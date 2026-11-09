@@ -1,0 +1,15 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>device test</title>
+<!-- 用法: /mobile-test.html?s=lab&w=820&h=1180   (預設 390x780;iPad 直式 820x1180,橫式 1180x820) -->
+<body style="margin:0;background:#333;overflow:hidden">
+<iframe id="f" style="border:0;display:block;transform-origin:0 0;background:#000"></iframe>
+<script>
+  const q = new URLSearchParams(location.search);
+  const w = +q.get('w') || 390, h = +q.get('h') || 780, s = q.get('s') || 'table';
+  const f = document.getElementById('f');
+  f.style.width = w + 'px'; f.style.height = h + 'px';
+  const k = Math.min(1, innerWidth / w, innerHeight / h);
+  f.style.transform = 'scale(' + k + ')';
+  f.src = '/index.html#' + s;
+</script>
