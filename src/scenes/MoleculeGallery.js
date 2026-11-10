@@ -68,8 +68,7 @@ export function mount(container, startId) {
         <button class="btn ${style === 'space' ? '' : 'alt'}" id="s-space">${T('gal.space')}</button>
         <button class="btn ${labels ? '' : 'alt'}" id="s-lab">${T('gal.labels')}</button>
         ${canSpeak() ? '<button class="btn alt" id="say">🔊</button>' : ''}
-      </div>
-      <p style="color:var(--muted);font-size:.85rem">${T('gal.tip')}</p>`;
+      </div>`;
     side.querySelector('#s-ball').onclick = () => { style = 'ball'; setStyle(current, style); renderSide(); };
     side.querySelector('#s-space').onclick = () => { style = 'space'; setStyle(current, style); renderSide(); };
     side.querySelector('#s-lab').onclick = () => { labels = !labels; show(id); };

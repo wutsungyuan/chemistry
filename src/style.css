@@ -243,3 +243,127 @@ button:focus-visible,input:focus-visible{outline:3px solid #fff;outline-offset:2
 .pt-grid .el:hover{background:linear-gradient(150deg,color-mix(in srgb,var(--c) 62%,transparent),color-mix(in srgb,var(--c) 28%,transparent));box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 10px 22px rgba(0,0,0,.45),0 0 16px color-mix(in srgb,var(--c) 55%,transparent)}
 .pt-grid .el.placeholder{border:1.5px dashed color-mix(in srgb,var(--c) 75%,#fff);opacity:1}
 .pt-grid .el.dim{opacity:.2}
+
+/* ================= 歡樂教室風:彩色魔法背景 + 漂浮化學小圖案 ================= */
+:root{
+  --bg:#1b1450; --panel:#2b2170; --panel2:#3a2f92; --glass:rgba(48,34,118,.72);
+  --line:rgba(255,255,255,.22);
+}
+html,body{background:#1b1450}
+body{background:
+  radial-gradient(900px 600px at 8% 12%,rgba(255,92,170,.45),transparent 60%),
+  radial-gradient(900px 650px at 92% 10%,rgba(60,200,255,.45),transparent 60%),
+  radial-gradient(1000px 700px at 80% 100%,rgba(120,255,190,.32),transparent 60%),
+  radial-gradient(900px 600px at 10% 100%,rgba(255,200,70,.28),transparent 60%),
+  linear-gradient(160deg,#3a1d8f 0%,#23297f 45%,#0f4a86 100%)}
+#deco{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+#topbar,#app{z-index:1}
+#app{background:transparent}
+/* 底部實驗桌小場景 */
+.bench{position:absolute;left:0;right:0;bottom:0;height:84px;display:flex;align-items:flex-end;justify-content:space-evenly;padding:0 4% 0;
+  background:linear-gradient(180deg,rgba(255,255,255,.16) 0,rgba(255,255,255,.16) 6px,rgba(20,10,70,.30) 6px,rgba(20,10,70,.45) 100%);border-top:1px solid rgba(255,255,255,.25)}
+.bench .it{position:relative;font-size:44px;line-height:1;margin-bottom:-2px;opacity:.75;transform:translateY(-6px)}
+.bench .eq{display:flex;align-items:center;gap:8px;margin-bottom:10px;opacity:.8;color:#fff;font-weight:800}
+.bench .eq span{font-size:34px}
+.bench .eq b{font-size:20px;opacity:.8}
+.bench .at{width:34px;height:34px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#fff,var(--c) 55%);color:#222;font-style:normal;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:16px;box-shadow:0 2px 6px rgba(0,0,0,.3)}
+.bench .b{position:absolute;left:50%;top:2px;width:9px;height:9px;border-radius:50%;border:2px solid rgba(255,255,255,.8);background:rgba(255,255,255,.25);opacity:0;animation:bub 3s ease-in infinite}
+.bench .b2{animation-delay:1s;margin-left:-10px;width:7px;height:7px}.bench .b3{animation-delay:2s;margin-left:8px;width:6px;height:6px}
+@keyframes bub{0%{transform:translateY(0) scale(.6);opacity:0}15%{opacity:.9}100%{transform:translateY(-70px) scale(1.2);opacity:0}}
+@media (max-width:900px){.bench .eq{display:none}}
+@media (max-width:700px){.bench{height:60px}.bench .it{font-size:32px}.bench .it:nth-of-type(n+5){display:none}}
+/* 3D 場景改半透明,讓背景的彩色透出來 */
+.canvas-wrap{background:radial-gradient(ellipse at 50% 45%,rgba(255,255,255,.14) 0%,rgba(20,10,70,.18) 70%,rgba(10,5,50,.35) 100%)}
+/* 標題列:彩虹品牌字、各色導覽鈕 */
+#topbar{background:linear-gradient(90deg,rgba(255,92,170,.55),rgba(120,90,255,.6) 45%,rgba(40,170,255,.6));border-bottom:2px solid rgba(255,255,255,.3);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.brand{background:linear-gradient(90deg,#fff176,#ffb74d 30%,#ff80ab 60%,#80d8ff);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:none;filter:drop-shadow(0 2px 0 rgba(0,0,0,.35));font-size:1.5rem}
+#nav button{--nc:#fff;background:color-mix(in srgb,var(--nc) 30%,rgba(30,20,90,.35));border:1px solid color-mix(in srgb,var(--nc) 60%,transparent)}
+#nav button:nth-child(1){--nc:#7ee8a2}#nav button:nth-child(2){--nc:#7cc4ff}#nav button:nth-child(3){--nc:#c9a7ff}#nav button:nth-child(4){--nc:#ff9a8a}#nav button:nth-child(5){--nc:#ffe066}
+#nav button:hover{background:color-mix(in srgb,var(--nc) 48%,rgba(30,20,90,.3))}
+#nav button.active{background:linear-gradient(180deg,#ffe066,#ffb92e)}
+#nav .ico{font-size:1.25em}
+/* 標題與按鈕更活潑 */
+.btn,#nav button,.tool{transition:transform .15s cubic-bezier(.3,1.6,.5,1),box-shadow .15s,background .15s}
+#nav button:hover,.btn:hover{transform:translateY(-2px) scale(1.05)}
+/* 點擊閃光 */
+.spark{position:fixed;z-index:99;pointer-events:none;font-size:18px;transform:translate(-50%,-50%);animation:spark .7s ease-out forwards}
+@keyframes spark{to{transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) scale(1.4) rotate(120deg);opacity:0}}
+@media (prefers-reduced-motion:reduce){.bench .b{animation:none}.spark{display:none}}
+
+/* 教室感:頂端彩旗 + 木質實驗桌 */
+.bench{height:104px;background:linear-gradient(180deg,#f0b868 0,#d9954a 12px,#8a5428 12px,#5e3519 100%);border-top:2px solid #ffd9a0;box-shadow:0 -6px 18px rgba(0,0,0,.25)}
+.bench .it{font-size:58px;opacity:1;transform:translateY(-12px);filter:drop-shadow(0 4px 3px rgba(0,0,0,.35))}
+.bench .eq{margin-bottom:22px;opacity:1}
+.bench .eq span{font-size:40px}
+.bench .at{width:40px;height:40px;font-size:18px}
+.bench .b{top:-4px}
+@media (max-width:700px){.bench{height:72px}.bench .it{font-size:38px;transform:translateY(-8px)}}
+
+/* ---------- 週期表格子:降低透明度,色塊更明確 ---------- */
+.pt-grid .el{
+  background:linear-gradient(150deg,var(--c),color-mix(in srgb,var(--c) 68%,#2a2070));
+  border:1px solid color-mix(in srgb,var(--c) 70%,#fff);
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:#16123a;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.7),inset 0 -8px 14px -8px rgba(0,0,0,.3),0 4px 10px rgba(0,0,0,.3)}
+.pt-grid .el::before{background:linear-gradient(180deg,rgba(255,255,255,.42),rgba(255,255,255,0))}
+.pt-grid .el .sym{color:#16123a;text-shadow:0 1px 0 rgba(255,255,255,.35)}
+.pt-grid .el .nm{color:#2a2358;text-shadow:none;font-weight:600}
+.pt-grid .el .z{color:#2a2358;opacity:.75}
+.pt-grid .el:hover{background:linear-gradient(150deg,color-mix(in srgb,var(--c) 85%,#fff),var(--c));box-shadow:inset 0 1px 0 rgba(255,255,255,.8),0 10px 22px rgba(0,0,0,.45),0 0 16px color-mix(in srgb,var(--c) 60%,transparent)}
+.pt-grid .el.placeholder{border:2px dashed color-mix(in srgb,var(--c) 40%,#16123a)}
+
+
+/* ---------- 原子小博士:住在標題列下方的提示列(固定保留版面,不蓋住功能) ---------- */
+#tipbar{flex:none;position:relative;display:flex;align-items:center;gap:10px;padding:4px 14px 4px 10px;min-height:56px;
+  background:none}
+/* 彩旗掛在提示列下緣 */
+#bunting{flex:none;height:28px;pointer-events:none;position:relative;z-index:2;filter:drop-shadow(0 3px 2px rgba(0,0,0,.25));
+  background:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='34'><path d='M0 3 H180' stroke='%23ffffffaa' stroke-width='2'/><polygon points='3,3 33,3 18,30' fill='%23ff6b8b'/><polygon points='39,3 69,3 54,30' fill='%23ffd23f'/><polygon points='75,3 105,3 90,30' fill='%235ee0a0'/><polygon points='111,3 141,3 126,30' fill='%235cc8ff'/><polygon points='147,3 177,3 162,30' fill='%23c9a7ff'/></svg>") repeat-x;background-size:180px 28px;opacity:.9}
+.m-body{flex:none;width:52px;height:56px;padding:0;border:0;background:none;cursor:pointer;animation:m-bob 2.4s ease-in-out infinite;filter:drop-shadow(0 3px 3px rgba(0,0,0,.35));-webkit-tap-highlight-color:transparent;margin-top:-2px}
+.m-body.jump{animation:m-jump .55s cubic-bezier(.3,1.5,.5,1)}
+.m-body.twirl{animation:m-twirl .8s cubic-bezier(.3,1.3,.5,1)}
+.m-orbits{transform-origin:60px 46px;animation:m-spin 9s linear infinite}
+.m-arm{transform-origin:92px 96px;animation:m-wave 1.6s ease-in-out infinite}
+.m-eyes{transform-origin:60px 50px;animation:m-blink 4s infinite}
+.m-pl,.m-pr{transition:transform .08s}
+.m-bubble{position:relative;flex:0 1 auto;max-width:min(900px,100%);padding:7px 16px;border-radius:16px;background:#fff;color:#2a2358;font-weight:700;font-size:1rem;line-height:1.9;box-shadow:0 3px 10px rgba(0,0,0,.3)}
+.m-bubble::before{content:'';position:absolute;left:-8px;top:50%;margin-top:-8px;border:8px solid transparent;border-right-color:#fff;border-left:0}
+.m-bubble.swap{animation:m-pop .3s cubic-bezier(.3,1.5,.5,1)}
+#tipbar.sleep .m-body{animation:m-bob 4s ease-in-out infinite}
+#tipbar.sleep .m-eyes{animation:none;transform:scaleY(.1)}
+#tipbar.sleep .m-pl,#tipbar.sleep .m-pr{display:none}
+@keyframes m-pop{from{opacity:0;transform:translateX(-10px) scale(.92)}to{opacity:1;transform:none}}
+@keyframes m-bob{50%{transform:translateY(-3px)}}
+@keyframes m-jump{0%{transform:translateY(0)}35%{transform:translateY(-14px) rotate(-6deg)}70%{transform:translateY(0) rotate(4deg)}100%{transform:none}}
+@keyframes m-twirl{0%{transform:translateY(0) rotate(0)}40%{transform:translateY(-14px) rotate(200deg)}100%{transform:translateY(0) rotate(360deg)}}
+@keyframes m-spin{to{transform:rotate(360deg)}}
+@keyframes m-wave{50%{transform:rotate(-16deg)}}
+@keyframes m-blink{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}
+/* 提示已整合進小博士,實驗室頂部的獨立提示條不再需要 */
+.hint{display:none!important}
+@media (max-width:900px){#tipbar{min-height:46px;padding:3px 10px 3px 8px}.m-body{width:40px;height:44px}.m-bubble{font-size:.85rem;line-height:1.7;padding:5px 12px}}
+@media (prefers-reduced-motion:reduce){.m-body,.m-orbits,.m-arm,.m-eyes{animation:none}}
+
+/* ---------- 標題列 + 小博士提示列合為同一塊(少一層、不突兀);彩旗改成垂掛在下緣的裝飾 ---------- */
+#head{position:relative;z-index:0;flex:none;
+  background:linear-gradient(90deg,rgba(255,92,170,.55),rgba(120,90,255,.6) 45%,rgba(40,170,255,.6));
+  border-bottom:2px solid rgba(255,255,255,.3);box-shadow:0 4px 16px rgba(0,0,0,.3);
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+#head #topbar{background:none;border:0;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none;padding-bottom:2px}
+#head #tipbar{min-height:46px;padding-top:0;padding-bottom:6px}
+#head #bunting{position:absolute;left:0;right:0;top:100%;height:24px;background-size:180px 24px;filter:none;z-index:0}
+.m-body{margin-top:0}
+@media (max-width:900px){#head #tipbar{min-height:40px;padding-bottom:4px}}
+
+/* 窄螢幕導覽列:iPad 直式(701~900)按鈕太多時直接換行,不用橫向捲動;手機維持橫向滑動但隱藏捲軸 */
+@media (min-width:701px) and (max-width:900px){#nav{flex-wrap:wrap;overflow:visible}}
+@media (max-width:900px){#nav{scrollbar-width:none}#nav::-webkit-scrollbar{display:none}}
+@media (min-width:701px) and (max-width:900px){#nav{gap:4px}#nav button{padding:6px 9px;font-size:.85rem}#nav .ico{margin-right:3px}}
+@media (max-width:700px){
+  .brand{font-size:1.05rem;letter-spacing:0}
+  #topbar{gap:4px 6px}
+  .tools{display:flex;gap:4px;margin-left:auto}
+  .tool{padding:4px 8px!important;font-size:.78rem!important;min-height:36px!important}
+  #head #tipbar{min-height:36px}
+  .m-body{width:34px;height:38px}
+}

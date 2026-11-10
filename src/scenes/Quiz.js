@@ -76,10 +76,12 @@ export function mount(container) {
     if (o.ok) {
       streak++; score++;
       fb.innerHTML = `🎉 ${T('quiz.right')}`;
+      dispatchEvent(new CustomEvent('mascot', { detail: { type: 'cheer' } }));
       const news = update(d => { d.quizRight++; d.bestStreak = Math.max(d.bestStreak, streak); });
       news.forEach(b => toast(`${b.icon} ${Tp('badge.new')}${L(b.name)}`, 3000));
     } else {
       btn.classList.add('wrong'); streak = 0;
+      dispatchEvent(new CustomEvent('mascot', { detail: { type: 'oops' } }));
       fb.innerHTML = `💪 ${T('quiz.wrong')} <b>${render(qn.answerText)}</b>`;
     }
     fb.innerHTML += ` <button class="btn" id="nx">${T('quiz.next')}</button>`;

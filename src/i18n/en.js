@@ -36,13 +36,17 @@ export default {
 
   'lab.hint': 'Add atoms from below, then drag them together to bond!',
   'lab.scissors': 'Scissors',
+  'lab.cut': 'Snip! Snip a lone atom again to remove it.',
+  'lab.spare': '✅ Done! One hand always stays free - that is normal, nothing more to do!',
   'lab.clear': 'Clear',
   'lab.missions': 'Missions',
   'lab.showrecipe': 'Show recipe hints',
   'lab.full': 'The table is full. Clear some atoms!',
   'lab.made': 'You made ',
   'lab.wants': '{sym} wants to hold {n} more hand(s)!',
-  'lab.unknown': 'Stable, but I do not know this one yet. Try another!',
+  'lab.unknown': 'This combo is not one of the missions. Snip it apart and try again, or check the mission list!',
+  'lab.scissors.on': 'Scissors on! Tap an atom to cut its bonds, or a lone atom to remove it. Tap empty space to turn them off.',
+  'lab.howto': 'Bonds to make: {list}.',
 
   'rx.play': 'Play',
   'rx.pause': 'Pause',

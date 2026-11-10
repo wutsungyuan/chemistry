@@ -36,13 +36,17 @@ export default {
 
   'lab.hint': '點下方的原子加進來,把它們拖到一起就會牽手!',
   'lab.scissors': '剪刀',
+  'lab.cut': '剪斷了!再剪一次單獨的原子,就可以把它移走。',
+  'lab.spare': '✅ 完成囉!它有一隻手永遠空著,這是正常的,不用再牽了!',
   'lab.clear': '清空',
   'lab.missions': '任務',
   'lab.showrecipe': '顯示配方提示',
   'lab.full': '桌子放不下了,先清空一些吧!',
   'lab.made': '你做出了',
   'lab.wants': '{sym} 還想再牽 {n} 隻手喔!',
-  'lab.unknown': '這個組合很穩定,但我還不認識它,再試試別的!',
+  'lab.unknown': '這個組合還不在任務裡。可以用剪刀剪開重拼,或看左邊的任務提示!',
+  'lab.scissors.on': '剪刀開啟了!點原子的手可以剪斷,點單獨的原子可以移走。點畫面空白處就會關閉剪刀。',
+  'lab.howto': '要牽的手:{list}。',
 
   'rx.play': '播放',
   'rx.pause': '暫停',

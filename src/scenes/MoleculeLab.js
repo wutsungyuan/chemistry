@@ -5,7 +5,7 @@ import { BY_SYMBOL } from '../data/elements.js';
 import { LAB_TARGETS, VALENCE, composition, matchMolecule } from '../data/molecules.js';
 import { createStage } from '../three/stage.js';
 import { atomMaterial, atomRadius, sphereGeo, cylGeo, bondMat, ionicMat, burst } from '../three/mol.js';
-import { T, Tp, L, LH, formulaHTML } from '../i18n/index.js';
+import { T, Tp, L, LH, formulaHTML, state } from '../i18n/index.js';
 import { update, addUnique, progress } from '../game/store.js';
 import { toast } from '../ui/toast.js';
 
@@ -13,6 +13,15 @@ const TRAY = ['H', 'C', 'N', 'O', 'Na', 'Cl'];
 const SIZE = 1.5;           // 實驗室裡原子放大倍率
 const MAX_ATOMS = 40;
 const UP = new THREE.Vector3(0, 1, 0);
+
+// 空手光暈貼圖(黃色柔光)
+const glowMat = (() => {
+  const c = document.createElement('canvas'); c.width = c.height = 64;
+  const g = c.getContext('2d'), grd = g.createRadialGradient(32, 32, 14, 32, 32, 32);
+  grd.addColorStop(0, 'rgba(255,255,255,0.0)'); grd.addColorStop(0.55, 'rgba(255,255,255,0.7)'); grd.addColorStop(1, 'rgba(255,255,255,0)');
+  g.fillStyle = grd; g.fillRect(0, 0, 64, 64);
+  return new THREE.SpriteMaterial({ map: new THREE.CanvasTexture(c), transparent: true, depthWrite: false });
+})();
 
 export function mount(container) {
   const stage = createStage(container, { camPos: [0, 0, 12], controls: false });
@@ -41,18 +50,33 @@ export function mount(container) {
     b.className = 'atom-btn'; b.textContent = sym;
     b.style.background = BY_SYMBOL[sym].color;
     b.title = L(BY_SYMBOL[sym].name);
-    b.onclick = () => spawn(sym);
+    b.onclick = () => { if (scissors) setScissors(false); spawn(sym); };
     tray.appendChild(b);
   });
   const sep = document.createElement('span'); sep.style.flex = '1'; tray.appendChild(sep);
   const bScissors = document.createElement('button');
   bScissors.className = 'btn alt'; bScissors.innerHTML = '✂️ ' + T('lab.scissors');
-  bScissors.onclick = () => { scissors = !scissors; bScissors.className = 'btn ' + (scissors ? '' : 'alt'); stage.el.style.cursor = scissors ? 'crosshair' : ''; };
+  // 剪刀模式:開啟時按鈕變黃;加新原子、清空、點畫面空白處都會自動關閉,不用再點一次剪刀
+  function setScissors(on, say = false) {
+    scissors = on;
+    bScissors.className = 'btn ' + (on ? '' : 'alt');
+    stage.el.style.cursor = on ? 'crosshair' : '';
+    if (on && say) dispatchEvent(new CustomEvent('mascot', { detail: { type: 'say', text: Tp('lab.scissors.on'), ms: 7000 } }));
+  }
+  bScissors.onclick = () => setScissors(!scissors, true);
   const bClear = document.createElement('button');
   bClear.className = 'btn alt'; bClear.innerHTML = '🗑️ ' + T('lab.clear');
-  bClear.onclick = clearAll;
+  bClear.onclick = () => { setScissors(false); clearAll(); };
   tray.append(bScissors, bClear);
 
+  /** 組裝提示:有手寫的 howto 就用,否則依化學鍵自動列出「誰要牽誰」 */
+  function howTo(m) {
+    if (m.howto) return L(m.howto);
+    const cnt = new Map();
+    m.bonds.forEach(([i, j]) => { const k = [m.atoms[i][0], m.atoms[j][0]].sort().join('–'); cnt.set(k, (cnt.get(k) || 0) + 1); });
+    const list = [...cnt].map(([k, n]) => k + (n > 1 ? '×' + n : '')).join(state.lang === 'zh' ? '、' : ', ');
+    return Tp('lab.howto', { list });
+  }
   function renderMission() {
     const items = LAB_TARGETS.map(m => {
       const comp = composition(m.labPair ? m.labPair.atoms : m.atoms.map(a => a[0]));
@@ -71,6 +95,7 @@ export function mount(container) {
         const m = LAB_TARGETS.find(x => x.id === b.dataset.id);
         const comp = composition(m.labPair ? m.labPair.atoms : m.atoms.map(a => a[0]));
         toast(`${L(m.name)}:` + Object.entries(comp).map(([s, n]) => `${s}×${n}`).join(' ') + (built.has(m.id) ? ' ✔' : ''), 3200);
+        dispatchEvent(new CustomEvent('mascot', { detail: { type: 'say', text: howTo(m), ms: 12000 } }));
       };
     });
   }
@@ -90,6 +115,11 @@ export function mount(container) {
     mesh.add(new CSS2DObject(div));
     const a = { id: nextId++, sym, mesh, vel: new THREE.Vector3(), r };
     mesh.userData.atom = a;
+    // 空手提示光暈:已經牽手但還沒牽滿的原子會發光呼吸
+    a.glow = new THREE.Sprite(glowMat.clone());
+    a.glow.material.color.set(0xffe150);
+    a.glow.visible = false; a.glow.scale.set(3, 3, 1); a.glow.renderOrder = -1;
+    mesh.add(a.glow);
     stage.scene.add(mesh); atoms.push(a);
   }
   function clearAll() {
@@ -126,6 +156,7 @@ export function mount(container) {
       }
     }
     bonds.forEach(b => rebuildBondMeshes(b));
+    free.forEach((v, a) => { a.free = v; });          // 記下每顆原子還有幾隻空手(給發光提示用)
     return free;
   }
   function rebuildBondMeshes(b) {
@@ -151,6 +182,8 @@ export function mount(container) {
 
   // ---------- 辨識分子 ----------
   function compKey(comp) { return comp.map(a => a.id).sort((x, y) => x - y).join(','); }
+  // 文字引導只走原子博士這一個管道(3D 標籤只標示算式/名稱,光暈負責視覺提示,toast 只用於「完成」等事件)
+  function coach(text) { dispatchEvent(new CustomEvent('mascot', { detail: { type: 'say', text, ms: 6000 } })); }
   function evaluate(seed, free) {
     const comp = components().find(c => c.includes(seed));
     if (!comp) return;
@@ -169,14 +202,17 @@ export function mount(container) {
         built.add(m.id);
         const news = update(d => addUnique(d.built, m.id));
         toast(`🎉 ${Tp('lab.made')}${L(m.name)}!`, 3500);
+        const spare = comp.some(a => free.get(a) > 0);   // 本來就有空手的分子(如 NO2):只在剛完成時短暫說明,光暈幾秒後消失
+        if (spare) comp.forEach(a => { a.glowUntil = performance.now() + 4500; });
+        dispatchEvent(new CustomEvent('mascot', { detail: { type: 'cheer', text: `${Tp('lab.made')}${L(m.name)}!` + (spare ? ' ' + Tp('lab.spare') : '') } }));
         news.forEach(b => setTimeout(() => toast(`${b.icon} ${Tp('badge.new')}${L(b.name)}`), 1800));
         if (wasNew) renderMission();
       }
     } else if (incomplete.length) {
       const a = incomplete.sort((x, y) => free.get(y) - free.get(x))[0];
-      toast(Tp('lab.wants', { sym: a.sym, n: free.get(a) }));
+      coach(Tp('lab.wants', { sym: a.sym, n: free.get(a) }));
     } else if (comp.length > 1) {
-      toast(Tp('lab.unknown'));
+      coach(Tp('lab.unknown'));
     }
   }
   const centroid = comp => { const c = new THREE.Vector3(); comp.forEach(a => c.add(a.mesh.position)); return c.divideScalar(comp.length); };
@@ -251,6 +287,12 @@ export function mount(container) {
 
   const right = new THREE.Vector3(), a2 = new THREE.Vector3();
   stage.onFrame(dt => {
+    const pulse = 3.1 + Math.sin(performance.now() / 160) * 0.35;
+    atoms.forEach(a => {
+      const on = a.free > 0 && degree(a) > 0 && (!a.matched || performance.now() < (a.glowUntil || 0));
+      a.glow.visible = on;
+      if (on) { a.glow.scale.set(pulse, pulse, 1); a.glow.material.color.set(a.matched ? 0xff9ad5 : 0xffe150); }   // 黃=還想牽手;粉紅=已完成(本來就有空手)
+    });
     const steps = 3;
     for (let i = 0; i < steps; i++) physics(dt / steps);
     // 更新鍵的圓柱
@@ -275,8 +317,18 @@ export function mount(container) {
       const key = compKey(comp); seen.add(key);
       const idx = new Map(comp.map((a, i) => [a, i]));
       const m = matchMolecule(comp.map(a => a.sym), bonds.filter(b => idx.has(b.a)).map(b => [idx.get(b.a), idx.get(b.b)]));
+      comp.forEach(a => { a.matched = !!m; });
       let lab = labels.get(key);
-      const text = m ?`${formulaHTML(m.display || m.formula)} · ${LH(m.name)}` : '';
+      let text;
+      if (m) text = `${formulaHTML(m.display || m.formula)} · ${LH(m.name)}`;
+      else {
+        // 還不認識的組合:一樣顯示算式,並說明還缺什麼(不要讓小朋友看到空白)
+        const cnt = {};
+        comp.forEach(a => { cnt[a.sym] = (cnt[a.sym] || 0) + 1; });
+        const order = Object.keys(cnt).sort((x, y) => (x === 'C' ? -1 : y === 'C' ? 1 : x === 'H' ? -1 : y === 'H' ? 1 : x < y ? -1 : 1));
+        const formula = order.map(s => s + (cnt[s] > 1 ? cnt[s] : '')).join('');
+        text = formulaHTML(formula);
+      }
       if (!lab) {
         const div = document.createElement('div'); div.className = 'label3d';
         div.style.cssText = 'background:rgba(27,35,80,.85);padding:4px 10px;border-radius:999px;font-size:16px';
@@ -300,9 +352,19 @@ export function mount(container) {
   stage.el.addEventListener('pointerdown', ev => {
     setRay(ev);
     const h = ray.intersectObjects(atoms.map(a => a.mesh))[0];
-    if (!h) return;
+    if (!h) { if (scissors) setScissors(false); return; }
     const a = h.object.userData.atom;
-    if (scissors) { removeBondsOf(a); celebrated.clear(); return; }
+    if (scissors) {
+      celebrated.clear();
+      if (degree(a)) { removeBondsOf(a); toast(Tp('lab.cut')); }       // 有牽手:先剪斷
+      else {                                                            // 已經是單獨一顆:再剪一次就移除
+        a.mesh.children.forEach(c => c.element?.remove());
+        stage.scene.remove(a.mesh);
+        atoms.splice(atoms.indexOf(a), 1);
+        bursts.push(burst(stage.scene, a.mesh.position, 0xffffff, 24));
+      }
+      return;
+    }
     dragging = a; plane.constant = -a.mesh.position.z;
     stage.el.setPointerCapture(ev.pointerId);
   });

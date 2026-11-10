@@ -1,4 +1,6 @@
 import './style.css';
+import { mountDeco } from './ui/deco.js';
+import { mountMascot, mascotScene } from './ui/mascot.js';
 import { T, state, setLang, setZhuyin, onLangChange } from './i18n/index.js';
 import * as PeriodicTable from './scenes/PeriodicTable.js';
 import * as AtomView from './scenes/AtomView.js';
@@ -19,6 +21,7 @@ function go(n, a = null) {
   name = n; arg = a;
   current = SCENES[n].mount(app, a, { go });
   renderChrome();
+  mascotScene(n);
   history.replaceState(null, '', `#${n}${a != null ? '/' + a : ''}`);
 }
 
@@ -56,4 +59,6 @@ addEventListener('hashchange', () => {
   const [n, a] = fromHash();
   if (n !== name || a !== arg) go(n, a);
 });
+mountDeco();
+mountMascot();
 go(...fromHash());
