@@ -29,11 +29,11 @@ function makeQuestion() {
     return { q: { raw: L(e.fact), key: 'quiz.q.fact' }, opts: opts.map(o => ({ html: `${o.sym} ${render(L(o.name))}`, ok: o === e })), answerText: L(e.name) };
   }
   if (kind === 'formula') {
-    const m = pick(GALLERY.filter(x => !x.display)), opts = distract(GALLERY.filter(x => !x.display), m, 4, x => x.id);
+    const m = pick(GALLERY.filter(x => !x.display && !x.extra)), opts = distract(GALLERY.filter(x => !x.display && !x.extra), m, 4, x => x.id);
     return { q: { key: 'quiz.q.formula', vars: {}, html: formulaHTML(m.formula) }, opts: opts.map(o => ({ html: render(L(o.name)), ok: o === m })), answerText: L(m.name) };
   }
   // count
-  const m = pick(GALLERY.filter(x => x.atoms.length <= 12 && x.atoms.length >= 2 && !x.display));
+  const m = pick(GALLERY.filter(x => x.atoms.length <= 12 && x.atoms.length >= 2 && !x.display && !x.extra));
   const syms = [...new Set(m.atoms.map(a => a[0]))];
   const s = pick(syms), n = m.atoms.filter(a => a[0] === s).length;
   const nums = shuffle([...new Set([n, n + 1, Math.max(1, n - 1), n + 2])]).slice(0, 4);

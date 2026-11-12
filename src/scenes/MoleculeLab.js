@@ -95,6 +95,7 @@ export function mount(container) {
         const m = LAB_TARGETS.find(x => x.id === b.dataset.id);
         const comp = composition(m.labPair ? m.labPair.atoms : m.atoms.map(a => a[0]));
         toast(`${L(m.name)}:` + Object.entries(comp).map(([s, n]) => `${s}×${n}`).join(' ') + (built.has(m.id) ? ' ✔' : ''), 3200);
+        if (built.has(m.id)) { setScissors(false); showMolecule(m); }   // 已完成:直接把分子擺出來看
         dispatchEvent(new CustomEvent('mascot', { detail: { type: 'say', text: howTo(m), ms: 12000 } }));
       };
     });
@@ -301,7 +302,7 @@ export function mount(container) {
       tmp.subVectors(pb, pa);
       const len = tmp.length(); if (len < 1e-4) return;
       tmp.normalize();
-      right.crossVectors(tmp, Math.abs(tmp.y) > 0.9 ? new THREE.Vector3(1, 0, 0) : new THREE.Vector3(0, 0, 1)).normalize();
+      right.crossVectors(tmp, Math.abs(tmp.z) > 0.9 ? new THREE.Vector3(1, 0, 0) : new THREE.Vector3(0, 0, 1)).normalize();   // 並排方向留在畫面平面內,雙/三鍵才看得到
       const n = b.group.children.length;
       b.group.children.forEach((m, k) => {
         m.position.copy(pa).add(pb).multiplyScalar(0.5).addScaledVector(right, (k - (n - 1) / 2) * 0.17);
@@ -398,8 +399,25 @@ export function mount(container) {
     return best;
   }
 
-  // 範例原子
-  ['H', 'H', 'O'].forEach(spawn);
+  /** 把已完成的分子直接擺到畫面上(點「已完成」的任務卡片時用) */
+  function showMolecule(m) {
+    clearAll();
+    const src = m.labPair ? m.labPair.atoms.map((s, i) => [s, i * 1.6, 0, 0]) : m.atoms;
+    const bd = m.labPair ? m.labPair.bonds : m.bonds;
+    const vw = view(), cx = (vw.hl + vw.hw) / 2, cy = (vw.hh.top + vw.hh.bot) / 2;
+    const mid = src.reduce((p, a) => [p[0] + a[1] / src.length, p[1] + a[2] / src.length, p[2] + a[3] / src.length], [0, 0, 0]);
+    const list = src.map(a => {
+      spawn(a[0]);
+      const at = atoms[atoms.length - 1];
+      at.mesh.position.set(cx + (a[1] - mid[0]) * 1.9, cy + (a[2] - mid[1]) * 1.9, (a[3] - mid[2]) * 1.9);
+      return at;
+    });
+    bd.forEach(([i, j]) => bonds.push({ a: list[i], b: list[j], order: 1, group: null }));
+    computeOrders();
+    celebrated.add(compKey(list));
+  }
+
+  // 一開始是空白的實驗桌:自己從下方托盤選原子,或點已完成的任務看分子長相
 
   return {
     dispose() {

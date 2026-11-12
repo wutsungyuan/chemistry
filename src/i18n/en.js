@@ -26,6 +26,7 @@ export default {
   'legend.valence': 'Yellow ball: outer electron',
   'atom.nofact': 'A rare element. Explore the common ones first!',
   'atom.in': 'Found in these molecules',
+  'atom.found': 'Where you find it',
   'atom.back': 'Back to table',
   'atom.say': 'Read to me',
 

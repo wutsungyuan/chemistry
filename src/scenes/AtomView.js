@@ -2,8 +2,9 @@ import * as THREE from 'three';
 import { isNarrow } from '../ui/layout.js';
 import { BY_Z, CATEGORIES } from '../data/elements.js';
 import { GALLERY } from '../data/molecules.js';
+import { ELEMENT_USES } from '../data/elementUses.js';
 import { createStage } from '../three/stage.js';
-import { T, Tp, L, LH, render } from '../i18n/index.js';
+import { T, Tp, L, LH, render, formulaHTML } from '../i18n/index.js';
 import { update, addUnique } from '../game/store.js';
 import { toast } from '../ui/toast.js';
 import { speak, canSpeak } from '../ui/speech.js';
@@ -113,7 +114,18 @@ export function mount(container, z, { go }) {
   const side = document.createElement('div');
   side.className = 'side';
   const cat = CATEGORIES[el.cat];
-  const inMols = GALLERY.filter(m => m.atoms.some(a => a[0] === el.sym)).slice(0, 8);
+  // 「它在生活中的樣子」:圖鑑裡有的分子(可點進去看 3D)+ 其他常見物質
+  const norm = f => String(f).replace(/\(.*\)/, '');
+  const found = [], seen = new Set();
+  GALLERY.filter(m => !m.extra && m.atoms.some(a => a[0] === el.sym) && m.id !== 'diamond' && m.id !== 'graphite').forEach(m => {
+    seen.add(norm(m.formula)); found.push({ id: m.id, formula: m.display || m.formula, name: m.name });
+  });
+  (ELEMENT_USES[el.sym] || []).forEach(([f, zh, en]) => { if (!seen.has(norm(f))) { seen.add(norm(f)); found.push({ id: GALLERY.find(m => norm(m.formula) === norm(f))?.id, formula: f, name: { zh, en } }); } });
+  const foundItem = x => {
+    const tag = x.id ? 'button' : 'span';
+    return `<${tag} class="found-item${x.id ? ' link' : ''}" ${x.id ? `data-mol="${x.id}"` : ''}><b>${formulaHTML(x.formula)}</b><em class="fi-name">${LH(x.name)}</em></${tag}>`;
+  };
+  const foundHTML = found.length ? `<h3 class="found-h">🔎 ${T('atom.found')}</h3><div class="found-list">${found.map(foundItem).join('')}</div>` : '';
   side.innerHTML = `
     <h2><span style="color:${cat.color}">${el.sym}</span> ${LH(el.name)}</h2>
     <button class="chip tipchip" data-tip="cat" title="${Tp('atom.tapme')}" style="background:${cat.color};color:#111">${render(L(cat))} ⓘ</button>
@@ -129,18 +141,27 @@ export function mount(container, z, { go }) {
     </ul>
     ${el.fact ? `<p>💡 ${LH(el.fact)}</p>` : `<p style="color:var(--muted)">${T('atom.nofact')}</p>`}
     ${el.use && L(el.use) ? `<p>🏠 ${LH(el.use)}</p>` : ''}
-    ${inMols.length ? `<p>${T('atom.in')}:<br>${inMols.map(m => `<button class="btn alt" data-mol="${m.id}">${LH(m.name)}</button>`).join('')}</p>` : ''}
+    ${isNarrow() && foundHTML ? `<div class="found">${foundHTML}</div>` : ''}
     <div>
       <button class="btn alt" id="prev">◀</button><button class="btn alt" id="next">▶</button>
       <button class="btn alt" id="back">${T('atom.back')}</button>
       ${canSpeak() ? `<button class="btn" id="say">🔊 ${T('atom.say')}</button>` : ''}
     </div>`;
   container.appendChild(side);
+  // 桌面:獨立成右邊的區塊;手機/平板:放在左側面板最下方
+  let foundBox = null;
+  if (!isNarrow() && foundHTML) {
+    foundBox = document.createElement('div');
+    foundBox.className = 'side found-box';
+    foundBox.innerHTML = foundHTML;
+    container.appendChild(foundBox);
+    zoombar.style.right = (foundBox.offsetWidth + 28) + 'px';   // 縮放條貼著原子動畫這一側,生活用品區塊放最右邊
+  }
   // 為避開左側面板而平移畫面中心;越放大越減少平移,避免近距離時球體被拉歪
   stage.setCenterShift(() => {
     if (isNarrow()) return 0;
     const f = Math.min(1, Math.max(0, (dist() - minD * 1.6) / (dist0 * 0.7 - minD * 1.6)));
-    return (side.offsetWidth / 2) * f;
+    return ((side.offsetWidth - (foundBox ? foundBox.offsetWidth + 70 : 0)) / 2) * f;
   });
   const tipbox = side.querySelector('#tipbox');
   let tipOpen = null;
@@ -157,10 +178,10 @@ export function mount(container, z, { go }) {
   side.querySelector('#back').onclick = () => go('table');
   side.querySelector('#say')?.addEventListener('click', () =>
     speak(`${L(el.name)}。${el.fact ? L(el.fact) : ''}${el.use ? L(el.use) : ''}`));
-  side.querySelectorAll('[data-mol]').forEach(b => { b.onclick = () => go('gallery', b.dataset.mol); });
+  container.querySelectorAll('[data-mol]').forEach(b => { b.onclick = () => go('gallery', b.dataset.mol); });
 
   const news = update(d => addUnique(d.elements, el.z));
   news.forEach(b => toast(`${b.icon} ${Tp('badge.new')}${L(b.name)}`));
 
-  return { dispose() { window.speechSynthesis?.cancel?.(); stage.dispose(); side.remove(); zoombar.remove(); } };
+  return { dispose() { window.speechSynthesis?.cancel?.(); stage.dispose(); side.remove(); foundBox?.remove(); zoombar.remove(); } };
 }

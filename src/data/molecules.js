@@ -1,3 +1,4 @@
+import { EXTRA_MOLECULES } from './moleculesExtra.js';
 // 分子資料:atoms [符號, x, y, z](單位≈埃),bonds [i, j, 鍵級, 'ionic'?]
 // lab: true → 可在「分子實驗室」組出來; labPair → 以此圖形(骨架)比對
 const TET = 0.629; // 甲烷 C-H 1.09 Å / √3
@@ -100,10 +101,12 @@ export const MOLECULES = [
     use: { zh: '生命的泉源!我們身體約有 60% 是水。', en: 'The source of life! About 60% of your body is water.' } },
   { id: 'H2O2', formula: 'H2O2', name: { zh: '雙氧水(過氧化氫)', en: 'Hydrogen peroxide' }, lab: true,
     atoms: [['O', -0.73, 0, 0], ['O', 0.73, 0, 0], ['H', -1.05, 0.85, 0.25], ['H', 1.05, -0.25, 0.85]], bonds: [[0, 1, 1], [0, 2, 1], [1, 3, 1]],
+    howto: { zh: '拼法:先把 2 個 O 牽在一起,再在每個 O 上各牽 1 個 H。', en: 'Build: join 2 O atoms, then attach 1 H to each O.' },
     fact: { zh: '比水多一個氧原子。', en: 'Water with one extra oxygen.' },
     use: { zh: '稀釋後可以幫傷口消毒、漂白衣服(請大人幫忙使用)。', en: 'Diluted, it disinfects and bleaches (ask a grown-up).' } },
   { id: 'CO2', formula: 'CO2', name: { zh: '二氧化碳', en: 'Carbon dioxide' }, lab: true,
     atoms: [['C', 0, 0, 0], ['O', -1.16, 0, 0], ['O', 1.16, 0, 0]], bonds: [[0, 1, 2], [0, 2, 2]],
+    howto: { zh: '拼法:讓 1 個 C 在中間,左右各牽 1 個 O(每個 O 會用兩隻手抓緊 C)。', en: 'Build: put 1 C in the middle with 1 O on each side. Each O grips C with two hands.' },
     fact: { zh: '一個碳原子抱著兩個氧原子,排成一直線。', en: 'A carbon atom holding two oxygens in a straight line.' },
     use: { zh: '汽水的氣泡就是它!植物也用它來做光合作用。', en: 'The bubbles in soda! Plants use it for photosynthesis.' } },
   { id: 'CO', formula: 'CO', name: { zh: '一氧化碳', en: 'Carbon monoxide' }, lab: false,
@@ -112,11 +115,13 @@ export const MOLECULES = [
     use: { zh: '使用瓦斯熱水器要保持通風,避免中毒。', en: 'Keep rooms ventilated when using gas heaters.' } },
   { id: 'NH3', formula: 'NH3', name: { zh: '氨(阿摩尼亞)', en: 'Ammonia' }, lab: true,
     atoms: [['N', 0, 0, 0], ['H', 0.94, -0.33, 0], ['H', -0.47, -0.33, 0.81], ['H', -0.47, -0.33, -0.81]], bonds: [[0, 1, 1], [0, 2, 1], [0, 3, 1]],
+    howto: { zh: '拼法:把 3 個 H 都牽在 1 個 N 上。', en: 'Build: attach 3 H atoms to 1 N.' },
     fact: { zh: '一個氮原子加三個氫原子,像一座小金字塔。', en: 'A nitrogen with three hydrogens, shaped like a little pyramid.' },
     use: { zh: '用來製造肥料,味道很刺鼻。', en: 'Used to make fertilizer. It has a sharp smell.' } },
   { id: 'CH4', formula: 'CH4', name: { zh: '甲烷', en: 'Methane' }, lab: true,
     atoms: [['C', 0, 0, 0], ['H', TET, TET, TET], ['H', TET, -TET, -TET], ['H', -TET, TET, -TET], ['H', -TET, -TET, TET]],
     bonds: [[0, 1, 1], [0, 2, 1], [0, 3, 1], [0, 4, 1]],
+    howto: { zh: '拼法:把 4 個 H 都牽在 1 個 C 上。', en: 'Build: attach 4 H atoms to 1 C.' },
     fact: { zh: '一個碳原子被四個氫原子圍住,形狀像小金字塔(正四面體)。', en: 'A carbon surrounded by four hydrogens in a tetrahedron.' },
     use: { zh: '天然氣的主要成分,家裡煮飯的瓦斯就是它。', en: 'The main part of natural gas, used for cooking.' } },
   { id: 'HCl', formula: 'HCl', name: { zh: '氯化氫(鹽酸)', en: 'Hydrogen chloride' }, lab: true,
@@ -132,12 +137,14 @@ export const MOLECULES = [
     atoms: [['C', -1.2, -0.25, 0], ['C', 0.25, 0.2, 0], ['O', 1.2, -0.8, 0], ['H', -1.3, -0.9, 0.89], ['H', -1.3, -0.9, -0.89], ['H', -1.95, 0.5, 0],
       ['H', 0.35, 0.85, 0.89], ['H', 0.35, 0.85, -0.89], ['H', 2.05, -0.5, 0]],
     bonds: [[0, 1, 1], [1, 2, 1], [0, 3, 1], [0, 4, 1], [0, 5, 1], [1, 6, 1], [1, 7, 1], [2, 8, 1]],
+    howto: { zh: '拼法:先把 2 個 C 牽在一起。第一個 C 再牽 3 個 H;第二個 C 牽 2 個 H 和 1 個 O;最後把 1 個 H 牽在 O 上。', en: 'Build: join 2 C atoms. Give the first C 3 H. Give the second C 2 H and 1 O. Finally attach 1 H to the O.' },
     fact: { zh: '碳、氫、氧三種原子一起組成。', en: 'Built from carbon, hydrogen and oxygen.' },
     use: { zh: '酒精消毒液可以殺死細菌(兒童不能喝含酒精飲料)。', en: 'Rubbing alcohol kills germs.' } },
   { id: 'CH3COOH', formula: 'CH3COOH', name: { zh: '醋酸', en: 'Acetic acid' }, lab: true,
     atoms: [['C', 0, 0, 0], ['O', 0.2, 1.2, 0], ['O', 1.05, -0.75, 0], ['H', 1.9, -0.4, 0], ['C', -1.5, -0.1, 0],
       ['H', -1.85, 0.45, 0.88], ['H', -1.85, 0.45, -0.88], ['H', -1.55, -1.15, 0]],
     bonds: [[0, 1, 2], [0, 2, 1], [2, 3, 1], [0, 4, 1], [4, 5, 1], [4, 6, 1], [4, 7, 1]],
+    howto: { zh: '拼法:1) 先把 2 個 C 牽在一起。2) 左邊的 C 牽 3 個 H。3) 右邊的 C 牽 2 個 O。4) 其中一個 O 再牽 1 個 H,沒牽 H 的那個 O 會自動用兩隻手抓緊 C。', en: 'Build: 1) Join 2 C atoms. 2) Give the left C 3 H. 3) Attach 2 O atoms to the right C. 4) Attach 1 H to one of those O atoms. The O without H grips C with two hands.' },
     fact: { zh: '食用醋酸酸的味道就是它。', en: 'The sour taste of vinegar.' },
     use: { zh: '廚房的醋,可以拿來調味、清除水垢。', en: 'Kitchen vinegar for seasoning and cleaning limescale.' } },
   { id: 'C3H8', formula: 'C3H8', name: { zh: '丙烷(桶裝瓦斯)', en: 'Propane' }, lab: true,
@@ -147,6 +154,7 @@ export const MOLECULES = [
       ['H', 0, 1.15, 0.89], ['H', 0, 1.15, -0.89], ['H', -1.27, -0.9, 0.89], ['H', -1.27, -0.9, -0.89], ['H', -2.17, 0.35, 0],
       ['H', 1.27, -0.9, 0.89], ['H', 1.27, -0.9, -0.89], ['H', 2.17, 0.35, 0]]),
     bonds: [[0, 1, 1], [1, 2, 1], [1, 3, 1], [1, 4, 1], [0, 5, 1], [0, 6, 1], [0, 7, 1], [2, 8, 1], [2, 9, 1], [2, 10, 1]],
+    howto: { zh: '拼法:先把 3 個 C 排成一排牽起來。兩端的 C 各牽 3 個 H,中間的 C 牽 2 個 H。', en: 'Build: join 3 C atoms in a row. Give each end C 3 H and the middle C 2 H.' },
     fact: { zh: '三個碳排成一排,身上穿著八件氫外套。', en: 'Three carbons in a row wearing eight hydrogens.' },
     use: { zh: '桶裝瓦斯、露營瓦斯爐的燃料。', en: 'Fuel for gas bottles and camping stoves.' } },
   { id: 'NaHCO3', formula: 'NaHCO3', name: { zh: '小蘇打(碳酸氫鈉)', en: 'Baking soda' }, lab: true,
@@ -166,6 +174,7 @@ export const MOLECULES = [
     use: { zh: '是造成酸雨的原因之一,所以要減少汙染。', en: 'A cause of acid rain, so we should cut pollution.' } },
   { id: 'NO2', formula: 'NO2', name: { zh: '二氧化氮', en: 'Nitrogen dioxide' }, lab: true,
     atoms: [['N', 0, 0.35, 0], ['O', -1.07, -0.25, 0], ['O', 1.07, -0.25, 0]], bonds: [[0, 1, 2], [0, 2, 1]],
+    howto: { zh: '拼法:讓 1 個 N 在中間,左右各牽 1 個 O。N 會剩下一隻手空著,這是正常的!', en: 'Build: put 1 N in the middle with 1 O on each side. N keeps one hand free - that is normal!' },
     fact: { zh: '棕黃色的氣體。它有一隻手永遠牽不滿,所以特別活潑、容易跟別人反應!', en: 'A brown gas. One of its hands can never be filled, so it is very active!' },
     use: { zh: '汽車廢氣和工廠排放的空氣汙染物,是霧霾的原因之一。', en: 'A pollutant from car exhaust and factories that adds to smog.' } },
   { id: 'C6H12O6', formula: 'C6H12O6', name: { zh: '葡萄糖', en: 'Glucose' }, lab: false,
@@ -185,7 +194,8 @@ export const MOLECULES = [
   { id: 'Fe', formula: 'Fe', name: { zh: '鐵原子', en: 'Iron atom' }, hidden: true, atoms: [['Fe', 0, 0, 0]], bonds: [] },
   { id: 'Cl2', formula: 'Cl2', name: { zh: '氯氣', en: 'Chlorine gas' }, hidden: true, atoms: [['Cl', -0.99, 0, 0], ['Cl', 0.99, 0, 0]], bonds: [[0, 1, 1]] },
   { id: 'NaClp', formula: 'NaCl', name: { zh: '食鹽', en: 'Salt' }, hidden: true, atoms: [['Na', -1.2, 0, 0], ['Cl', 1.2, 0, 0]], bonds: [[0, 1, 1, 'ionic']] },
-  { id: 'Fe2O3', formula: 'Fe2O3', name: { zh: '鐵鏽', en: 'Rust' }, hidden: true,
+  { id: 'Fe2O3', formula: 'Fe2O3', name: { zh: '鐵鏽', en: 'Rust' }, extra: true,
+    fact: { zh: '鐵碰到水和空氣慢慢變成的紅褐色粉末。', en: 'The red-brown powder iron slowly turns into with water and air.' }, use: { zh: '鐵製品生鏽就是它,也用來做紅色顏料。', en: 'What rust is made of; also a red pigment.' },
     atoms: [['Fe', -1.1, 0, 0], ['Fe', 1.1, 0, 0], ['O', 0, 0.9, 0], ['O', 0, -0.45, 0.8], ['O', 0, -0.45, -0.8]],
     bonds: [[0, 2, 1, 'ionic'], [1, 2, 1, 'ionic'], [0, 3, 1, 'ionic'], [1, 3, 1, 'ionic'], [0, 4, 1, 'ionic'], [1, 4, 1, 'ionic']] },
   { id: 'CH3COONa', formula: 'CH3COONa', name: { zh: '醋酸鈉', en: 'Sodium acetate' }, hidden: true,
@@ -194,6 +204,7 @@ export const MOLECULES = [
     bonds: [[0, 1, 2], [0, 2, 1], [2, 3, 1, 'ionic'], [0, 4, 1], [4, 5, 1], [4, 6, 1], [4, 7, 1]] },
 ];
 
+MOLECULES.push(...EXTRA_MOLECULES);
 export const MOL = Object.fromEntries(MOLECULES.map(m => [m.id, m]));
 export const GALLERY = MOLECULES.filter(m => !m.hidden);
 export const LAB_TARGETS = MOLECULES.filter(m => m.lab);

@@ -367,3 +367,17 @@ body{background:
   #head #tipbar{min-height:36px}
   .m-body{width:34px;height:38px}
 }
+
+/* 元素頁:「它在生活中的樣子」 */
+.found-box{left:auto;right:12px;top:12px;width:min(300px,calc(100% - 24px))}
+.found-h{margin:0 0 10px;font-size:1.15rem}
+.found-list{display:flex;flex-direction:column;gap:8px}
+.found-item{display:flex;align-items:center;gap:10px;text-align:left;padding:8px 12px;border-radius:14px;border:1px solid var(--line);
+  background:rgba(255,255,255,.08);color:var(--text);font:inherit;line-height:1.5}
+.found-item > b{flex:0 0 auto;min-width:3.2em;color:var(--accent);font-size:1.02rem}
+.found-item .fi-name{flex:1;min-width:0;font-style:normal;font-size:.95rem}
+.found-item.link{cursor:pointer;background:var(--panel2);box-shadow:0 3px 0 #161d4d}
+.found-item.link::after{content:'▶';margin-left:auto;font-size:.7rem;opacity:.7}
+.found-item.link:hover{background:var(--accent);color:#222}
+.found-item.link:hover > b{color:#222}
+.side .found{margin-top:10px;padding-top:6px;border-top:1px solid var(--line)}

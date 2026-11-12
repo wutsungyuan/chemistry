@@ -26,7 +26,10 @@ export function makeBond(a, b, order = 1, ionic = false) {
   const len = dir.length();
   if (len < 1e-4) return g;
   dir.normalize();
-  const side = new THREE.Vector3().crossVectors(dir, Math.abs(dir.y) > 0.9 ? new THREE.Vector3(1, 0, 0) : UP).normalize();
+  // 多重鍵的並排方向:優先「上下」並排(鏡頭從前面看過來,不會前後疊在一起),這樣雙鍵/三鍵一眼就看得出來
+  const side = Math.abs(dir.y) > 0.9
+    ? new THREE.Vector3(1, 0, 0)
+    : UP.clone().addScaledVector(dir, -UP.dot(dir)).normalize();
   const n = ionic ? 1 : order;
   const radius = ionic ? 0.05 : (n === 1 ? 0.09 : 0.065);
   const gap = 0.14;
