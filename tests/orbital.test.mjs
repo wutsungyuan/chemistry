@@ -65,3 +65,49 @@ test('和光譜連結:氫的能階 −13.6/n² eV;3→2 的光 ≈ 656 nm(NIST �
   assert.ok(SPECTRA.H.lines.some(l => Math.abs(l[0] - 656.3) < 0.1), '光譜資料裡有 656.3 nm');
   for (const id of STATE_IDS) assert.ok(Math.abs(STATES[id].E - levelEV(STATES[id].n)) < 1e-3, id);
 });
+
+import { beat, composeMix, dipoleD } from '../src/data/hydrogenOrbital.js';
+
+test('拍頻:3→2 的能量差 1.89 eV、頻率 ≈ 4.57×10¹⁴ Hz、波長 ≈ 656 nm,而且 頻率 × 波長 = 光速', () => {
+  const b = beat(3, 2);
+  assert.ok(Math.abs(b.dE - 1.8897) < 1e-3, `dE ${b.dE}`);
+  assert.ok(Math.abs(b.freq / 1e14 - 4.569) < 0.01, `freq ${b.freq}`);
+  assert.ok(Math.abs(b.nm - 656.1) < 0.3, `nm ${b.nm}`);
+  assert.ok(Math.abs(b.freq * b.nm * 1e-9 - 299792458) < 1);
+  assert.ok(Math.abs(b.period - 2.19e-15) < 0.01e-15);
+});
+
+test('2p 與 3d 正交(疊加後仍歸一化):角度部分 ∫Y_p·Y_d dΩ = 0,所以 ∫ψ₂p·ψ₃d dV = 0', () => {
+  const angCross = integrate(c => psiAt('2p', 1, c) * psiAt('3d', 1, c), -1, 1, 4000);
+  assert.ok(Math.abs(angCross) < 1e-9, `角度正交 ${angCross}`);
+});
+
+test('混合點雲:亮度因子 c 永遠在 [-1, 1],純 2p / 純 3d 時沒有晃動(c = 0),等比例時晃動最大', () => {
+  const N = 6000, p2 = sampleCloud('2p', N, makeRng(11)), p3 = sampleCloud('3d', N, makeRng(12));
+  for (const m of [0, 1]) { const { c } = composeMix(p2, p3, N, m); assert.ok(c.every(v => v === 0), `m=${m} 應該完全不晃`); }
+  const amp = m => { const { c } = composeMix(p2, p3, N, m); let mx = 0, s = 0; for (const v of c) { assert.ok(Math.abs(v) <= 1 + 1e-6, 'c 超出範圍 ' + v); mx = Math.max(mx, Math.abs(v)); s += v * v; } return s / N; };
+  const a50 = amp(0.5); assert.ok(a50 > amp(0.1) && a50 > amp(0.9), '50:50 時晃得最厲害');
+});
+
+test('晃動方向與大小:平均位置 <z>(t) = 2ab·D·cos(ωt)(只沿 z 軸),用取樣加權的結果和解析積分一致', () => {
+  const N = 80000, p2 = sampleCloud('2p', N, makeRng(21)), p3 = sampleCloud('3d', N, makeRng(22)), D = dipoleD();
+  assert.ok(Math.abs(D) > 1, `偶極矩陣元 ${D}`);
+  for (const m of [0.25, 0.5, 0.75]) {
+    const { pos, c, a, b } = composeMix(p2, p3, N, m);
+    for (const [phase, f] of [[0, 1], [Math.PI / 2, 0], [Math.PI, -1]]) {
+      let sz = 0, sx = 0, sy = 0; for (let i = 0; i < N; i++) { const w = 1 + c[i] * Math.cos(phase); sz += w * pos[3 * i + 2]; sx += w * pos[3 * i]; sy += w * pos[3 * i + 1]; }
+      const want = 2 * a * b * D * f, got = sz / N;
+      assert.ok(Math.abs(got - want) < 0.06 * Math.abs(2 * a * b * D) + 0.05, `m=${m} φ=${phase.toFixed(2)}: 取樣 <z> = ${got.toFixed(3)},解析 = ${want.toFixed(3)}`);
+      assert.ok(Math.abs(sx / N) < 0.08 && Math.abs(sy / N) < 0.08, 'x、y 方向不該晃');
+    }
+  }
+});
+
+test('純態不晃:<z>(t) = 0;密度的時間平均 = 兩個狀態密度的加權和', () => {
+  const N = 40000, p2 = sampleCloud('2p', N, makeRng(31)), p3 = sampleCloud('3d', N, makeRng(32));
+  let sz = 0; const { pos } = composeMix(p2, p3, N, 0); for (let i = 0; i < N; i++) sz += pos[3 * i + 2]; assert.ok(Math.abs(sz / N) < 0.1);
+  const { pos: pm, a, b } = composeMix(p2, p3, N, 0.5);
+  let in2 = 0; for (let i = 0; i < N; i++) if (Math.hypot(pm[3 * i], pm[3 * i + 1], pm[3 * i + 2]) < 8) in2++;
+  const want = a * a * integrate(r => radialProb('2p', r), 0, 8, 4000) + b * b * integrate(r => radialProb('3d', r), 0, 8, 4000);
+  assert.ok(Math.abs(in2 / N - want) < 0.02, `半徑 8 內 ${in2 / N} vs ${want}`);
+});

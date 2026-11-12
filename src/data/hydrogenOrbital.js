@@ -106,3 +106,43 @@ export function sampleCloud(id, N, rng = Math.random) {
 
 /** 光譜連結:兩個能階之間的光子波長(nm,真空);3→2 約 656.1 nm,和 NIST 空氣中的 656.3 nm 差在空氣折射率 */
 export const photonNm = (nHi, nLo) => 1239.84198 / (levelEV(nHi) - levelEV(nLo));
+
+// ====== 第二期:兩個狀態疊加(2p + 3d),電子雲會晃動、放出光 ======
+// 含時間的波函數:ψ(t) = a·ψ_2p·e^(−iE₂t/ħ) + b·ψ_3d·e^(−iE₃t/ħ),a² + b² = 1(a² = 在 2p 的機率,b² = 在 3d 的機率)。
+// 機率密度 |ψ|² = a²ψ_2p² + b²ψ_3d² + 2ab·ψ_2p·ψ_3d·cos(ωt),ω = (E₃ − E₂)/ħ。
+// 最後一項(干涉項)就是「雲在晃」:它對 z 是奇函數(2p 是 l=1、3d 是 l=2,相乘後上下相反),所以雲沿著 z 軸上下晃,
+// 平均位置 <z>(t) = 2ab·D·cos(ωt)。這個來回晃動的電荷就是一個小天線,放出頻率 ω/2π 的光(= Hα 紅線)。
+// 只有「純的 2p」或「純的 3d」時 ab = 0,沒有晃動、不發光(定態不發光)。
+
+/** 兩個能階之間的「拍頻」:能量差(eV)、頻率(Hz)、週期(秒)、波長(nm,真空)。 */
+export function beat(nHi, nLo) {
+  const H_EV_S = 4.135667696e-15, C = 299792458;
+  const dE = levelEV(nHi) - levelEV(nLo), freq = dE / H_EV_S;
+  return { dE, freq, period: 1 / freq, nm: (C / freq) * 1e9 };
+}
+
+/**
+ * 組出「2p + 3d 混合」的點雲。m = 在 3d 的機率(0~1)。點由「時間平均的密度」ρ̄ = a²ψ_2p² + b²ψ_3d² 取樣:
+ * 前 N(1−m) 個取自 2p 的樣本、後 N·m 個取自 3d 的樣本(正好是這個混合分布)。
+ * 每個點帶一個 c = 2ab·ψ_2p·ψ_3d / ρ̄(−1~1):任一時刻這個點的亮度 ∝ 1 + c·cos(ωt)(密度 / 平均密度),
+ * 因為 |2abψ₂ψ₃| ≤ a²ψ₂² + b²ψ₃²(算術幾何平均),所以亮度永遠不會是負的。
+ * pool2 / pool3 = sampleCloud('2p'|'3d', N) 的結果(預先取樣,滑桿動的時候只重組,不用重抽)。
+ */
+export function composeMix(pool2, pool3, N, m) {
+  const a = Math.sqrt(1 - m), b = Math.sqrt(m), n3 = Math.round(N * m), n2 = N - n3;
+  const pos = new Float32Array(N * 3), c = new Float32Array(N);
+  pos.set(pool2.pos.subarray(0, n2 * 3), 0); pos.set(pool3.pos.subarray(0, n3 * 3), n2 * 3);
+  for (let i = 0; i < N; i++) {
+    const x = pos[3 * i], y = pos[3 * i + 1], z = pos[3 * i + 2];
+    const p2 = psiXYZ('2p', x, y, z), p3 = psiXYZ('3d', x, y, z), rho = a * a * p2 * p2 + b * b * p3 * p3;
+    c[i] = rho > 1e-30 ? (2 * a * b * p2 * p3) / rho : 0;
+  }
+  return { pos, c, a, b };
+}
+
+/** 偶極矩陣元 D = ∫ ψ_2p · z · ψ_3d dV(a₀)。<z>(t) = 2ab·D·cos(ωt)。數值積分(徑向 × 角度)。 */
+export function dipoleD() {
+  const rad = integrate(r => RADIAL['2p'](r) * RADIAL['3d'](r) * r ** 3, 0, 120, 12000);
+  const ang = 2 * Math.PI * integrate(c => ANGULAR.p(c) * ANGULAR.d(c) * c, -1, 1, 4000);
+  return rad * ang;
+}

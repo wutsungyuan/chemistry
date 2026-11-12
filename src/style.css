@@ -456,3 +456,13 @@ body{background:
 .cloud-side[data-level=kid] .cl-slice{display:none}
 .cloud-side .cl-actions{position:sticky;bottom:-4px;padding:8px 0 4px;background:linear-gradient(180deg,rgba(27,35,80,0),rgba(27,35,80,.98) 28%)}
 .cloud-side > *{flex:none}
+.cl-mix{display:none;align-items:center;gap:10px;flex-wrap:wrap}
+.cloud-side[data-mode=mix] .cl-mix{display:flex}
+.cl-mix label{display:flex;align-items:center;gap:8px;font-weight:800}
+.cl-mix input[type=range]{width:min(220px,48vw);accent-color:#ff5c5c}
+.cl-mixread{font-size:.9rem;color:var(--muted)}
+.cl-actions [data-act=play]{display:none}
+.cloud-side[data-mode=mix] .cl-actions [data-act=play]{display:inline-block}      /* 不能用 inline-flex:flex 會把注音的 ruby 拆成一個個彈性項目,字就跑版 */
+.cloud-side[data-mode=mix] .cl-actions [data-act=one],.cloud-side[data-mode=mix] .cl-actions [data-act=hundred],.cloud-side[data-mode=mix] .cl-actions [data-act=auto],.cloud-side[data-mode=mix] .cl-actions [data-act=all],.cloud-side[data-mode=mix] .cl-actions [data-act=clear],.cloud-side[data-mode=mix] .cl-count{display:none}
+.cloud-side[data-level=kid][data-mode=mix] .cl-slice{display:inline-block}
+.cloud-side .cl-actions .btn{white-space:nowrap;line-height:1.5}

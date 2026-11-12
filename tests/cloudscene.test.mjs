@@ -21,9 +21,10 @@ test('入口只在氫的光譜分頁(氫有精確解);回光譜會回到氫的�
   assert.match(atom, /export function setNextTab/);
 });
 
-test('國小/國中兩層;國中預設「切開看」並可切回立體;切開時鏡頭正對剖面、不自動旋轉', () => {
+test('國小/國中兩層;預設立體,可切換「切開看」;切開時鏡頭正對剖面、不自動旋轉', () => {
   assert.match(cloud, /const LEVELS = \['kid', 'teen'\]/);
-  assert.match(cloud, /slice = true/);
+  assert.match(cloud, /slice = false/);                                        // 預設立體;切開看是選項
+  assert.match(cloud, /if \(sliced\) stage\.camera\.position\.set\(0, 0, L\)/);       // 切開看時鏡頭正對剖面,不用再轉
   assert.match(cloud, /localClippingEnabled = true/);
   assert.match(cloud, /autoRotate = !reduced && !sliced/);
   assert.match(cloud, /camera\.position\.set\(0, 0,/);
@@ -58,4 +59,34 @@ test('T() 的變數裡不能再放 T():T 的結果已經是 HTML,再丟進 T 會
 
 test('電子雲面板的子元素不會被 flex 壓扁(底部按鈕列要有完整高度)', () => {
   assert.match(read('src/style.css'), /\.cloud-side > \*\{flex:none\}/);
+});
+
+test('第二期:2p+3d 疊加——有滑桿與播放鈕;光波強度 = 2ab(純態為 0);每個點的亮度 = (1 + c·cos φ)/2;光是 Hα 紅色', () => {
+  assert.match(cloud, /data-state="mix"/); assert.match(cloud, /class="cl-mixrange"/); assert.match(cloud, /data-act="play"/);
+  assert.match(cloud, /strength = \(\) => 2 \* Math\.sqrt\(mixFrac \* \(1 - mixFrac\)\)/);
+  assert.match(cloud, /0\.5 \* \(1 \+ cur\.c\[i\] \* cs\)/);
+  assert.match(cloud, /cssColor\(656\.3\)/);
+  assert.match(cloud, /composeMix\(pools\.p2, pools\.p3, MIX_POINTS, mixFrac\)/);
+  assert.match(cloud, /!reduced && !sliced && !cur\.mix/);                       // 疊加態不自動旋轉
+  assert.match(cloud, /playing = !reduced/);                                      // 減少動態效果:不自動播放,使用者按了才播
+});
+
+test('第二期:放慢倍率有誠實標示(約 10¹⁵ 倍),並說明這裡的混合比例是固定的、真實發光要幾奈秒', () => {
+  assert.match(zh, /'cloud\.mix\.slow': '為了看得見,這裡放慢了約 \{x\} 倍。'/);
+  assert.match(cloud, /x: '10¹⁵'/);
+  assert.match(zh, /真實的原子發光大約要幾奈秒/);
+});
+
+test('按鈕文字不能用 inline-flex(含注音的 ruby 會被拆開跑版):播放鈕與切開看鈕改用 inline-block', () => {
+  const st = read('src/style.css');
+  assert.match(st, /\[data-act=play\]\{display:inline-block\}/);
+  assert.ok(!/\[data-act=play\]\{display:inline-flex\}/.test(st));
+  assert.match(st, /\.cl-slice\{display:inline-block\}/);
+});
+
+test('暫停鈕不用 ⏸ 表情符號(各平台畫成帶底色的方塊,高度和文字不同,會讓注音文字跑版),改用純文字符號 ❚❚', () => {
+  const c = read('src/scenes/ElectronCloud.js');
+  assert.ok(!c.includes('⏸'));
+  assert.match(c, /data-act="play">❚❚/);
+  assert.match(read('src/style.css'), /\.cloud-side \.cl-actions \.btn\{white-space:nowrap/);
 });
