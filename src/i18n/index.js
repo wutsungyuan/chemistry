@@ -1,6 +1,7 @@
 import zh from './zh.js';
 import en from './en.js';
 import { rubyHTML } from './zhuyin.js';
+import { escapeHtml as esc } from '../ui/util.js';
 
 const dict = { zh, en };
 const store = {
@@ -11,7 +12,6 @@ export const state = {
   lang: store.get('lang', 'zh'),
   zhuyin: store.get('zhuyin', '0') === '1',
 };
-const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 const listeners = new Set();
 export const onLangChange = fn => { listeners.add(fn); return () => listeners.delete(fn); };
 export function setLang(l) { state.lang = l; store.set('lang', l); listeners.forEach(f => f()); }

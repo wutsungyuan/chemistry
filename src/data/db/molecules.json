@@ -1,0 +1,1531 @@
+[
+ {
+  "id": "H2",
+  "formula": "H2",
+  "name": {
+   "zh": "氫氣",
+   "en": "Hydrogen gas"
+  },
+  "lab": true,
+  "fact": {
+   "zh": "兩個氫原子手牽手,是宇宙中最輕的氣體。",
+   "en": "Two hydrogen atoms holding hands: the lightest gas of all."
+  },
+  "use": {
+   "zh": "燃料電池車的燃料,燃燒後只會變成水!",
+   "en": "Fuel-cell car fuel. It burns into plain water!"
+  }
+ },
+ {
+  "id": "O2",
+  "formula": "O2",
+  "name": {
+   "zh": "氧氣",
+   "en": "Oxygen gas"
+  },
+  "lab": true,
+  "fact": {
+   "zh": "兩個氧原子用「雙鍵」抓得緊緊的。",
+   "en": "Two oxygen atoms joined by a double bond."
+  },
+  "use": {
+   "zh": "我們每一口呼吸都需要它,火也需要它才會燃燒。",
+   "en": "Every breath needs it, and fire needs it to burn."
+  }
+ },
+ {
+  "id": "O3",
+  "formula": "O3",
+  "name": {
+   "zh": "臭氧",
+   "en": "Ozone"
+  },
+  "lab": true,
+  "fact": {
+   "zh": "三個氧原子彎彎的排在一起,有一點特別的味道。",
+   "en": "Three oxygen atoms in a bent shape, with a sharp smell."
+  },
+  "use": {
+   "zh": "高空的臭氧層像大雨傘,幫我們擋住太陽的紫外線。",
+   "en": "The ozone layer is a giant umbrella blocking the Sun's UV rays."
+  }
+ },
+ {
+  "id": "N2",
+  "formula": "N2",
+  "name": {
+   "zh": "氮氣",
+   "en": "Nitrogen gas"
+  },
+  "lab": true,
+  "fact": {
+   "zh": "兩個氮原子用「三鍵」緊緊相連,非常穩定。",
+   "en": "Two nitrogen atoms joined by a very strong triple bond."
+  },
+  "use": {
+   "zh": "佔空氣的 78%;洋芋片包裝充氮氣,可以保持酥脆。",
+   "en": "78% of air. Chip bags are filled with it to stay crunchy."
+  }
+ },
+ {
+  "id": "H2O",
+  "formula": "H2O",
+  "name": {
+   "zh": "水",
+   "en": "Water"
+  },
+  "lab": true,
+  "fact": {
+   "zh": "一個氧原子加兩個氫原子,像一張小小的笑臉。",
+   "en": "One oxygen and two hydrogens, like a tiny smiley face."
+  },
+  "use": {
+   "zh": "生命的泉源!我們身體約有 60% 是水。",
+   "en": "The source of life! About 60% of your body is water."
+  }
+ },
+ {
+  "id": "H2O2",
+  "formula": "H2O2",
+  "name": {
+   "zh": "雙氧水(過氧化氫)",
+   "en": "Hydrogen peroxide"
+  },
+  "lab": true,
+  "howto": {
+   "zh": "拼法:先把 2 個 O 牽在一起,再在每個 O 上各牽 1 個 H。",
+   "en": "Build: join 2 O atoms, then attach 1 H to each O."
+  },
+  "fact": {
+   "zh": "比水多一個氧原子。",
+   "en": "Water with one extra oxygen."
+  },
+  "use": {
+   "zh": "稀釋後可以幫傷口消毒、漂白衣服(請大人幫忙使用)。",
+   "en": "Diluted, it disinfects and bleaches (ask a grown-up)."
+  }
+ },
+ {
+  "id": "CO2",
+  "formula": "CO2",
+  "name": {
+   "zh": "二氧化碳",
+   "en": "Carbon dioxide"
+  },
+  "lab": true,
+  "howto": {
+   "zh": "拼法:讓 1 個 C 在中間,左右各牽 1 個 O(每個 O 會用兩隻手抓緊 C)。",
+   "en": "Build: put 1 C in the middle with 1 O on each side. Each O grips C with two hands."
+  },
+  "fact": {
+   "zh": "一個碳原子抱著兩個氧原子,排成一直線。",
+   "en": "A carbon atom holding two oxygens in a straight line."
+  },
+  "use": {
+   "zh": "汽水的氣泡就是它!植物也用它來做光合作用。",
+   "en": "The bubbles in soda! Plants use it for photosynthesis."
+  }
+ },
+ {
+  "id": "CO",
+  "formula": "CO",
+  "name": {
+   "zh": "一氧化碳",
+   "en": "Carbon monoxide"
+  },
+  "lab": false,
+  "fact": {
+   "zh": "燃燒不完全時會產生,無色無味但有毒。",
+   "en": "Made when fuel burns incompletely. Colorless, odorless and poisonous."
+  },
+  "use": {
+   "zh": "使用瓦斯熱水器要保持通風,避免中毒。",
+   "en": "Keep rooms ventilated when using gas heaters."
+  }
+ },
+ {
+  "id": "NH3",
+  "formula": "NH3",
+  "name": {
+   "zh": "氨(阿摩尼亞)",
+   "en": "Ammonia"
+  },
+  "lab": true,
+  "howto": {
+   "zh": "拼法:把 3 個 H 都牽在 1 個 N 上。",
+   "en": "Build: attach 3 H atoms to 1 N."
+  },
+  "fact": {
+   "zh": "一個氮原子加三個氫原子,像一座小金字塔。",
+   "en": "A nitrogen with three hydrogens, shaped like a little pyramid."
+  },
+  "use": {
+   "zh": "用來製造肥料,味道很刺鼻。",
+   "en": "Used to make fertilizer. It has a sharp smell."
+  }
+ },
+ {
+  "id": "CH4",
+  "formula": "CH4",
+  "name": {
+   "zh": "甲烷",
+   "en": "Methane"
+  },
+  "lab": true,
+  "howto": {
+   "zh": "拼法:把 4 個 H 都牽在 1 個 C 上。",
+   "en": "Build: attach 4 H atoms to 1 C."
+  },
+  "fact": {
+   "zh": "一個碳原子被四個氫原子圍住,形狀像小金字塔(正四面體)。",
+   "en": "A carbon surrounded by four hydrogens in a tetrahedron."
+  },
+  "use": {
+   "zh": "天然氣的主要成分,家裡煮飯的瓦斯就是它。",
+   "en": "The main part of natural gas, used for cooking."
+  }
+ },
+ {
+  "id": "HCl",
+  "formula": "HCl",
+  "name": {
+   "zh": "氯化氫(鹽酸)",
+   "en": "Hydrogen chloride"
+  },
+  "lab": true,
+  "fact": {
+   "zh": "溶在水裡就是鹽酸,我們的胃液裡也有它!",
+   "en": "Dissolved in water it is hydrochloric acid, which is also in your stomach!"
+  },
+  "use": {
+   "zh": "幫助胃消化食物(濃度很低);工廠用來清除鐵鏽。",
+   "en": "Helps digest food; factories use it to remove rust."
+  }
+ },
+ {
+  "id": "NaCl",
+  "formula": "NaCl",
+  "name": {
+   "zh": "食鹽(氯化鈉)",
+   "en": "Table salt"
+  },
+  "lab": true,
+  "labPair": {
+   "atoms": [
+    "Na",
+    "Cl"
+   ],
+   "bonds": [
+    [
+     0,
+     1
+    ]
+   ]
+  },
+  "fact": {
+   "zh": "鈉和氯整齊地交錯排列成方塊晶體。",
+   "en": "Sodium and chlorine alternate in a neat cubic crystal."
+  },
+  "use": {
+   "zh": "每天的調味料。鈉遇水會爆炸,氯有毒,結合後卻很安全!",
+   "en": "Our everyday seasoning. Sodium and chlorine are dangerous alone, yet safe together!"
+  }
+ },
+ {
+  "id": "C2H5OH",
+  "formula": "C2H5OH",
+  "name": {
+   "zh": "酒精(乙醇)",
+   "en": "Ethanol"
+  },
+  "lab": true,
+  "howto": {
+   "zh": "拼法:先把 2 個 C 牽在一起。第一個 C 再牽 3 個 H;第二個 C 牽 2 個 H 和 1 個 O;最後把 1 個 H 牽在 O 上。",
+   "en": "Build: join 2 C atoms. Give the first C 3 H. Give the second C 2 H and 1 O. Finally attach 1 H to the O."
+  },
+  "fact": {
+   "zh": "碳、氫、氧三種原子一起組成。",
+   "en": "Built from carbon, hydrogen and oxygen."
+  },
+  "use": {
+   "zh": "酒精消毒液可以殺死細菌(兒童不能喝含酒精飲料)。",
+   "en": "Rubbing alcohol kills germs."
+  }
+ },
+ {
+  "id": "CH3COOH",
+  "formula": "CH3COOH",
+  "name": {
+   "zh": "醋酸",
+   "en": "Acetic acid"
+  },
+  "lab": true,
+  "howto": {
+   "zh": "拼法:1) 先把 2 個 C 牽在一起。2) 左邊的 C 牽 3 個 H。3) 右邊的 C 牽 2 個 O。4) 其中一個 O 再牽 1 個 H,沒牽 H 的那個 O 會自動用兩隻手抓緊 C。",
+   "en": "Build: 1) Join 2 C atoms. 2) Give the left C 3 H. 3) Attach 2 O atoms to the right C. 4) Attach 1 H to one of those O atoms. The O without H grips C with two hands."
+  },
+  "fact": {
+   "zh": "食用醋酸酸的味道就是它。",
+   "en": "The sour taste of vinegar."
+  },
+  "use": {
+   "zh": "廚房的醋,可以拿來調味、清除水垢。",
+   "en": "Kitchen vinegar for seasoning and cleaning limescale."
+  }
+ },
+ {
+  "id": "C3H8",
+  "formula": "C3H8",
+  "name": {
+   "zh": "丙烷(桶裝瓦斯)",
+   "en": "Propane"
+  },
+  "lab": true,
+  "howto": {
+   "zh": "拼法:先把 3 個 C 排成一排牽起來。兩端的 C 各牽 3 個 H,中間的 C 牽 2 個 H。",
+   "en": "Build: join 3 C atoms in a row. Give each end C 3 H and the middle C 2 H."
+  },
+  "fact": {
+   "zh": "三個碳排成一排,身上穿著八件氫外套。",
+   "en": "Three carbons in a row wearing eight hydrogens."
+  },
+  "use": {
+   "zh": "桶裝瓦斯、露營瓦斯爐的燃料。",
+   "en": "Fuel for gas bottles and camping stoves."
+  }
+ },
+ {
+  "id": "NaHCO3",
+  "formula": "NaHCO3",
+  "name": {
+   "zh": "小蘇打(碳酸氫鈉)",
+   "en": "Baking soda"
+  },
+  "lab": true,
+  "howto": {
+   "zh": "拼法:先讓 C 在中間,牽上 3 個 O。再把 H 牽在其中一個 O 上,Na 牽在另一個 O 上,最後一個 O 不用再牽別人。",
+   "en": "How to build: put C in the middle and attach 3 O atoms. Then attach H to one O and Na to another O. The last O stays as it is."
+  },
+  "fact": {
+   "zh": "白色粉末,遇到酸會冒出氣泡。",
+   "en": "A white powder that fizzes with acid."
+  },
+  "use": {
+   "zh": "做蛋糕、饅頭讓麵團膨起來,也能去除異味。",
+   "en": "Makes cakes rise and removes odors."
+  }
+ },
+ {
+  "id": "CaCO3",
+  "formula": "CaCO3",
+  "name": {
+   "zh": "碳酸鈣(蛋殼、貝殼)",
+   "en": "Calcium carbonate"
+  },
+  "lab": false,
+  "fact": {
+   "zh": "雞蛋殼、貝殼、珍珠、石灰岩都是它。",
+   "en": "Eggshells, seashells, pearls and limestone."
+  },
+  "use": {
+   "zh": "補鈣片、粉筆、水泥的原料。",
+   "en": "Calcium tablets, chalk and cement."
+  }
+ },
+ {
+  "id": "SO2",
+  "formula": "SO2",
+  "name": {
+   "zh": "二氧化硫",
+   "en": "Sulfur dioxide"
+  },
+  "lab": false,
+  "fact": {
+   "zh": "火山和燃燒煤炭會產生的刺鼻氣體。",
+   "en": "A sharp gas released by volcanoes and burning coal."
+  },
+  "use": {
+   "zh": "是造成酸雨的原因之一,所以要減少汙染。",
+   "en": "A cause of acid rain, so we should cut pollution."
+  }
+ },
+ {
+  "id": "NO2",
+  "formula": "NO2",
+  "name": {
+   "zh": "二氧化氮",
+   "en": "Nitrogen dioxide"
+  },
+  "lab": true,
+  "howto": {
+   "zh": "拼法:讓 1 個 N 在中間,左右各牽 1 個 O。N 會剩下一隻手空著,這是正常的!",
+   "en": "Build: put 1 N in the middle with 1 O on each side. N keeps one hand free - that is normal!"
+  },
+  "fact": {
+   "zh": "棕黃色的氣體。它有一隻手永遠牽不滿,所以特別活潑、容易跟別人反應!",
+   "en": "A brown gas. One of its hands can never be filled, so it is very active!"
+  },
+  "use": {
+   "zh": "汽車廢氣和工廠排放的空氣汙染物,是霧霾的原因之一。",
+   "en": "A pollutant from car exhaust and factories that adds to smog."
+  }
+ },
+ {
+  "id": "C6H12O6",
+  "formula": "C6H12O6",
+  "name": {
+   "zh": "葡萄糖",
+   "en": "Glucose"
+  },
+  "lab": false,
+  "fact": {
+   "zh": "植物用陽光、水和二氧化碳做出來的糖。",
+   "en": "The sugar plants make from sunlight, water and CO2."
+  },
+  "use": {
+   "zh": "是我們身體和大腦的能量來源。",
+   "en": "The energy source for your body and brain."
+  }
+ },
+ {
+  "id": "diamond",
+  "formula": "C(鑽石)",
+  "display": "C",
+  "name": {
+   "zh": "鑽石",
+   "en": "Diamond"
+  },
+  "lab": false,
+  "fact": {
+   "zh": "每個碳都跟四個碳手牽手,排成立體網格,所以超級硬。",
+   "en": "Each carbon holds four others in a 3D grid, so it is super hard."
+  },
+  "use": {
+   "zh": "閃亮的寶石,也用來切割堅硬的東西。",
+   "en": "Sparkling gems, and cutting tools for hard stuff."
+  }
+ },
+ {
+  "id": "graphite",
+  "formula": "C(石墨)",
+  "display": "C",
+  "name": {
+   "zh": "石墨(鉛筆芯)",
+   "en": "Graphite"
+  },
+  "lab": false,
+  "fact": {
+   "zh": "碳排成一層一層的蜂巢,層與層很容易滑開。",
+   "en": "Carbon in honeycomb sheets that slide over each other."
+  },
+  "use": {
+   "zh": "鉛筆寫字時,一層層的石墨就留在紙上。",
+   "en": "When you write, layers of graphite stay on the paper."
+  }
+ },
+ {
+  "id": "Na",
+  "formula": "Na",
+  "name": {
+   "zh": "鈉原子",
+   "en": "Sodium atom"
+  },
+  "hidden": true
+ },
+ {
+  "id": "Fe",
+  "formula": "Fe",
+  "name": {
+   "zh": "鐵原子",
+   "en": "Iron atom"
+  },
+  "hidden": true
+ },
+ {
+  "id": "Cl2",
+  "formula": "Cl2",
+  "name": {
+   "zh": "氯氣",
+   "en": "Chlorine gas"
+  },
+  "hidden": true
+ },
+ {
+  "id": "NaClp",
+  "formula": "NaCl",
+  "name": {
+   "zh": "食鹽",
+   "en": "Salt"
+  },
+  "hidden": true
+ },
+ {
+  "id": "Fe2O3",
+  "formula": "Fe2O3",
+  "name": {
+   "zh": "鐵鏽",
+   "en": "Rust"
+  },
+  "extra": true,
+  "fact": {
+   "zh": "鐵碰到水和空氣慢慢變成的紅褐色粉末。",
+   "en": "The red-brown powder iron slowly turns into with water and air."
+  },
+  "use": {
+   "zh": "鐵製品生鏽就是它,也用來做紅色顏料。",
+   "en": "What rust is made of; also a red pigment."
+  }
+ },
+ {
+  "id": "Fe2O3p",
+  "formula": "Fe2O3",
+  "name": {
+   "zh": "鐵鏽",
+   "en": "Rust"
+  },
+  "hidden": true
+ },
+ {
+  "id": "CH3COONa",
+  "formula": "CH3COONa",
+  "name": {
+   "zh": "醋酸鈉",
+   "en": "Sodium acetate"
+  },
+  "hidden": true
+ },
+ {
+  "id": "HF",
+  "formula": "HF",
+  "name": {
+   "zh": "氟化氫",
+   "en": "Hydrogen fluoride"
+  },
+  "extra": true,
+  "lab": false,
+  "fact": {
+   "zh": "氫和氟牽手,溶在水裡會變成能蝕刻玻璃的氫氟酸。",
+   "en": "Hydrogen holds hands with fluorine. In water it etches glass."
+  },
+  "use": {
+   "zh": "用來在玻璃上蝕刻花紋,需要大人在實驗室使用。",
+   "en": "Used to etch glass, only by experts."
+  }
+ },
+ {
+  "id": "Br2",
+  "formula": "Br2",
+  "name": {
+   "zh": "溴",
+   "en": "Bromine"
+  },
+  "extra": true,
+  "lab": false,
+  "fact": {
+   "zh": "紅棕色的液體,會冒出刺鼻的煙。",
+   "en": "A red-brown liquid that gives off sharp fumes."
+  },
+  "use": {
+   "zh": "用來製造藥品和阻燃劑。",
+   "en": "Used to make medicines and flame retardants."
+  }
+ },
+ {
+  "id": "I2",
+  "formula": "I2",
+  "name": {
+   "zh": "碘",
+   "en": "Iodine"
+  },
+  "extra": true,
+  "lab": false,
+  "fact": {
+   "zh": "紫黑色的晶體,加熱會直接變成紫色氣體。",
+   "en": "Purple-black crystals that turn straight into purple gas."
+  },
+  "use": {
+   "zh": "碘酒可以幫傷口消毒;身體需要一點點碘才能製造甲狀腺素。",
+   "en": "Iodine tincture cleans wounds; your body needs a little iodine."
+  }
+ },
+ {
+  "id": "C2F4",
+  "formula": "C2F4",
+  "name": {
+   "zh": "鐵氟龍的小單元",
+   "en": "Teflon unit"
+  },
+  "extra": true,
+  "lab": false,
+  "fact": {
+   "zh": "很多這種小單元連成長長的鏈子,就是鐵氟龍,超級滑。",
+   "en": "Many of these units join into a long chain called Teflon - super slippery."
+  },
+  "use": {
+   "zh": "不沾鍋的塗層,煎蛋不會黏。",
+   "en": "The coating of non-stick pans."
+  }
+ },
+ {
+  "id": "NaOH",
+  "formula": "NaOH",
+  "name": {
+   "zh": "氫氧化鈉",
+   "en": "Sodium hydroxide"
+  },
+  "extra": true,
+  "lab": false,
+  "fact": {
+   "zh": "很強的鹼,會讓皮膚受傷,要小心。",
+   "en": "A strong base that can hurt skin."
+  },
+  "use": {
+   "zh": "製作肥皂、通水管的原料(請大人使用)。",
+   "en": "Used to make soap and unblock drains (adults only)."
+  }
+ },
+ {
+  "id": "NaClO",
+  "formula": "NaClO",
+  "name": {
+   "zh": "次氯酸鈉(漂白水)",
+   "en": "Sodium hypochlorite (bleach)"
+  },
+  "extra": true,
+  "lab": false,
+  "fact": {
+   "zh": "漂白水的主要成分,可以殺死細菌。",
+   "en": "The main part of bleach, which kills germs."
+  },
+  "use": {
+   "zh": "消毒、漂白衣服(不能和別的清潔劑混在一起)。",
+   "en": "Disinfecting and bleaching (never mix with other cleaners)."
+  }
+ },
+ {
+  "id": "H2SO4",
+  "formula": "H2SO4",
+  "name": {
+   "zh": "硫酸",
+   "en": "Sulfuric acid"
+  },
+  "extra": true,
+  "lab": false,
+  "fact": {
+   "zh": "非常強的酸,會腐蝕東西,絕對不能亂碰。",
+   "en": "A very strong acid that eats away materials."
+  },
+  "use": {
+   "zh": "汽車電池裡有它,工廠也用它做肥料。",
+   "en": "Found in car batteries and used to make fertilizer."
+  }
+ },
+ {
+  "id": "H3PO4",
+  "formula": "H3PO4",
+  "name": {
+   "zh": "磷酸",
+   "en": "Phosphoric acid"
+  },
+  "extra": true,
+  "lab": false,
+  "fact": {
+   "zh": "磷在中間,抓著四個氧,其中三個還帶著氫。",
+   "en": "Phosphorus holds four oxygens, three of them carrying hydrogens."
+  },
+  "use": {
+   "zh": "可樂的酸味來源,也用在肥料裡。",
+   "en": "Gives cola its tang and goes into fertilizer."
+  }
+ },
+ {
+  "id": "P4",
+  "formula": "P4",
+  "name": {
+   "zh": "白磷(磷)",
+   "en": "White phosphorus"
+  },
+  "extra": true,
+  "lab": false,
+  "fact": {
+   "zh": "四個磷原子排成小金字塔。很容易著火,要泡在水裡保存。",
+   "en": "Four phosphorus atoms in a tiny pyramid. It catches fire easily."
+  },
+  "use": {
+   "zh": "磷是火柴頭的原料,也是骨頭和 DNA 需要的元素。",
+   "en": "Phosphorus is in match heads, bones and DNA."
+  }
+ },
+ {
+  "id": "S8",
+  "formula": "S8",
+  "name": {
+   "zh": "硫磺",
+   "en": "Sulfur"
+  },
+  "extra": true,
+  "lab": false,
+  "fact": {
+   "zh": "八個硫原子連成皺皺的皇冠環,是黃色粉末。",
+   "en": "Eight sulfur atoms in a crown-shaped ring: a yellow powder."
+  },
+  "use": {
+   "zh": "溫泉的味道、火柴和火藥都有它。",
+   "en": "Found at hot springs, in matches and fireworks."
+  }
+ },
+ {
+  "id": "SiO2",
+  "formula": "SiO2",
+  "name": {
+   "zh": "二氧化矽(沙子、玻璃)",
+   "en": "Silicon dioxide (sand)"
+  },
+  "extra": true,
+  "lab": false,
+  "fact": {
+   "zh": "沙子、水晶和玻璃的主要成分。",
+   "en": "The main part of sand, quartz and glass."
+  },
+  "use": {
+   "zh": "蓋房子的玻璃、水晶球都是它。",
+   "en": "Window glass and crystal balls."
+  }
+ },
+ {
+  "id": "TiO2",
+  "formula": "TiO2",
+  "name": {
+   "zh": "二氧化鈦",
+   "en": "Titanium dioxide"
+  },
+  "extra": true,
+  "lab": false,
+  "fact": {
+   "zh": "超級白的粉末,會擋住紫外線。",
+   "en": "A super-white powder that blocks UV light."
+  },
+  "use": {
+   "zh": "白色顏料和防曬乳。",
+   "en": "White paint and sunscreen."
+  }
+ },
+ {
+  "id": "SnO2",
+  "formula": "SnO2",
+  "name": {
+   "zh": "二氧化錫",
+   "en": "Tin dioxide"
+  },
+  "extra": true,
+  "lab": false,
+  "fact": {
+   "zh": "透明又能導電的神奇材料。",
+   "en": "A clear material that can carry electricity."
+  },
+  "use": {
+   "zh": "觸控螢幕和太陽能板的透明導電層。",
+   "en": "The transparent conductor in touchscreens."
+  }
+ },
+ {
+  "id": "UO2",
+  "formula": "UO2",
+  "name": {
+   "zh": "二氧化鈾",
+   "en": "Uranium dioxide"
+  },
+  "extra": true,
+  "lab": false,
+  "fact": {
+   "zh": "黑色的陶瓷小顆粒,裡面藏著很大的能量。",
+   "en": "Small black ceramic pellets full of energy."
+  },
+  "use": {
+   "zh": "核能發電廠的燃料(有輻射,只有專家處理)。",
+   "en": "Nuclear power fuel, handled only by experts."
+  }
+ },
+ {
+  "id": "Al2O3",
+  "formula": "Al2O3",
+  "name": {
+   "zh": "氧化鋁(紅藍寶石)",
+   "en": "Aluminium oxide (ruby, sapphire)"
+  },
+  "extra": true,
+  "lab": false,
+  "fact": {
+   "zh": "混進一點別的金屬,就變成紅寶石或藍寶石。",
+   "en": "A pinch of another metal turns it into ruby or sapphire."
+  },
+  "use": {
+   "zh": "寶石、砂紙的磨料,鋁表面的保護膜也是它。",
+   "en": "Gems, sandpaper grit and the skin on aluminium."
+  }
+ },
+ {
+  "id": "MgSO4",
+  "formula": "MgSO4",
+  "name": {
+   "zh": "硫酸鎂(瀉鹽)",
+   "en": "Magnesium sulfate (Epsom salt)"
+  },
+  "extra": true,
+  "lab": false,
+  "fact": {
+   "zh": "白色的小晶體,泡在水裡很好溶解。",
+   "en": "Small white crystals that dissolve in water."
+  },
+  "use": {
+   "zh": "泡腳的浴鹽、植物的鎂肥。",
+   "en": "Bath salts and plant fertilizer."
+  }
+ },
+ {
+  "id": "CuSO4",
+  "formula": "CuSO4",
+  "name": {
+   "zh": "硫酸銅(藍色晶體)",
+   "en": "Copper sulfate (blue crystals)"
+  },
+  "extra": true,
+  "lab": false,
+  "fact": {
+   "zh": "美麗的藍色晶體,溶在水裡整杯水都變藍。",
+   "en": "Beautiful blue crystals that turn water blue."
+  },
+  "use": {
+   "zh": "科學實驗長晶體、農場殺菌(有毒,不能吃)。",
+   "en": "Growing crystals and farm fungicide (poisonous!)."
+  }
+ },
+ {
+  "id": "Li2CO3",
+  "formula": "Li2CO3",
+  "name": {
+   "zh": "碳酸鋰",
+   "en": "Lithium carbonate"
+  },
+  "extra": true,
+  "lab": false,
+  "fact": {
+   "zh": "白色粉末,是做鋰電池的重要原料。",
+   "en": "A white powder, key for making lithium batteries."
+  },
+  "use": {
+   "zh": "手機、電動車的鋰電池。",
+   "en": "Phone and electric-car batteries."
+  }
+ },
+ {
+  "id": "KNO3",
+  "formula": "KNO3",
+  "name": {
+   "zh": "硝酸鉀",
+   "en": "Potassium nitrate"
+  },
+  "extra": true,
+  "lab": false,
+  "fact": {
+   "zh": "白色晶體,含有植物最愛的鉀和氮。",
+   "en": "White crystals with the potassium and nitrogen plants love."
+  },
+  "use": {
+   "zh": "肥料,也是煙火的材料。",
+   "en": "Fertilizer and an ingredient in fireworks."
+  }
+ },
+ {
+  "id": "NaF",
+  "formula": "NaF",
+  "name": {
+   "zh": "氟化鈉",
+   "en": "Sodium fluoride"
+  },
+  "extra": true,
+  "lab": false,
+  "fact": {
+   "zh": "鈉和氟配成一對。",
+   "en": "A sodium and a fluorine pair."
+  },
+  "use": {
+   "zh": "牙膏裡的氟,幫牙齒抵抗蛀蟲。",
+   "en": "The fluoride in toothpaste that protects teeth."
+  }
+ },
+ {
+  "id": "KCl",
+  "formula": "KCl",
+  "name": {
+   "zh": "氯化鉀",
+   "en": "Potassium chloride"
+  },
+  "extra": true,
+  "lab": false,
+  "fact": {
+   "zh": "像食鹽,不過是鉀和氯配成對。",
+   "en": "Like salt, but with potassium."
+  },
+  "use": {
+   "zh": "代用鹽、植物肥料。",
+   "en": "Salt substitute and fertilizer."
+  }
+ },
+ {
+  "id": "KI",
+  "formula": "KI",
+  "name": {
+   "zh": "碘化鉀",
+   "en": "Potassium iodide"
+  },
+  "extra": true,
+  "lab": false,
+  "fact": {
+   "zh": "鉀和碘配成一對。",
+   "en": "A potassium and an iodine pair."
+  },
+  "use": {
+   "zh": "加碘鹽裡的碘,幫身體製造甲狀腺素。",
+   "en": "The iodine in iodized salt."
+  }
+ },
+ {
+  "id": "AgCl",
+  "formula": "AgCl",
+  "name": {
+   "zh": "氯化銀",
+   "en": "Silver chloride"
+  },
+  "extra": true,
+  "lab": false,
+  "fact": {
+   "zh": "白色粉末,照到光會慢慢變黑。",
+   "en": "A white powder that slowly darkens in light."
+  },
+  "use": {
+   "zh": "傳統相片的感光材料。",
+   "en": "Used in old photo paper."
+  }
+ },
+ {
+  "id": "AgBr",
+  "formula": "AgBr",
+  "name": {
+   "zh": "溴化銀",
+   "en": "Silver bromide"
+  },
+  "extra": true,
+  "lab": false,
+  "fact": {
+   "zh": "照到光就會起變化的淡黃色粉末。",
+   "en": "A pale powder that changes in light."
+  },
+  "use": {
+   "zh": "傳統底片就是靠它拍出照片。",
+   "en": "Old camera film used it to take pictures."
+  }
+ },
+ {
+  "id": "MgO",
+  "formula": "MgO",
+  "name": {
+   "zh": "氧化鎂",
+   "en": "Magnesium oxide"
+  },
+  "extra": true,
+  "lab": false,
+  "fact": {
+   "zh": "鎂在空氣中燃燒,發出刺眼白光後變成的白色粉末。",
+   "en": "The white ash left when magnesium burns with a dazzling light."
+  },
+  "use": {
+   "zh": "耐高溫的爐子材料、運動員手上的白粉。",
+   "en": "Heat-proof furnace lining and climbers' chalk."
+  }
+ },
+ {
+  "id": "CaO",
+  "formula": "CaO",
+  "name": {
+   "zh": "氧化鈣(生石灰)",
+   "en": "Calcium oxide (quicklime)"
+  },
+  "extra": true,
+  "lab": false,
+  "fact": {
+   "zh": "加水會發熱,冒出熱氣。",
+   "en": "Adds heat when water is added."
+  },
+  "use": {
+   "zh": "食品乾燥劑,蓋房子也用得到。",
+   "en": "Food drying packs and building."
+  }
+ },
+ {
+  "id": "ZnO",
+  "formula": "ZnO",
+  "name": {
+   "zh": "氧化鋅",
+   "en": "Zinc oxide"
+  },
+  "extra": true,
+  "lab": false,
+  "fact": {
+   "zh": "白色粉末,可以擋住紫外線。每個鋅被 4 個氧圍成小金字塔(纖鋅礦結構)。",
+   "en": "A white powder that blocks UV. Each zinc sits inside a tetrahedron of 4 oxygens (wurtzite)."
+  },
+  "use": {
+   "zh": "防曬乳、嬰兒痱子粉。",
+   "en": "Sunscreen and baby powder."
+  }
+ },
+ {
+  "id": "PbO",
+  "formula": "PbO",
+  "name": {
+   "zh": "氧化鉛",
+   "en": "Lead oxide"
+  },
+  "extra": true,
+  "lab": false,
+  "fact": {
+   "zh": "黃色或紅色的粉末,有毒。",
+   "en": "A yellow or red powder. Poisonous."
+  },
+  "use": {
+   "zh": "做鉛玻璃和舊式電池,現在盡量少用。",
+   "en": "Lead glass and old batteries; use is shrinking."
+  }
+ },
+ {
+  "id": "HgS",
+  "formula": "HgS",
+  "name": {
+   "zh": "硫化汞(朱砂)",
+   "en": "Mercury sulfide (cinnabar)"
+  },
+  "extra": true,
+  "lab": false,
+  "fact": {
+   "zh": "鮮紅色的礦石。",
+   "en": "A bright red mineral."
+  },
+  "use": {
+   "zh": "古時候的紅色顏料(有毒)。",
+   "en": "Ancient red pigment (poisonous)."
+  }
+ },
+ {
+  "id": "WC",
+  "formula": "WC",
+  "name": {
+   "zh": "碳化鎢",
+   "en": "Tungsten carbide"
+  },
+  "extra": true,
+  "lab": false,
+  "fact": {
+   "zh": "比鋼鐵還硬很多。碳被 6 個鎢圍成三角柱(六方結構)。",
+   "en": "Much harder than steel. Each carbon sits in a trigonal prism of 6 tungsten atoms."
+  },
+  "use": {
+   "zh": "超硬的鑽頭和刀具,原子筆筆尖。",
+   "en": "Tough drill bits, cutters and ballpoint tips."
+  }
+ },
+ {
+  "id": "a-He",
+  "formula": "He",
+  "display": "He",
+  "name": {
+   "zh": "氦原子",
+   "en": "Helium atom"
+  },
+  "extra": true,
+  "lab": false,
+  "fact": {
+   "zh": "只有一顆原子的氣體,不跟別人牽手。",
+   "en": "A gas of single atoms that never hold hands."
+  },
+  "use": {
+   "zh": "氣球、冷卻醫院的核磁共振儀。",
+   "en": "Balloons and cooling MRI scanners."
+  }
+ },
+ {
+  "id": "a-Ne",
+  "formula": "Ne",
+  "display": "Ne",
+  "name": {
+   "zh": "氖原子",
+   "en": "Neon atom"
+  },
+  "extra": true,
+  "lab": false,
+  "fact": {
+   "zh": "通電會發出紅橘色的光。",
+   "en": "Glows red-orange with electricity."
+  },
+  "use": {
+   "zh": "霓虹燈招牌。",
+   "en": "Neon signs."
+  }
+ },
+ {
+  "id": "a-Ar",
+  "formula": "Ar",
+  "display": "Ar",
+  "name": {
+   "zh": "氬原子",
+   "en": "Argon atom"
+  },
+  "extra": true,
+  "lab": false,
+  "fact": {
+   "zh": "空氣裡第三多的氣體,非常安靜。",
+   "en": "The third most common gas in air, very calm."
+  },
+  "use": {
+   "zh": "燈泡裡的保護氣體,不讓燈絲燒壞。",
+   "en": "Protects light-bulb filaments."
+  }
+ },
+ {
+  "id": "a-Kr",
+  "formula": "Kr",
+  "display": "Kr",
+  "name": {
+   "zh": "氪原子",
+   "en": "Krypton atom"
+  },
+  "extra": true,
+  "lab": false,
+  "fact": {
+   "zh": "稀少的氣體,會發出白光。",
+   "en": "A rare gas that glows white."
+  },
+  "use": {
+   "zh": "攝影用的閃光燈。",
+   "en": "Photo flash lamps."
+  }
+ },
+ {
+  "id": "a-Xe",
+  "formula": "Xe",
+  "display": "Xe",
+  "name": {
+   "zh": "氙原子",
+   "en": "Xenon atom"
+  },
+  "extra": true,
+  "lab": false,
+  "fact": {
+   "zh": "發出很亮的藍白光。",
+   "en": "Glows with a bright blue-white light."
+  },
+  "use": {
+   "zh": "汽車的氙氣大燈。",
+   "en": "Xenon car headlights."
+  }
+ },
+ {
+  "id": "m-Li",
+  "formula": "Li",
+  "display": "Li",
+  "name": {
+   "zh": "鋰(金屬)",
+   "en": "Lithium metal"
+  },
+  "extra": true,
+  "lab": false,
+  "fact": {
+   "zh": "最輕的金屬,輕到可以浮在水上。",
+   "en": "The lightest metal, floats on water."
+  },
+  "use": {
+   "zh": "手機和電動車的電池。",
+   "en": "Phone and car batteries."
+  }
+ },
+ {
+  "id": "m-Mg",
+  "formula": "Mg",
+  "display": "Mg",
+  "name": {
+   "zh": "鎂(金屬)",
+   "en": "Magnesium metal"
+  },
+  "extra": true,
+  "lab": false,
+  "fact": {
+   "zh": "燃燒時會發出刺眼的白光。",
+   "en": "Burns with a dazzling white light."
+  },
+  "use": {
+   "zh": "閃光燈、煙火、輕巧的筆電外殼。",
+   "en": "Flash bulbs, fireworks and light laptop cases."
+  }
+ },
+ {
+  "id": "m-Al",
+  "formula": "Al",
+  "display": "Al",
+  "name": {
+   "zh": "鋁(金屬)",
+   "en": "Aluminium metal"
+  },
+  "extra": true,
+  "lab": false,
+  "fact": {
+   "zh": "又輕又不容易生鏽的銀白色金屬。",
+   "en": "A light, rust-proof silvery metal."
+  },
+  "use": {
+   "zh": "鋁罐、鋁箔、飛機。",
+   "en": "Cans, foil and planes."
+  }
+ },
+ {
+  "id": "m-K",
+  "formula": "K",
+  "display": "K",
+  "name": {
+   "zh": "鉀(金屬)",
+   "en": "Potassium metal"
+  },
+  "extra": true,
+  "lab": false,
+  "fact": {
+   "zh": "很軟的金屬,遇水會爆出火花。",
+   "en": "A soft metal that sparks in water."
+  },
+  "use": {
+   "zh": "植物和人體都需要它,香蕉裡也有。",
+   "en": "Plants and people need it; bananas have it."
+  }
+ },
+ {
+  "id": "m-Ti",
+  "formula": "Ti",
+  "display": "Ti",
+  "name": {
+   "zh": "鈦(金屬)",
+   "en": "Titanium metal"
+  },
+  "extra": true,
+  "lab": false,
+  "fact": {
+   "zh": "像鋼鐵一樣強,卻輕得多。",
+   "en": "As strong as steel yet much lighter."
+  },
+  "use": {
+   "zh": "眼鏡架、飛機、人工關節。",
+   "en": "Glasses frames, planes and joints."
+  }
+ },
+ {
+  "id": "m-Cr",
+  "formula": "Cr",
+  "display": "Cr",
+  "name": {
+   "zh": "鉻(金屬)",
+   "en": "Chromium metal"
+  },
+  "extra": true,
+  "lab": false,
+  "fact": {
+   "zh": "銀亮閃閃,不容易生鏽。",
+   "en": "Shiny and hard to rust."
+  },
+  "use": {
+   "zh": "水龍頭的電鍍,也是不鏽鋼的成員。",
+   "en": "Tap plating and a part of stainless steel."
+  }
+ },
+ {
+  "id": "m-Fe",
+  "formula": "Fe",
+  "display": "Fe",
+  "name": {
+   "zh": "鐵(金屬)",
+   "en": "Iron metal"
+  },
+  "extra": true,
+  "lab": false,
+  "fact": {
+   "zh": "可以被磁鐵吸住,潮濕會生鏽。",
+   "en": "Sticks to magnets; rusts when damp."
+  },
+  "use": {
+   "zh": "鋼鐵蓋房子、造橋樑。",
+   "en": "Steel for buildings and bridges."
+  }
+ },
+ {
+  "id": "m-Ni",
+  "formula": "Ni",
+  "display": "Ni",
+  "name": {
+   "zh": "鎳(金屬)",
+   "en": "Nickel metal"
+  },
+  "extra": true,
+  "lab": false,
+  "fact": {
+   "zh": "銀白色,也能被磁鐵吸住。",
+   "en": "Silver-white and a bit magnetic."
+  },
+  "use": {
+   "zh": "硬幣和電池。",
+   "en": "Coins and batteries."
+  }
+ },
+ {
+  "id": "m-Cu",
+  "formula": "Cu",
+  "display": "Cu",
+  "name": {
+   "zh": "銅(金屬)",
+   "en": "Copper metal"
+  },
+  "extra": true,
+  "lab": false,
+  "fact": {
+   "zh": "紅橘色,很會導電和導熱。",
+   "en": "Reddish and great at carrying electricity and heat."
+  },
+  "use": {
+   "zh": "電線、銅鍋。",
+   "en": "Electric wires and pots."
+  }
+ },
+ {
+  "id": "m-Zn",
+  "formula": "Zn",
+  "display": "Zn",
+  "name": {
+   "zh": "鋅(金屬)",
+   "en": "Zinc metal"
+  },
+  "extra": true,
+  "lab": false,
+  "fact": {
+   "zh": "藍白色金屬,可以保護鐵不生鏽。",
+   "en": "A bluish metal that protects iron from rust."
+  },
+  "use": {
+   "zh": "鍍鋅鐵皮、乾電池。",
+   "en": "Galvanized steel and batteries."
+  }
+ },
+ {
+  "id": "m-Ag",
+  "formula": "Ag",
+  "display": "Ag",
+  "name": {
+   "zh": "銀(金屬)",
+   "en": "Silver metal"
+  },
+  "extra": true,
+  "lab": false,
+  "fact": {
+   "zh": "最會導電的金屬,亮晶晶。",
+   "en": "The best electric conductor, very shiny."
+  },
+  "use": {
+   "zh": "銀飾、餐具。",
+   "en": "Jewelry and cutlery."
+  }
+ },
+ {
+  "id": "m-Sn",
+  "formula": "Sn",
+  "display": "Sn",
+  "name": {
+   "zh": "錫(金屬)",
+   "en": "Tin metal"
+  },
+  "extra": true,
+  "lab": false,
+  "fact": {
+   "zh": "很軟,熔點低,容易融化。",
+   "en": "Soft and melts easily."
+  },
+  "use": {
+   "zh": "焊錫、馬口鐵罐。",
+   "en": "Solder and tin cans."
+  }
+ },
+ {
+  "id": "m-W",
+  "formula": "W",
+  "display": "W",
+  "name": {
+   "zh": "鎢(金屬)",
+   "en": "Tungsten metal"
+  },
+  "extra": true,
+  "lab": false,
+  "fact": {
+   "zh": "熔點最高的金屬,超級耐熱。",
+   "en": "The metal with the highest melting point."
+  },
+  "use": {
+   "zh": "舊式燈泡裡的燈絲。",
+   "en": "Old light-bulb filaments."
+  }
+ },
+ {
+  "id": "m-Pt",
+  "formula": "Pt",
+  "display": "Pt",
+  "name": {
+   "zh": "鉑(白金)",
+   "en": "Platinum metal"
+  },
+  "extra": true,
+  "lab": false,
+  "fact": {
+   "zh": "銀白、稀有又不容易變色。",
+   "en": "Rare, silvery and never tarnishes."
+  },
+  "use": {
+   "zh": "白金戒指、汽車廢氣過濾器。",
+   "en": "Rings and car exhaust cleaners."
+  }
+ },
+ {
+  "id": "m-Au",
+  "formula": "Au",
+  "display": "Au",
+  "name": {
+   "zh": "金(金屬)",
+   "en": "Gold metal"
+  },
+  "extra": true,
+  "lab": false,
+  "fact": {
+   "zh": "金黃色,不會生鏽,很柔軟。",
+   "en": "Golden, never rusts and very soft."
+  },
+  "use": {
+   "zh": "金飾、電子零件。",
+   "en": "Jewelry and electronics."
+  }
+ },
+ {
+  "id": "m-Hg",
+  "formula": "Hg",
+  "display": "Hg",
+  "name": {
+   "zh": "汞(水銀)",
+   "en": "Mercury metal"
+  },
+  "extra": true,
+  "lab": false,
+  "fact": {
+   "zh": "常溫下是液體的金屬,有毒。",
+   "en": "A metal that is liquid at room temperature. Toxic."
+  },
+  "use": {
+   "zh": "老式溫度計(現在已經少用了)。",
+   "en": "Old thermometers (now rare)."
+  }
+ },
+ {
+  "id": "m-Pb",
+  "formula": "Pb",
+  "display": "Pb",
+  "name": {
+   "zh": "鉛(金屬)",
+   "en": "Lead metal"
+  },
+  "extra": true,
+  "lab": false,
+  "fact": {
+   "zh": "又重又軟,有毒,不能亂碰。",
+   "en": "Heavy, soft and toxic."
+  },
+  "use": {
+   "zh": "舊式汽車電池。",
+   "en": "Old car batteries."
+  }
+ },
+ {
+  "id": "m-Si",
+  "formula": "Si",
+  "display": "Si",
+  "name": {
+   "zh": "矽(晶片)",
+   "en": "Silicon"
+  },
+  "extra": true,
+  "lab": false,
+  "fact": {
+   "zh": "像鑽石一樣排成網格的灰色硬物。",
+   "en": "A hard grey solid, in a diamond-like grid."
+  },
+  "use": {
+   "zh": "電腦和手機裡的晶片。",
+   "en": "Chips in computers and phones."
+  }
+ },
+ {
+  "id": "m-Fe-Cr",
+  "formula": "Fe-Cr",
+  "display": "Fe-Cr",
+  "name": {
+   "zh": "不鏽鋼(鐵+鉻)",
+   "en": "Stainless steel (iron + chromium)"
+  },
+  "extra": true,
+  "lab": false,
+  "fact": {
+   "zh": "鐵加了鉻,就不容易生鏽。",
+   "en": "Iron plus chromium resists rust."
+  },
+  "use": {
+   "zh": "鍋子、餐具。",
+   "en": "Pots and cutlery."
+  }
+ },
+ {
+  "id": "m-Fe-Cr-Ni",
+  "formula": "Fe-Cr-Ni",
+  "display": "Fe-Cr-Ni",
+  "name": {
+   "zh": "不鏽鋼(鐵+鉻+鎳)",
+   "en": "Stainless steel (Fe, Cr, Ni)"
+  },
+  "extra": true,
+  "lab": false,
+  "fact": {
+   "zh": "再加一點鎳,更亮更耐用。",
+   "en": "A little nickel makes it shinier and tougher."
+  },
+  "use": {
+   "zh": "廚房水槽、餐具。",
+   "en": "Sinks and cutlery."
+  }
+ },
+ {
+  "id": "m-Cu-Zn",
+  "formula": "Cu-Zn",
+  "display": "Cu-Zn",
+  "name": {
+   "zh": "黃銅(銅+鋅)",
+   "en": "Brass (copper + zinc)"
+  },
+  "extra": true,
+  "lab": false,
+  "fact": {
+   "zh": "金黃色的合金,聲音很好聽。",
+   "en": "A golden alloy with a lovely sound."
+  },
+  "use": {
+   "zh": "門把、小喇叭和銅管樂器。",
+   "en": "Door handles and brass instruments."
+  }
+ }
+]

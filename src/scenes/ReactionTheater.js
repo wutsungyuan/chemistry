@@ -13,8 +13,7 @@ import { speak, canSpeak } from '../ui/speech.js';
 
 // 時間軸(秒)
 const TA = 2.6, TB = 3.6, TC = 6.4, TEND = 9.5;
-const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
-const ease = x => { x = clamp(x); return x * x * (3 - 2 * x); };
+const ease = x => THREE.MathUtils.smoothstep(x, 0, 1);      // 0~1 的平滑曲線(three.js 內建,自動夾在 0~1)
 function rng(seed) { let a = seed >>> 0; return () => { a |= 0; a = (a + 0x6D2B79F5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
 
 if (import.meta.env?.DEV) REACTIONS.forEach(r => { if (!checkBalance(r)) console.warn('反應未平衡', r.id); });
@@ -186,7 +185,7 @@ export function mount(container, startId) {
         g.position.lerpVectors(S[i], C[i], u);
         const [rx, ry, rz] = spinAt(i, time); g.rotation.set(rx, ry, rz);
         if (time > TA) {
-          const k = clamp((time - TA) / (TB - TA)), amp = Math.sin(Math.PI * k) * 0.14, q = Math.floor(time * 30) + i * 7;
+          const k = THREE.MathUtils.clamp((time - TA) / (TB - TA), 0, 1), amp = Math.sin(Math.PI * k) * 0.14, q = Math.floor(time * 30) + i * 7;
           const rr = rng(q);
           g.position.add(new THREE.Vector3(rr() - 0.5, rr() - 0.5, rr() - 0.5).multiplyScalar(amp * 2));
           g.userData.bonds.scale.setScalar(Math.max(0.001, 1 - k));

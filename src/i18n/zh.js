@@ -26,6 +26,7 @@ export default {
   'legend.valence': '黃球:最外層電子',
   'atom.nofact': '這個元素比較少見,先去認識常見的元素吧!',
   'atom.in': '它出現在這些分子裡',
+  'gal.source': '資料出處',
   'atom.found': '它在生活中的樣子',
   'atom.back': '回週期表',
   'atom.say': '念給我聽',

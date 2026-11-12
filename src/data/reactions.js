@@ -22,7 +22,7 @@ export const REACTIONS = [
     name: { zh: '植物的光合作用', en: 'Photosynthesis' },
     story: { zh: '植物吸收陽光,把二氧化碳和水變成葡萄糖(養分),還送給我們滿滿的氧氣!',
              en: 'Plants use sunlight to turn carbon dioxide and water into glucose (food) and give us oxygen!' } },
-  { id: 'rust', reactants: [['Fe', 4], ['O2', 3]], products: [['Fe2O3', 2]], effect: 'slow',
+  { id: 'rust', reactants: [['Fe', 4], ['O2', 3]], products: [['Fe2O3p', 2]], effect: 'slow',
     name: { zh: '鐵生鏽', en: 'Iron rusting' },
     story: { zh: '鐵遇到空氣中的氧氣,慢慢變成紅褐色的鐵鏽。這個反應很慢,要好幾天甚至好幾年。',
              en: 'Iron slowly meets oxygen in the air and turns into reddish-brown rust. It takes days or years.' } },

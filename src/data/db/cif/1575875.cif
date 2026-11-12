@@ -1,0 +1,94 @@
+#------------------------------------------------------------------------------
+#$Date: 2025-09-29 13:09:00 +0300 (Mon, 29 Sep 2025) $
+#$Revision: 302263 $
+#$URL: file:///home/coder/svn-repositories/_RELOADED_COD/cod-reloaded/cif/1/57/58/1575875.cif $
+#------------------------------------------------------------------------------
+#
+# This file is available in the Crystallography Open Database (COD),
+# http://www.crystallography.net/
+#
+# All data on this site have been placed in the public domain by the
+# contributors.
+#
+data_1575875
+loop_
+_publ_author_name
+'Chen, Haipeng'
+'Xiao, Haiyan'
+'Wang, Yajing'
+'Liu, Jinqiang'
+'Yang, Qingfeng'
+'Feng, Xun'
+_publ_section_title
+;
+ Insight into the energy conversion and structural evolution of magnesium
+ hydride during high-energy ball milling for its controllable synthesis
+;
+_journal_name_full               'Journal of Alloys and Compounds'
+_journal_page_first              155312
+_journal_paper_doi               10.1016/j.jallcom.2020.155312
+_journal_volume                  836
+_journal_year                    2020
+_chemical_formula_structural     Mg
+_chemical_formula_sum            Mg
+_chemical_name_common            Magnesium
+_chemical_name_structure_type    Mg
+_space_group_IT_number           194
+_space_group_name_Hall           '-P 6c 2c'
+_space_group_name_H-M_alt        'P 63/m m c'
+_cell_angle_alpha                90
+_cell_angle_beta                 90
+_cell_angle_gamma                120
+_cell_formula_units_Z            2
+_cell_length_a                   3.205
+_cell_length_b                   3.205
+_cell_length_c                   5.2
+_cell_volume                     46.258
+_cod_data_source_file            Mg_P63_mmc_Chen_DC301.cif
+_cod_data_source_block           Chateigner_
+_cod_depositor_comments          'DOI added'
+_cod_original_cell_volume        46.26
+_cod_original_formula_sum        Mg1
+_cod_database_code               1575875
+loop_
+_space_group_symop_id
+_space_group_symop_operation_xyz
+1 'x, x-y, -z+1/2'
+2 '-x+y, y, -z+1/2'
+3 '-y, -x, -z+1/2'
+4 '-x+y, -x, -z+1/2'
+5 '-y, x-y, -z+1/2'
+6 'x, y, -z+1/2'
+7 '-x, -x+y, z+1/2'
+8 'x-y, -y, z+1/2'
+9 'y, x, z+1/2'
+10 'x-y, x, z+1/2'
+11 'y, -x+y, z+1/2'
+12 '-x, -y, z+1/2'
+13 '-x, -x+y, -z'
+14 'x-y, -y, -z'
+15 'y, x, -z'
+16 'x-y, x, -z'
+17 'y, -x+y, -z'
+18 '-x, -y, -z'
+19 'x, x-y, z'
+20 '-x+y, y, z'
+21 '-y, -x, z'
+22 '-x+y, -x, z'
+23 '-y, x-y, z'
+24 'x, y, z'
+loop_
+_atom_site_label
+_atom_site_type_symbol
+_atom_site_symmetry_multiplicity
+_atom_site_Wyckoff_symbol
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+_atom_site_B_iso_or_equiv
+_atom_site_occupancy
+Mg1 Mg0+ 2 c 0.3333 0.6667 0.25 0.0 1
+loop_
+_atom_type_symbol
+_atom_type_oxidation_number
+Mg0+ 0

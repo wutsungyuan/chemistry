@@ -3,10 +3,9 @@ import { GALLERY } from '../data/molecules.js';
 import { BADGES, update, progress, badgeIds } from '../game/store.js';
 import { T, Tp, L, LH, render, formulaHTML } from '../i18n/index.js';
 import { toast } from '../ui/toast.js';
+import { pick, shuffle } from '../ui/util.js';
 
 const COMMON = ELEMENTS.filter(e => e.fact);
-const pick = arr => arr[Math.floor(Math.random() * arr.length)];
-const shuffle = arr => arr.map(v => [Math.random(), v]).sort((a, b) => a[0] - b[0]).map(x => x[1]);
 function distract(pool, correct, n, key) {
   const out = new Set([key(correct)]);
   const res = [correct];

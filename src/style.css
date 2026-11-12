@@ -381,3 +381,5 @@ body{background:
 .found-item.link:hover{background:var(--accent);color:#222}
 .found-item.link:hover > b{color:#222}
 .side .found{margin-top:10px;padding-top:6px;border-top:1px solid var(--line)}
+
+.side .schem{font-size:.85rem;color:var(--muted);border-top:1px dashed var(--line);padding-top:6px}

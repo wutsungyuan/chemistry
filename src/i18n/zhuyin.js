@@ -1,4 +1,5 @@
 import { pinyin } from 'pinyin-pro';
+import { escapeHtml as esc } from '../ui/util.js';
 
 const INIT = { b:'ㄅ',p:'ㄆ',m:'ㄇ',f:'ㄈ',d:'ㄉ',t:'ㄊ',n:'ㄋ',l:'ㄌ',g:'ㄍ',k:'ㄎ',h:'ㄏ',j:'ㄐ',q:'ㄑ',x:'ㄒ',zh:'ㄓ',ch:'ㄔ',sh:'ㄕ',r:'ㄖ',z:'ㄗ',c:'ㄘ',s:'ㄙ' };
 const FIN = { a:'ㄚ',o:'ㄛ',e:'ㄜ',ai:'ㄞ',ei:'ㄟ',ao:'ㄠ',ou:'ㄡ',an:'ㄢ',en:'ㄣ',ang:'ㄤ',eng:'ㄥ',er:'ㄦ',
@@ -45,7 +46,6 @@ export function toZhuyin(py) {
 
 const cache = new Map();
 const isHan = c => /[一-鿿]/.test(c);
-const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
 // 注音直式顯示在字的右側:聲調符號在最右側中間,輕聲點在注音上方
 function zyHTML(c, z) {

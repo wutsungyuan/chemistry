@@ -4,15 +4,20 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "build-db": "node --permission --allow-fs-read=. --allow-fs-write=src/data/generated scripts/build-db.mjs && node --permission --allow-fs-read=. scripts/check-reactions.mjs",
+    "predev": "npm run build-db",
     "dev": "vite",
+    "prebuild": "npm run build-db",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "node --test \"tests/**/*.test.mjs\""
   },
   "dependencies": {
-    "pinyin-pro": "^3.29.5",
-    "three": "^0.187.0"
+    "pinyin-pro": "3.29.5",
+    "three": "0.187.0"
   },
   "devDependencies": {
-    "vite": "^8.3.6"
+    "crystcif-parse": "0.2.9",
+    "vite": "8.3.6"
   }
 }

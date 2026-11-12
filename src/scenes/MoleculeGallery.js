@@ -6,6 +6,16 @@ import { buildMolecule, setStyle, molRadius } from '../three/mol.js';
 import { T, L, LH, formulaHTML } from '../i18n/index.js';
 import { progress } from '../game/store.js';
 import { speak, canSpeak } from '../ui/speech.js';
+import { escapeHtml } from '../ui/util.js';
+
+/** 結構是「簡化示意」或「晶體的一小塊」時,誠實地告訴小朋友 */
+function schemNote(m) {
+  if (m.schem) return m.schem;
+  if (m.crystal) return { zh: '這是依真實晶體資料畫出來的一小塊,最外圍的原子其實還連著更多原子,沒有全部畫出來。', en: 'A small piece drawn from real crystal data; atoms at the edge really bond to more atoms that are not shown.' };
+  if (['NaCl', 'NaF', 'KCl', 'KI', 'AgCl', 'AgBr', 'MgO', 'CaO'].includes(m.id)) return { zh: '這是晶體的一小塊:正負離子像棋盤一樣交錯排列,真實的晶體是這樣重複很多很多次。', en: 'A small piece of the crystal: ions alternate like a chessboard, repeated many, many times.' };
+  if (m.id === 'NaHCO3') return { zh: '由真實晶體取出一個碳酸氫根和一個鈉離子。真實晶體裡鈉離子被更多氧原子圍住。', en: 'One bicarbonate and one sodium taken from the real crystal. In the crystal, sodium is surrounded by more oxygens.' };
+  return null;
+}
 
 export function mount(container, startId) {
   const stage = createStage(container, { camPos: [0, 2, 9] });
@@ -60,9 +70,11 @@ export function mount(container, startId) {
     side.innerHTML = `
       <h2>${LH(m.name)}</h2>
       <p style="font-size:1.6rem;margin:0"><b>${formulaHTML(m.display || m.formula)}</b></p>
-      <p>${Object.entries(counts).map(([s, n]) => `<span class="chip">${s} × ${n}</span>`).join('')}</p>
+      ${m.crystal ? '' : `<p>${Object.entries(counts).map(([s, n]) => `<span class="chip">${s} × ${n}</span>`).join('')}</p>`}
       <p>💡 ${LH(m.fact)}</p>
       <p>🏠 ${LH(m.use)}</p>
+      ${schemNote(m) ? `<p class="schem">📐 ${LH(schemNote(m))}</p>` : ''}
+      ${m.source ? `<p class="schem">📚 ${T('gal.source')}:${escapeHtml(m.source)}</p>` : ''}
       <div>
         <button class="btn ${style === 'ball' ? '' : 'alt'}" id="s-ball">${T('gal.ball')}</button>
         <button class="btn ${style === 'space' ? '' : 'alt'}" id="s-space">${T('gal.space')}</button>

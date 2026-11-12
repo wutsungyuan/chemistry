@@ -1,4 +1,5 @@
 import { state, render } from '../i18n/index.js';
+import { pick } from './util.js';
 
 // 原子小博士:住在標題列下方的「提示列」裡(版面中固定保留的一條,不蓋住任何功能)。
 // 他說的話就是各頁的操作提示;點他會換下一句,答對/做出分子時會跳出來慶祝。
@@ -54,7 +55,6 @@ const SVG = `<svg viewBox="0 0 120 130" width="100%" height="100%" aria-hidden="
   <circle cx="41" cy="62" r="4" fill="#ff9aa8" opacity=".6"/><circle cx="79" cy="62" r="4" fill="#ff9aa8" opacity=".6"/>
 </svg>`;
 
-const pick = a => a[Math.floor(Math.random() * a.length)];
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 let bar, bubble, body, scene = 'table', holdTimer, holding = false, asleep = false, lastMove = Date.now();
