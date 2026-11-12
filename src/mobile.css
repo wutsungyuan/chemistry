@@ -153,3 +153,75 @@
 @media (max-height: 480px) and (max-width: 950px) {
   #head #tipbar, #head #bunting { display: none; }
 }
+
+/* 手機:光譜區塊的觸控目標要夠大 */
+@media (max-width: 600px) {
+  .spec-modes .chip, .spec-top .chip { min-height: 42px; padding: 6px 14px; }
+  .spec-strip { margin: 4px -2px; }
+}
+
+/* 手機:元素頁面板分頁(原子資訊 | 光譜) */
+@media (max-width: 600px) {
+  .side-tabs { display: flex; gap: 6px; margin: 4px 0 8px; }
+  .side-tabs .chip { flex: 1; text-align: center; min-height: 40px; margin: 0; border: 0; color: var(--text); cursor: pointer; font-size: .95rem; }
+  .side-tabs .chip.on { background: var(--accent); color: #222; font-weight: 700; }
+  #app > .side[data-tab=info] .spec { display: none; }
+  #app > .side[data-tab=spec] > *:not(h2):not(.side-tabs):not(.spec):not(:last-child) { display: none; }
+  #app > .side[data-tab=spec] .spec { margin-top: 0; padding-top: 0; border-top: 0; }
+}
+
+/* 手機:光譜分頁 = 一頁、不用捲動。3D 原子、光譜條、電子階梯圖三個圖同時看得到,點哪個顏色就立刻看到電子怎麼跳。
+   空間怎麼分:3D(約 26% 高)→ 標題與分頁一列 → 「發光/吸收 + 最亮的幾條線 + ⓘ」一列 → 光譜條 → 讀數 → 階梯圖(吃掉剩下的高度)→ 精簡的操作列。
+   長篇說明是一張蓋住下方面板的獨立面板(實心背景、有 ✕),不和圖疊在一起;原子博士提示列與縮放滑桿在這一頁隱藏
+   (滑桿的位置用百分比算,畫布有最小高度時會對不上而蓋住原子)。3D 的取景由 AtomView 依畫布大小自動算(fitRing)。 */
+@media (max-width: 600px) {
+  body:has(#app > .side[data-tab=spec]) #head #tipbar { display: none; }
+  #app:has(> .side[data-tab=spec]) > .canvas-wrap { flex: 0 0 clamp(150px, 26%, 200px); min-height: 150px; }
+  #app:has(> .side[data-tab=spec]) > .zoombar { display: none; }
+  #app > .side[data-tab=spec] {
+    position: relative; top: 0; left: 0; display: grid; grid-template-columns: auto minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr) auto;   /* top/left 歸零:舊的窄版規則有 top/left: 8px,relative 時會真的位移 */
+    column-gap: 8px; padding: 8px 12px 0; overflow-x: hidden; overflow-y: auto;
+  }
+  #app > .side[data-tab=spec] > h2 { grid-area: 1 / 1; margin: 0; align-self: center; font-size: 1.15rem; }
+  #app > .side[data-tab=spec] > .side-tabs { grid-area: 1 / 2; margin: 0; }
+  #app > .side[data-tab=spec] > .spec {
+    grid-area: 2 / 1 / 3 / 3; min-height: 0; margin: 4px 0 0; padding: 0; border: 0; position: static;
+    display: grid; grid-template-columns: auto minmax(0, 1fr) auto; grid-template-rows: auto auto auto minmax(0, 1fr); gap: 6px 8px;
+  }
+  /* 操作列:◀ 回週期表 念給我聽 ▶(兩個分頁完全一致)。這一頁把它縮得比較扁,省下高度給圖 */
+  #app > .side[data-tab=spec] > div:last-child { grid-area: 3 / 1 / 4 / 3; margin: 4px -12px 0; padding: 4px 12px 6px; }
+  .spec > .spec-h { display: none; }
+  .spec-modes { grid-area: 1 / 1; margin: 0; }
+  .spec-modes .chip, .spec-top .chip { min-height: 38px; padding: 4px 12px; }
+  .spec-top { grid-area: 1 / 2; margin: 0; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+  .spec-top::-webkit-scrollbar { display: none; }
+  .spec-top > span { display: none; }
+  .spec-top .chip { flex: none; }
+  .spec-info-btn { grid-area: 1 / 3; display: inline-flex; align-items: center; justify-content: center; min-width: 40px; min-height: 38px; border-radius: 50%; border: 0; background: var(--panel2); color: var(--accent); font-size: 1.15rem; cursor: pointer; padding: 0; }
+  .spec-strip { grid-area: 2 / 1 / 3 / 4; margin: 0; --fit: 1; }
+  .spec-read { grid-area: 3 / 1 / 4 / 4; min-height: 0; margin: 0; font-size: .88rem; line-height: 1.5; }
+  .spec-read .rd-sub { display: none; }
+  .spec-ladder-box { grid-area: 4 / 1 / 5 / 4; display: flex; flex-direction: column; min-height: 0; margin: 0; padding: 0; border: 0; }
+  .spec-ladder-box > .spec-h2 { display: none; }
+  .spec-ladder { --fit: 1; flex: 1 1 0; min-height: 100px; position: relative; }
+  .spec-ladder svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .spec-ladder-read { flex: none; margin: 2px 0 0; min-height: 0; font-size: .76rem; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  /* 說明面板:蓋住整個下方面板,實心背景(不會和圖疊在一起),標題列固定在最上面,有 ✕ 可以關閉 */
+  .spec-more { display: none; }
+  .spec-more.open { display: block; position: absolute; inset: 0; z-index: 30; padding: 0 14px 16px; overflow-y: auto; background: #1b2350; border-radius: 18px 18px 0 0; box-shadow: 0 -8px 24px rgba(0,0,0,.45); }
+  .spec-more-head { position: sticky; top: 0; z-index: 1; display: flex; align-items: center; justify-content: space-between; padding: 10px 0 6px; background: #1b2350; font-size: 1rem; }
+  .spec-more-close { min-width: 44px; min-height: 44px; border-radius: 50%; border: 0; background: var(--panel2); color: var(--text); font-size: 1.1rem; cursor: pointer; }
+  .spec-sub, .spec-tip, .spec-tip2, .spec-3d { font-size: .85rem; }
+}
+
+/* 手機很矮(例如 iPhone SE、或瀏覽器工具列佔很多):階梯圖下方的一行說明先收起來,空間留給三個圖(完整說明仍在「ⓘ 說明」) */
+@media (max-width: 600px) and (max-height: 640px) {
+  .spec-ladder-read { display: none; }
+}
+
+/* 手機:操作列的順序是 ◀ 回週期表 念給我聽 ▶ —— 左右箭頭固定在兩側,中間兩個按鈕平分剩下的空間 */
+@media (max-width: 600px) {
+  #app > .side:not(.mission) > div:last-child { justify-content: space-between; }
+  #app > .side:not(.mission) > div:last-child #prev, #app > .side:not(.mission) > div:last-child #next { flex: none; min-width: 48px; }
+  #app > .side:not(.mission) > div:last-child #back, #app > .side:not(.mission) > div:last-child #say { flex: 1 1 auto; }
+}

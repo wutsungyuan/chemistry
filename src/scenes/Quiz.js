@@ -4,8 +4,12 @@ import { BADGES, update, progress, badgeIds } from '../game/store.js';
 import { T, Tp, L, LH, render, formulaHTML } from '../i18n/index.js';
 import { toast } from '../ui/toast.js';
 import { pick, shuffle } from '../ui/util.js';
+import { SPECTRA } from '../data/generated/spectra.js';
+import { spectrumSVG, colorKey } from '../ui/spectrum.js';
+import { spectrumPool, makeSpectrumQuestion } from '../game/spectrumQuiz.js';
 
 const COMMON = ELEMENTS.filter(e => e.fact);
+const SPEC_POOL = spectrumPool(SPECTRA, ELEMENTS);
 function distract(pool, correct, n, key) {
   const out = new Set([key(correct)]);
   const res = [correct];
@@ -14,7 +18,14 @@ function distract(pool, correct, n, key) {
 }
 
 function makeQuestion() {
-  const kind = pick(['sym2name', 'name2sym', 'formula', 'count', 'fact']);
+  const kind = pick(['sym2name', 'name2sym', 'formula', 'count', 'fact', 'spectrum', 'spectrum']);
+  if (kind === 'spectrum') {                                            // 光譜偵探:看光譜指紋,猜是哪個元素
+    const s = makeSpectrumQuestion(SPEC_POOL, SPECTRA);
+    return {
+      kind, q: { key: 'quiz.q.spectrum', block: spectrumSVG(s.lines, { mode: 'emit', width: 360, height: 70, uid: 'qz' }) },
+      opts: s.options.map(o => ({ html: `${o.sym} ${render(L(o.name))}`, ok: o === s.answer })), answerText: L(s.answer.name), brightest: s.brightest,
+    };
+  }
   if (kind === 'sym2name') {
     const e = pick(COMMON), opts = distract(COMMON, e, 4, x => x.sym);
     return { q: { key: 'quiz.q.sym2name', vars: { s: e.sym } }, opts: opts.map(o => ({ html: render(L(o.name)), ok: o === e })), answerText: L(e.name) };
@@ -54,7 +65,9 @@ export function mount(container) {
   function next() {
     qn = makeQuestion();
     const p = progress();
-    const qHtml = qn.q.raw
+    const qHtml = qn.q.block
+      ? `${T(qn.q.key)}<div class="quiz-spec">${qn.q.block}</div>`
+      : qn.q.raw
       ? `${render(qn.q.raw)}<br><small>${T(qn.q.key)}</small>`
       : qn.q.html
         ? `${T(qn.q.key)} <b style="font-size:2rem">${qn.q.html}</b>`
@@ -76,13 +89,14 @@ export function mount(container) {
       streak++; score++;
       fb.innerHTML = `🎉 ${T('quiz.right')}`;
       dispatchEvent(new CustomEvent('mascot', { detail: { type: 'cheer' } }));
-      const news = update(d => { d.quizRight++; d.bestStreak = Math.max(d.bestStreak, streak); });
+      const news = update(d => { d.quizRight++; d.bestStreak = Math.max(d.bestStreak, streak); if (qn.kind === 'spectrum') d.spectrumRight++; });
       news.forEach(b => toast(`${b.icon} ${Tp('badge.new')}${L(b.name)}`, 3000));
     } else {
       btn.classList.add('wrong'); streak = 0;
       dispatchEvent(new CustomEvent('mascot', { detail: { type: 'oops' } }));
       fb.innerHTML = `💪 ${T('quiz.wrong')} <b>${render(qn.answerText)}</b>`;
     }
+    if (qn.kind === 'spectrum') fb.innerHTML += `<br><small>${T('quiz.spec.hint', { nm: qn.brightest.toFixed(1), c: Tp(colorKey(qn.brightest)) })}</small><br>`;
     fb.innerHTML += ` <button class="btn" id="nx">${T('quiz.next')}</button>`;
     fb.querySelector('#nx').onclick = next;
   }

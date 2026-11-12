@@ -1,12 +1,12 @@
 // 共用的小工具(各場景不要再自己寫一份)
 
-/** 從陣列隨機取一個 */
-export const pick = arr => arr[Math.floor(Math.random() * arr.length)];
+/** 從陣列隨機取一個(rng 可注入,測試用) */
+export const pick = (arr, rng = Math.random) => arr[Math.floor(rng() * arr.length)];
 
 /** 洗牌(Fisher–Yates,每種排列機率相同;不改動原陣列) */
-export function shuffle(arr) {
+export function shuffle(arr, rng = Math.random) {
   const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
+  for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rng() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
   return a;
 }
 

@@ -95,7 +95,20 @@ export function mount(container, startId) {
     side.querySelector('#s-lab').onclick = () => { labels = !labels; show(id); };
     side.querySelector('#say')?.addEventListener('click', () => speak(`${L(m.name)}。${L(m.fact)}${L(m.use)}`));
   }
+  let listShown = false;
+  /** 把目前選的分子捲到清單中間(手機是橫向清單、桌面是直向清單,兩個方向都處理) */
+  function centerActive(behavior) {
+    const el = list.querySelector('.active');
+    if (!el) return;
+    const lr = list.getBoundingClientRect(), br = el.getBoundingClientRect();
+    list.scrollTo({
+      left: Math.max(0, list.scrollLeft + (br.left - lr.left) - (list.clientWidth - br.width) / 2),
+      top: Math.max(0, list.scrollTop + (br.top - lr.top) - (list.clientHeight - br.height) / 2),
+      behavior,
+    });
+  }
   function renderList() {
+    const keep = { left: list.scrollLeft, top: list.scrollTop };
     list.innerHTML = '';
     GALLERY.forEach(m => {
       const b = document.createElement('button');
@@ -104,6 +117,10 @@ export function mount(container, startId) {
       b.onclick = () => show(m.id);
       list.appendChild(b);
     });
+    list.scrollLeft = keep.left; list.scrollTop = keep.top;      // 重畫後保持原位置,不要跳回最前面
+    // 等版面套用完成再置中(換頁時 body[data-scene] 在場景掛載後才更新,手機版的橫向清單樣式那時才生效)
+    const first = !listShown; listShown = true;
+    requestAnimationFrame(() => requestAnimationFrame(() => centerActive(first ? 'auto' : 'smooth')));
   }
   stage.setCenterShift(() => (!isNarrow() ? (side.offsetWidth - list.offsetWidth) / 2 : 0));
   show(id);
