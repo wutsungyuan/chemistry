@@ -436,3 +436,23 @@ body{background:
   .pt-grid .el .nm{font-size:.74rem}
   .pt-grid .el .sym{font-size:1.2rem}
 }
+
+/* ---------- 電子雲場景 ---------- */
+.cloud-side{display:flex;flex-direction:column;gap:8px}
+.cloud-side h2{margin:0}
+.cl-bar{display:flex;gap:8px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.cl-levels,.cl-states{display:flex;gap:6px;flex-wrap:wrap}
+.cl-bar .chip,.cl-states .chip{min-height:38px}
+.cl-info p{margin:0 0 8px;line-height:1.7}
+.cl-lead{font-size:1.02em}
+.cl-honest{color:var(--muted);font-size:.9em}
+.cl-scale{color:var(--muted);font-size:.9em}
+.cl-actions{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.cl-actions .btn.on{background:var(--accent);color:#2a1a08}
+.spec-top .cloud-link{background:linear-gradient(90deg,#7c5cff,#37c8ff);color:#fff;font-weight:800}
+.cloud-side[data-level=kid] [data-act=all]{display:none}
+.cloud-side[data-level=teen] [data-act=one],.cloud-side[data-level=teen] [data-act=hundred]{display:none}
+.cl-count{font-size:.9rem;color:var(--muted);min-height:1.2em}
+.cloud-side[data-level=kid] .cl-slice{display:none}
+.cloud-side .cl-actions{position:sticky;bottom:-4px;padding:8px 0 4px;background:linear-gradient(180deg,rgba(27,35,80,0),rgba(27,35,80,.98) 28%)}
+.cloud-side > *{flex:none}

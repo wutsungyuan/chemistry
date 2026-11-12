@@ -12,6 +12,10 @@ const TIPS = {
     zh: ['紅球是質子,灰球是中子,藍球是電子!', '拖曳可以轉動原子,右邊的滑桿可以放大縮小。', '黃球是最外層電子,它們決定這個元素愛跟誰牽手!', '點「原子序」「原子量」旁邊的小圖示,有簡單的說明喔!'],
     en: ['Red = proton, gray = neutron, blue = electron!', 'Drag to spin the atom. Use the slider to zoom!', 'Yellow balls are the outer electrons - they decide who the atom holds hands with!', 'Tap the little info icons for simple explanations!'],
   },
+  cloud: {
+    zh: ['按「拍照」,電子可能出現的地方會亮一個點!', '拍越多張,雲的形狀就越清楚,不同的能階形狀不一樣喔!', '電子不是繞圈圈的小球,而是一團機率的雲!'],
+    en: ['Tap "Snap" and a dot lights up where the electron might be!', 'The more you snap, the clearer the shape!', 'An electron is not a little ball going round - it is a cloud of probability!'],
+  },
   gallery: {
     zh: ['用手指或滑鼠拖曳可以旋轉,點一下原子它會彈跳喔!', '試試切換「球棍模型」和「空間填充」,長得不一樣呢!', '點右邊的名字,認識生活中的分子!'],
     en: ['Drag to rotate, and tap an atom to make it bounce!', 'Try switching between ball-and-stick and space-filling!', 'Pick a name on the right to meet everyday molecules!'],

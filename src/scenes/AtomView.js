@@ -35,7 +35,7 @@ function mountSpectrum(box, sym, onSelect = () => {}) {
     <div class="spec-modes"><button class="chip" data-mode="emit"></button><button class="chip" data-mode="absorb"></button></div>
     <div class="spec-strip"></div>
     <div class="spec-read"></div>
-    <div class="spec-top"><span>${T('sp.top')}:</span>${top.map(i => `<button class="chip" data-i="${i}"><i class="swatch" style="color:${cssColor(lines[i][0])}"></i>${lines[i][0].toFixed(1)}</button>`).join('')}</div>
+    <div class="spec-top"><span>${T('sp.top')}:</span>${sym === 'H' ? `<button class="chip cloud-link" title="${Tp('cloud.title')}">${T('cloud.link')}</button>` : ''}${top.map(i => `<button class="chip" data-i="${i}"><i class="swatch" style="color:${cssColor(lines[i][0])}"></i>${lines[i][0].toFixed(1)}</button>`).join('')}</div>
     ${anyLevels ? `<div class="spec-ladder-box"><h4 class="spec-h2">🪜 ${T('sp.ladder')}</h4><div class="spec-ladder"></div><div class="spec-ladder-read"></div></div>` : ''}
     <button class="spec-info-btn" aria-expanded="false" aria-label="${Tp('sp.more')}">ⓘ</button>
     <div class="spec-more">
@@ -114,6 +114,7 @@ function mountSpectrum(box, sym, onSelect = () => {}) {
   const stop = () => { dragging = false; };
   strip.addEventListener('pointerup', stop); strip.addEventListener('pointercancel', stop);
   modeBtns.forEach(b => { b.onclick = () => { mode = b.dataset.mode; draw(); }; });
+  box.querySelector('.cloud-link')?.addEventListener('click', () => { location.hash = '#cloud/1s'; });   // 只有氫:電子雲(氫有精確解)
   box.querySelectorAll('.spec-top [data-i]').forEach(b => { b.onclick = () => { sel = +b.dataset.i; draw(); markSeen(); }; });
   draw();
   // 面板大小改變(切分頁、說明展開/收起、旋轉手機)時,依新的大小重畫
@@ -127,6 +128,8 @@ function mountSpectrum(box, sym, onSelect = () => {}) {
 
 /** 按 ◀ ▶ 換元素時,要停留在目前的分頁(原子資訊 / 光譜);從週期表等其他地方進來則一律從「原子資訊」開始 */
 let pendingTab = null;
+/** 從別的頁面(例如電子雲)回到原子頁時,指定要停在哪個分頁 */
+export function setNextTab(t) { pendingTab = t; }
 
 export function mount(container, z, { go }) {
   const el = BY_Z[z || 1];
