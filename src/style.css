@@ -428,4 +428,5 @@ body{background:
 .spec-ladder{position:relative}
 
 .spec-info-btn,.spec-more-head{display:none}
+.spec-why{margin:8px 0 0;padding:8px 10px;border-radius:10px;background:var(--panel2);font-size:.9rem;line-height:1.6}
 .spec-more{display:block}

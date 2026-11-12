@@ -44,6 +44,7 @@ function mountSpectrum(box, sym, onSelect = () => {}) {
       <p class="spec-sub">${T('sp.sub')}</p>
       <p class="spec-tip2"></p>
       <p class="spec-3d"></p>
+      <p class="spec-why">${T('sp.why')}</p>
       <p class="spec-note">${sp.estimated ? T('sp.est') : T('sp.meas')} ${T('sp.note')}<a href="${SPECTRA_META.url}" target="_blank" rel="noopener noreferrer">NIST ASD</a> (DOI ${SPECTRA_META.doi})</p>
     </div>`;
   const strip = box.querySelector('.spec-strip'), read = box.querySelector('.spec-read'), tip = box.querySelector('.spec-tip');
@@ -59,6 +60,14 @@ function mountSpectrum(box, sym, onSelect = () => {}) {
   modeBtns.forEach(b => { b.innerHTML = T('sp.' + b.dataset.mode); });
   // 手機的光譜分頁是「一頁、不用捲動」的版面(見 mobile.css,--fit:1):光譜條與階梯圖要配合可用空間決定大小
   const fit = () => getComputedStyle(strip).getPropertyValue('--fit').trim() === '1';
+  /** 手機(一頁版面):階梯圖至少要 100px,下面那行說明如果放不下(開注音後字比較高、或手機比較矮)就整行收起來,而不是被切掉一半。
+   *  只看「格子高度」和「說明自然高度」,不看階梯圖現在多高,所以不會因為收起來又變高而來回跳動。 */
+  const ladderBox = box.querySelector('.spec-ladder-box');
+  function fitRead() {
+    if (!ladderBox || !fit()) { ladderBox?.classList.remove('tight'); return; }
+    ladderBox.classList.remove('tight');
+    if (ladderRead.scrollHeight && ladderBox.clientHeight < 100 + ladderRead.scrollHeight + 4) ladderBox.classList.add('tight');
+  }
   function draw() {
     const f = fit();
     lastW = strip.clientWidth || 320;
@@ -79,9 +88,10 @@ function mountSpectrum(box, sym, onSelect = () => {}) {
         const [wl, , lo, hi] = lines[sel];
         const q1 = parseLabel(lines[sel][4]), q2 = parseLabel(lines[sel][5]);
         ladderRead.innerHTML = T('sp.ladder.sel.' + mode, { nm: wl.toFixed(1), lo: lo.toFixed(2), hi: hi.toFixed(2), c: Tp(colorKey(wl)) });
-        note3d.innerHTML = (q1 && q2 && q1.n === q2.n && q1.l !== q2.l ? T('sp.ladder.same', { n: q1.n }) + ' ' : '') + T('sp.ladder.3d');     // 長的說明放進「ⓘ 說明」
+        note3d.innerHTML = (lo > 0.01 ? T('sp.ladder.excited') + ' ' : '') + (q1 && q2 && q1.n === q2.n && q1.l !== q2.l ? T('sp.ladder.same', { n: q1.n }) + ' ' : '') + T('sp.ladder.3d');     // 長的說明放進「ⓘ 說明」
       }
     }
+    fitRead();
     if (sel < 0) read.innerHTML = `<span class="rd-main">${T('sp.tap')}</span>`;
     else {
       const [wl, I] = lines[sel], strength = I > 0.5 ? 'strong' : I > 0.1 ? 'mid' : 'weak';
@@ -108,10 +118,10 @@ function mountSpectrum(box, sym, onSelect = () => {}) {
   draw();
   // 面板大小改變(切分頁、說明展開/收起、旋轉手機)時,依新的大小重畫
   const ro = new ResizeObserver(() => {
-    const f = fit();
+    const f = fit(); fitRead();
     if (Math.abs((strip.clientWidth || 320) - lastW) >= 1 || (ladder && Math.abs((f ? Math.max(100, ladder.clientHeight) : 190) - lastLH) >= 1)) draw();
   });
-  ro.observe(strip); if (ladder) ro.observe(ladder);
+  ro.observe(strip); if (ladder) { ro.observe(ladder); ro.observe(ladderBox); }
   return () => { ro.disconnect(); removeEventListener('keydown', onKey); onSelect(null); };
 }
 
@@ -268,6 +278,11 @@ export function mount(container, z, { go }) {
         const o = new CSS2DObject(d); o.position.set(side * r, 0, 0); outerShell.g.add(o); jump.labels.push(o);
       }
     });
+    if (plan.rLo > outerShell.R + 0.05) {                          // 這條線的「下層」不是電子平常待的那一圈(例如氫的可見光是 n=3,4…→2,不是回到 n=1):把原本那一圈標成「平常位置」,才不會像是憑空多出軌道
+      const d = document.createElement('div'); d.className = 'label3d'; d.innerHTML = T('sp.ground'); d.style.cssText = 'font-size:12px;color:#bfe3ff';
+      const o = new CSS2DObject(d); o.position.set(0, 0, outerShell.R); outerShell.g.add(o); jump.labels.push(o);
+      plan.ground = true;
+    }
     // 同一顆電子的兩個影子:原本的電子留在下軌道,另外在上軌道放一個(材質各自複製,才能各自調濃淡)
     jump.origMat = outerElectron.m.material;
     jump.matLow = jump.origMat.clone(); jump.matLow.transparent = true; outerElectron.m.material = jump.matLow;

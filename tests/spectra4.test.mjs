@@ -37,3 +37,27 @@ test('示意的線不會混進「最亮的幾條線」階梯圖,只有被選到�
   const plan = jumpPlan(P[i], { baseR: 3, nGround: 3 });
   assert.ok(plan && plan.rHi > plan.rLo);
 });
+
+test('說明裡有「為什麼跳的是最外層電子」的解釋(中英文都有),並顯示在說明面板', async () => {
+  const fs = await import('node:fs');
+  const zh = fs.readFileSync(new URL('../src/i18n/zh.js', import.meta.url), 'utf8'), en = fs.readFileSync(new URL('../src/i18n/en.js', import.meta.url), 'utf8');
+  const av = fs.readFileSync(new URL('../src/scenes/AtomView.js', import.meta.url), 'utf8');
+  assert.match(zh, /'sp\.why': '為什麼跳的是最外層的電子/); assert.match(en, /'sp\.why': 'Why is it the outermost/);
+  assert.match(av, /<p class="spec-why">\$\{T\('sp\.why'\)\}<\/p>/);
+});
+
+test('下層不是平常那一圈時(氫的巴耳末線等),3D 會把原本那圈標成「平常位置」並解釋,不會像憑空多出軌道', async () => {
+  const fs = await import('node:fs');
+  const av = fs.readFileSync(new URL('../src/scenes/AtomView.js', import.meta.url), 'utf8');
+  assert.match(av, /plan\.rLo > outerShell\.R \+ 0\.05/); assert.match(av, /T\('sp\.ground'\)/); assert.match(av, /T\('sp\.ladder\.excited'\)/);
+  // 氫:所有可見線的下能階都不是基態,所以每一條都會走到這個分支
+  const H = SPECTRA.H.lines; assert.ok(H.every(l => l[2] > 0.01));
+});
+
+test('手機:階梯圖下方說明放不下時整行收起來(.tight),不會被切掉一半(開注音後字比較高)', async () => {
+  const fs = await import('node:fs');
+  const av = fs.readFileSync(new URL('../src/scenes/AtomView.js', import.meta.url), 'utf8'), css = fs.readFileSync(new URL('../src/mobile.css', import.meta.url), 'utf8');
+  assert.match(av, /function fitRead\(\)/); assert.match(av, /ladderBox\.clientHeight < 100 \+ ladderRead\.scrollHeight/);   // 只看格子高度和說明自然高度,不看階梯圖現在多高 → 不會來回跳動
+  assert.match(av, /ro\.observe\(ladderBox\)/);
+  assert.match(css, /\.spec-ladder-box\.tight \.spec-ladder-read \{ display: none; \}/);
+});
