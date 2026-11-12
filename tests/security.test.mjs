@@ -100,3 +100,11 @@ test('產生的資料庫裡,CIF 衍生的出處不含 HTML 特殊字元', async 
   const { STRUCTURES } = await import('../src/data/generated/db.js');
   for (const [id, s] of Object.entries(STRUCTURES)) assert.ok(!/[<>]/.test(s.source), `${id} 的出處含有 < 或 >`);
 });
+
+test('手機用的 Tailscale 開發伺服器:只綁 Tailscale 位址(100.64.0.0/10),不綁 0.0.0.0,不對外', () => {
+  const s = read('scripts/dev-tailscale.mjs');
+  assert.match(s, /host:\s*ip/);
+  assert.match(s, /\+m\[1\]\s*<\s*64\s*\|\|\s*\+m\[1\]\s*>\s*127/);        // 位址不在 100.64.0.0/10 就拒絕啟動
+  assert.ok(!/0\.0\.0\.0|host:\s*true/.test(s));
+  assert.equal(pkg.scripts['dev:tailscale'], 'node scripts/dev-tailscale.mjs');
+});

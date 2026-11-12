@@ -55,7 +55,16 @@ export function mount(container, startId) {
     const desk = !isNarrow();
     const usableW = stage.el.clientWidth - (desk ? side.offsetWidth + list.offsetWidth + 40 : 0);
     const fit = Math.tan((stage.camera.fov * Math.PI) / 360) * Math.min(1, usableW / Math.max(1, stage.el.clientHeight));
-    stage.camera.position.set(0, R * 0.3, Math.max(9, ((R + 0.6) / fit) * 1.15));
+    // 距離依分子大小自動算,讓分子佔滿畫面;下限避免小分子(H2、O2)被拉得太近(手機的 3D 區域小,下限更低)
+    const minDist = desk ? 6 : 2.3, pad = desk ? 0.6 : 0.4, margin = desk ? 1.15 : 1.05;   // 手機:留白小一點,分子更滿版
+    let dist = ((R + pad) / fit) * margin;
+    if (!desk) {                       // 手機:3D 區域是寬扁的,橫向與縱向分開算(分子繞 y 軸旋轉,橫向取 x-z 平面的半徑)
+      const t = Math.tan((stage.camera.fov * Math.PI) / 360), aspect = stage.el.clientWidth / Math.max(1, stage.el.clientHeight);
+      let rxz = 0, ry = 0;
+      current.userData.atoms.forEach(m => { rxz = Math.max(rxz, Math.hypot(m.position.x, m.position.z) + m.scale.x); ry = Math.max(ry, Math.abs(m.position.y) + m.scale.x); });
+      dist = Math.max((ry + pad) / t, (rxz + pad) / (t * Math.min(aspect, 1.6))) * margin;   // 橫向最多只利用 1.6 倍高度,留一點邊
+    }
+    stage.camera.position.set(0, R * 0.3, Math.max(minDist, dist));
     if (stage.controls) {
       stage.controls.target.set(0, 0, 0);
       stage.controls.autoRotate = true; stage.controls.autoRotateSpeed = 1.2;

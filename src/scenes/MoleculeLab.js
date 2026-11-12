@@ -55,7 +55,7 @@ export function mount(container) {
   });
   const sep = document.createElement('span'); sep.style.flex = '1'; tray.appendChild(sep);
   const bScissors = document.createElement('button');
-  bScissors.className = 'btn alt'; bScissors.innerHTML = '✂️ ' + T('lab.scissors');
+  bScissors.className = 'btn alt'; bScissors.innerHTML = '✂️<span class="lbl"> ' + T('lab.scissors') + '</span>'; bScissors.setAttribute('aria-label', Tp('lab.scissors'));
   // 剪刀模式:開啟時按鈕變黃;加新原子、清空、點畫面空白處都會自動關閉,不用再點一次剪刀
   function setScissors(on, say = false) {
     scissors = on;
@@ -65,7 +65,7 @@ export function mount(container) {
   }
   bScissors.onclick = () => setScissors(!scissors, true);
   const bClear = document.createElement('button');
-  bClear.className = 'btn alt'; bClear.innerHTML = '🗑️ ' + T('lab.clear');
+  bClear.className = 'btn alt'; bClear.innerHTML = '🗑️<span class="lbl"> ' + T('lab.clear') + '</span>'; bClear.setAttribute('aria-label', Tp('lab.clear'));
   bClear.onclick = () => { setScissors(false); clearAll(); };
   tray.append(bScissors, bClear);
 

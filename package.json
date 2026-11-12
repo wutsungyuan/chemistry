@@ -10,7 +10,9 @@
     "prebuild": "npm run build-db",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "node --test \"tests/**/*.test.mjs\""
+    "test": "node --test \"tests/**/*.test.mjs\"",
+    "predev:tailscale": "npm run build-db",
+    "dev:tailscale": "node scripts/dev-tailscale.mjs"
   },
   "dependencies": {
     "pinyin-pro": "3.29.5",

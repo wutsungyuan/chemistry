@@ -1,4 +1,5 @@
 import './style.css';
+import './mobile.css';
 import { mountDeco } from './ui/deco.js';
 import { mountMascot, mascotScene } from './ui/mascot.js';
 import { T, state, setLang, setZhuyin, onLangChange } from './i18n/index.js';
@@ -33,7 +34,7 @@ function renderChrome() {
   nav.innerHTML = '';
   NAV.forEach(([key, label, icon]) => {
     const b = document.createElement('button');
-    b.innerHTML = `<span class="ico">${icon}</span>${T(label)}`;
+    b.innerHTML = `<span class="ico">${icon}</span><span class="lbl">${T(label)}</span>`;
     if (key === name || (key === 'table' && name === 'atom')) b.classList.add('active');
     b.onclick = () => go(key);
     nav.appendChild(b);
