@@ -126,7 +126,11 @@
   .quiz { margin: 8px; padding: 14px; }
   .quiz .opts button { min-height: 52px; }
 
-  /* 週期表:格子縮到適合手指,左右滑動;說明與家族標籤固定在左邊,不會跟著捲走 */
+}
+
+/* 週期表(只有手機):格子縮到只剩符號,適合手指,左右滑動;說明與家族標籤固定在左邊,不會跟著捲走。
+   iPad 與桌面的格子夠大,照常顯示中文名稱和注音,所以這一段不套用在 iPad。 */
+@media (max-width: 600px) {
   .pt-wrap { min-width: 0; width: max-content; padding: 8px 10px 24px; }
   .pt-wrap > h2, .pt-wrap > p { display: none; }
   .pt-legend, .cat-info { position: sticky; left: 10px; width: calc(100vw - 20px); max-width: calc(100vw - 20px); }

@@ -1,5 +1,4 @@
 import { ELEMENTS, CATEGORIES } from '../data/elements.js';
-import { isNarrow } from '../ui/layout.js';
 import { T, L, LH, render } from '../i18n/index.js';
 import { progress } from '../game/store.js';
 import { SPECTRA } from '../data/generated/spectra.js';
@@ -34,13 +33,14 @@ export function mount(container, _arg, { go }) {
 
   const grid = document.createElement('div');
   grid.className = 'pt-grid';
+  const phoneOnly = matchMedia('(max-width: 600px)').matches;   // 只有手機的格子小到只放符號;iPad 與桌面顯示中文名稱(含注音)
   const cells = [], holders = [];
   ELEMENTS.forEach(e => {
     const b = document.createElement('button');
     b.className = 'el';
     b.style.setProperty('--c', CATEGORIES[e.cat].color);
     b.style.gridRow = e.row; b.style.gridColumn = e.col;
-    b.innerHTML = `<span class="z">${e.z}</span><span class="sym">${e.sym}</span><span class="nm">${isNarrow() ? L(e.name) : LH(e.name)}</span>`;
+    b.innerHTML = `<span class="z">${e.z}</span><span class="sym">${e.sym}</span><span class="nm">${phoneOnly ? L(e.name) : LH(e.name)}</span>`;
     b.onclick = () => go('atom', e.z);
     grid.appendChild(b); cells.push([e, b]);
     if (!(SPECTRA[e.sym]?.lines.length)) b.classList.add('nospec');

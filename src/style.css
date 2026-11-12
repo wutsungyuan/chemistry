@@ -430,3 +430,9 @@ body{background:
 .spec-info-btn,.spec-more-head{display:none}
 .spec-why{margin:8px 0 0;padding:8px 10px;border-radius:10px;background:var(--panel2);font-size:.9rem;line-height:1.6}
 .spec-more{display:block}
+/* iPad 直式(寬 601–1100px):18 欄塞不下可讀的中文名稱+注音,所以格子放大到約 56px,整張表左右滑動(和手機一樣);橫式(更寬)放得下就不用滑 */
+@media (min-width:601px) and (max-width:1100px){
+  .pt-wrap{min-width:1060px}
+  .pt-grid .el .nm{font-size:.74rem}
+  .pt-grid .el .sym{font-size:1.2rem}
+}
