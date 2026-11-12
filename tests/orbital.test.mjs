@@ -111,3 +111,38 @@ test('純態不晃:<z>(t) = 0;密度的時間平均 = 兩個狀態密度的加�
   const want = a * a * integrate(r => radialProb('2p', r), 0, 8, 4000) + b * b * integrate(r => radialProb('3d', r), 0, 8, 4000);
   assert.ok(Math.abs(in2 / N - want) < 0.02, `半徑 8 內 ${in2 / N} vs ${want}`);
 });
+
+import { ALL_IDS, COMPLEX_IDS, STATES as ST, selectionTable, peakRadius, flowOmega } from '../src/data/hydrogenOrbital.js';
+
+test('第三期:m ≠ 0 的複數軌域(2p₊₁、3d₊₂)同樣歸一化、平均半徑符合解析式,雲的半徑範圍足夠', () => {
+  for (const id of COMPLEX_IDS) {
+    assert.ok(Math.abs(integrate(r => radialProb(id, r), 0, 200, 20000) - 1) < 1e-4, id);
+    assert.ok(Math.abs(integrate(c => psiAt(id, 1, c) ** 2 / radialProb(id, 1), -1, 1, 4000) * 2 * Math.PI - 1) < 1e-4, id + ' 角度歸一化');
+    assert.ok(Math.abs(integrate(r => r * radialProb(id, r), 0, 200, 20000) - meanRadius(id)) < 1e-3, id + ' <r>');
+    assert.ok(integrate(r => radialProb(id, r), 0, cloudRadius(id), 20000) > 0.999, id + ' 雲半徑');
+  }
+  assert.ok(ALL_IDS.length === 6 && ST['2p+1'].m === 1 && ST['3d+2'].m === 2);
+});
+
+test('最可能的半徑:l = n−1 的軌域 = n² a₀(1s:1、2p:4、3d:9);2s 有兩個峰,最高的在 (3+√5) = 5.24 a₀', () => {
+  assert.ok(Math.abs(peakRadius('1s') - 1) < 0.01); assert.ok(Math.abs(peakRadius('2p') - 4) < 0.01); assert.ok(Math.abs(peakRadius('3d') - 9) < 0.02);
+  assert.ok(Math.abs(peakRadius('2s') - (3 + Math.sqrt(5))) < 0.02);
+  assert.ok(Math.abs(peakRadius('2p+1') - 4) < 0.01 && Math.abs(peakRadius('3d+2') - 9) < 0.02);        // 徑向部分只由 n、l 決定,和 m 無關
+});
+
+test('選擇定則:偶極矩陣元 |D|:1s↔2p = 0.7449、2s↔2p = 3、2p↔3d = 2.452;Δl ≠ ±1 的 D = 0;同一層(n 相同)能量相同,不會晃', () => {
+  const t = Object.fromEntries(selectionTable().map(r => [r.a + '-' + r.b, r]));
+  assert.ok(Math.abs(t['1s-2p'].D - 0.7449) < 1e-3, t['1s-2p'].D); assert.ok(Math.abs(t['2s-2p'].D - 3) < 1e-3); assert.ok(Math.abs(t['2p-3d'].D - 2.4519) < 2e-3);
+  for (const k of ['1s-2s', '1s-3d', '2s-3d']) { assert.ok(t[k].D < 1e-6, k); assert.equal(t[k].reason, 'deltaL'); assert.equal(t[k].glows, false); }
+  assert.equal(t['2s-2p'].reason, 'sameE'); assert.equal(t['2s-2p'].glows, false);
+  assert.deepEqual(Object.entries(t).filter(([, r]) => r.glows).map(([k]) => k).sort(), ['1s-2p', '2p-3d']);
+});
+
+test('機率流與角動量:m = 1 的 2p 雲繞 z 軸、比 m = 0 的更貼近 xy 平面(<x²+y²>/<z²> = 4);ω = m/ρ² 時 L_z = ρ²ω = m', () => {
+  const N = 60000, q = sampleCloud('2p+1', N, makeRng(41)); let sz = 0, sr = 0, sphi = 0, sphi2 = 0;
+  for (let i = 0; i < N; i++) { const x = q.pos[3 * i], y = q.pos[3 * i + 1], z = q.pos[3 * i + 2]; sz += z * z; sr += x * x + y * y; const ph = Math.atan2(y, x); sphi += Math.cos(ph); sphi2 += Math.sin(ph); }
+  assert.ok(Math.abs(sr / sz - 4) < 0.2, `比值 ${sr / sz}`);
+  assert.ok(Math.abs(sphi / N) < 0.02 && Math.abs(sphi2 / N) < 0.02, 'φ 要均勻');
+  for (const [m, rho] of [[1, 3], [2, 5.5], [-1, 0.8]]) assert.ok(Math.abs(rho * rho * flowOmega(m, rho) - m) < 1e-12);
+  assert.ok(flowOmega(1, 2) > 0 && flowOmega(-1, 2) < 0, '方向由 m 的正負決定');
+});

@@ -21,8 +21,8 @@ test('入口只在氫的光譜分頁(氫有精確解);回光譜會回到氫的�
   assert.match(atom, /export function setNextTab/);
 });
 
-test('國小/國中兩層;預設立體,可切換「切開看」;切開時鏡頭正對剖面、不自動旋轉', () => {
-  assert.match(cloud, /const LEVELS = \['kid', 'teen'\]/);
+test('國小/國中/高中三層;預設立體,可切換「切開看」;切開時鏡頭正對剖面、不自動旋轉', () => {
+  assert.match(cloud, /const LEVELS = \['kid', 'teen', 'high'\]/);
   assert.match(cloud, /slice = false/);                                        // 預設立體;切開看是選項
   assert.match(cloud, /if \(sliced\) stage\.camera\.position\.set\(0, 0, L\)/);       // 切開看時鏡頭正對剖面,不用再轉
   assert.match(cloud, /localClippingEnabled = true/);
@@ -31,8 +31,9 @@ test('國小/國中兩層;預設立體,可切換「切開看」;切開時鏡頭�
 });
 
 test('點雲數據來自物理公式取樣(同一狀態同一個種子,每次一樣),節點與正負號用顏色表示', () => {
-  assert.match(cloud, /sampleCloud\(id, MAX_POINTS, makeRng\(1000 \+ STATE_IDS\.indexOf\(id\)\)\)/);
+  assert.match(cloud, /sampleCloud\(id, MAX_POINTS, makeRng\(1000 \+ \[\.\.\.STATE_IDS, \.\.\.COMPLEX_IDS\]\.indexOf\(id\)\)\)/);
   assert.match(cloud, /cur\.sign\[i\] > 0 \? WARM : COOL/);
+  assert.match(cloud, /HUES\[Math\.floor/);                                       // 複數軌域用相位色環
 });
 
 test('所有 cloud.* 文字中英文都有,而且沒有漏掉的變數', () => {

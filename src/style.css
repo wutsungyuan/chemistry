@@ -466,3 +466,15 @@ body{background:
 .cloud-side[data-mode=mix] .cl-actions [data-act=one],.cloud-side[data-mode=mix] .cl-actions [data-act=hundred],.cloud-side[data-mode=mix] .cl-actions [data-act=auto],.cloud-side[data-mode=mix] .cl-actions [data-act=all],.cloud-side[data-mode=mix] .cl-actions [data-act=clear],.cloud-side[data-mode=mix] .cl-count{display:none}
 .cloud-side[data-level=kid][data-mode=mix] .cl-slice{display:inline-block}
 .cloud-side .cl-actions .btn{white-space:nowrap;line-height:1.5}
+
+/* ---- 電子雲:高中層 ---- */
+.cloud-side:not([data-level=high]) .cl-complex{display:none}
+.cloud-side[data-level=high] [data-act=one],.cloud-side[data-level=high] [data-act=hundred]{display:none}
+.cl-formula{background:rgba(255,255,255,.06);border-radius:10px;padding:8px 12px;margin:0 0 8px;font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:.95em;line-height:1.9;overflow-x:auto}
+.cl-formula div{white-space:nowrap}
+.cl-graph{margin:0 0 6px}
+.cl-graph svg{width:100%;height:auto;display:block}
+.cl-table{width:100%;border-collapse:collapse;font-size:.85rem;margin:0 0 8px}
+.cl-table th,.cl-table td{padding:3px 6px;text-align:left;border-bottom:1px solid rgba(255,255,255,.12)}
+.cl-table tr.yes td{color:var(--good)}
+.cl-table tr.no td{color:var(--muted)}

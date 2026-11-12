@@ -20,6 +20,10 @@ const ANGULAR = {
   s: () => 1 / Math.sqrt(4 * PI),
   p: c => Math.sqrt(3 / (4 * PI)) * c,
   d: c => Math.sqrt(5 / (16 * PI)) * (3 * c * c - 1),
+  // m ≠ 0 的「複數」軌域:ψ = R · Y_l^m,Y_l^m ∝ sin^|m|θ · e^{imφ}。這裡只放「大小」|Y|(與 φ 無關),
+  // 相位 e^{imφ} 另外處理(上色與機率流用)。|Y_1^1| = √(3/8π) sinθ,|Y_2^2| = √(15/32π) sin²θ。
+  p1: c => Math.sqrt(3 / (8 * PI)) * Math.sqrt(Math.max(0, 1 - c * c)),
+  d2: c => Math.sqrt(15 / (32 * PI)) * (1 - c * c),
 };
 
 /** 可以畫的狀態。E = −13.6/n² eV;nodesR = 徑向節點(電子「絕不出現」的球面)半徑(a0) */
@@ -28,8 +32,14 @@ export const STATES = {
   '2s': { id: '2s', n: 2, l: 0, m: 0, shape: 's', E: -3.4014, nodesR: [2] },
   '2p': { id: '2p', n: 2, l: 1, m: 0, shape: 'p', E: -3.4014, nodesR: [] },
   '3d': { id: '3d', n: 3, l: 2, m: 0, shape: 'd', E: -1.5117, nodesR: [] },
+  // 高中層:m ≠ 0 的複數軌域(角動量沿 z 軸 = mħ,有環繞 z 軸的機率流)。徑向部分和同 n、l 的 m=0 軌域一樣。
+  '2p+1': { id: '2p+1', n: 2, l: 1, m: 1, shape: 'p1', rad: '2p', E: -3.4014, nodesR: [], complex: true },
+  '3d+2': { id: '3d+2', n: 3, l: 2, m: 2, shape: 'd2', rad: '3d', E: -1.5117, nodesR: [], complex: true },
 };
-export const STATE_IDS = Object.keys(STATES);
+export const STATE_IDS = ['1s', '2s', '2p', '3d'];                 // 國小/國中(m = 0 的實數軌域)
+export const COMPLEX_IDS = ['2p+1', '3d+2'];                        // 高中(m ≠ 0,複數,有相位與機率流)
+export const ALL_IDS = [...STATE_IDS, ...COMPLEX_IDS];
+const radKey = id => STATES[id].rad ?? id;
 
 /** 氫能階 E_n = −13.6057/n² eV(沒有精細結構) */
 export const levelEV = n => -13.605693 / (n * n);
@@ -37,7 +47,7 @@ export const levelEV = n => -13.605693 / (n * n);
 /** ψ(r,θ,φ) 在球座標 (r, cosθ) 的值(m = 0 時與 φ 無關) */
 export function psiAt(id, r, cosT) {
   const s = STATES[id];
-  return RADIAL[id](r) * ANGULAR[s.shape](cosT);
+  return RADIAL[radKey(id)](r) * ANGULAR[s.shape](cosT);      // 複數軌域傳回的是「大小」|ψ|
 }
 /** ψ 在直角座標 (x,y,z)(a0)的值 */
 export function psiXYZ(id, x, y, z) {
@@ -46,7 +56,7 @@ export function psiXYZ(id, x, y, z) {
 }
 
 /** 徑向機率密度 P(r) = r² R² (每單位 a0 找到電子在距離 r 的機率);∫P dr = 1 */
-export const radialProb = (id, r) => r * r * RADIAL[id](r) ** 2;
+export const radialProb = (id, r) => r * r * RADIAL[radKey(id)](r) ** 2;
 
 /** 解析的平均半徑 <r> = (3n² − l(l+1)) / 2  (a0) */
 export const meanRadius = id => { const { n, l } = STATES[id]; return (3 * n * n - l * (l + 1)) / 2; };
@@ -59,7 +69,7 @@ export function integrate(f, a, b, steps = 4000) {
 }
 
 /** 這個狀態的雲「夠大」的半徑(包含 99.9% 機率的半徑上限,a0) */
-export function cloudRadius(id) { return { '1s': 12, '2s': 32, '2p': 30, '3d': 52 }[id]; }
+export function cloudRadius(id) { return { '1s': 12, '2s': 32, '2p': 30, '3d': 52, '2p+1': 30, '3d+2': 52 }[id]; }
 
 /** 建立「由機率反推位置」的查表(累積分布) */
 function cdfTable(f, a, b, steps) {
@@ -140,9 +150,32 @@ export function composeMix(pool2, pool3, N, m) {
   return { pos, c, a, b };
 }
 
-/** 偶極矩陣元 D = ∫ ψ_2p · z · ψ_3d dV(a₀)。<z>(t) = 2ab·D·cos(ωt)。數值積分(徑向 × 角度)。 */
-export function dipoleD() {
-  const rad = integrate(r => RADIAL['2p'](r) * RADIAL['3d'](r) * r ** 3, 0, 120, 12000);
-  const ang = 2 * Math.PI * integrate(c => ANGULAR.p(c) * ANGULAR.d(c) * c, -1, 1, 4000);
+/** 偶極矩陣元 D = ∫ ψ_A · z · ψ_B dV(a₀,m=0 的實數軌域)。<z>(t) = 2ab·D·cos(ωt)。數值積分(徑向 × 角度)。D = 0 就不會發光。 */
+export function dipole(idA, idB) {
+  const rad = integrate(r => RADIAL[radKey(idA)](r) * RADIAL[radKey(idB)](r) * r ** 3, 0, 160, 16000);
+  const ang = 2 * Math.PI * integrate(c => ANGULAR[STATES[idA].shape](c) * ANGULAR[STATES[idB].shape](c) * c, -1, 1, 4000);
   return rad * ang;
+}
+export const dipoleD = () => dipole('2p', '3d');
+
+/** 選擇定則表:四個 m=0 軌域兩兩之間的偶極矩陣元 |D|,以及是否能發光(D ≠ 0 ⇔ Δl = ±1;同一層 n 相同的兩個能量相同,不會晃) */
+export function selectionTable() {
+  const out = [];
+  for (let i = 0; i < STATE_IDS.length; i++) for (let j = i + 1; j < STATE_IDS.length; j++) {
+    const a = STATE_IDS[i], b = STATE_IDS[j], D = Math.abs(dipole(a, b));
+    const dl = Math.abs(STATES[a].l - STATES[b].l), sameE = STATES[a].n === STATES[b].n, hasD = D > 1e-6;
+    out.push({ a, b, D, dl, glows: hasD && !sameE, reason: !hasD ? 'deltaL' : sameE ? 'sameE' : 'ok' });      // deltaL:Δl ≠ ±1,偶極矩陣元為 0;sameE:能量相同,不會晃
+  }
+  return out;
+}
+
+/** 機率流(高中層):定態 ψ = R·Θ·e^{imφ} 的機率流 J = (ħ/μ)·Im(ψ*∇ψ) 只有 φ 方向:J_φ = (ħ m /(μ ρ))·|ψ|²,ρ = r sinθ(離 z 軸的距離)。
+ *  粒子沿 φ 方向的角速度 ω = v/ρ = (ħ/μ)·m/ρ²(原子單位 ħ = μ = 1 時,ω = m/ρ²)。m = 0 的實數軌域沒有流動。 */
+export const flowOmega = (m, rho) => m / (rho * rho);
+
+/** 最可能的半徑(徑向機率 P(r) 的最高點,a₀):取格點最大值 */
+export function peakRadius(id) {
+  let best = 0, bestP = -1; const R = cloudRadius(id);
+  for (let i = 1; i <= 4000; i++) { const r = (i / 4000) * R, v = radialProb(id, r); if (v > bestP) { bestP = v; best = r; } }
+  return best;
 }
