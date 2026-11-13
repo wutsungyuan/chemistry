@@ -110,7 +110,7 @@ export function mount(container) {
       ? `<div class="mi-card"><div class="mi-title">🧪 ${T('lab.mission.free')}</div><p class="mi-sub">${T('lab.mission.freehint', { n: LAB_TARGETS.length })}</p></div>`
       : `<div class="mi-card"><div class="mi-title">🏆 ${T('lab.mission.alldone')}</div><p class="mi-sub">${T('lab.mission.freehint', { n: LAB_TARGETS.length })}</p></div>`;
     const m = curM, have = haveNow(), done = built.has(m.id), [lq, rq] = q(state), stuck = stuckFormula();
-    const toks = Object.entries(compOf(m)).map(([sy, n]) => { const h = have[sy] || 0, ok = h >= n; return `<span class="mi-tok${ok ? ' ok' : ''}"><i style="background:${BY_SYMBOL[sy].color}">${sy}</i><b>×${n}</b><em>${ok ? '✔' : `${h}/${n}`}</em></span>`; }).join('');
+    const toks = Object.entries(compOf(m)).map(([sy, n]) => { const h = have[sy] || 0, ok = h === n, over = h > n; return `<span class="mi-tok${ok ? ' ok' : over ? ' over' : ''}"><i style="background:${BY_SYMBOL[sy].color}">${sy}</i><b>×${n}</b><em>${ok ? '✔' : over ? T('lab.mission.over', { n: h - n }) : `${h}/${n}`}</em></span>`; }).join('');
     return `<div class="mi-card${done ? ' done' : ''}">
       <div class="mi-title">🎯 ${T('lab.mission.make')}${lq}<b>${LH(m.name)}</b>${rq}</div>
       ${done ? `<div class="mi-done">🎉 ${T('lab.mission.done')} ${formulaHTML(m.display || m.formula)}</div>` : `<div class="mi-toks">${toks}</div>`}

@@ -1,8 +1,8 @@
 export default {
   brand: '⚗️ Kids Chemistry Park',
-  'nav.table': 'Periodic Table',
+  'nav.table': 'Elements',
   'nav.gallery': 'Molecules',
-  'nav.lab': 'Molecule Lab',
+  'nav.lab': 'Lab',
   'nav.reaction': 'Reactions',
   'nav.matter': 'Matter',
   'nav.quiz': 'Quiz',
@@ -127,6 +127,7 @@ export default {
   'lab.wants': '{sym} wants to hold {n} more hand(s)!',
   'lab.unknown': 'This combo is not a mission molecule yet. Snip it apart and try again, or tap Hint on the mission card!',
   'lab.scissors.on': 'Scissors on! Tap an atom to cut its bonds, or a lone atom to remove it. Tap empty space to turn them off.',
+  'lab.mission.over': '{n} too many',
   'lab.howto': 'Bonds to make: {list}.',
   'lab.order.2': ' (double bond)', 'lab.order.3': ' (triple bond)',
   'lab.add': 'Add {nm} atom',
