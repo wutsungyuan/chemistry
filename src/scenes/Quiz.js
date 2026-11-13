@@ -1,7 +1,7 @@
 import { ELEMENTS } from '../data/elements.js';
 import { GALLERY } from '../data/molecules.js';
 import { BADGES, update, progress, badgeIds } from '../game/store.js';
-import { T, Tp, L, LH, render, formulaHTML } from '../i18n/index.js';
+import { T, Tp, L, render, formulaHTML } from '../i18n/index.js';
 import { toast } from '../ui/toast.js';
 import { pick, shuffle } from '../ui/util.js';
 import { SPECTRA } from '../data/generated/spectra.js';

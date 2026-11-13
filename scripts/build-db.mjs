@@ -19,7 +19,6 @@ const CIF_DIR = path.join(root, 'src/data/db/cif');
 
 const errors = [], warns = [];
 const err = (id, msg) => errors.push(`✗ ${id}: ${msg}`);
-const warn = (id, msg) => warns.push(`! ${id}: ${msg}`);
 
 // ---- 1) 清單一致 ----
 const ids = records.map(r => r.id);

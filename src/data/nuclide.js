@@ -2,7 +2,6 @@
 // 數據來自 src/data/generated/nuclides.js(IAEA LiveChart);這裡只做換算,測試會用精確值檢查。
 import { makeRng } from './hydrogenOrbital.js';
 
-export const MODES = ['B-', 'B+', 'A', 'SF', 'IT', 'P', 'N'];
 export const SEC = { min: 60, h: 3600, d: 86400, y: 365.25 * 86400 };
 
 /** 一筆核種 → 物件。row = [n, 半衰期秒(0=穩定), 豐度%, 衰變代碼, 該衰變%, 原子質量u] */

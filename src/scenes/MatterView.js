@@ -1,4 +1,4 @@
-import { T, Tp, L, LH, formulaText, state } from '../i18n/index.js';
+import { T, Tp, L, LH, formulaText } from '../i18n/index.js';
 import { getLevel } from '../ui/level.js';
 import { levelChipsHTML, bindLevelChips } from '../ui/levelBar.js';
 import { createParticleBox } from '../ui/particles.js';
