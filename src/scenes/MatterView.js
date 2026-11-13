@@ -2,7 +2,7 @@ import { T, Tp, L, LH, formulaText } from '../i18n/index.js';
 import { getLevel } from '../ui/level.js';
 import { createParticleBox } from '../ui/particles.js';
 import { SUBSTANCES, HEAT_VALID_MAX_C, substance, phases, stateAt, positionOf, heatNeeded, changeKind, pickRound } from '../data/matter.js';
-import { update } from '../game/store.js';
+import { update, badgeName } from '../game/store.js';
 import { toast } from '../ui/toast.js';
 
 // 物質的變化:① 三態(高中再加電漿)與溫度:拉滑桿加熱/冷卻,看粒子怎麼動;② 物理變化還是化學變化?的判斷遊戲。
@@ -120,7 +120,7 @@ export function mount(container, arg) {
       b.onclick = () => {
         const c = quiz.items[quiz.i]; quiz.answer = b.dataset.a;
         const right = quiz.answer === c.answer; if (right) quiz.right++;
-        update(d => { if (right) d.changeRight = (d.changeRight || 0) + 1; }).forEach(bd => toast(`${bd.icon} ${Tp('badge.new')}${L(bd.name)}`));
+        update(d => { if (right) d.changeRight = (d.changeRight || 0) + 1; }).forEach(bd => toast(`${bd.icon} ${Tp('badge.new')}${L(badgeName(bd, getLevel()))}`));
         render();
       };
     });

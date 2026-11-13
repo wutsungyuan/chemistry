@@ -46,6 +46,8 @@ export function toZhuyin(py) {
 
 const cache = new Map();
 const isHan = c => /[一-鿿]/.test(c);
+// 超重元素的罕用字不在 pinyin-pro 的字典裡(也不在基本漢字區):𨧀、𨭎、𨨏、𨭆、䥑(第 105~109 號),手動補上注音,才不會在國小版漏字
+const RARE = { '𨧀': 'ㄉㄨˋ', '𨭎': 'ㄒㄧˇ', '𨨏': 'ㄅㄛ', '𨭆': 'ㄏㄟ', '䥑': 'ㄇㄞˋ' };
 
 // 注音直式顯示在字的右側:聲調符號在最右側中間,輕聲點在注音上方
 function zyHTML(c, z) {
@@ -65,7 +67,8 @@ export function rubyHTML(text) {
   try { py = pinyin(text, { type: 'array', toneType: 'num', v: true }); } catch { py = []; }
   let out = '';
   chars.forEach((c, i) => {
-    if (isHan(c) && py[i]) out += zyHTML(c, toZhuyin(py[i]));
+    if (RARE[c]) out += zyHTML(c, RARE[c]);
+    else if (isHan(c) && py[i]) out += zyHTML(c, toZhuyin(py[i]));
     else out += esc(FULL[c] && !(c === '.' && /\d/.test(chars[i - 1] || '') && /\d/.test(chars[i + 1] || '')) && /[一-鿿，。！？：；、（）「」]/.test(text) ? FULL[c] : c);
   });
   cache.set(text, out);

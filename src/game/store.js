@@ -29,3 +29,24 @@ export function update(fn) {
   return BADGES.filter(b => b.test(data) && !before.has(b.id));
 }
 export const addUnique = (arr, v) => { if (!arr.includes(v)) arr.push(v); };
+
+// 徽章名稱依階段:國小是原本的名字(BADGES 裡),國中、高中換成比較平實/正式的說法
+const BADGE_NAMES = {
+  'first-el': { teen: { zh: '元素探索者', en: 'Element Explorer' }, high: { zh: '元素初探', en: 'First Look at Elements' } },
+  'ten-el': { teen: { zh: '元素蒐集者', en: 'Element Collector' }, high: { zh: '元素通', en: 'Element Expert' } },
+  'first-mol': { teen: { zh: '分子建構者', en: 'Molecule Builder' }, high: { zh: '初次合成', en: 'First Synthesis' } },
+  'five-mol': { teen: { zh: '化學能手', en: 'Chemistry Pro' }, high: { zh: '分子合成能手', en: 'Synthesis Specialist' } },
+  water: { teen: { zh: '水分子達人', en: 'Water Molecule Master' }, high: { zh: 'H₂O 合成者', en: 'H₂O Assembler' } },
+  ozone: { teen: { zh: '臭氧觀察者', en: 'Ozone Observer' }, high: { zh: 'O₃ 合成者', en: 'O₃ Assembler' } },
+  react3: { teen: { zh: '反應觀察員', en: 'Reaction Observer' }, high: { zh: '反應分析者', en: 'Reaction Analyst' } },
+  rainbow: { teen: { zh: '光譜觀察員', en: 'Spectrum Observer' }, high: { zh: '光譜分析者', en: 'Spectrum Analyst' } },
+  spec3: { teen: { zh: '光譜偵探', en: 'Spectrum Detective' }, high: { zh: '光譜鑑定者', en: 'Spectrum Identifier' } },
+  streak5: { teen: { zh: '答題高手', en: 'Quiz Master' }, high: { zh: '連續答對 5 題', en: '5 Correct in a Row' } },
+  change10: { teen: { zh: '變化判斷者', en: 'Change Judge' }, high: { zh: '物理/化學變化辨識者', en: 'Physical/Chemical Change Identifier' } },
+};
+/** 徽章名稱 {zh,en}:依階段(國小 = BADGES 裡的 name;沒有專屬名稱的退回 name) */
+export const badgeName = (b, level) => BADGE_NAMES[b.id]?.[level] || b.name;
+
+// 國小版沒有分子實驗室、反應劇場與光譜(ui/level.js 的 sceneAllowed / featureOn),靠這些功能才拿得到的徽章不列給國小,免得出現永遠解不開的鎖
+const KID_UNREACHABLE = new Set(['first-mol', 'five-mol', 'water', 'ozone', 'react3', 'rainbow', 'spec3']);
+export const badgesFor = level => (level === 'kid' ? BADGES.filter(b => !KID_UNREACHABLE.has(b.id)) : BADGES);

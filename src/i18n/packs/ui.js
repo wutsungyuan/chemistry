@@ -1,0 +1,33 @@
+// 各場景共用的小標籤與訊息的階段用語(原本是國小語氣)。key@teen / key@high 優先;沒有 @ 的在 zh.js / en.js。中英文放在一起,才不會漏翻。
+export default {
+  zh: {
+    'lab.made.msg': '你做出了{n}!',
+    'lab.made.msg@teen': '做出了{n}。', 'lab.made.msg@high': '已完成:{n}。',
+    'lab.mission.done@teen': '完成!', 'lab.mission.done@high': '完成',
+    'lab.mission.alldone@teen': '全部任務都完成了。', 'lab.mission.alldone@high': '所有任務皆已完成。',
+    'lab.full@teen': '桌面放不下了,先清空一些原子。', 'lab.full@high': '工作區已滿,請先清空部分原子。',
+    'lab.mission.make@teen': '組出', 'lab.mission.make@high': '組成',
+    'rx.slow@teen': '時間快轉中,真實的反應需要好幾天。', 'rx.slow@high': '時間已加速(真實反應需數日)。',
+    'quiz.badges@teen': '徽章', 'quiz.badges@high': '成就徽章',
+    'quiz.streak@high': '連續答對', 'quiz.best@high': '最佳連續答對',
+    'atom.say@teen': '朗讀', 'atom.say@high': '朗讀',
+    'atom.found@teen': '生活中的應用', 'atom.found@high': '常見的應用與化合物',
+    'atom.tapme@teen': '點一下看說明', 'atom.tapme@high': '點選查看說明',
+    'atom.in@teen': '常見於這些分子', 'atom.in@high': '存在於下列分子',
+  },
+  en: {
+    'lab.made.msg': 'You made {n}!',
+    'lab.made.msg@teen': 'Made {n}.', 'lab.made.msg@high': 'Completed: {n}.',
+    'lab.mission.done@teen': 'Done!', 'lab.mission.done@high': 'Complete',
+    'lab.mission.alldone@teen': 'All missions are done.', 'lab.mission.alldone@high': 'All missions completed.',
+    'lab.full@teen': 'The table is full. Clear some atoms first.', 'lab.full@high': 'The workspace is full. Please clear some atoms first.',
+    'lab.mission.make@teen': 'Build', 'lab.mission.make@high': 'Assemble',
+    'rx.slow@teen': 'Time is sped up; the real reaction takes days.', 'rx.slow@high': 'Time accelerated (the real reaction takes days).',
+    'quiz.badges@teen': 'Badges', 'quiz.badges@high': 'Achievements',
+    'quiz.streak@high': 'Current streak', 'quiz.best@high': 'Best streak',
+    'atom.say@teen': 'Read aloud', 'atom.say@high': 'Read aloud',
+    'atom.found@teen': 'Everyday uses', 'atom.found@high': 'Common uses and compounds',
+    'atom.tapme@teen': 'Tap for an explanation', 'atom.tapme@high': 'Select for an explanation',
+    'atom.in@teen': 'Found in these molecules', 'atom.in@high': 'Present in the following molecules',
+  },
+};

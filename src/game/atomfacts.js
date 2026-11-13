@@ -28,3 +28,8 @@ export function catDesc(cat, level) {
   const c = typeof cat === 'string' ? CATEGORIES[cat] : cat;
   return (level === 'teen' && c.descTeen) || (level === 'high' && c.descHigh) || c.desc;
 }
+
+/** 元素的生活小知識與用途依階段:factTeen / factHigh(useTeen / useHigh)優先,沒有就退回國中版、再退回 fact / use(國小說法) */
+const pickEl = (e, level, base) => (level === 'high' && (e[base + 'High'] || e[base + 'Teen'])) || (level === 'teen' && e[base + 'Teen']) || e[base];
+export const elFact = (e, level) => pickEl(e, level, 'fact');
+export const elUse = (e, level) => pickEl(e, level, 'use');

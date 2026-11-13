@@ -123,6 +123,7 @@ export default {
   'lab.missions': 'Missions',
   'lab.showrecipe': 'Show recipe hints',
   'lab.full': 'The table is full. Clear some atoms!',
+  'lab.made.msg': 'You made {n}!',
   'lab.made': 'You made ',
   'lab.wants': '{sym} wants to hold {n} more hand(s)!',
   'lab.unknown': 'This combo is not a mission molecule yet. Snip it apart and try again, or tap Hint on the mission card!',

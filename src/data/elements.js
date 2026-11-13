@@ -9,8 +9,10 @@ export const ELEMENTS = DB.elements.map(e => ({
   color: e.color ?? CATEGORIES[e.cat].color,                       // 沒有 CPK 配色的元素用分類色
   radius: e.radius ?? 0.5 + 0.06 * e.shells.length,                // 示意大小:沒寫的依殼層數估算
   fact: e.fact ?? null,
+  factTeen: e.factTeen ?? null, factHigh: e.factHigh ?? null,         // 國中/高中版的知識(沒有就用 fact)
   // 英文版把「知識+用途」寫成同一句放在 fact,所以 use 的英文留空(不重複顯示)
   use: e.use ? { zh: e.use.zh, en: '' } : null,
+  useTeen: e.useTeen ? { zh: e.useTeen.zh, en: '' } : null, useHigh: e.useHigh ? { zh: e.useHigh.zh, en: '' } : null,
 }));
 
 export const BY_SYMBOL = Object.fromEntries(ELEMENTS.map(e => [e.sym, e]));

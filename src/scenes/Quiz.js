@@ -1,4 +1,4 @@
-import { BADGES, update, progress, badgeIds } from '../game/store.js';
+import { badgesFor, update, progress, badgeIds, badgeName } from '../game/store.js';
 import { T, Tp, L, render } from '../i18n/index.js';
 import { toast } from '../ui/toast.js';
 import { colorKey } from '../ui/spectrum.js';
@@ -13,7 +13,7 @@ export function mount(container) {
 
   function badgesHTML() {
     const got = new Set(badgeIds());
-    return `<div class="badges">${BADGES.map(b => `<span class="badge ${got.has(b.id) ? 'got' : ''}" title="${L(b.desc).replace(/"/g, '&quot;')}">${got.has(b.id) ? b.icon : '🔒'} ${render(L(b.name))}</span>`).join('')}</div>`;
+    return `<div class="badges">${badgesFor(getLevel()).map(b => `<span class="badge ${got.has(b.id) ? 'got' : ''}" title="${L(b.desc).replace(/"/g, '&quot;')}">${got.has(b.id) ? b.icon : '🔒'} ${render(L(badgeName(b, getLevel())))}</span>`).join('')}</div>`;
   }
 
   function next() {
@@ -44,7 +44,7 @@ export function mount(container) {
       fb.innerHTML = `🎉 ${T('quiz.right')}`;
       dispatchEvent(new CustomEvent('mascot', { detail: { type: 'cheer' } }));
       const news = update(d => { d.quizRight++; d.bestStreak = Math.max(d.bestStreak, streak); if (qn.kind === 'spectrum') d.spectrumRight++; });
-      news.forEach(b => toast(`${b.icon} ${Tp('badge.new')}${L(b.name)}`, 3000));
+      news.forEach(b => toast(`${b.icon} ${Tp('badge.new')}${L(badgeName(b, getLevel()))}`, 3000));
     } else {
       btn.classList.add('wrong'); streak = 0;
       dispatchEvent(new CustomEvent('mascot', { detail: { type: 'oops' } }));

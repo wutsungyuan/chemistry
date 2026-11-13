@@ -4,7 +4,7 @@ import { progress } from '../game/store.js';
 import { SPECTRA } from '../data/generated/spectra.js';
 import { miniSpectrumSVG } from '../ui/spectrum.js';
 import { setNextTab } from './AtomView.js';
-import { getLevel } from '../ui/level.js';
+import { getLevel, featureOn } from '../ui/level.js';
 import { catDesc } from '../game/atomfacts.js';
 
 export function mount(container, _arg, { go }) {
@@ -21,7 +21,7 @@ export function mount(container, _arg, { go }) {
   const specBtn = document.createElement('button');                      // 光譜模式開關:每一格換成該元素的光譜指紋
   specBtn.className = 'chip spec-toggle'; specBtn.innerHTML = T('pt.spec');
   specBtn.onclick = () => { specMode = !specMode; apply(); };
-  legend.appendChild(specBtn);
+  if (featureOn('spectrum')) legend.appendChild(specBtn);                // 國小版沒有光譜模式
   Object.entries(CATEGORIES).forEach(([k, c]) => {
     const chip = document.createElement('span');
     chip.className = 'chip'; chip.style.background = c.color; chip.innerHTML = render(L(c));
@@ -45,7 +45,7 @@ export function mount(container, _arg, { go }) {
     b.style.gridRow = e.row; b.style.gridColumn = e.col;
     // 高中版:格子裡多一行原子量(手機的格子只放符號,不加)
     const ms = level === 'high' && !phoneOnly ? `<span class="ms">${e.mass}</span>` : '';
-    b.innerHTML = `<span class="z">${e.z}</span><span class="sym">${e.sym}</span><span class="nm">${phoneOnly ? L(e.name) : LH(e.name)}</span>${ms}`;
+    b.innerHTML = `<span class="z">${e.z}</span><span class="sym">${e.sym}</span><span class="nm">${phoneOnly && level !== 'kid' ? L(e.name) : LH(e.name)}</span>${ms}`;
     if (level === 'kid' && !e.fact) b.classList.add('rare');                 // 國小:少見的元素淡一點,先看常見的
     b.onclick = () => { setNextTab(specMode && SPECTRA[e.sym]?.lines.length ? 'spec' : 'info'); go('atom', e.z); };   // 光譜模式下點元素 → 直接開光譜分頁;否則開原子資訊
     grid.appendChild(b); cells.push([e, b]);

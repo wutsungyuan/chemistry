@@ -77,7 +77,7 @@ test('操作列:順序是 ◀ 回週期表 念給我聽 ▶;按 ◀ ▶ 換元�
   assert.deepEqual(ids, ['prev', 'back', 'say', 'next']);
   assert.match(av, /#prev'\)\.onclick = \(\) => \{ pendingTab = side\.dataset\.tab; go\(/);
   assert.match(av, /#next'\)\.onclick = \(\) => \{ pendingTab = side\.dataset\.tab; go\(/);
-  assert.match(av, /side\.dataset\.tab = pendingTab === 'spec' \? 'spec' : 'info'; pendingTab = null;/);   // 用過就清掉:從週期表進來仍從原子資訊開始
+  assert.match(av, /side\.dataset\.tab = specOn && pendingTab === 'spec' \? 'spec' : 'info'; pendingTab = null;/);   // 用過就清掉:從週期表進來仍從原子資訊開始
   assert.match(css, /#prev, #app > \.side:not\(\.mission\) > div:last-child #next \{ flex: none;/);   // 箭頭固定在兩側
 });
 
@@ -96,7 +96,7 @@ test('iPad(觸控、寬度 ≤ 1400px)與手機共用同一套版面;JS 判斷(l
   assert.match(tableBlock, /\.pt-grid \{ grid-template-columns: repeat\(18, 40px\)/);
   assert.ok(!raw.slice(0, raw.indexOf('@media (max-width: 600px) {\n  .pt-wrap')).includes('.pt-grid'), '.pt-grid 的小格子規則不能在涵蓋 iPad 的區塊裡');
   const pt = fs.readFileSync(path.join(root, 'src/scenes/PeriodicTable.js'), 'utf8');
-  assert.match(pt, /phoneOnly = matchMedia\('\(max-width: 600px\)'\)\.matches/); assert.match(pt, /phoneOnly \? L\(e\.name\) : LH\(e\.name\)/);   // 少一個就會造成 iPad 版面一半是手機、一半是桌面
+  assert.match(pt, /phoneOnly = matchMedia\('\(max-width: 600px\)'\)\.matches/); assert.match(pt, /phoneOnly && level !== 'kid' \? L\(e\.name\) : LH\(e\.name\)/);   // 少一個就會造成 iPad 版面一半是手機、一半是桌面
 });
 
 test('週期表:手機只顯示符號;iPad 直式放大格子(可左右滑)顯示中文名稱與注音;桌面不變', () => {

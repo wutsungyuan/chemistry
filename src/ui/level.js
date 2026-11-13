@@ -18,3 +18,9 @@ export function applyLevel() { if (typeof document !== 'undefined') document.doc
  */
 export const forLevel = (items, level = getLevel(), key = 'level') => items.filter(it => (RANK[it[key]] ?? 0) <= (RANK[level] ?? 0));
 export const levelRank = l => RANK[l] ?? 0;
+
+// 各階段不提供的頁面與功能(國小版:先專心看元素、圖鑑、物質變化與小測驗,不放分子實驗室、反應劇場與光譜)。
+// 頁面名稱見 main.js 的 SCENES;功能名稱目前有 'spectrum'(原子頁的光譜分頁、週期表的光譜模式、小測驗的光譜題)。
+const OFF = { kid: { scenes: ['lab', 'reaction'], features: ['spectrum'] } };
+export const sceneAllowed = (name, level = getLevel()) => !(OFF[level]?.scenes || []).includes(name);
+export const featureOn = (feature, level = getLevel()) => !(OFF[level]?.features || []).includes(feature);

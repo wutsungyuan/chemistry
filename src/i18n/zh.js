@@ -124,6 +124,7 @@ export default {
   'lab.showrecipe': '顯示配方提示',
   'lab.full': '桌子放不下了,先清空一些吧!',
   'lab.made': '你做出了',
+  'lab.made.msg': '你做出了{n}!',
   'lab.wants': '{sym} 還想再牽 {n} 隻手喔!',
   'lab.unknown': '這個組合還不是任務的分子。可以用剪刀剪開重拼,或點任務卡上的「提示」看怎麼牽!',
   'lab.scissors.on': '剪刀開啟了!點原子的手可以剪斷,點單獨的原子可以移走。點畫面空白處就會關閉剪刀。',

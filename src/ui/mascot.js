@@ -26,14 +26,26 @@ const TIPS = {
   cloud: {
     zh: ['按「拍照」,電子可能出現的地方會亮一個點!', '拍越多張,雲的形狀就越清楚,不同的能階形狀不一樣喔!', '電子不是繞圈圈的小球,而是一團機率的雲!'],
     en: ['Tap "Snap" and a dot lights up where the electron might be!', 'The more you snap, the clearer the shape!', 'An electron is not a little ball going round - it is a cloud of probability!'],
+    'zh@teen': ['按「拍照」,每個亮點代表電子可能出現的位置。','亮點越密的地方,電子出現的機率越大。','不同的軌域(1s、2s、2p、3d)有不同的形狀。'],
+    'zh@high': ['每個亮點是一次位置測量的結果,分布由波函數 ψ 決定。','可切換「切開看」觀察節點;亮點的密度正比於 |ψ|²。','複數軌域(m ≠ 0)會顯示相位與機率流。'],
+    'en@teen': ['Press \'Snap\': each bright dot marks a place the electron might be found.','Where the dots are denser, the electron is more likely to be found.','Different orbitals (1s, 2s, 2p, 3d) have different shapes.'],
+    'en@high': ['Each dot is one position measurement; the distribution is set by the wave function ψ.','Use the cut view to see the nodes; dot density is proportional to |ψ|².','Complex orbitals (m ≠ 0) show the phase and the probability current.'],
   },
   matter: {
     zh: ['拉動滑桿加熱或冷卻,看看分子怎麼動!', '變成冰、水、水蒸氣,每個分子都還是 H₂O 喔!', '正在融化或沸騰的時候,溫度會停住不上升。', '判斷物理還是化學變化:有沒有產生新的物質?'],
     en: ['Drag the slider to heat or cool and watch the molecules!', 'Ice, water and steam: every molecule is still H2O!', 'While melting or boiling, the temperature stops rising.', 'Physical or chemical? Ask: is a new substance made?'],
+    'zh@teen': ['拉動滑桿改變溫度,觀察分子運動的快慢與狀態的改變。','融化或沸騰時,溫度會暫時停住,因為能量用來破壞分子間的吸引力。','判斷物理或化學變化:有沒有產生新的物質?'],
+    'zh@high': ['拉動滑桿改變溫度:狀態由分子動能與分子間作用力的消長決定。','相變時溫度維持不變,吸收的熱用來克服分子間作用力(潛熱)。','物理變化不產生新物質;化學變化會改變物質的組成。'],
+    'en@teen': ['Drag the slider to change the temperature and watch the molecules and the state change.','During melting or boiling the temperature pauses because the energy is used to overcome attractions between molecules.','Physical or chemical? Ask: is a new substance made?'],
+    'en@high': ['Drag the slider to change the temperature: the state is set by the balance between kinetic energy and intermolecular forces.','The temperature stays constant during a phase change; the heat absorbed (latent heat) overcomes intermolecular forces.','A physical change makes no new substance; a chemical change alters the composition.'],
   },
   nucleus: {
     zh: ['紅球是質子,灰球是中子。質子數一樣、中子數不一樣的,就是同位素!', '按「看它變身」,看看不穩定的原子核會發生什麼事!', '半衰期:一大堆原子裡,有一半變身掉所要的時間。', '點上面的數字,換一種同位素看看!'],
     en: ['Red = proton, gray = neutron. Same protons, different neutrons: isotopes!', 'Press "Watch it change" to see what an unstable nucleus does!', 'Half-life: the time for half of a big pile of atoms to change.', 'Tap a number above to try another isotope!'],
+    'zh@teen': ['紅球是質子,灰球是中子。質子數相同、中子數不同的原子互為同位素。','按「看它變身」,觀察不穩定的原子核如何衰變。','半衰期是一大堆原子中有一半衰變所需的時間。'],
+    'zh@high': ['核種由質子數 Z 與中子數 N 決定;同一元素的同位素 Z 相同、N 不同。','按「看它變身」可觀察衰變模式;半衰期與衰變常數的關係為 t½ = ln2/λ。','核種圖上穩定的核種排成「穩定之谷」。'],
+    'en@teen': ['Red = protons, gray = neutrons. Atoms with the same protons but different neutrons are isotopes.','Press \'Watch it change\' to see how an unstable nucleus decays.','Half-life is the time for half of a large number of atoms to decay.'],
+    'en@high': ['A nuclide is set by its proton number Z and neutron number N; isotopes share Z and differ in N.','Press \'Watch it change\' to see the decay mode; half-life and decay constant are related by t½ = ln2/λ.','On the chart of nuclides the stable nuclides form the \'valley of stability\'.'],
   },
   gallery: {
     zh: ['用手指或滑鼠拖曳可以旋轉,點一下原子它會彈跳喔!', '試試切換「球棍模型」和「空間填充」,長得不一樣呢!', '點右邊的名字,認識生活中的分子!'],

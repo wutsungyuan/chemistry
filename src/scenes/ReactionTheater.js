@@ -7,7 +7,7 @@ import { BY_SYMBOL } from '../data/elements.js';
 import { createStage } from '../three/stage.js';
 import { buildMolecule, molRadius, atomMaterial, atomRadius, sphereGeo } from '../three/mol.js';
 import { T, Tp, L, LH, formulaHTML } from '../i18n/index.js';
-import { update, addUnique } from '../game/store.js';
+import { update, addUnique, badgeName } from '../game/store.js';
 import { toast } from '../ui/toast.js';
 import { speak, canSpeak } from '../ui/speech.js';
 import { getLevel, forLevel } from '../ui/level.js';
@@ -300,7 +300,7 @@ export function mount(container, startId) {
   });
   function done() {
     const news = update(d => addUnique(d.reactions, cur.id));
-    news.forEach(b => toast(`${b.icon} ${Tp('badge.new')}${L(b.name)}`, 3000));
+    news.forEach(b => toast(`${b.icon} ${Tp('badge.new')}${L(badgeName(b, getLevel()))}`, 3000));
   }
 
   select(cur);

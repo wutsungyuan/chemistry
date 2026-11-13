@@ -35,6 +35,13 @@ export function validateElements(E, { err }) {
     if (e.fact !== undefined && !isText(e.fact)) err(id, 'fact 要有中英文');
     if (e.use !== undefined && !(typeof e.use.zh === 'string' && e.use.zh.trim())) err(id, 'use.zh 不能是空的');
     if (e.use !== undefined && e.fact === undefined) err(id, '有 use 就要有 fact');
+    // 有「生活小知識」的元素:國中版與高中版也要有(語氣依階段);use 只有中文,規則同 fact/use
+    if (e.fact !== undefined) for (const sfx of ['Teen', 'High']) {
+      if (!isText(e['fact' + sfx])) err(id, `fact${sfx}(${sfx === 'Teen' ? '國中' : '高中'}版)要有中英文`);
+      else if (/[一-鿿]/.test(e['fact' + sfx].en)) err(id, `fact${sfx}.en 不可含中文字`);
+      if ((e.use !== undefined) !== (e['use' + sfx] !== undefined)) err(id, `use${sfx} 要和 use 一起有或一起沒有`);
+      if (e['use' + sfx] !== undefined && !(typeof e['use' + sfx].zh === 'string' && e['use' + sfx].zh.trim())) err(id, `use${sfx} 要有中文`);
+    }
   });
   // 錨點:大家都知道的值
   const by = Object.fromEntries(list.map(e => [e.sym, e]));

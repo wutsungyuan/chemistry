@@ -9,10 +9,10 @@ import { jumpPlan, jumpState, parseLabel } from '../ui/orbitJump.js';
 import { CSS2DObject } from 'three/examples/jsm/renderers/CSS2DRenderer.js';
 import { createStage } from '../three/stage.js';
 import { T, Tp, L, LH, render, formulaHTML } from '../i18n/index.js';
-import { update, addUnique } from '../game/store.js';
+import { update, addUnique, badgeName } from '../game/store.js';
 import { toast } from '../ui/toast.js';
-import { getLevel } from '../ui/level.js';
-import { atomFacts, catDesc } from '../game/atomfacts.js';
+import { getLevel, featureOn } from '../ui/level.js';
+import { atomFacts, catDesc, elFact, elUse } from '../game/atomfacts.js';
 import { speak, canSpeak } from '../ui/speech.js';
 
 const protonMat = new THREE.MeshStandardMaterial({ color: 0xff5a5a, roughness: 0.4 });
@@ -109,7 +109,7 @@ function mountSpectrum(box, sym, onSelect = () => {}) {
   function markSeen() {
     if (seen || sel < 0) return;
     seen = true;
-    update(d => addUnique(d.spectraSeen, sym)).forEach(b => toast(`${b.icon} ${Tp('badge.new')}${L(b.name)}`, 3200));
+    update(d => addUnique(d.spectraSeen, sym)).forEach(b => toast(`${b.icon} ${Tp('badge.new')}${L(badgeName(b, getLevel()))}`, 3200));
   }
   strip.addEventListener('pointerdown', e => { dragging = true; strip.setPointerCapture?.(e.pointerId); pickAt(e.clientX); });
   strip.addEventListener('pointermove', e => { if (dragging || e.pointerType === 'mouse') pickAt(e.clientX); });
@@ -332,12 +332,12 @@ export function mount(container, z, { go }) {
     return `<${tag} class="found-item${x.id ? ' link' : ''}" ${x.id ? `data-mol="${x.id}"` : ''}><b>${formulaHTML(x.formula)}</b><em class="fi-name">${LH(x.name)}</em></${tag}>`;
   };
   /** 國中/高中:多一段「粒子數與位置」(質子/電子/中子、週期、族、價電子);國小不顯示 */
-  const level = getLevel(), af = atomFacts(el);
+  const level = getLevel(), af = atomFacts(el), specOn = featureOn('spectrum');          // 國小版沒有光譜
   const factsHTML = level === 'kid' ? '' : `<p class="at-facts">${T('atom.facts.p', { z: af.protons, n: af.neutrons })}<br>${T('atom.facts.pos', { p: af.period, g: af.group ? Tp('atom.facts.group', { g: af.group }) : '', v: level === 'high' && af.valence != null ? Tp('atom.facts.valence', { v: af.valence }) : '' })}</p>`;
   const foundHTML = found.length ? `<h3 class="found-h">🔎 ${T('atom.found')}</h3><div class="found-list">${found.map(foundItem).join('')}</div>` : '';
   side.innerHTML = `
     <h2><span style="color:${cat.color}">${el.sym}</span> ${LH(el.name)}</h2>
-    <div class="side-tabs"><button class="chip on" data-tab="info">${T('atom.tab.info')}</button><button class="chip" data-tab="spec">🌈 ${T('atom.tab.spec')}</button></div>
+    ${specOn ? `<div class="side-tabs"><button class="chip on" data-tab="info">${T('atom.tab.info')}</button><button class="chip" data-tab="spec">🌈 ${T('atom.tab.spec')}</button></div>` : ''}
     <button class="chip tipchip" data-tip="cat" title="${Tp('atom.tapme')}" style="background:${cat.color};color:#111">${render(L(cat))} ⓘ</button>
     <button class="chip tipchip" data-tip="z" title="${Tp('atom.tapme')}">${T('atom.z')} ${el.z} ⓘ</button>
     <button class="chip tipchip" data-tip="mass" title="${Tp('atom.tapme')}">${T('atom.mass')} ${el.mass} ⓘ</button>
@@ -350,10 +350,10 @@ export function mount(container, z, { go }) {
       <li><i class="ball" style="--c:#4cc9ff"></i>${T('legend.electron')}</li>
       <li><i class="ball" style="--c:#ffd23f"></i>${T('legend.valence')}</li>
     </ul>
-    ${el.fact ? `<p>💡 ${LH(el.fact)}</p>` : `<p style="color:var(--muted)">${T('atom.nofact')}</p>`}
-    ${el.use && L(el.use) ? `<p>🏠 ${LH(el.use)}</p>` : ''}
+    ${el.fact ? `<p>💡 ${LH(elFact(el, level))}</p>` : `<p style="color:var(--muted)">${T('atom.nofact')}</p>`}
+    ${elUse(el, level) && L(elUse(el, level)) ? `<p>🏠 ${LH(elUse(el, level))}</p>` : ''}
     <p><button class="chip nuc-link" title="${Tp('nuc.title')}">${T('nuc.link')}</button></p>
-    <div class="spec" id="spec"></div>
+    ${specOn ? '<div class="spec" id="spec"></div>' : ''}
     ${isNarrow() && foundHTML ? `<div class="found">${foundHTML}</div>` : ''}
     <div>
       <button class="btn alt" id="prev" aria-label="${Tp('atom.prev')}">◀</button>
@@ -362,9 +362,9 @@ export function mount(container, z, { go }) {
       <button class="btn alt" id="next" aria-label="${Tp('atom.next')}">▶</button>
     </div>`;
   container.appendChild(side);
-  const unmountSpectrum = mountSpectrum(side.querySelector('#spec'), el.sym, startJump);
+  const unmountSpectrum = specOn ? mountSpectrum(side.querySelector('#spec'), el.sym, startJump) : () => {};
   // 手機:面板頂部分頁(原子資訊 | 光譜),切到光譜就是完整一頁;桌面版這排分頁隱藏,兩者上下並列
-  side.dataset.tab = pendingTab === 'spec' ? 'spec' : 'info'; pendingTab = null;
+  side.dataset.tab = specOn && pendingTab === 'spec' ? 'spec' : 'info'; pendingTab = null;
   side.querySelectorAll('.side-tabs [data-tab]').forEach(b => b.classList.toggle('on', b.dataset.tab === side.dataset.tab));
   side.querySelectorAll('.side-tabs [data-tab]').forEach(b => {
     b.onclick = () => {
@@ -404,11 +404,11 @@ export function mount(container, z, { go }) {
   side.querySelector('#back').onclick = () => go('table');
   side.querySelector('.nuc-link').onclick = () => go('nucleus', el.z);
   side.querySelector('#say')?.addEventListener('click', () =>
-    speak(`${L(el.name)}。${el.fact ? L(el.fact) : ''}${el.use ? L(el.use) : ''}`));
+    speak(`${L(el.name)}。${el.fact ? L(elFact(el, level)) : ''}${elUse(el, level) ? L(elUse(el, level)) : ''}`));
   container.querySelectorAll('[data-mol]').forEach(b => { b.onclick = () => go('gallery', b.dataset.mol); });
 
   const news = update(d => addUnique(d.elements, el.z));
-  news.forEach(b => toast(`${b.icon} ${Tp('badge.new')}${L(b.name)}`));
+  news.forEach(b => toast(`${b.icon} ${Tp('badge.new')}${L(badgeName(b, getLevel()))}`));
 
   return { dispose() { window.speechSynthesis?.cancel?.(); unmountSpectrum(); clearJump(); frameWatcher.disconnect(); stage.dispose(); side.remove(); foundBox?.remove(); zoombar.remove(); } };
 }

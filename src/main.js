@@ -4,7 +4,7 @@ import './themes.css';
 import { mountDeco } from './ui/deco.js';
 import { mountMascot, mascotScene } from './ui/mascot.js';
 import { T, state, setLang, onLangChange } from './i18n/index.js';
-import { applyLevel } from './ui/level.js';
+import { applyLevel, sceneAllowed } from './ui/level.js';
 import { initLayout } from './ui/layout.js';
 import * as PeriodicTable from './scenes/PeriodicTable.js';
 import * as AtomView from './scenes/AtomView.js';
@@ -38,7 +38,7 @@ function renderChrome() {
   document.getElementById('brand').innerHTML = T('brand');
   const nav = document.getElementById('nav');
   nav.innerHTML = '';
-  NAV.forEach(([key, label, icon]) => {
+  NAV.filter(([key]) => sceneAllowed(key)).forEach(([key, label, icon]) => {          // 國小版沒有分子實驗室與反應劇場
     const b = document.createElement('button');
     b.innerHTML = `<span class="ico">${icon}</span><span class="lbl">${T(label)}</span>`;
     if (key === name || (key === 'table' && (name === 'atom' || name === 'cloud' || name === 'nucleus'))) b.classList.add('active');
@@ -57,7 +57,7 @@ onLangChange(() => go(name, arg));
 
 function fromHash() {
   const [h, a] = location.hash.slice(1).split('/');
-  return [SCENES[h] ? h : 'table', a ? (isNaN(+a) ? a : +a) : null];
+  return [SCENES[h] && sceneAllowed(h) ? h : 'table', a ? (isNaN(+a) ? a : +a) : null];     // 該階段沒有的頁面 → 回週期表
 }
 // 支援瀏覽器上一頁/下一頁與直接改網址
 addEventListener('hashchange', () => {

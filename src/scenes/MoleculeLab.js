@@ -10,7 +10,7 @@ import { getLevel } from '../ui/level.js';
 import { bondFacts } from '../game/bondfacts.js';
 import { lewisStructure } from '../game/lewis.js';
 import { lewisSVG } from '../ui/lewisView.js';
-import { update, addUnique, progress } from '../game/store.js';
+import { update, addUnique, progress, badgeName } from '../game/store.js';
 import { toast } from '../ui/toast.js';
 
 const TRAY = ['H', 'C', 'N', 'O', 'S', 'Na', 'Cl'];
@@ -274,11 +274,11 @@ export function mount(container) {
         const wasNew = !built.has(m.id);
         built.add(m.id);
         const news = update(d => addUnique(d.built, m.id));
-        toast(`🎉 ${Tp('lab.made')}${L(m.name)}!`, 3500);
+        toast(`🎉 ${Tp('lab.made.msg', { n: L(m.name) })}`, 3500);
         const spare = comp.some(a => free.get(a) > 0);   // 本來就有空手的分子(如 NO2):只在剛完成時短暫說明,光暈幾秒後消失
         if (spare) comp.forEach(a => { a.glowUntil = performance.now() + 4500; });
-        dispatchEvent(new CustomEvent('mascot', { detail: { type: 'cheer', text: `${Tp('lab.made')}${L(m.name)}!` + (spare ? ' ' + Tp('lab.spare') : '') } }));
-        news.forEach(b => setTimeout(() => toast(`${b.icon} ${Tp('badge.new')}${L(b.name)}`), 1800));
+        dispatchEvent(new CustomEvent('mascot', { detail: { type: 'cheer', text: Tp('lab.made.msg', { n: L(m.name) }) + (spare ? ' ' + Tp('lab.spare') : '') } }));
+        news.forEach(b => setTimeout(() => toast(`${b.icon} ${Tp('badge.new')}${L(badgeName(b, getLevel()))}`), 1800));
         if (wasNew || m === curM) renderMission();
       }
     } else if (incomplete.length) {

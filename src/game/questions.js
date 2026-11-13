@@ -3,7 +3,7 @@
 import { ELEMENTS, CATEGORIES } from '../data/elements.js';
 import { GALLERY } from '../data/molecules.js';
 import { L, render, formulaHTML } from '../i18n/index.js';
-import { isMainGroupEl, valenceOf } from './atomfacts.js';
+import { isMainGroupEl, valenceOf, elFact } from './atomfacts.js';
 import { pick, shuffle } from '../ui/util.js';
 import { SPECTRA } from '../data/generated/spectra.js';
 import { spectrumSVG } from '../ui/spectrum.js';
@@ -59,7 +59,7 @@ export function makeQuestion(level = 'kid') {
   }
   if (kind === 'fact') {
     const e = pick(COMMON), opts = distract(COMMON, e, 4, x => x.sym);
-    return { kind, q: { raw: L(e.fact), key: 'quiz.q.fact' }, opts: opts.map(o => ({ html: `${o.sym} ${render(L(o.name))}`, ok: o === e })), answerText: L(e.name) };
+    return { kind, q: { raw: L(elFact(e, level)), key: 'quiz.q.fact' }, opts: opts.map(o => ({ html: `${o.sym} ${render(L(o.name))}`, ok: o === e })), answerText: L(e.name) };
   }
   if (kind === 'z2sym') {                                               // 國中、高中:用原子序找元素
     const e = pick(elPool), opts = distract(elPool, e, 4, x => x.sym);
