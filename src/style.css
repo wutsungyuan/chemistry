@@ -583,3 +583,9 @@ em.absorb{background:rgba(255,150,90,.3)}em.release{background:rgba(110,170,255,
 .mi-lewis{margin-top:6px}
 .mi-lewis summary{cursor:pointer;font-weight:700;min-height:32px;display:flex;align-items:center}
 .lewis-svg{display:block;width:100%;height:auto;margin:4px auto;color:var(--text)}
+
+/* 原子頁:國中/高中的「粒子數與位置」;週期表:高中的原子量、國小的少見元素 */
+.at-facts{margin:6px 0;line-height:1.7;color:var(--muted);font-size:.95rem}
+.pt-grid .el .ms{font-size:clamp(.5rem,.62vw,.68rem);opacity:.8;line-height:1;margin-top:1px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pt-grid .el.rare:not(.dim){opacity:.62}
+.pt-grid .el.rare:hover{opacity:1}

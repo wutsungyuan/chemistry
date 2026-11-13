@@ -4,11 +4,13 @@ import { progress } from '../game/store.js';
 import { SPECTRA } from '../data/generated/spectra.js';
 import { miniSpectrumSVG } from '../ui/spectrum.js';
 import { setNextTab } from './AtomView.js';
+import { getLevel } from '../ui/level.js';
+import { catDesc } from '../game/atomfacts.js';
 
 export function mount(container, _arg, { go }) {
   const page = document.createElement('div');
   page.className = 'page';
-  const seen = new Set(progress().elements);
+  const seen = new Set(progress().elements), level = getLevel();
   let filter = null, specMode = false;
 
   const wrap = document.createElement('div');
@@ -41,7 +43,10 @@ export function mount(container, _arg, { go }) {
     b.className = 'el';
     b.style.setProperty('--c', CATEGORIES[e.cat].color);
     b.style.gridRow = e.row; b.style.gridColumn = e.col;
-    b.innerHTML = `<span class="z">${e.z}</span><span class="sym">${e.sym}</span><span class="nm">${phoneOnly ? L(e.name) : LH(e.name)}</span>`;
+    // 高中版:格子裡多一行原子量(手機的格子只放符號,不加)
+    const ms = level === 'high' && !phoneOnly ? `<span class="ms">${e.mass}</span>` : '';
+    b.innerHTML = `<span class="z">${e.z}</span><span class="sym">${e.sym}</span><span class="nm">${phoneOnly ? L(e.name) : LH(e.name)}</span>${ms}`;
+    if (level === 'kid' && !e.fact) b.classList.add('rare');                 // 國小:少見的元素淡一點,先看常見的
     b.onclick = () => { setNextTab(specMode && SPECTRA[e.sym]?.lines.length ? 'spec' : 'info'); go('atom', e.z); };   // 光譜模式下點元素 → 直接開光譜分頁;否則開原子資訊
     grid.appendChild(b); cells.push([e, b]);
     if (!(SPECTRA[e.sym]?.lines.length)) b.classList.add('nospec');
@@ -74,7 +79,7 @@ export function mount(container, _arg, { go }) {
     if (!filter && specMode) info.innerHTML = T('pt.spec.tip');
     if (filter) {
       const c = CATEGORIES[filter];
-      info.innerHTML = `<b style="background:${c.color};color:#111;padding:1px 10px;border-radius:999px">${render(L(c))}</b> ${render(L(c.desc))}`;
+      info.innerHTML = `<b style="background:${c.color};color:#111;padding:1px 10px;border-radius:999px">${render(L(c))}</b> ${render(L(catDesc(c, level)))}`;
     }
   }
   // 第 8 列空白用 margin 分隔

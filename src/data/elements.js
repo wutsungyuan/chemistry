@@ -2,7 +2,7 @@
 // 驗證在 scripts/lib/validate-elements.mjs(npm run dev / build 前會自動執行)。
 import DB from './db/elements.json' with { type: 'json' };
 
-export const CATEGORIES = Object.fromEntries(Object.entries(DB.categories).map(([k, v]) => [k, { color: v.color, zh: v.name.zh, en: v.name.en, desc: v.desc }]));
+export const CATEGORIES = Object.fromEntries(Object.entries(DB.categories).map(([k, v]) => [k, { color: v.color, zh: v.name.zh, en: v.name.en, desc: v.desc, descTeen: v.descTeen ?? v.desc, descHigh: v.descHigh ?? v.desc }]));
 
 export const ELEMENTS = DB.elements.map(e => ({
   z: e.z, sym: e.sym, name: e.name, mass: e.mass, cat: e.cat, row: e.row, col: e.col, shells: e.shells,

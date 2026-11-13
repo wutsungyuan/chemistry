@@ -11,6 +11,7 @@ export function validateElements(E, { err }) {
   for (const [k, c] of Object.entries(cats)) {
     if (!HEX.test(c.color || '')) err('elements:cat:' + k, 'color 要是 #rrggbb');
     if (!isText(c.name) || !isText(c.desc)) err('elements:cat:' + k, 'name/desc 要有中英文');
+    for (const f of ['descTeen', 'descHigh']) if (!isText(c[f])) err('elements:cat:' + k, `${f}(國中/高中版的分類說明)要有中英文`);
   }
 
   const list = E.elements || [], syms = new Set(), pos = new Set();

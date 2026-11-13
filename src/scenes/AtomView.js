@@ -11,6 +11,8 @@ import { createStage } from '../three/stage.js';
 import { T, Tp, L, LH, render, formulaHTML } from '../i18n/index.js';
 import { update, addUnique } from '../game/store.js';
 import { toast } from '../ui/toast.js';
+import { getLevel } from '../ui/level.js';
+import { atomFacts, catDesc } from '../game/atomfacts.js';
 import { speak, canSpeak } from '../ui/speech.js';
 
 const protonMat = new THREE.MeshStandardMaterial({ color: 0xff5a5a, roughness: 0.4 });
@@ -329,6 +331,9 @@ export function mount(container, z, { go }) {
     const tag = x.id ? 'button' : 'span';
     return `<${tag} class="found-item${x.id ? ' link' : ''}" ${x.id ? `data-mol="${x.id}"` : ''}><b>${formulaHTML(x.formula)}</b><em class="fi-name">${LH(x.name)}</em></${tag}>`;
   };
+  /** 國中/高中:多一段「粒子數與位置」(質子/電子/中子、週期、族、價電子);國小不顯示 */
+  const level = getLevel(), af = atomFacts(el);
+  const factsHTML = level === 'kid' ? '' : `<p class="at-facts">${T('atom.facts.p', { z: af.protons, n: af.neutrons })}<br>${T('atom.facts.pos', { p: af.period, g: af.group ? Tp('atom.facts.group', { g: af.group }) : '', v: level === 'high' && af.valence != null ? Tp('atom.facts.valence', { v: af.valence }) : '' })}</p>`;
   const foundHTML = found.length ? `<h3 class="found-h">🔎 ${T('atom.found')}</h3><div class="found-list">${found.map(foundItem).join('')}</div>` : '';
   side.innerHTML = `
     <h2><span style="color:${cat.color}">${el.sym}</span> ${LH(el.name)}</h2>
@@ -338,6 +343,7 @@ export function mount(container, z, { go }) {
     <button class="chip tipchip" data-tip="mass" title="${Tp('atom.tapme')}">${T('atom.mass')} ${el.mass} ⓘ</button>
     <div class="tipbox" id="tipbox" hidden></div>
     <p>${T('atom.shells')}:<b> ${el.shells.join(' , ')}</b></p>
+    ${factsHTML}
     <ul class="legend">
       <li><i class="ball" style="--c:#ff5a5a"></i>${T('legend.proton')}</li>
       <li><i class="ball" style="--c:#b0b6d0"></i>${T('legend.neutron')}</li>
@@ -390,7 +396,7 @@ export function mount(container, z, { go }) {
       const k = b.dataset.tip;
       tipOpen = tipOpen === k ? null : k;
       tipbox.hidden = !tipOpen;
-      if (tipOpen) tipbox.innerHTML = k === 'z' ? T('atom.z.tip', { name: L(el.name), n: el.z }) : k === 'cat' ? LH(cat.desc) : T('atom.mass.tip');
+      if (tipOpen) tipbox.innerHTML = k === 'z' ? T('atom.z.tip', { name: L(el.name), n: el.z }) : k === 'cat' ? render(L(catDesc(cat, level))) : T('atom.mass.tip');
     };
   });
   side.querySelector('#prev').onclick = () => { pendingTab = side.dataset.tab; go('atom', el.z > 1 ? el.z - 1 : 118); };

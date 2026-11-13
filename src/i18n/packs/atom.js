@@ -1,0 +1,36 @@
+// 原子頁(scenes/AtomView.js)與週期表(scenes/PeriodicTable.js)的階段用語。
+// key@kid / key@teen / key@high 優先;沒有 @ 的 key 在 zh.js / en.js(國小的說法是預設)。中英文放在一起,才不會漏翻。
+export default {
+  zh: {
+    'pt.sub@teen': '點一格元素看它的原子結構。點上方的顏色可以找出同一類元素,並看它們的共同特徵。',
+    'pt.sub@high': '點選元素查看原子結構。點選上方分類可標示同一類元素;高中版在格子裡加註原子量。',
+    'atom.z.tip@teen': '原子序 = 原子核裡質子的數量,中性原子的電子數也一樣。{name}有 {n} 個質子,排在第 {n} 號。',
+    'atom.z.tip@high': '原子序 Z = 原子核中的質子數;中性原子的電子數也等於 Z。{name}的 Z = {n}。',
+    'atom.mass.tip@teen': '原子量是原子的平均質量(單位 u,以碳-12 的 1/12 為標準),大約等於質子數加中子數。同一種元素的原子可以有不同的中子數(同位素),所以表上寫的是平均值。',
+    'atom.mass.tip@high': '原子量是依各同位素的天然豐度加權平均的原子質量(單位 u);沒有穩定同位素的元素,表上寫的是代表性核種的質量數。',
+    'atom.nofact@teen': '這個元素比較少見,先認識常見的元素吧。',
+    'atom.nofact@high': '此元素在日常生活中較少見。',
+    'atom.facts.p@teen': '質子 {z} 個、電子 {z} 個、中子約 {n} 個。',
+    'atom.facts.p@high': '質子數 = 電子數 = {z};中子數約 {n}(質量數 − 原子序)。',
+    'atom.facts.pos@teen': '在週期表的第 {p} 週期{g}。',
+    'atom.facts.pos@high': '第 {p} 週期{g}{v}。',
+    'atom.facts.group': ',第 {g} 族',
+    'atom.facts.valence': ';價電子 {v} 個',
+  },
+  en: {
+    'pt.sub@teen': 'Tap an element to see its atomic structure. Tap a color above to find elements of the same kind and their shared features.',
+    'pt.sub@high': 'Select an element to view its atomic structure. Select a category above to highlight it; atomic masses are shown in the cells.',
+    'atom.z.tip@teen': 'The atomic number is the number of protons in the nucleus, and a neutral atom has the same number of electrons. {name} has {n} protons, so it is number {n}.',
+    'atom.z.tip@high': 'The atomic number Z is the number of protons in the nucleus; a neutral atom also has Z electrons. For {name}, Z = {n}.',
+    'atom.mass.tip@teen': 'Atomic mass is the average mass of an atom (in u, based on 1/12 of carbon-12), roughly protons plus neutrons. Atoms of one element can have different numbers of neutrons (isotopes), so the table shows an average.',
+    'atom.mass.tip@high': 'Atomic mass is the abundance-weighted average mass of the natural isotopes (in u); for elements without stable isotopes the table gives the mass number of a representative nuclide.',
+    'atom.nofact@teen': 'A rare element. Get to know the common ones first.',
+    'atom.nofact@high': 'This element is uncommon in everyday life.',
+    'atom.facts.p@teen': '{z} protons, {z} electrons and about {n} neutrons.',
+    'atom.facts.p@high': 'Protons = electrons = {z}; about {n} neutrons (mass number − atomic number).',
+    'atom.facts.pos@teen': 'It is in period {p}{g} of the periodic table.',
+    'atom.facts.pos@high': 'Period {p}{g}{v}.',
+    'atom.facts.group': ', group {g}',
+    'atom.facts.valence': '; {v} valence electrons',
+  },
+};

@@ -3,6 +3,7 @@
 import { ELEMENTS, CATEGORIES } from '../data/elements.js';
 import { GALLERY } from '../data/molecules.js';
 import { L, render, formulaHTML } from '../i18n/index.js';
+import { isMainGroupEl, valenceOf } from './atomfacts.js';
 import { pick, shuffle } from '../ui/util.js';
 import { SPECTRA } from '../data/generated/spectra.js';
 import { spectrumSVG } from '../ui/spectrum.js';
@@ -13,9 +14,9 @@ const HS = ELEMENTS.filter(e => e.z <= 54);                   // 高中:前 54 �
 const SPEC_POOL = spectrumPool(SPECTRA, ELEMENTS);
 const MOLS = GALLERY.filter(x => !x.display && !x.extra);
 
-/** 主族元素(第 1、2、13~18 欄):最外層電子數 = 殼層陣列的最後一項,可以出「價電子」題;He 是 2 */
-export const isMainGroup = e => e.z <= 54 && (e.col <= 2 || e.col >= 13);
-export const valenceOf = e => e.shells[e.shells.length - 1];
+/** 價電子題只出前 54 號的主族元素(主族判斷與價電子數在 game/atomfacts.js) */
+export const isMainGroup = e => e.z <= 54 && isMainGroupEl(e);
+export { valenceOf };
 
 /** 各階段的題型(重複的題型 = 出現機率較高) */
 export const KINDS = {

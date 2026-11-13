@@ -10,10 +10,18 @@ const TIPS = {
   table: {
     zh: ['點一格元素,看看它的原子長什麼樣子!', '點上面的顏色標籤,可以找出同一家族,還有說明喔!', '氫(H)是第 1 號元素,宇宙裡最多的就是它!'],
     en: ['Tap a square to see its atom!', 'Tap a color tag to find a whole family - with a little story!', 'Hydrogen (H) is number 1 - the most common element in the universe!'],
+    'zh@teen': ['點一格元素,看看它的原子結構。','點上方的顏色標籤,可以找出同一類元素。','氫(H)是第 1 號元素,也是宇宙中含量最多的元素。'],
+    'zh@high': ['選取任一元素以檢視原子結構與光譜。','點選分類標籤可標示同類元素;格內的數字依序為原子序與原子量。','氫(H,Z = 1)是宇宙中含量最多的元素。'],
+    'en@teen': ['Tap an element to see its atomic structure.','Tap a color tag to find elements of the same kind.','Hydrogen (H) is number 1 and the most abundant element in the universe.'],
+    'en@high': ['Select an element to view its atomic structure and spectrum.','Select a category tag to highlight it; each cell shows the atomic number and atomic mass.','Hydrogen (H, Z = 1) is the most abundant element in the universe.'],
   },
   atom: {
     zh: ['紅球是質子,灰球是中子,藍球是電子!', '拖曳可以轉動原子,右邊的滑桿可以放大縮小。', '黃球是最外層電子,它們決定這個元素愛跟誰牽手!', '點「原子序」「原子量」旁邊的小圖示,有簡單的說明喔!'],
     en: ['Red = proton, gray = neutron, blue = electron!', 'Drag to spin the atom. Use the slider to zoom!', 'Yellow balls are the outer electrons - they decide who the atom holds hands with!', 'Tap the little info icons for simple explanations!'],
+    'zh@teen': ['紅球是質子,灰球是中子,藍球是電子。','拖曳可以旋轉原子,右邊的滑桿可以縮放。','黃球是最外層電子,它們決定這個元素的化學性質。'],
+    'zh@high': ['質子(紅)與中子(灰)組成原子核,電子(藍)依殼層排列。','黃色電子是最外層(價)電子,決定元素的化學性質。','點選原子序與原子量旁的圖示可查看說明。'],
+    'en@teen': ['Red = proton, gray = neutron, blue = electron.','Drag to rotate the atom; use the slider to zoom.','Yellow balls are the outer electrons; they decide how the element behaves chemically.'],
+    'en@high': ['Protons (red) and neutrons (gray) form the nucleus; electrons (blue) fill the shells.','Yellow electrons are the outermost (valence) electrons and determine chemical behavior.','Select the icons beside atomic number and mass for explanations.'],
   },
   cloud: {
     zh: ['按「拍照」,電子可能出現的地方會亮一個點!', '拍越多張,雲的形狀就越清楚,不同的能階形狀不一樣喔!', '電子不是繞圈圈的小球,而是一團機率的雲!'],
@@ -46,6 +54,10 @@ const TIPS = {
   quiz: {
     zh: ['答對越多,徽章越多,加油!', '不確定的話,先去週期表逛逛再回來!'],
     en: ['More right answers, more badges. You can do it!', 'Not sure? Visit the periodic table first, then come back!'],
+    'zh@teen': ['答對越多,徽章越多。','不確定的話,先去週期表查一查再回來。'],
+    'zh@high': ['答對可累積連對紀錄與徽章。','可先回週期表查閱資料再作答。'],
+    'en@teen': ['More right answers, more badges.','Not sure? Check the periodic table first, then come back.'],
+    'en@high': ['Correct answers build your streak and earn badges.','Consult the periodic table first if needed.'],
   },
 };
 
