@@ -21,6 +21,11 @@ test('入口只在氫的光譜分頁(氫有精確解);回光譜會回到氫的�
   assert.match(atom, /export function setNextTab/);
 });
 
+test('週期表光譜模式下點元素,直接進原子頁的光譜分頁;一般模式進原子資訊', () => {
+  const pt = read('src/scenes/PeriodicTable.js');
+  assert.match(pt, /setNextTab\(specMode && SPECTRA\[e\.sym\]\?\.lines\.length \? 'spec' : 'info'\)/);
+});
+
 test('國小/國中/高中三層;預設立體,可切換「切開看」;切開時鏡頭正對剖面、不自動旋轉', () => {
   assert.match(cloud, /const LEVELS = \['kid', 'teen', 'high'\]/);
   assert.match(cloud, /slice = false/);                                        // 預設立體;切開看是選項

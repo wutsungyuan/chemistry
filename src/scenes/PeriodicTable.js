@@ -3,6 +3,7 @@ import { T, L, LH, render } from '../i18n/index.js';
 import { progress } from '../game/store.js';
 import { SPECTRA } from '../data/generated/spectra.js';
 import { miniSpectrumSVG } from '../ui/spectrum.js';
+import { setNextTab } from './AtomView.js';
 
 export function mount(container, _arg, { go }) {
   const page = document.createElement('div');
@@ -41,7 +42,7 @@ export function mount(container, _arg, { go }) {
     b.style.setProperty('--c', CATEGORIES[e.cat].color);
     b.style.gridRow = e.row; b.style.gridColumn = e.col;
     b.innerHTML = `<span class="z">${e.z}</span><span class="sym">${e.sym}</span><span class="nm">${phoneOnly ? L(e.name) : LH(e.name)}</span>`;
-    b.onclick = () => go('atom', e.z);
+    b.onclick = () => { setNextTab(specMode && SPECTRA[e.sym]?.lines.length ? 'spec' : 'info'); go('atom', e.z); };   // 光譜模式下點元素 → 直接開光譜分頁;否則開原子資訊
     grid.appendChild(b); cells.push([e, b]);
     if (!(SPECTRA[e.sym]?.lines.length)) b.classList.add('nospec');
   });
