@@ -1,0 +1,285 @@
+{
+  "meta": {
+    "source": "化學故事(國小版):依常見的教科書與百科說法整理改寫,語氣為給國小生聽的自行撰寫。",
+    "note": "level 是最低適用階段;body 每段一個陣列元素;quiz 恰好 3 個選項、1 個正確;elements / molecules 是這則故事連結到的元素符號與圖鑑分子 id(建置時檢查存在);safety 是安全提醒(有火、有毒、有輻射的故事一定要有);checks 列出這則故事裡的史實與數字,方便審稿者逐項查證。年份與人物為常見的教科書說法,尚未逐則對照原始文獻;傳說性質的說法(例如卡片排元素)在故事裡有寫「據說」。",
+    "retrieved": "2026-11-14"
+  },
+  "stories": [
+    {
+      "id": "fire", "level": "kid",
+      "title": { "zh": "火是怎麼來的?", "en": "How does a fire burn?" },
+      "body": {
+        "zh": [
+          "很久很久以前,人類第一次學會用火。火可以把食物煮熟,變得又香又好吃;可以取暖;晚上還能照亮四周,把野獸趕跑。",
+          "火是怎麼燒起來的呢?我們可以請大人幫忙,做一個小實驗:點亮一根蠟燭,再用玻璃杯把它蓋起來。過一會兒,火就慢慢熄掉了!",
+          "這是因為杯子裡的氧氣被燒完了。原來,火要燒起來,一定要有氧氣。"
+        ],
+        "en": [
+          "A very, very long time ago, people learned to use fire for the first time. Fire cooks food so it tastes good, keeps us warm, lights up the night and scares wild animals away.",
+          "What makes a fire burn? With a grown-up's help we can try a little experiment: light a candle and cover it with a glass. After a moment, the flame slowly goes out!",
+          "That is because the oxygen inside the glass has been used up. A fire can only burn when there is oxygen."
+        ]
+      },
+      "quiz": {
+        "q": { "zh": "蠟燭被玻璃杯蓋住以後,火為什麼會熄掉?", "en": "Why does the candle flame go out under the glass?" },
+        "options": [
+          { "zh": "火怕冷", "en": "The flame is afraid of the cold" },
+          { "zh": "杯子裡的氧氣用完了", "en": "The oxygen in the glass is used up", "ok": true },
+          { "zh": "杯子太重了", "en": "The glass is too heavy" }
+        ],
+        "explain": { "zh": "火要有氧氣才能燃燒。杯子裡的氧氣用完了,火就熄掉了。", "en": "A fire needs oxygen to burn. When the oxygen in the glass runs out, the flame goes out." }
+      },
+      "elements": ["O"], "molecules": ["O2"],
+      "safety": { "zh": "玩火很危險,一定要請大人陪你做。", "en": "Playing with fire is dangerous. Always do it with a grown-up." },
+      "checks": ["人類控制用火的證據至少有幾十萬年,故事只用「很久很久以前」,不寫確切年代", "燃燒需要氧氣:蠟燭蓋杯子會熄滅(氧氣被消耗)"]
+    },
+    {
+      "id": "iron", "level": "kid",
+      "title": { "zh": "鐵:會變壞的好朋友", "en": "Iron: a good friend that can go bad" },
+      "body": {
+        "zh": [
+          "大約三千多年前,人們發現有一種石頭放在很旺的火裡燒,可以煉出又硬又結實的鐵。有了鐵,人們就能做出鋤頭、刀子和鍋子,生活方便多了。這個時代,就叫做「鐵器時代」。",
+          "不過,鐵有一個小缺點。把鐵放在潮濕的地方,它會慢慢長出紅褐色的鐵鏽。",
+          "鐵鏽不是髒東西,而是鐵碰到空氣裡的氧氣和水,變出來的新東西,已經不是原來的鐵了。所以鐵做的東西要保持乾燥,或是塗上油漆保護它。"
+        ],
+        "en": [
+          "About three thousand years ago, people found that a certain kind of rock, heated in a very hot fire, gives hard, strong iron. With iron they could make hoes, knives and pots, and life became easier. This time is called the Iron Age.",
+          "But iron has a small weakness. Left in a damp place, it slowly grows reddish-brown rust.",
+          "Rust is not dirt. It is a new substance made when iron meets oxygen in the air and water, and it is no longer the iron it was. That is why iron things should be kept dry, or protected with paint."
+        ]
+      },
+      "quiz": {
+        "q": { "zh": "鐵鏽是什麼?", "en": "What is rust?" },
+        "options": [
+          { "zh": "一層灰塵", "en": "A layer of dust" },
+          { "zh": "鐵和氧氣、水變成的新東西", "en": "A new substance made from iron, oxygen and water", "ok": true },
+          { "zh": "鐵流出來的汗", "en": "Sweat from the iron" }
+        ],
+        "explain": { "zh": "鐵碰到氧氣和水,會變成紅褐色的鐵鏽,這是化學變化。", "en": "Iron that meets oxygen and water turns into reddish-brown rust. This is a chemical change." }
+      },
+      "elements": ["Fe", "O"], "molecules": ["Fe2O3"],
+      "safety": { "zh": "煉鐵要用很高的溫度,非常危險,只有工廠裡的專家才能做,千萬不要自己玩火或燒東西。", "en": "Making iron needs very high temperatures and is very dangerous. Only experts in factories may do it. Never play with fire or burn things yourself." },
+      "checks": ["煉鐵技術約在西元前 1200 年(三千多年前)前後開始普遍,稱為鐵器時代", "鐵鏽的主要成分是含水的氧化鐵(鐵 + 氧氣 + 水)"]
+    },
+    {
+      "id": "phosphorus", "level": "kid",
+      "title": { "zh": "會發光的白色東西:磷的故事", "en": "The white stuff that glows: the story of phosphorus" },
+      "body": {
+        "zh": [
+          "三百多年前,德國有一位煉金術士,名字叫布蘭德。那時候的人相信,只要用對方法,就能把一般的東西變成黃金。",
+          "布蘭德收集了很多很多尿液,一直加熱、提煉。最後,他得到一種白白的東西,拿到黑漆漆的房間一看,哇!它竟然發出淡淡的綠光!",
+          "他沒有煉出黃金,卻發現了一種新的元素,就是「磷」。磷的名字有「帶來光」的意思。"
+        ],
+        "en": [
+          "More than three hundred years ago, a German alchemist named Brand lived. People then believed that, with the right method, ordinary things could be turned into gold.",
+          "Brand collected a great deal of urine and kept heating and refining it. In the end he got a white substance, and when he took it into a pitch-dark room, wow! It gave off a faint green glow!",
+          "He did not make gold, but he discovered a new element: phosphorus. Its name means \"light-bringer\"."
+        ]
+      },
+      "quiz": {
+        "q": { "zh": "布蘭德想煉出黃金,卻意外發現了什麼?", "en": "Brand wanted to make gold. What did he discover by accident?" },
+        "options": [
+          { "zh": "磷", "en": "Phosphorus", "ok": true },
+          { "zh": "鐵", "en": "Iron" },
+          { "zh": "水", "en": "Water" }
+        ],
+        "explain": { "zh": "他發現了會發光的新元素「磷」。科學家常常在尋找別的東西時,意外發現新東西。", "en": "He found the glowing new element phosphorus. Scientists often discover new things by accident while looking for something else." }
+      },
+      "elements": ["P"], "molecules": [],
+      "safety": { "zh": "白磷很容易著火,而且有毒,只有專家才能處理,千萬不要自己找來玩。", "en": "White phosphorus catches fire easily and is poisonous. Only experts may handle it. Never look for it to play with." },
+      "checks": ["1669 年,德國漢堡的煉金術士布蘭德(Hennig Brand)從尿液提煉出磷", "磷在黑暗中發出淡綠色的光", "phosphorus 來自希臘文「帶來光」"]
+    },
+    {
+      "id": "lavoisier", "level": "kid",
+      "title": { "zh": "拉瓦節:東西燒掉了,去哪裡了?", "en": "Lavoisier: where does a burnt thing go?" },
+      "body": {
+        "zh": [
+          "兩百多年前,法國有一位科學家,叫拉瓦節。他最愛用天平,什麼都要量一量、稱一稱。",
+          "有一次,他把東西放進密閉的玻璃容器裡燃燒,再把整個容器放上天平。奇怪,重量一點都沒有變!",
+          "拉瓦節告訴大家:東西燒起來,不是不見了,而是和空氣裡的氧氣結合,變成了別的東西。後來大家記住了一個重要的想法:物質不會憑空消失,只會變成別的樣子。"
+        ],
+        "en": [
+          "More than two hundred years ago, a French scientist named Lavoisier lived. He loved his balance and liked to weigh everything.",
+          "Once he burned something inside a sealed glass container and put the whole container on the balance. How strange: the weight had not changed at all!",
+          "Lavoisier told everyone: when something burns it does not vanish. It joins with oxygen from the air and becomes something else. People remembered an important idea: matter does not disappear out of nowhere, it only turns into something else."
+        ]
+      },
+      "quiz": {
+        "q": { "zh": "拉瓦節把東西放在密閉容器裡燃燒,整個容器的重量怎麼了?", "en": "Lavoisier burned something in a sealed container. What happened to the weight of the whole container?" },
+        "options": [
+          { "zh": "變輕了", "en": "It got lighter" },
+          { "zh": "沒有變", "en": "It did not change", "ok": true },
+          { "zh": "變重了", "en": "It got heavier" }
+        ],
+        "explain": { "zh": "燃燒只是東西變成別的物質,總重量不會改變。", "en": "Burning only turns things into other substances, so the total weight stays the same." }
+      },
+      "elements": ["O"], "molecules": [],
+      "checks": ["拉瓦節是 18 世紀(1770 年代前後)的法國科學家", "在密閉容器中燃燒,總質量不變(質量守恆),燃燒是與氧氣結合", "拉瓦節為氧(oxygen)命名並說明它在燃燒中的角色"]
+    },
+    {
+      "id": "soda", "level": "kid",
+      "title": { "zh": "汽水是怎麼發明的?", "en": "How was soda water invented?" },
+      "body": {
+        "zh": [
+          "兩百多年前,英國有一位科學家,叫普利斯特里。他家附近有一間啤酒工廠。他發現,啤酒在大桶子裡發酵的時候,上面會有一層看不見的氣體。",
+          "他想:把這種氣體和水放在一起,會怎麼樣呢?他讓氣體慢慢溶進水裡,結果水喝起來有點特別的味道,還會冒出小泡泡!這就是最早的汽水。",
+          "這種氣體叫做「二氧化碳」。汽水裡的小泡泡,就是二氧化碳。汽水瓶一打開,二氧化碳就跑出來,所以會冒泡泡;搖一搖再打開,泡泡還會噴出來呢!"
+        ],
+        "en": [
+          "More than two hundred years ago, an English scientist named Priestley lived. There was a brewery near his home. He noticed that when beer ferments in big vats, an invisible gas gathers above it.",
+          "He wondered: what happens if this gas meets water? He let the gas slowly dissolve into water, and the water tasted a little different and made tiny bubbles! That was the first soda water.",
+          "This gas is called carbon dioxide. The bubbles in soda are carbon dioxide. When you open the bottle the carbon dioxide escapes, so it fizzes. Shake it before opening, and the bubbles even spray out!"
+        ]
+      },
+      "quiz": {
+        "q": { "zh": "汽水裡的泡泡是什麼氣體?", "en": "Which gas makes the bubbles in soda?" },
+        "options": [
+          { "zh": "二氧化碳", "en": "Carbon dioxide", "ok": true },
+          { "zh": "氧氣", "en": "Oxygen" },
+          { "zh": "氫氣", "en": "Hydrogen" }
+        ],
+        "explain": { "zh": "汽水裡溶著二氧化碳,瓶子打開時它跑出來,就形成泡泡。", "en": "Soda has carbon dioxide dissolved in it. When the bottle is opened it escapes and makes bubbles." }
+      },
+      "elements": ["C", "O"], "molecules": ["CO2"],
+      "checks": ["1767 年,英國的普利斯特里在英格蘭里茲(Leeds)的啤酒廠旁研究發酵產生的氣體,做出溶有二氧化碳的水", "汽水的氣泡是二氧化碳"]
+    },
+    {
+      "id": "salt", "level": "kid",
+      "title": { "zh": "食鹽的大祕密", "en": "The big secret of table salt" },
+      "body": {
+        "zh": [
+          "你知道嗎?每天都在吃的食鹽,是由兩種很危險的東西變成的!",
+          "第一種叫「鈉」,是軟軟的銀白色金屬。把它丟進水裡,會噗噗冒泡,甚至爆炸!第二種叫「氯」,是黃綠色的氣體,味道刺鼻,而且有毒。",
+          "可是,當鈉和氯碰在一起,卻變成了白白的小顆粒,就是食鹽。食鹽讓菜變得好吃,也能幫我們的身體運作。這就是化學變化的神奇:兩種危險的東西,變成了完全不一樣、很安全的新東西!不過,吃鹽也不能吃太多喔。"
+        ],
+        "en": [
+          "Did you know? The table salt we eat every day is made from two very dangerous things!",
+          "The first is sodium, a soft silvery metal. Drop it into water and it fizzes, and may even explode! The second is chlorine, a yellow-green gas with a sharp smell, and it is poisonous.",
+          "But when sodium and chlorine meet, they turn into little white grains: table salt. Salt makes food tasty and helps our bodies work. This is the magic of chemical change: two dangerous things become something completely different and safe! But we should not eat too much salt."
+        ]
+      },
+      "quiz": {
+        "q": { "zh": "食鹽是由哪兩種元素組成的?", "en": "Which two elements make up table salt?" },
+        "options": [
+          { "zh": "鈉和氯", "en": "Sodium and chlorine", "ok": true },
+          { "zh": "鐵和氧", "en": "Iron and oxygen" },
+          { "zh": "氫和氧", "en": "Hydrogen and oxygen" }
+        ],
+        "explain": { "zh": "食鹽(氯化鈉)是鈉和氯結合成的。", "en": "Table salt (sodium chloride) is made when sodium and chlorine join together." }
+      },
+      "elements": ["Na", "Cl"], "molecules": ["NaCl"],
+      "safety": { "zh": "鈉和氯都很危險,只有專家在實驗室裡才能操作,千萬不要自己試。", "en": "Both sodium and chlorine are dangerous. Only experts in a lab may work with them. Never try it yourself." },
+      "checks": ["鈉是柔軟的銀白色金屬,與水劇烈反應", "氯氣是黃綠色、有刺鼻味道的有毒氣體", "鈉 + 氯 → 氯化鈉(食鹽)"]
+    },
+    {
+      "id": "soap", "level": "kid",
+      "title": { "zh": "肥皂為什麼洗得掉油?", "en": "Why can soap wash away oil?" },
+      "body": {
+        "zh": [
+          "手上沾到油,只用水洗,怎麼洗都洗不乾淨,這是為什麼呢?因為油和水就像兩個不愛玩在一起的朋友,怎麼攪也混不在一起。",
+          "很久很久以前,大約四千多年前,古代的人就發現了一種好東西:肥皂。肥皂裡的小分子很特別,一頭喜歡水,一頭喜歡油。",
+          "它們用喜歡油的那一頭,抓住小小的油滴;喜歡水的那一頭,就跟著水一起跑。這樣,油就被水帶走了,手也變乾淨了!"
+        ],
+        "en": [
+          "When your hands get oily, rinsing with water alone never gets them clean. Why? Oil and water are like two friends who do not like to play together. However you stir, they will not mix.",
+          "A very long time ago, more than four thousand years ago, people discovered something useful: soap. The tiny molecules in soap are special. One end likes water and the other end likes oil.",
+          "They grab tiny drops of oil with the oil-loving end, and the water-loving end goes along with the water. That way the water carries the oil away, and your hands get clean!"
+        ]
+      },
+      "quiz": {
+        "q": { "zh": "肥皂為什麼能把油洗掉?", "en": "Why can soap wash oil away?" },
+        "options": [
+          { "zh": "它一頭喜歡水、一頭喜歡油", "en": "One end likes water and the other likes oil", "ok": true },
+          { "zh": "它把油吃掉了", "en": "It eats the oil" },
+          { "zh": "它讓油變成了空氣", "en": "It turns the oil into air" }
+        ],
+        "explain": { "zh": "肥皂的小分子一頭抓住油、一頭跟著水,把油帶走。", "en": "A soap molecule holds the oil with one end and goes with the water with the other, carrying the oil away." }
+      },
+      "elements": [], "molecules": ["H2O"],
+      "checks": ["約西元前 2800 年的古巴比倫泥筒上有製作類似肥皂物質的記載(常見說法,約四千八百年前)", "肥皂分子一端親水、一端親油,能把油滴包起來被水沖走"]
+    },
+    {
+      "id": "mendeleev", "level": "kid",
+      "title": { "zh": "讓元素排排站:門得列夫的週期表", "en": "Lining up the elements: Mendeleev's periodic table" },
+      "body": {
+        "zh": [
+          "一百多年前,俄國有一位化學家,叫門得列夫。那時候,科學家已經找到很多元素,可是它們亂七八糟的,很難記住。",
+          "門得列夫想:能不能讓它們排排站呢?據說,他把每個元素的名字和特性寫在小卡片上,像玩接龍一樣,排來排去。最後,他排出了第一張有規律的元素週期表!",
+          "他還很大膽,在表上留了幾個空位,說:「這裡一定有還沒被找到的元素!」幾年後,人們真的找到了鎵和鍺,性質和他預測的很像。你看,週期表不只是一張表,還能幫我們猜出新元素呢!"
+        ],
+        "en": [
+          "More than a hundred years ago, a Russian chemist named Mendeleev lived. By then scientists had found many elements, but they were in a jumble and hard to remember.",
+          "Mendeleev wondered: could they line up in order? It is said that he wrote each element's name and features on little cards and moved them around like a game of solitaire. In the end he arranged the first periodic table with a pattern!",
+          "He was bold, too. He left some empty spaces in the table and said: \"There must be elements here that nobody has found yet!\" A few years later, people really did find gallium and germanium, and they were much like his predictions. So the periodic table is not just a chart: it helps us guess new elements!"
+        ]
+      },
+      "quiz": {
+        "q": { "zh": "門得列夫在表上留空位,是想告訴大家什麼?", "en": "What was Mendeleev telling people by leaving empty spaces?" },
+        "options": [
+          { "zh": "這裡還沒寫完", "en": "He had not finished writing" },
+          { "zh": "這些地方還有沒被發現的元素", "en": "Elements not yet discovered belong here", "ok": true },
+          { "zh": "這些元素不見了", "en": "Those elements had disappeared" }
+        ],
+        "explain": { "zh": "他根據規律預測還有新元素,後來真的被找到了。", "en": "He used the pattern to predict new elements, and they were later really found." }
+      },
+      "elements": ["Ga", "Ge"], "molecules": [],
+      "checks": ["門得列夫在 1869 年發表元素週期表(約一百五十多年前)", "他預測的「類鋁」與「類矽」後來分別是 1875 年發現的鎵與 1886 年發現的鍺", "用卡片排元素是廣為流傳的說法,故事用「據說」"]
+    },
+    {
+      "id": "curie", "level": "kid",
+      "title": { "zh": "居禮夫人和會發光的元素", "en": "Madame Curie and the glowing elements" },
+      "body": {
+        "zh": [
+          "一百多年前,有一位很努力的科學家,叫居禮夫人。她從波蘭來到法國念書,後來和先生一起研究一種礦石,發現它會悄悄放出特別的能量。",
+          "他們花了好幾年,處理了好多好多礦石,終於找出了兩種新元素。第一種,她取名叫「釙」,是為了紀念她的祖國波蘭。第二種叫「鐳」,在暗處會發出淡淡的光。",
+          "後來大家才知道,這些元素有「輻射」,碰了對身體不好,所以要交給專家小心處理。居禮夫人很了不起,一共得到兩次諾貝爾獎,一次是物理學獎,一次是化學獎。"
+        ],
+        "en": [
+          "More than a hundred years ago, a very hard-working scientist named Madame Curie lived. She came from Poland to study in France, and later studied a kind of ore with her husband. They found that it quietly gives off a special kind of energy.",
+          "They worked for several years and processed a great deal of ore, and finally found two new elements. The first she named polonium, to honor her homeland, Poland. The second is radium, which glows faintly in the dark.",
+          "Later everyone learned that these elements give off radiation, which is bad for the body, so experts must handle them carefully. Madame Curie was remarkable: she won two Nobel Prizes, one in physics and one in chemistry."
+        ]
+      },
+      "quiz": {
+        "q": { "zh": "「釙」這個名字是為了紀念哪裡?", "en": "Which place is the name \"polonium\" in honor of?" },
+        "options": [
+          { "zh": "波蘭", "en": "Poland", "ok": true },
+          { "zh": "法國", "en": "France" },
+          { "zh": "俄國", "en": "Russia" }
+        ],
+        "explain": { "zh": "居禮夫人用祖國波蘭的名字,替釙命名。", "en": "Madame Curie named polonium after her homeland, Poland." }
+      },
+      "elements": ["Po", "Ra"], "molecules": [],
+      "safety": { "zh": "有輻射的東西很危險,只有專家才能處理,看到要離遠一點,並告訴大人。", "en": "Things that give off radiation are dangerous. Only experts may handle them. Stay away and tell a grown-up." },
+      "checks": ["1898 年居禮夫婦(皮耶與瑪麗)發現釙與鐳", "釙以瑪麗的祖國波蘭(Poland)命名", "瑪麗·居禮得過兩次諾貝爾獎:1903 物理學獎(與皮耶、貝克勒共享)、1911 化學獎", "鐳在暗處會發出淡淡的光,且有輻射"]
+    },
+    {
+      "id": "fireworks", "level": "kid",
+      "title": { "zh": "煙火為什麼有那麼多顏色?", "en": "Why are fireworks so colorful?" },
+      "body": {
+        "zh": [
+          "夜空裡的煙火,有紅的、黃的、綠的、藍的,真漂亮!煙火最早是中國古代的人發明的。",
+          "煙火的顏色是從哪裡來的呢?原來,不同的金屬(元素)被火燒的時候,會發出不一樣顏色的光:鈉是黃色,鍶是紅色,鋇是綠色,銅是藍綠色。",
+          "煙火師傅就把這些金屬放進煙火裡,調出五顏六色的花朵。下次看煙火的時候,你可以猜猜看,是哪一種元素在發光呢?"
+        ],
+        "en": [
+          "The fireworks in the night sky come in red, yellow, green and blue. How beautiful! Fireworks were first invented by people in ancient China.",
+          "Where do the colors come from? It turns out that different metals (elements) give off different colors of light when they burn: sodium is yellow, strontium is red, barium is green and copper is blue-green.",
+          "Fireworks makers put these metals into the fireworks to mix flowers of every color. Next time you watch fireworks, try to guess which element is shining!"
+        ]
+      },
+      "quiz": {
+        "q": { "zh": "煙火的顏色是從哪裡來的?", "en": "Where do the colors of fireworks come from?" },
+        "options": [
+          { "zh": "不同的金屬(元素)", "en": "Different metals (elements)", "ok": true },
+          { "zh": "彩色的顏料", "en": "Colored paint" },
+          { "zh": "太陽的光", "en": "Sunlight" }
+        ],
+        "explain": { "zh": "不同的金屬燒起來會發出不同顏色的光,煙火就是利用這一點。", "en": "Different metals give off different colors when they burn, and fireworks make use of this." }
+      },
+      "elements": ["Na", "Sr", "Ba", "Cu"], "molecules": [],
+      "safety": { "zh": "煙火很危險,一定要在大人帶領下,到安全的地方觀賞,不要自己玩。", "en": "Fireworks are dangerous. Watch them only with a grown-up in a safe place, and never play with them yourself." },
+      "checks": ["煙火源自中國古代(火藥的應用)", "焰色:鈉黃色、鍶紅色、鋇綠色、銅藍綠色"]
+    }
+  ]
+}

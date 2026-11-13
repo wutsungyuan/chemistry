@@ -12,6 +12,7 @@ import { validateSpectra } from './lib/validate-spectra.mjs';
 import { validateNuclides } from './lib/validate-nuclides.mjs';
 import { validateMatter } from './lib/validate-matter.mjs';
 import { validateElements, validateElementUses } from './lib/validate-elements.mjs';
+import { validateStories } from './lib/validate-stories.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DB = p => JSON.parse(fs.readFileSync(path.join(root, 'src/data/db', p), 'utf8'));
@@ -164,6 +165,8 @@ validateMatter(MATTER, dataCtx);
 const ELEM = DB('elements.json');
 validateElements(ELEM, dataCtx);
 validateElementUses(DB('element-uses.json'), ELEM, dataCtx);
+// 化學故事:連結的元素與分子必須存在
+validateStories(DB('stories.json'), { elements: new Set(Object.keys(BY_SYMBOL)), molecules: new Set(ids) }, dataCtx);
 
 // ---- 6) 輸出 ----
 if (errors.length) {
