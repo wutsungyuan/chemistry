@@ -346,6 +346,7 @@ export function mount(container, z, { go }) {
     </ul>
     ${el.fact ? `<p>💡 ${LH(el.fact)}</p>` : `<p style="color:var(--muted)">${T('atom.nofact')}</p>`}
     ${el.use && L(el.use) ? `<p>🏠 ${LH(el.use)}</p>` : ''}
+    <p><button class="chip nuc-link" title="${Tp('nuc.title')}">${T('nuc.link')}</button></p>
     <div class="spec" id="spec"></div>
     ${isNarrow() && foundHTML ? `<div class="found">${foundHTML}</div>` : ''}
     <div>
@@ -395,6 +396,7 @@ export function mount(container, z, { go }) {
   side.querySelector('#prev').onclick = () => { pendingTab = side.dataset.tab; go('atom', el.z > 1 ? el.z - 1 : 118); };
   side.querySelector('#next').onclick = () => { pendingTab = side.dataset.tab; go('atom', el.z < 118 ? el.z + 1 : 1); };
   side.querySelector('#back').onclick = () => go('table');
+  side.querySelector('.nuc-link').onclick = () => go('nucleus', el.z);
   side.querySelector('#say')?.addEventListener('click', () =>
     speak(`${L(el.name)}。${el.fact ? L(el.fact) : ''}${el.use ? L(el.use) : ''}`));
   container.querySelectorAll('[data-mol]').forEach(b => { b.onclick = () => go('gallery', b.dataset.mol); });

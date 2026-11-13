@@ -10,8 +10,9 @@ import * as MoleculeLab from './scenes/MoleculeLab.js';
 import * as ReactionTheater from './scenes/ReactionTheater.js';
 import * as Quiz from './scenes/Quiz.js';
 import * as ElectronCloud from './scenes/ElectronCloud.js';
+import * as NuclearView from './scenes/NuclearView.js';
 
-const SCENES = { table: PeriodicTable, atom: AtomView, gallery: MoleculeGallery, lab: MoleculeLab, reaction: ReactionTheater, quiz: Quiz, cloud: ElectronCloud };
+const SCENES = { table: PeriodicTable, atom: AtomView, gallery: MoleculeGallery, lab: MoleculeLab, reaction: ReactionTheater, quiz: Quiz, cloud: ElectronCloud, nucleus: NuclearView };
 const NAV = [['table', 'nav.table', '🧪'], ['gallery', 'nav.gallery', '🔬'], ['lab', 'nav.lab', '⚗️'], ['reaction', 'nav.reaction', '🔥'], ['quiz', 'nav.quiz', '🎯']];
 
 const app = document.getElementById('app');
@@ -36,7 +37,7 @@ function renderChrome() {
   NAV.forEach(([key, label, icon]) => {
     const b = document.createElement('button');
     b.innerHTML = `<span class="ico">${icon}</span><span class="lbl">${T(label)}</span>`;
-    if (key === name || (key === 'table' && (name === 'atom' || name === 'cloud'))) b.classList.add('active');
+    if (key === name || (key === 'table' && (name === 'atom' || name === 'cloud' || name === 'nucleus'))) b.classList.add('active');
     b.onclick = () => go(key);
     nav.appendChild(b);
   });

@@ -27,7 +27,8 @@ test('週期表光譜模式下點元素,直接進原子頁的光譜分頁;一般
 });
 
 test('國小/國中/高中三層;預設立體,可切換「切開看」;切開時鏡頭正對剖面、不自動旋轉', () => {
-  assert.match(cloud, /const LEVELS = \['kid', 'teen', 'high'\]/);
+  assert.match(cloud, /import \{ LEVELS, getLevel, setLevel \} from '\.\.\/ui\/level\.js'/);                // 三個階段與「記住上次選的」在 ui/level.js,和原子核頁共用
+  assert.match(read('src/ui/level.js'), /LEVELS = \['kid', 'teen', 'high'\]/);
   assert.match(cloud, /slice = false/);                                        // 預設立體;切開看是選項
   assert.match(cloud, /if \(sliced\) stage\.camera\.position\.set\(0, 0, L\)/);       // 切開看時鏡頭正對剖面,不用再轉
   assert.match(cloud, /localClippingEnabled = true/);

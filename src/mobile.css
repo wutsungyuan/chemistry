@@ -231,3 +231,14 @@
   #app > .side:not(.mission) > div:last-child #prev, #app > .side:not(.mission) > div:last-child #next { flex: none; min-width: 48px; }
   #app > .side:not(.mission) > div:last-child #back, #app > .side:not(.mission) > div:last-child #say { flex: 1 1 auto; }
 }
+
+/* 手機:原子核與同位素面板——標題一行、「回原子」只留箭頭,省出高度給內容 */
+@media (max-width: 900px), (pointer: coarse) and (max-width: 1400px) {
+  .nuc-side { gap: 6px; }
+  .nuc-side h2 small { display: inline; margin-left: 6px; }
+  .nuc-back .lbl { display: none; }
+  .nuc-back { min-width: 44px; }
+  .nuc-iso { max-height: 88px; }
+  .nuc-iso .chip { min-height: 34px; min-width: 36px; }
+  .cl-bar .chip { min-height: 36px; padding: 4px 10px; }
+}

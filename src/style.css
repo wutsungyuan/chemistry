@@ -487,3 +487,44 @@ body{background:
 .cl-table th,.cl-table td{padding:3px 6px;text-align:left;border-bottom:1px solid rgba(255,255,255,.12)}
 .cl-table tr.yes td{color:var(--good)}
 .cl-table tr.no td{color:var(--muted)}
+
+/* ---------- 原子核與同位素 ---------- */
+.nuc-side{display:flex;flex-direction:column;gap:8px}
+.nuc-side > *{flex:none}
+.nuc-side h2{margin:0}
+.nuc-side h2 small{display:block;font-size:.6em;color:var(--muted);font-weight:600}
+.nuc-iso{display:flex;flex-wrap:wrap;gap:5px;margin-top:4px;padding:4px;max-height:84px;overflow-x:hidden;overflow-y:auto;scroll-snap-type:y proximity;scroll-padding-top:4px}   /* padding:選取框畫在外面時不會被捲動區切掉 */
+.nuc-iso .chip{min-width:34px;min-height:32px;padding:2px 8px;margin:0;border:0;color:var(--text);cursor:pointer;text-align:center;font-weight:800;font-size:.85rem;line-height:1.2}
+.nuc-iso .chip{scroll-snap-align:start}
+.nuc-iso .chip.st{background:#1f6b44}
+.nuc-iso .chip.ra{background:#7a3d2a}
+.nuc-iso .chip.on{box-shadow:0 0 0 2px #fff;background:var(--accent);color:#222}
+.nuc-info p,.nuc-result p{margin:0 0 8px;line-height:1.7}
+.nuc-lead{font-size:1.02em}
+.nuc-note{color:var(--muted);font-size:.9em;line-height:1.7;margin:0}
+.nuc-src{color:var(--muted);font-size:.8em;margin:0}
+.nuc-src a{color:var(--accent)}
+.nuc-res{font-weight:800;color:var(--accent)}
+.nuc-result{background:rgba(255,255,255,.07);border-radius:12px;padding:8px 12px}
+.nuc-use{background:rgba(255,255,255,.06);border-radius:10px;padding:6px 10px}
+.nuc-sym{display:inline-block;font-weight:800;font-size:1.1em;margin:0 4px}
+.nuc-sym sup,.nuc-sym sub{font-size:.6em;line-height:0}
+.nuc-sym sup{margin-right:-.4em;position:relative;top:-.1em}
+.nuc-sym sub{margin-right:.15em;margin-left:-.45em;position:relative;left:0;top:.35em}
+.nuc-dotsbox{display:flex;flex-direction:column;gap:6px;background:rgba(255,255,255,.05);border-radius:12px;padding:8px 10px}
+.nuc-dots{display:grid;grid-template-columns:repeat(20,1fr);gap:3px}
+.nuc-dots i{aspect-ratio:1;border-radius:50%;background:#ff9d5c;transition:background .25s,transform .25s}
+.nuc-dots i.gone{background:#4cc9ff;transform:scale(.8)}
+.nuc-dotread{font-size:.92rem;line-height:1.6}
+.nuc-theory{color:var(--muted)}
+.nuc-row{display:flex;gap:8px;flex-wrap:wrap}
+.nuc-slider{display:flex;align-items:center;gap:8px;font-weight:700;flex-wrap:wrap}
+.nuc-slider input{flex:1;min-width:140px;accent-color:#ff9d5c}
+.nuc-curve{width:100%;height:auto;display:block}
+.nuc-bar{display:flex;gap:2px;height:14px;margin:4px 0 8px;border-radius:7px;overflow:hidden}
+.nuc-bar span{min-width:4px}
+.nuc-ablist{list-style:none;margin:0 0 8px;padding:0;display:grid;gap:4px}.nuc-ablist li{display:flex;align-items:center;gap:8px;font-size:.9rem}.nuc-ablist i{width:12px;height:12px;border-radius:3px;flex:none}.nuc-ablist li span{margin-left:auto;font-variant-numeric:tabular-nums;color:#cfd6ff}
+.nuc-formula{background:rgba(255,255,255,.06);border-radius:10px;padding:8px 12px;margin:0 0 8px;font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-size:.95em;line-height:1.9;overflow-x:auto}
+.nuc-chart{width:100%;height:auto;display:block;border-radius:8px}
+.nuc-actions{display:flex;flex-wrap:wrap;gap:6px;align-items:center;position:sticky;bottom:-4px;z-index:2;margin:0 -6px;padding:8px 6px 6px;background:#1b2350;border-radius:12px}
+.nuc-actions .btn{white-space:nowrap;line-height:1.5}

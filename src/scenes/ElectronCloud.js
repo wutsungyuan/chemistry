@@ -6,10 +6,10 @@ import { radialGraph } from '../ui/radialGraph.js';
 import { cssColor } from '../ui/spectrum.js';
 import { setNextTab } from './AtomView.js';
 import { isNarrow } from '../ui/layout.js';
+import { LEVELS, getLevel, setLevel } from '../ui/level.js';
 
 // 氫原子的電子雲。只做氫:氫只有一顆電子,波函數有精確解;多電子原子沒有精確解,畫出來會誤導。
 // 兩個難度:🌱 國小(「拍照」:每按一次在電子可能出現的地方亮一個點,拍多了雲就浮現)、🔭 國中(完整的雲 + 節點 + 名稱 + 能量)。
-const LEVELS = ['kid', 'teen', 'high'];
 const advanced = l => l !== 'kid';          // 國中與高中:完整的雲、節點、切開看
 const FLOW_POINTS = 500;                    // 高中:機率流的示蹤粒子數
 const FLOW_SECONDS = 5;                     // 畫面上,離 z 軸一半雲半徑處的粒子繞一圈要幾秒(放慢)
@@ -27,7 +27,6 @@ const MAX_POINTS = 24000;                 // 每個狀態預先取樣的點數
 const FULL_POINTS = 9000;                 // 國中版預設顯示的點數
 const MIX_POINTS = 12000;                 // 疊加態的點數
 const MIX_PERIOD = 2.4;                   // 疊加態:放慢後,畫面上晃一次要幾秒(真實是 2.19×10⁻¹⁵ 秒)
-const store = { get(k, d) { try { return localStorage.getItem(k) ?? d; } catch { return d; } }, set(k, v) { try { localStorage.setItem(k, v); } catch {} } };
 
 export function mount(container, startId) {
   const stage = createStage(container, { camPos: [0, 1.2, 8.5] });
@@ -36,7 +35,7 @@ export function mount(container, startId) {
   stage.controls.enablePan = false;
   const reduced = false;   // 不理會系統的「減少動態效果」
 
-  let level = LEVELS.includes(store.get('cloudLevel', 'kid')) ? store.get('cloudLevel', 'kid') : 'kid';
+  let level = getLevel();
   let id = STATES[startId] || startId === 'mix' ? startId : '1s';
   if (COMPLEX_IDS.includes(id) && level !== 'high') id = '2p';       // m ≠ 0 的複數軌域只在高中層
   let mixFrac = 0.5, playing = false, phase = 0, pools = null;           // 疊加態:mixFrac = 在 3d 的機率;phase = 現在晃到哪(弧度)
@@ -262,7 +261,7 @@ export function mount(container, startId) {
     if (shown >= MAX_POINTS && auto) { auto = false; refresh(); } else updateCount();      // 只更新數字;整個面板重畫只在換難度/狀態/連拍開關時
   }
   side.querySelector('.cl-back').onclick = () => { setNextTab('spec'); location.hash = '#atom/1'; };
-  side.querySelectorAll('[data-level]').forEach(b => b.onclick = () => { level = b.dataset.level; store.set('cloudLevel', level); auto = false; if (COMPLEX_IDS.includes(id) && level !== 'high') id = '2p'; load(id); refresh(); });
+  side.querySelectorAll('[data-level]').forEach(b => b.onclick = () => { level = b.dataset.level; setLevel(level); auto = false; if (COMPLEX_IDS.includes(id) && level !== 'high') id = '2p'; load(id); refresh(); });
   side.querySelectorAll('[data-state]').forEach(b => b.onclick = () => { auto = false; load(b.dataset.state); refresh(); });
   side.querySelector('[data-slice]').onclick = () => { slice = !slice; auto = false; applyView(); refresh(); };
   side.querySelector('.cl-mixrange').oninput = e => { mixFrac = +e.target.value / 100; recomposeMix(); paintMix(); updateMixRead(); info.innerHTML = infoHTML(); };

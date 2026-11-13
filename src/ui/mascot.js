@@ -16,6 +16,10 @@ const TIPS = {
     zh: ['按「拍照」,電子可能出現的地方會亮一個點!', '拍越多張,雲的形狀就越清楚,不同的能階形狀不一樣喔!', '電子不是繞圈圈的小球,而是一團機率的雲!'],
     en: ['Tap "Snap" and a dot lights up where the electron might be!', 'The more you snap, the clearer the shape!', 'An electron is not a little ball going round - it is a cloud of probability!'],
   },
+  nucleus: {
+    zh: ['紅球是質子,灰球是中子。質子數一樣、中子數不一樣的,就是同位素!', '按「看它變身」,看看不穩定的原子核會發生什麼事!', '半衰期:一大堆原子裡,有一半變身掉所要的時間。', '點上面的數字,換一種同位素看看!'],
+    en: ['Red = proton, gray = neutron. Same protons, different neutrons: isotopes!', 'Press "Watch it change" to see what an unstable nucleus does!', 'Half-life: the time for half of a big pile of atoms to change.', 'Tap a number above to try another isotope!'],
+  },
   gallery: {
     zh: ['用手指或滑鼠拖曳可以旋轉,點一下原子它會彈跳喔!', '試試切換「球棍模型」和「空間填充」,長得不一樣呢!', '點右邊的名字,認識生活中的分子!'],
     en: ['Drag to rotate, and tap an atom to make it bounce!', 'Try switching between ball-and-stick and space-filling!', 'Pick a name on the right to meet everyday molecules!'],
