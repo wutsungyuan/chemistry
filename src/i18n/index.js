@@ -6,12 +6,13 @@ import quiz from './packs/quiz.js';
 import lab from './packs/lab.js';
 import atom from './packs/atom.js';
 import gallery from './packs/gallery.js';
+import reaction from './packs/reaction.js';
 import { rubyHTML } from './zhuyin.js';
 import { escapeHtml as esc } from '../ui/util.js';
 import { getLevel } from '../ui/level.js';
 
 // 基本文字 + 各功能自己的文字包(packs/*.js,每包 {zh, en})。新功能的文字請放進新的 pack,不要再往 zh.js/en.js 堆。
-const PACKS = [nuc, matter, quiz, lab, atom, gallery];
+const PACKS = [nuc, matter, quiz, lab, atom, gallery, reaction];
 const dict = { zh: Object.assign({}, zh, ...PACKS.map(p => p.zh)), en: Object.assign({}, en, ...PACKS.map(p => p.en)) };
 const store = {
   get(k, d) { try { return localStorage.getItem(k) ?? d; } catch { return d; } },

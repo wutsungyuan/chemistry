@@ -6,10 +6,22 @@ export function validateReactions(R, MOL, { err }) {
   const m = R.meta || {};
   for (const k of ['source', 'note', 'retrieved']) if (!m[k]) err('reactions', `meta 缺少 ${k}(必須標示資料出處與限制)`);
   const ids = new Set();
+  for (const lv of ['kid', 'teen', 'high']) if (!(R.reactions || []).some(r => r.level === lv)) err('reactions', `階段 ${lv} 沒有任何反應`);
   for (const r of R.reactions || []) {
     const id = 'reaction:' + r.id;
     if (ids.has(r.id)) err(id, 'id 重複'); ids.add(r.id);
     if (!isText(r.name) || !isText(r.story)) err(id, 'name/story 要有中英文');
+    // 階段:level 是最低適用階段;國中/高中版的說明、反應類型、條件都要有中英文,英文欄位不可含中文字
+    if (!['kid', 'teen', 'high'].includes(r.level)) err(id, 'level 要是 kid / teen / high');
+    for (const f of ['storyTeen', 'storyHigh', 'type', 'cond']) {
+      if (!isText(r[f])) err(id, `${f} 要有中英文`);
+      else if (/[一-鿿]/.test(r[f].en)) err(id, `${f}.en 不可含中文字`);
+    }
+    if (!['exo', 'endo'].includes(r.heat)) err(id, 'heat 要是 exo(放熱)或 endo(吸熱)');
+    if (r.dH !== undefined) {
+      if (typeof r.dH !== 'number' || !Number.isFinite(r.dH)) err(id, 'dH 要是數字(kJ)');
+      else if ((r.dH < 0) !== (r.heat === 'exo')) err(id, `dH ${r.dH} 的正負號和 heat ${r.heat} 不一致(放熱 < 0、吸熱 > 0)`);
+    }
     if (!EFFECTS.includes(r.effect)) err(id, `effect ${r.effect} 沒有對應的動畫(可用:${EFFECTS.join('、')})`);
     const count = side => {
       const c = {};

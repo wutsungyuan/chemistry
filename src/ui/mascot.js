@@ -54,6 +54,10 @@ const TIPS = {
   reaction: {
     zh: ['按播放,看原子怎麼重新排隊變成新東西!', '反應前後,原子的種類和數量都不會變喔!', '可以拖動下面的進度條,慢慢看每一步。'],
     en: ['Press play and watch atoms line up into something new!', 'Atoms never disappear - they just rearrange!', 'Drag the progress bar to see every step slowly.'],
+    'zh@teen': ['按播放,看原子怎麼重新組合成新的物質。','反應前後原子的種類和數量不變,這就是原子守恆。','拖動下面的進度條,可以一步一步看。'],
+    'zh@high': ['播放動畫並對照方程式:係數表示分子的個數比。','下方列出原子守恆、反應類型、條件與反應熱。','可拖動進度條逐步觀察鍵的斷裂與生成。'],
+    'en@teen': ['Press play and watch the atoms regroup into new substances.','The kinds and numbers of atoms stay the same: conservation of atoms.','Drag the progress bar to go step by step.'],
+    'en@high': ['Play the animation and compare it with the equation: coefficients give the ratio of molecules.','Below: conservation of atoms, reaction type, conditions and enthalpy change.','Drag the progress bar to watch bonds break and form step by step.'],
   },
   quiz: {
     zh: ['答對越多,徽章越多,加油!', '不確定的話,先去週期表逛逛再回來!'],

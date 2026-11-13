@@ -10,6 +10,8 @@ import { T, Tp, L, LH, formulaHTML } from '../i18n/index.js';
 import { update, addUnique } from '../game/store.js';
 import { toast } from '../ui/toast.js';
 import { speak, canSpeak } from '../ui/speech.js';
+import { getLevel, forLevel } from '../ui/level.js';
+import { storyFor, conservation, countText } from '../game/rxfacts.js';
 
 // 時間軸(秒)
 const TA = 2.6, TB = 3.6, TC = 6.4, TEND = 9.5;
@@ -20,7 +22,10 @@ if (import.meta.env?.DEV) REACTIONS.forEach(r => { if (!checkBalance(r)) console
 
 export function mount(container, startId) {
   const stage = createStage(container, { camPos: [0, 1.5, 14] });
-  let cur = REACTIONS.find(r => r.id === startId) || REACTIONS[0];
+  // 反應清單依階段:國小 6 個最常見的、國中多 2 個、高中全部;從別處指定的反應即使超出階段也放進清單
+  const level = getLevel(), items = forLevel(REACTIONS, level);
+  let cur = REACTIONS.find(r => r.id === startId) || items[0];
+  if (!items.includes(cur)) items.push(cur);
   let scene3 = null;        // 目前反應的 3D 物件集合
   let t = 0, playing = true, finished = false;
 
@@ -229,7 +234,7 @@ export function mount(container, startId) {
   }
   function renderList() {
     list.innerHTML = '';
-    REACTIONS.forEach(r => {
+    items.forEach(r => {
       const b = document.createElement('button');
       if (r.id === cur.id) b.className = 'active';
       b.innerHTML = LH(r.name);
@@ -237,11 +242,24 @@ export function mount(container, startId) {
       list.appendChild(b);
     });
   }
+  /** 國中/高中:原子守恆、吸放熱;高中再加反應類型、條件、反應熱。國小不顯示 */
+  function infoHTML(r) {
+    if (level === 'kid') return '';
+    const c = conservation(r), rows = [], hi = level === 'high';
+    const heatName = Tp('rx.heat.' + r.heat);
+    if (hi) {
+      rows.push(T('rx.type', { t: L(r.type) }), T('rx.cond', { c: L(r.cond) }));
+      rows.push(r.dH !== undefined ? `${T('rx.heat', { h: heatName })}:${T('rx.dH', { v: (r.dH > 0 ? '+' : '−') + Math.abs(r.dH) })}` : T('rx.heat', { h: heatName }));
+    } else rows.push(T('rx.heat', { h: heatName, d: Tp('rx.heat.d.' + r.heat) }));
+    rows.push(T('rx.cons', { l: countText(c.left), r: countText(c.right) }));
+    return `<div class="rx-info">${rows.map(x => '📊 ' + x).join('<br>')}</div>`;
+  }
   let slider, playBtn, noteEl;
   function renderBar() {
     bar.innerHTML = `
       <div class="equation">${eqHTML(cur)}</div>
-      <div style="margin:4px 0"><b>${LH(cur.name)}</b> — ${LH(cur.story)}</div>
+      <div style="margin:4px 0"><b>${LH(cur.name)}</b> — ${LH(storyFor(cur, level))}</div>
+      ${infoHTML(cur)}
       <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
         <button class="btn" id="play"></button>
         <button class="btn alt" id="replay">↺ ${T('rx.replay')}</button>
@@ -253,7 +271,7 @@ export function mount(container, startId) {
     playBtn.onclick = () => { if (finished) { t = 0; finished = false; } playing = !playing; setPlayLabel(); };
     bar.querySelector('#replay').onclick = () => { t = 0; playing = true; finished = false; setPlayLabel(); };
     slider.oninput = () => { t = slider.value / 100; playing = false; finished = false; setPlayLabel(); };
-    bar.querySelector('#say')?.addEventListener('click', () => speak(`${L(cur.name)}。${L(cur.story)}`));
+    bar.querySelector('#say')?.addEventListener('click', () => speak(`${L(cur.name)}。${L(storyFor(cur, level))}`));
     setPlayLabel();
   }
   function setPlayLabel() { if (playBtn) playBtn.innerHTML = playing ? '⏸ ' + T('rx.pause') : '▶ ' + T('rx.play'); }

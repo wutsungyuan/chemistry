@@ -592,3 +592,6 @@ em.absorb{background:rgba(255,150,90,.3)}em.release{background:rgba(110,170,255,
 
 /* 圖鑑:國中/高中的分子數據 */
 .gal-facts{margin:6px 0;line-height:1.7;color:var(--muted);font-size:.95rem}
+
+/* 反應劇場:國中/高中的補充資訊 */
+.rx-info{margin:4px 0 6px;line-height:1.7;color:var(--muted);font-size:.92rem}
