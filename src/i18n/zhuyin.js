@@ -1,4 +1,5 @@
-import { pinyin } from 'pinyin-pro';
+import { pinyin, customPinyin } from 'pinyin-pro';
+import { PINYIN_TW } from './pinyinTW.js';
 import { escapeHtml as esc } from '../ui/util.js';
 
 const INIT = { b:'ㄅ',p:'ㄆ',m:'ㄇ',f:'ㄈ',d:'ㄉ',t:'ㄊ',n:'ㄋ',l:'ㄌ',g:'ㄍ',k:'ㄎ',h:'ㄏ',j:'ㄐ',q:'ㄑ',x:'ㄒ',zh:'ㄓ',ch:'ㄔ',sh:'ㄕ',r:'ㄖ',z:'ㄗ',c:'ㄘ',s:'ㄙ' };
@@ -8,10 +9,12 @@ const FIN = { a:'ㄚ',o:'ㄛ',e:'ㄜ',ai:'ㄞ',ei:'ㄟ',ao:'ㄠ',ou:'ㄡ',an:'�
   v:'ㄩ',ve:'ㄩㄝ',van:'ㄩㄢ',vn:'ㄩㄣ',iong:'ㄩㄥ' };
 const TONE = { 1:'', 2:'ˊ', 3:'ˇ', 4:'ˋ', 5:'' };
 
+customPinyin(PINYIN_TW);                       // 台灣國語的破音字與輕聲(見 pinyinTW.js)
+
 export function toZhuyin(py) {
-  const m = /^([a-züv]+)([1-5])?$/i.exec(py.replace(/ü/g, 'v'));
+  const m = /^([a-züv]+)([0-5])?$/i.exec(py.replace(/ü/g, 'v'));          // pinyin-pro 把輕聲寫成 0(例如 de0),不能漏掉,否則「的」「了」會沒有注音
   if (!m) return '';
-  let s = m[1].toLowerCase(); const tone = m[2] || '5';
+  let s = m[1].toLowerCase(); const tone = !m[2] || m[2] === '0' ? '5' : m[2];
   let ini = '';
   // y / w -> 還原成韻母
   if (s[0] === 'y') {
