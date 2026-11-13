@@ -1,5 +1,6 @@
 import { state, render } from '../i18n/index.js';
 import { pick } from './util.js';
+import { mountFace, setMood, trackPupils } from './mascotFace.js';
 
 // 原子小博士:住在標題列下方的「提示列」裡(版面中固定保留的一條,不蓋住任何功能)。
 // 他說的話就是各頁的操作提示;點他會換下一句,答對/做出分子時會跳出來慶祝。
@@ -51,21 +52,6 @@ const OOPS = {
   en: ['No worries, try again!', 'Mistakes help scientists learn!', 'Keep going, you got this!'],
 };
 
-const SVG = `<svg viewBox="0 0 120 130" width="100%" height="100%" aria-hidden="true">
-  <g class="m-orbits"><g fill="none" stroke="#9fe0ff" stroke-width="2.2" opacity=".9">
-    <ellipse cx="60" cy="46" rx="50" ry="17"/><ellipse cx="60" cy="46" rx="50" ry="17" transform="rotate(60 60 46)"/><ellipse cx="60" cy="46" rx="50" ry="17" transform="rotate(120 60 46)"/></g>
-    <circle cx="110" cy="46" r="5" fill="#4cc9ff"/><circle cx="35" cy="89" r="5" fill="#ffd23f"/><circle cx="35" cy="3" r="5" fill="#ff7aa8"/></g>
-  <path d="M26 128 Q26 82 60 80 Q94 82 94 128 Z" fill="#fff" stroke="#cfd6ff" stroke-width="2"/>
-  <path d="M60 80 L50 100 L60 96 L70 100 Z" fill="#ff5a5a"/>
-  <g class="m-arm"><path d="M92 96 Q108 84 104 66" fill="none" stroke="#fff" stroke-width="9" stroke-linecap="round"/><circle cx="104" cy="64" r="6" fill="#ffe0b8"/></g>
-  <circle cx="60" cy="48" r="29" fill="#ffe0b8"/>
-  <path d="M33 40 Q60 8 87 40 Q60 28 33 40Z" fill="#7a4a2a"/>
-  <g class="m-eyes"><circle cx="49" cy="50" r="10" fill="#fff" stroke="#3a3a66" stroke-width="2.5"/><circle cx="71" cy="50" r="10" fill="#fff" stroke="#3a3a66" stroke-width="2.5"/>
-    <circle class="m-pl" cx="50" cy="51" r="4" fill="#222"/><circle class="m-pr" cx="72" cy="51" r="4" fill="#222"/></g>
-  <path d="M59 50 H61" stroke="#3a3a66" stroke-width="2.5"/>
-  <path d="M50 64 Q60 73 70 64" fill="none" stroke="#c0453a" stroke-width="3" stroke-linecap="round"/>
-  <circle cx="41" cy="62" r="4" fill="#ff9aa8" opacity=".6"/><circle cx="79" cy="62" r="4" fill="#ff9aa8" opacity=".6"/>
-</svg>`;
 
 const reduced = false;   // 不理會系統的「減少動態效果」(遠端桌面常會自動開啟),動畫照常呈現
 
@@ -81,11 +67,15 @@ function tip(advance) {
   const list = TIPS[scene]?.[state.lang] || TIPS[scene]?.zh;
   if (!list) return;
   if (advance) idx[scene] = ((idx[scene] ?? -1) + 1) % list.length;
-  show(render(list[idx[scene] ?? (idx[scene] = 0)]));
+  const s = list[idx[scene] ?? (idx[scene] = 0)];
+  show(render(s));
+  if (advance && body && !asleep) setMood(body, 'talk', talkMs(s));
 }
 /** 臨時說一句話(慶祝等),幾秒後回到該頁提示 */
-function say(text, ms = 5000) {
+const talkMs = s => Math.max(1200, Math.min(3500, String(s).length * 70));
+function say(text, ms = 5000, mood = 'talk') {
   clearTimeout(holdTimer);
+  if (body) setMood(body, mood, mood === 'talk' ? talkMs(text) : 2400);
   holding = true;                      // 說話期間不要被自動輪播的提示蓋掉
   show(render(text));
   holdTimer = setTimeout(() => { holding = false; tip(false); }, ms);
@@ -97,44 +87,45 @@ const act = cls => {
 
 export function mountMascot() {
   bar = document.getElementById('tipbar');
-  bar.innerHTML = `<button class="m-body" aria-label="原子小博士">${SVG}</button><div class="m-bubble"></div>`;
-  body = bar.querySelector('.m-body');
+  bar.innerHTML = `<button class="m-body" aria-label="原子小博士"></button><div class="m-bubble"></div>`;
+  body = bar.querySelector('.m-body'); mountFace(body);
   bubble = bar.querySelector('.m-bubble');
-  const pl = bar.querySelector('.m-pl'), pr = bar.querySelector('.m-pr');
 
   body.onclick = () => { act('jump'); clearTimeout(holdTimer); holding = false; tip(true); };
 
   // 眼睛跟著指標走
   const wake = () => {
     lastMove = Date.now();
-    if (asleep) { asleep = false; bar.classList.remove('sleep'); act('jump'); say(state.lang === 'zh' ? '哈啾~我醒啦!' : 'Yawn... I am awake!', 2500); }
+    if (asleep) { asleep = false; bar.classList.remove('sleep'); act('jump'); say(state.lang === 'zh' ? '哈啾~我醒啦!' : 'Yawn... I am awake!', 2500); setMood(body, 'wow', 900); }
   };
-  addEventListener('pointermove', e => {
-    wake();
-    const r = body.getBoundingClientRect();
-    const dx = e.clientX - (r.left + r.width / 2), dy = e.clientY - (r.top + r.height * 0.4);
-    const d = Math.hypot(dx, dy) || 1, k = Math.min(1, d / 200) * 3;
-    pl.style.transform = pr.style.transform = `translate(${(dx / d) * k}px,${(dy / d) * k}px)`;
-  }, { passive: true });
+  trackPupils(body);
+  addEventListener('pointermove', wake, { passive: true });
   addEventListener('pointerdown', wake, { passive: true });
   addEventListener('keydown', wake);
 
   // 閒著時:偶爾跳一下、轉圈,每 14 秒換一句提示;45 秒沒人操作就睡著
   setInterval(() => {
     if (document.hidden) return;
-    if (!asleep && Date.now() - lastMove > 45000) { asleep = true; bar.classList.add('sleep'); show('Zzz… Zzz…'); return; }
+    if (!asleep && Date.now() - lastMove > 45000) { asleep = true; bar.classList.add('sleep'); show('Zzz… Zzz…'); setMood(body, 'sleep'); return; }
     if (asleep) return;
     if (holding) return;
     if (!reduced) { const r = Math.random(); if (r < 0.35) act('jump'); else if (r < 0.5) act('twirl'); }
     tip(true);
   }, 14000);
 
+  // 沒在說話時,偶爾眨單眼、露出驚訝的表情,讓他看起來是活的
+  setInterval(() => {
+    if (document.hidden || asleep || holding || body.dataset.mood !== 'happy') return;
+    const r = Math.random();
+    if (r < 0.45) setMood(body, 'wink', 500); else if (r < 0.6) setMood(body, 'wow', 900);
+  }, 4500);
+
   // 回應遊戲事件
   addEventListener('mascot', e => {
     const t = e.detail?.type, lang = state.lang;
-    if (t === 'cheer') { act('twirl'); say(e.detail.text || pick(PRAISE[lang] || PRAISE.zh), e.detail.text ? 8000 : 4000); }
+    if (t === 'cheer') { act('twirl'); say(e.detail.text || pick(PRAISE[lang] || PRAISE.zh), e.detail.text ? 8000 : 4000, 'cheer'); }
     else if (t === 'say') say(e.detail.text, e.detail.ms || 7000);
-    else if (t === 'oops') say(pick(OOPS[lang] || OOPS.zh), 4000);
+    else if (t === 'oops') say(pick(OOPS[lang] || OOPS.zh), 4000, 'oops');
   });
 }
 

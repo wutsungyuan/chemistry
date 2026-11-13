@@ -1,0 +1,108 @@
+/* 入口頁:三種版本各有自己的視覺風格;背景由 bg.js 畫。 */
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  min-height:100vh;min-height:100dvh;color:#2b2f6b;background:#fff8e8;overflow-x:hidden;
+  font-family:"PingFang TC","Noto Sans TC","Microsoft JhengHei",system-ui,-apple-system,"Segoe UI",sans-serif;
+  -webkit-text-size-adjust:100%;transition:color .8s,background .8s;
+}
+body[data-active=teen]{color:#1f3350;background:#f3f6fb}
+body[data-active=high]{color:#e6efff;background:#070e22}
+button{font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
+
+.lp-bg{position:fixed;inset:0;z-index:0}
+.lp-bg-layer{position:absolute;inset:0;opacity:0}
+.lp-bg-kid{background:
+  radial-gradient(circle at 12% 18%,#ffe9a8 0,transparent 38%),radial-gradient(circle at 88% 26%,#bfe9ff 0,transparent 42%),
+  radial-gradient(circle at 50% 105%,#ffc9dd 0,transparent 50%),linear-gradient(#fff8e8,#e9f7ff)}
+.lp-bg-teen{background:radial-gradient(circle at 18% 8%,#e1eaf6 0,transparent 52%),linear-gradient(#f4f7fb,#dde6f1)}
+.lp-bg-high{background:
+  linear-gradient(rgba(120,180,255,.07) 1px,transparent 1px) 0 0/34px 34px,linear-gradient(90deg,rgba(120,180,255,.07) 1px,transparent 1px) 0 0/34px 34px,
+  radial-gradient(ellipse at 50% 0,#16295a 0,transparent 70%),#070e22}
+.lp-canvas{position:fixed;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
+
+#lp{position:relative;z-index:2;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;justify-content:center;gap:clamp(18px,4vh,40px);
+  max-width:1120px;margin:0 auto;padding:max(20px,env(safe-area-inset-top)) 16px max(24px,env(safe-area-inset-bottom))}
+
+/* ---- 標題 ---- */
+.lp-head{text-align:center;position:relative;padding-top:8px}
+.lp-head h1{margin:0;font-size:clamp(1.9rem,5.2vw,3.2rem);letter-spacing:.04em;font-weight:800;line-height:1.15}
+.lp-head p{margin:.6em auto 0;max-width:34em;font-size:clamp(1rem,2.4vw,1.2rem);opacity:.85;line-height:1.6}
+body[data-active=kid] .lp-head h1{text-shadow:0 3px 0 #fff,0 6px 14px rgba(255,140,170,.35)}
+body[data-active=high] .lp-head h1{font-weight:600;letter-spacing:.12em}
+.lp-lang{position:absolute;right:0;top:0;min-height:44px;min-width:44px;padding:0 16px;border-radius:999px;border:1.5px solid currentColor;background:rgba(255,255,255,.45);font-weight:700;font-size:.95rem;backdrop-filter:blur(6px);transition:color .8s}
+body[data-active=high] .lp-lang{background:rgba(255,255,255,.06)}
+
+/* ---- 卡片(共通) ---- */
+.lp-cards{display:grid;gap:16px;grid-template-columns:1fr;align-items:stretch}
+.lp-card{position:relative;display:grid;grid-template-columns:96px 1fr;grid-template-areas:"art txt" "cta cta";gap:6px 14px;align-items:center;text-align:left;
+  padding:14px 16px 12px;min-height:64px;border:0;transition:transform .25s cubic-bezier(.3,1.4,.5,1),box-shadow .25s,border-color .25s}
+.lp-art{grid-area:art;display:block}
+.lp-art svg{width:100%;height:auto;display:block}
+.lp-txt{grid-area:txt;display:flex;flex-direction:column;gap:3px;min-width:0}
+.lp-name{font-size:1.35rem;font-weight:800;line-height:1.3}
+.lp-grade{font-size:.9rem;opacity:.75;line-height:1.5}
+.lp-line{font-size:.98rem;line-height:1.75;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.lp-cta{grid-area:cta;justify-self:end;display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 18px;font-weight:800;font-size:1rem}
+.lp-cta i{font-style:normal;font-size:1.3em;line-height:1;transition:transform .2s}
+.lp-card:hover .lp-cta i,.lp-card:focus-visible .lp-cta i{transform:translateX(4px)}
+.lp-card:focus-visible{outline:3px solid #ffb703;outline-offset:3px}
+
+/* 國小:快樂學習 — 白底圓潤大卡片、粗彩色邊、吉祥物探出頭 */
+.lp-kid{background:#fff;border-radius:30px;border:4px solid #ffd23f;box-shadow:0 8px 0 #ffb703,0 14px 26px rgba(255,150,120,.3);color:#2b2f6b}
+.lp-kid .lp-name{color:#ff5c7a;font-size:1.5rem}
+.lp-kid .lp-cta{background:#ff5c7a;color:#fff;border-radius:999px;box-shadow:0 4px 0 #d93d5c}
+.lp-kid:hover{transform:translateY(-6px) rotate(-1.2deg)}
+.lp-kid:active{transform:translateY(2px);box-shadow:0 4px 0 #ffb703}
+.lp-mascot{position:absolute;right:12px;top:-34px;width:62px;height:68px;pointer-events:none;filter:drop-shadow(0 3px 3px rgba(0,0,0,.25));animation:lp-bob 2.6s ease-in-out infinite}
+.lp-mascot svg{overflow:visible}
+@keyframes lp-bob{50%{transform:translateY(-4px)}}
+
+
+/* 國中:稍嚴謹 — 淺色面板、細邊、藍灰、整齊 */
+.lp-teen{background:rgba(255,255,255,.92);border-radius:14px;border:1px solid #c6d2e3;border-top:4px solid #4a6fa5;box-shadow:0 6px 18px rgba(40,70,120,.12);color:#1f3350}
+.lp-teen .lp-name{color:#27456e;font-weight:700}
+.lp-teen .lp-cta{color:#27456e;border-radius:8px;border:1.5px solid #4a6fa5;font-weight:700}
+.lp-teen:hover{transform:translateY(-4px);box-shadow:0 12px 26px rgba(40,70,120,.2)}
+
+/* 高中:專業 — 深色玻璃面板、細青線、等寬字 */
+.lp-high{background:rgba(10,22,52,.82);border-radius:6px;border:1px solid rgba(143,200,255,.45);box-shadow:0 0 0 1px rgba(143,200,255,.08) inset,0 10px 30px rgba(0,0,0,.35);color:#e6efff;backdrop-filter:blur(6px)}
+.lp-high .lp-name{font-weight:600;letter-spacing:.1em;font-size:1.25rem}
+.lp-high .lp-grade{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.8rem;opacity:.7;letter-spacing:.04em}
+.lp-high .lp-line{font-size:.93rem;opacity:.92}
+.lp-high .lp-cta{color:#8fc8ff;border:1px solid rgba(143,200,255,.6);border-radius:3px;font-weight:600;letter-spacing:.1em}
+.lp-high:hover{transform:translateY(-3px);border-color:#8fc8ff;box-shadow:0 0 22px rgba(120,190,255,.3),0 10px 30px rgba(0,0,0,.35)}
+
+/* 大螢幕:三欄並排,卡片改直式 */
+@media (min-width:860px){
+  .lp-cards{grid-template-columns:repeat(3,1fr);gap:26px}
+  .lp-card{grid-template-columns:1fr;grid-template-areas:"art" "txt" "cta";gap:10px;padding:26px 24px 20px;text-align:center}
+  .lp-art{width:62%;margin:0 auto}
+  .lp-txt{align-items:center;gap:6px}
+  .lp-name{font-size:1.6rem}
+  .lp-kid .lp-name{font-size:1.8rem}
+  .lp-line{-webkit-line-clamp:4;min-height:6em}
+  .lp-cta{justify-self:center}
+  .lp-mascot{width:84px;height:92px;top:-48px;right:18px}
+}
+/* 平板直向到小桌機:保持直式卡片但字小一點 */
+@media (min-width:860px) and (max-width:1040px){.lp-line{font-size:.9rem}.lp-card{padding:22px 16px 16px}}
+/* 手機橫向(矮螢幕):標題縮小 */
+@media (max-height:520px){.lp-head h1{font-size:1.5rem}.lp-head p{display:none}#lp{justify-content:flex-start}}
+
+/* 轉場:從點擊處以該版本的底色擴散 */
+.lp-wipe{position:fixed;inset:0;z-index:10;pointer-events:none;clip-path:circle(0 at var(--x,50%) var(--y,50%));transition:clip-path .65s cubic-bezier(.5,0,.2,1);background:#fff8e8}
+.lp-wipe[data-to=teen]{background:#e8eef7}
+.lp-wipe[data-to=high]{background:#070e22}
+.lp-wipe.on{clip-path:circle(160vmax at var(--x,50%) var(--y,50%))}
+
+/* 注音(與主程式 style.css 完全相同的排法:字右側直排注音;少了 .zy 就會跑版) */
+.zy{display:inline-flex;align-items:center;vertical-align:middle;height:1em;line-height:1}
+.zp{display:inline-flex;align-items:center;margin-left:1px}
+.zp .zs{font-weight:400;font-size:.33em;line-height:1;height:auto;writing-mode:vertical-rl;text-orientation:upright;letter-spacing:0;opacity:.95}
+.zp .zt{font-style:normal;font-size:.4em;line-height:1;margin-left:1px;opacity:.95}
+.lp-kid .lp-line{line-height:2.1;-webkit-line-clamp:3}
+.lp-kid .lp-grade{line-height:1.9}
+.lp-kid .lp-line{font-size:1.1rem}
+.lp-kid .lp-grade{font-size:1rem}
+.lp-kid .lp-cta{font-size:1.1rem}

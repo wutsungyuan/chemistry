@@ -318,23 +318,14 @@ body{background:
 .m-body{flex:none;width:52px;height:56px;padding:0;border:0;background:none;cursor:pointer;animation:m-bob 2.4s ease-in-out infinite;filter:drop-shadow(0 3px 3px rgba(0,0,0,.35));-webkit-tap-highlight-color:transparent;margin-top:-2px}
 .m-body.jump{animation:m-jump .55s cubic-bezier(.3,1.5,.5,1)}
 .m-body.twirl{animation:m-twirl .8s cubic-bezier(.3,1.3,.5,1)}
-.m-orbits{transform-origin:60px 46px;animation:m-spin 9s linear infinite}
-.m-arm{transform-origin:92px 96px;animation:m-wave 1.6s ease-in-out infinite}
-.m-eyes{transform-origin:60px 50px;animation:m-blink 4s infinite}
-.m-pl,.m-pr{transition:transform .08s}
 .m-bubble{position:relative;flex:0 1 auto;max-width:min(900px,100%);padding:7px 16px;border-radius:16px;background:#fff;color:#2a2358;font-weight:700;font-size:1rem;line-height:1.9;box-shadow:0 3px 10px rgba(0,0,0,.3)}
 .m-bubble::before{content:'';position:absolute;left:-8px;top:50%;margin-top:-8px;border:8px solid transparent;border-right-color:#fff;border-left:0}
 .m-bubble.swap{animation:m-pop .3s cubic-bezier(.3,1.5,.5,1)}
 #tipbar.sleep .m-body{animation:m-bob 4s ease-in-out infinite}
-#tipbar.sleep .m-eyes{animation:none;transform:scaleY(.1)}
-#tipbar.sleep .m-pl,#tipbar.sleep .m-pr{display:none}
 @keyframes m-pop{from{opacity:0;transform:translateX(-10px) scale(.92)}to{opacity:1;transform:none}}
 @keyframes m-bob{50%{transform:translateY(-3px)}}
 @keyframes m-jump{0%{transform:translateY(0)}35%{transform:translateY(-14px) rotate(-6deg)}70%{transform:translateY(0) rotate(4deg)}100%{transform:none}}
 @keyframes m-twirl{0%{transform:translateY(0) rotate(0)}40%{transform:translateY(-14px) rotate(200deg)}100%{transform:translateY(0) rotate(360deg)}}
-@keyframes m-spin{to{transform:rotate(360deg)}}
-@keyframes m-wave{50%{transform:rotate(-16deg)}}
-@keyframes m-blink{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}
 /* 提示已整合進小博士,實驗室頂部的獨立提示條不再需要 */
 .hint{display:none!important}
 @media (max-width:900px){#tipbar{min-height:46px;padding:3px 10px 3px 8px}.m-body{width:40px;height:44px}.m-bubble{font-size:.85rem;line-height:1.7;padding:5px 12px}}

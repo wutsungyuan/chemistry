@@ -1,0 +1,47 @@
+/* 原子小博士的表情(由 data-mood 控制)。預設只顯示:一般眼睛 + 微笑 */
+[data-mood] .mo, [data-mood] .eh, [data-mood] .ec { display: none; }
+[data-mood] .mo-smile { display: inline; }
+[data-mood] .br { transform-box: fill-box; transform-origin: center; transition: transform .18s; }
+[data-mood] .m-cheek { transition: opacity .2s; }
+
+[data-mood=talk] .mo-smile,
+[data-mood=wow] .mo-smile,
+[data-mood=cheer] .mo-smile,
+[data-mood=oops] .mo-smile,
+[data-mood=sleep] .mo-smile { display: none; }
+
+[data-mood=talk] .mo-talk { display: inline; transform-box: fill-box; transform-origin: center top; animation: m-talk .3s ease-in-out infinite alternate; }
+[data-mood=wow] .mo-o { display: inline; transform-box: fill-box; transform-origin: center; animation: m-pop-o .35s cubic-bezier(.3,1.6,.5,1); }
+[data-mood=cheer] .mo-big { display: inline; transform-box: fill-box; transform-origin: center top; animation: m-pop-o .35s cubic-bezier(.3,1.6,.5,1); }
+[data-mood=oops] .mo-sad { display: inline; }
+[data-mood=sleep] .mo-z { display: inline; }
+
+/* 眼睛 */
+[data-mood=cheer] .en { display: none; }
+[data-mood=cheer] .eh { display: inline; }
+[data-mood=wink] .enr { display: none; }
+[data-mood=wink] .ehr { display: inline; }
+[data-mood=sleep] .en { display: none; }
+[data-mood=sleep] .ec { display: inline; }
+
+/* 眉毛 */
+[data-mood=wow] .br, [data-mood=cheer] .br { transform: translateY(-5px); }
+[data-mood=oops] .br-l { transform: rotate(-16deg) translateY(-1px); }
+[data-mood=oops] .br-r { transform: rotate(16deg) translateY(-1px); }
+[data-mood=wink] .br-r { transform: translateY(2px); }
+[data-mood=cheer] .m-cheek { opacity: 1; }
+
+.m-eyes { transform-box: fill-box; transform-origin: center; }
+[data-mood=wow] .m-eyes { animation: none; transform: scale(1.12); }
+
+@keyframes m-talk { from { transform: scaleY(.45); } to { transform: scaleY(1.15); } }
+@keyframes m-pop-o { from { transform: scale(.4); } to { transform: scale(1); } }
+
+/* 身體各部位的常態動畫(入口頁與主程式共用) */
+.m-orbits { transform-origin: 60px 62px; animation: m-spin 9s linear infinite; }
+.m-arm { transform-origin: 97px 114px; animation: m-wave 1.6s ease-in-out infinite; }
+.m-eyes { animation: m-blink 4s infinite; }
+.m-pl, .m-pr { transition: transform .08s; }
+@keyframes m-spin { to { transform: rotate(360deg); } }
+@keyframes m-wave { 50% { transform: rotate(-16deg); } }
+@keyframes m-blink { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(.1); } }
