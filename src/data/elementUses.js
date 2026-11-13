@@ -1,40 +1,5 @@
-// 各元素在生活中常見的物質 [公式, 中文, English]。
+// 各元素在生活中常見的物質 [公式, 中文, English]:資料在 db/element-uses.json。
 // 分子圖鑑裡有的分子會自動合併,而且可以點進去看 3D。
-export const ELEMENT_USES = {
-  H: [['H2', '氫氣(氣球、燃料電池)', 'Hydrogen gas'], ['H2O', '水', 'Water'], ['CH4', '甲烷(瓦斯)', 'Methane']],
-  He: [['He', '氦氣(飄浮氣球)', 'Helium balloon gas']],
-  Li: [['Li', '鋰電池(手機、電動車)', 'Lithium battery'], ['Li2CO3', '碳酸鋰(電池原料)', 'Lithium carbonate']],
-  C: [['C', '鑽石、石墨(鉛筆芯)', 'Diamond, graphite'], ['CO2', '二氧化碳(汽水氣泡)', 'Carbon dioxide'], ['C6H12O6', '葡萄糖', 'Glucose'], ['CaCO3', '碳酸鈣(貝殼、粉筆)', 'Chalk, shells']],
-  N: [['N2', '氮氣(空氣的 78%)', 'Nitrogen gas'], ['NH3', '氨(肥料)', 'Ammonia'], ['KNO3', '硝酸鉀(肥料)', 'Potassium nitrate']],
-  O: [['O2', '氧氣(呼吸)', 'Oxygen'], ['H2O', '水', 'Water'], ['CO2', '二氧化碳', 'Carbon dioxide'], ['O3', '臭氧層', 'Ozone']],
-  F: [['NaF', '氟化鈉(牙膏防蛀)', 'Sodium fluoride (toothpaste)'], ['C2F4', '鐵氟龍(不沾鍋)', 'Teflon (non-stick pan)'], ['HF', '氟化氫(蝕刻玻璃)', 'Hydrogen fluoride']],
-  Ne: [['Ne', '霓虹燈(紅橘色光)', 'Neon signs']],
-  Na: [['NaCl', '食鹽', 'Table salt'], ['NaHCO3', '小蘇打', 'Baking soda'], ['NaOH', '氫氧化鈉(肥皂原料)', 'Sodium hydroxide (soap)']],
-  Mg: [['MgO', '氧化鎂(耐火材料)', 'Magnesium oxide'], ['MgSO4', '硫酸鎂(瀉鹽)', 'Epsom salt'], ['Mg', '鎂光(閃光燈、煙火)', 'Magnesium flare']],
-  Al: [['Al', '鋁罐、鋁箔', 'Cans, foil'], ['Al2O3', '氧化鋁(紅寶石、藍寶石)', 'Alumina (ruby, sapphire)']],
-  Si: [['SiO2', '沙子、玻璃、水晶', 'Sand, glass, quartz'], ['Si', '電腦晶片', 'Computer chips']],
-  P: [['P4', '白磷、火柴頭', 'White phosphorus, matches'], ['H3PO4', '磷酸(可樂的酸味)', 'Phosphoric acid (cola)']],
-  S: [['SO2', '二氧化硫', 'Sulfur dioxide'], ['S8', '硫磺(溫泉)', 'Sulfur (hot springs)'], ['H2SO4', '硫酸(汽車電池)', 'Sulfuric acid (car battery)']],
-  Cl: [['NaCl', '食鹽', 'Table salt'], ['HCl', '鹽酸(胃酸)', 'Hydrochloric acid'], ['NaClO', '漂白水', 'Bleach']],
-  Ar: [['Ar', '氬氣(日光燈、燈泡)', 'Argon (light bulbs)']],
-  K: [['KCl', '氯化鉀(肥料、代鹽)', 'Potassium chloride'], ['KNO3', '硝酸鉀(煙火、肥料)', 'Saltpeter'], ['K', '香蕉裡的鉀', 'Potassium in bananas']],
-  Ca: [['CaCO3', '粉筆、貝殼、石灰岩', 'Chalk, shells, limestone'], ['CaO', '生石灰(乾燥劑)', 'Quicklime']],
-  Ti: [['TiO2', '白色顏料、防曬乳', 'White paint, sunscreen'], ['Ti', '鈦合金(眼鏡架、飛機)', 'Titanium frames']],
-  Cr: [['Cr', '電鍍閃亮表面(水龍頭)', 'Shiny chrome plating'], ['Fe-Cr', '不鏽鋼(鍋子、餐具)', 'Stainless steel']],
-  Fe: [['Fe2O3', '鐵鏽', 'Rust'], ['Fe', '鋼鐵(橋樑、鐵釘)', 'Steel, nails']],
-  Ni: [['Ni', '硬幣、鎳氫電池', 'Coins, batteries'], ['Fe-Cr-Ni', '不鏽鋼', 'Stainless steel']],
-  Cu: [['Cu', '銅線、銅鍋', 'Copper wire, pots'], ['CuSO4', '硫酸銅(藍色晶體)', 'Blue vitriol'], ['Cu-Zn', '黃銅(門把、樂器)', 'Brass']],
-  Zn: [['Zn', '鍍鋅鐵皮、電池', 'Galvanized steel, batteries'], ['ZnO', '氧化鋅(防曬乳、痱子粉)', 'Zinc oxide (sunscreen)']],
-  Br: [['AgBr', '溴化銀(傳統底片)', 'Silver bromide (film)'], ['Br2', '溴(紅棕色液體)', 'Bromine (red-brown liquid)']],
-  Kr: [['Kr', '氪燈、閃光燈', 'Krypton lamps']],
-  Ag: [['Ag', '銀飾、銀器', 'Silver jewelry'], ['AgBr', '傳統底片', 'Old camera film'], ['AgCl', '氯化銀', 'Silver chloride']],
-  Sn: [['Sn', '錫罐、焊錫', 'Tin cans, solder'], ['SnO2', '氧化錫(觸控螢幕)', 'Tin oxide (touchscreens)']],
-  I: [['KI', '碘化鉀(加碘鹽)', 'Potassium iodide (iodized salt)'], ['I2', '碘酒(傷口消毒)', 'Iodine tincture']],
-  Xe: [['Xe', '氙氣大燈(汽車)', 'Xenon car headlights']],
-  W: [['W', '舊式燈泡燈絲', 'Light bulb filaments'], ['WC', '碳化鎢(超硬刀具)', 'Tungsten carbide (hard tools)']],
-  Pt: [['Pt', '白金戒指、催化轉換器', 'Platinum rings, catalytic converters']],
-  Au: [['Au', '金飾、金條、電子零件', 'Gold jewelry, electronics']],
-  Hg: [['Hg', '溫度計裡的水銀', 'Mercury in thermometers'], ['HgS', '朱砂(紅色顏料)', 'Cinnabar (red pigment)']],
-  Pb: [['Pb', '舊式汽車電池', 'Old car batteries'], ['PbO', '氧化鉛(鉛玻璃)', 'Lead oxide']],
-  U: [['UO2', '核能發電燃料', 'Nuclear fuel']],
-};
+import DB from './db/element-uses.json' with { type: 'json' };
+
+export const ELEMENT_USES = Object.fromEntries(DB.uses.map(u => [u.sym, u.items.map(i => [i.mol, i.zh, i.en])]));

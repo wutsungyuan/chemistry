@@ -11,6 +11,7 @@ import { loadCif } from './lib/cif.mjs';
 import { validateSpectra } from './lib/validate-spectra.mjs';
 import { validateNuclides } from './lib/validate-nuclides.mjs';
 import { validateMatter } from './lib/validate-matter.mjs';
+import { validateElements, validateElementUses } from './lib/validate-elements.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DB = p => JSON.parse(fs.readFileSync(path.join(root, 'src/data/db', p), 'utf8'));
@@ -134,6 +135,10 @@ const NUC = JSON.parse(fs.readFileSync(path.join(root, 'src/data/db/nuclides.jso
 validateNuclides(NUC, dataCtx);
 const MATTER = JSON.parse(fs.readFileSync(path.join(root, 'src/data/db/matter.json'), 'utf8'));
 validateMatter(MATTER, dataCtx);
+// 元素與元素用途:程式直接讀 db/*.json(不經 generated,因為建置腳本自己也要用元素資料)
+const ELEM = DB('elements.json');
+validateElements(ELEM, dataCtx);
+validateElementUses(DB('element-uses.json'), ELEM, dataCtx);
 
 // ---- 6) 輸出 ----
 if (errors.length) {

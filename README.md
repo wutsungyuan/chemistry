@@ -124,6 +124,8 @@ Three.js 製作的兒童化學學習網站:元素週期表 → 原子 3D → 分
 
 ## 程式與資料的組織(新增功能時照這個走,不要另起爐灶)
 - **資料集**:一個 JSON 放在 `src/data/db/`(含 `meta`:出處、限制、日期)→ 一個驗證模組 `scripts/lib/validate-<名稱>.mjs`(出處必填、範圍、錨點)→ `scripts/build-db.mjs` 呼叫它,並用 `writeModule()` 寫成 `src/data/generated/<名稱>.js`(自動產生,不要手改)→ 純函式放 `src/data/<名稱>.js`(不碰畫面,`tests/` 直接測)。
+- **資料集一覽(`src/data/db/`)**:`elements.json`(118 元素、分類、電子殼層、版面位置、小知識)、`element-uses.json`(元素的生活用途)、`reactions.json`(反應與說明)、`molecules.json` / `structures.json`(分子與結構)、`spectra.json`(光譜)、`nuclides.json`(核種)、`matter.json`(物質變化)。每個都有 `meta`(出處、限制、日期)與對應的驗證腳本;要找資料先來這裡。
+- **例外**:元素、元素用途、反應是程式「直接讀 JSON」(`src/data/elements.js` 等只是載入器,不寫死資料),因為建置腳本自己也要用元素資料,不能等自動產生。反應的驗證需要分子資料,所以放在 build-db 之後(`scripts/check-reactions.mjs`)。
 - **文字**:每個功能一個文字包 `src/i18n/packs/<名稱>.js`(`{ zh, en }` 放同一個檔,不會漏翻),在 `src/i18n/index.js` 的 `PACKS` 登記。`zh.js` / `en.js` 只放共用的基本文字,不要再往裡面堆。
 - **共用的小元件**放 `src/ui/`:`level.js`(國小/國中/高中,記住使用者上次選的)、`levelBar.js`(階段選擇鈕)、`particles.js`(粒子示意圖)。第三個地方要用同樣的東西之前,先把它抽到這裡。
 - **場景**放 `src/scenes/`,在 `src/main.js` 的 `SCENES` 登記;每個場景要有測試(路由、文字齊全、不理會 prefers-reduced-motion)。
