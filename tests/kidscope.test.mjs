@@ -1,4 +1,4 @@
-// 國小版的範圍:不提供分子實驗室、反應劇場與光譜(其他階段都有)。
+// 國小版的範圍:不提供分子實驗室、反應劇場、光譜與電子雲(其他階段都有)。
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -9,8 +9,8 @@ import { KINDS } from '../src/game/questions.js';
 const read = p => fs.readFileSync(new URL('../' + p, import.meta.url), 'utf8');
 
 test('sceneAllowed / featureOn:國小沒有 lab、reaction、光譜;國中與高中全部都有', () => {
-  for (const s of ['table', 'atom', 'gallery', 'matter', 'quiz', 'cloud', 'nucleus']) assert.equal(sceneAllowed(s, 'kid'), true, s);
-  for (const s of ['lab', 'reaction']) { assert.equal(sceneAllowed(s, 'kid'), false, s); assert.equal(sceneAllowed(s, 'teen'), true); assert.equal(sceneAllowed(s, 'high'), true); }
+  for (const s of ['table', 'atom', 'gallery', 'matter', 'quiz', 'nucleus']) assert.equal(sceneAllowed(s, 'kid'), true, s);
+  for (const s of ['lab', 'reaction', 'cloud']) { assert.equal(sceneAllowed(s, 'kid'), false, s); assert.equal(sceneAllowed(s, 'teen'), true); assert.equal(sceneAllowed(s, 'high'), true); }
   assert.equal(featureOn('spectrum', 'kid'), false); assert.equal(featureOn('spectrum', 'teen'), true); assert.equal(featureOn('spectrum', 'high'), true);
   assert.equal(featureOn('anything-else', 'kid'), true);
 });

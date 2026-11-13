@@ -74,8 +74,8 @@ await page.eval(`document.querySelector('.lp-kid').click()`); await page.sleep(1
 s = await snap();
 check('選國小 → 進入主程式', s.path.endsWith('index.html') && s.hash === '#table', s.path + s.hash);
 check('選國小後 data-level=kid、有注音、沒有舊的注音按鈕', s.level === 'kid' && s.zp > 0 && !s.zhuyinBtn);
-check('國小導覽只有 4 項(沒有分子實驗室、反應劇場)', s.navCount === 4, `nav=${s.navCount}`);
-for (const hidden of ['lab', 'reaction']) { await page.goto(url('index.html#' + hidden), 700); const h = await snap(); check(`國小直接開 #${hidden} 會回到週期表`, h.scene === 'table' && h.hash === '#table', h.scene + h.hash); }
+check('國小導覽只有 4 項(沒有分子實驗室、反應劇場;光譜與電子雲也不提供)', s.navCount === 4, `nav=${s.navCount}`);
+for (const hidden of ['lab', 'reaction', 'cloud']) { await page.goto(url('index.html#' + hidden), 700); const h = await snap(); check(`國小直接開 #${hidden} 會回到週期表`, h.scene === 'table' && h.hash === '#table', h.scene + h.hash); }
 await page.goto(url('index.html#table'), 500);
 await page.goto(url('landing.html'), 900); s = await snap();
 check('選過版本後,入口頁直接進主程式', s.path.endsWith('index.html'), s.path);
