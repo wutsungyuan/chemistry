@@ -6,6 +6,10 @@ import { LAB_TARGETS, VALENCE, composition, matchMolecule } from '../data/molecu
 import { createStage } from '../three/stage.js';
 import { atomMaterial, atomRadius, sphereGeo, cylGeo, bondMat, ionicMat, burst } from '../three/mol.js';
 import { T, Tp, L, LH, formulaHTML, state } from '../i18n/index.js';
+import { getLevel } from '../ui/level.js';
+import { bondFacts } from '../game/bondfacts.js';
+import { lewisStructure } from '../game/lewis.js';
+import { lewisSVG } from '../ui/lewisView.js';
 import { update, addUnique, progress } from '../game/store.js';
 import { toast } from '../ui/toast.js';
 
@@ -105,6 +109,18 @@ export function mount(container) {
     }
     return '';
   }
+  /** 國中/高中:完成後多一行「電子帳」(共用電子對、孤對電子);國小不顯示,離子化合物不顯示 */
+  function factsLine(m) {
+    const lv = getLevel(), f = lv === 'kid' ? null : bondFacts(m);
+    if (!f) return '';
+    return `<p class="mi-sub mi-facts">🧮 ${T('lab.facts', { pairs: f.pairs, e: f.electrons, lone: f.lone, odd: f.unpaired ? Tp('lab.facts.odd') : '' })}</p>`;
+  }
+  /** 高中:完成後可以展開「路易斯結構」(線 = 共用電子對、點 = 孤對電子、± = 形式電荷);手機預設收合,不擋住 3D */
+  function lewisBlock(m) {
+    const s = getLevel() === 'high' ? lewisStructure(m) : null;
+    if (!s) return '';
+    return `<details class="mi-lewis"${isNarrow() ? '' : ' open'}><summary>📐 ${T('lab.lewis')}</summary>${lewisSVG(s, { label: Tp('lab.lewis') + ' ' + (m.formula || '') })}<p class="mi-sub">${T('lab.lewis.legend')}</p></details>`;
+  }
   function missionCard() {
     if (!curM) return freeMode
       ? `<div class="mi-card"><div class="mi-title">🧪 ${T('lab.mission.free')}</div><p class="mi-sub">${T('lab.mission.freehint', { n: LAB_TARGETS.length })}</p></div>`
@@ -113,7 +129,7 @@ export function mount(container) {
     const toks = Object.entries(compOf(m)).map(([sy, n]) => { const h = have[sy] || 0, ok = h === n, over = h > n; return `<span class="mi-tok${ok ? ' ok' : over ? ' over' : ''}"><i style="background:${BY_SYMBOL[sy].color}">${sy}</i><b>×${n}</b><em>${ok ? '✔' : over ? T('lab.mission.over', { n: h - n }) : `${h}/${n}`}</em></span>`; }).join('');
     return `<div class="mi-card${done ? ' done' : ''}">
       <div class="mi-title">🎯 ${T('lab.mission.make')}${lq}<b>${LH(m.name)}</b>${rq}</div>
-      ${done ? `<div class="mi-done">🎉 ${T('lab.mission.done')} ${formulaHTML(m.display || m.formula)}</div>` : `<div class="mi-toks">${toks}</div>`}
+      ${done ? `<div class="mi-done">🎉 ${T('lab.mission.done')} ${formulaHTML(m.display || m.formula)}</div>${factsLine(m)}${lewisBlock(m)}` : `<div class="mi-toks">${toks}</div>`}
       ${stuck && !done ? `<p class="mi-warn">⚠️ ${T('lab.mission.stuck', { f: stuck })}</p>` : ''}
       ${(hintOpen || stuck) && !done ? `<p class="mi-tip">💡 ${howTo(m)}</p>` : ''}
       <div class="mi-btns">${done ? `<button class="btn" data-a="next">➜ ${T('lab.mission.next')}</button>` : `<button class="btn alt" data-a="tip">💡 ${T('lab.mission.tip')}</button><button class="btn alt" data-a="skip">⟳ ${T('lab.mission.skip')}</button>`}</div>

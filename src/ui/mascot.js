@@ -1,9 +1,11 @@
 import { state, render } from '../i18n/index.js';
 import { pick } from './util.js';
+import { getLevel } from './level.js';
 import { mountFace, setMood, trackPupils } from './mascotFace.js';
 
 // 原子小博士:住在標題列下方的「提示列」裡(版面中固定保留的一條,不蓋住任何功能)。
 // 他說的話就是各頁的操作提示;點他會換下一句,答對/做出分子時會跳出來慶祝。
+// 各頁提示;可以依階段換說法:'zh@teen' / 'zh@high' / 'en@teen' / 'en@high' 優先,沒有就用 zh / en(國小)
 const TIPS = {
   table: {
     zh: ['點一格元素,看看它的原子長什麼樣子!', '點上面的顏色標籤,可以找出同一家族,還有說明喔!', '氫(H)是第 1 號元素,宇宙裡最多的就是它!'],
@@ -32,6 +34,10 @@ const TIPS = {
   lab: {
     zh: ['點下方的原子加進來,把它們拖到一起就會牽手!', 'H 想牽 1 隻手,O 想牽 2 隻手,N 想牽 3 隻手,C 想牽 4 隻手喔!', '黃色光圈表示「還想牽手」。做錯了沒關係,用剪刀剪開再試一次!'],
     en: ['Tap atoms below, then drag them together to hold hands!', 'H wants 1 hand, O wants 2, N wants 3, and C wants 4!', 'A yellow glow means "still wants a hand". Made a mistake? Use the scissors!'],
+    'zh@teen': ['點下方的原子加進來,把它們拖到一起就會形成共價鍵!', 'H 能形成 1 個鍵,O 能形成 2 個,N 能形成 3 個,C 能形成 4 個。', '黃色光圈表示這個原子還能再形成鍵。做錯了沒關係,用剪刀拆開再試一次!'],
+    'zh@high': ['選取原子並拖曳靠近,依價電子數形成共價鍵。', '常見價數:H 1、O 2、N 3、C 4(八隅體規則;H 為二隅體)。', '黃色光圈表示價數尚未飽和;可用剪刀斷鍵後重新組合。'],
+    'en@teen': ['Tap atoms below, then drag them together to form covalent bonds!', 'H forms 1 bond, O forms 2, N forms 3 and C forms 4.', 'A yellow glow means the atom can still form a bond. Made a mistake? Use the scissors to break bonds!'],
+    'en@high': ['Select atoms and drag them together; bonds form according to valence electrons.', 'Usual valences: H 1, O 2, N 3, C 4 (octet rule; duet for H).', 'A yellow glow marks unsaturated valence; break bonds with the scissors to reassemble.'],
   },
   reaction: {
     zh: ['按播放,看原子怎麼重新排隊變成新東西!', '反應前後,原子的種類和數量都不會變喔!', '可以拖動下面的進度條,慢慢看每一步。'],
@@ -64,7 +70,7 @@ function show(html) {
 }
 /** 顯示該頁目前這一句提示(advance=true 換下一句) */
 function tip(advance) {
-  const list = TIPS[scene]?.[state.lang] || TIPS[scene]?.zh;
+  const list = TIPS[scene]?.[`${state.lang}@${getLevel()}`] || TIPS[scene]?.[state.lang] || TIPS[scene]?.zh;
   if (!list) return;
   if (advance) idx[scene] = ((idx[scene] ?? -1) + 1) % list.length;
   const s = list[idx[scene] ?? (idx[scene] = 0)];

@@ -578,3 +578,8 @@ em.absorb{background:rgba(255,150,90,.3)}em.release{background:rgba(110,170,255,
 .mat-marks{height:4.6em}
 .mat-marks{margin-top:-8px}
 .mi-tok.over{background:rgba(255,150,90,.28)}.mi-tok.over em{color:#ffc9a3;opacity:1}
+
+/* 路易斯結構(高中版,分子實驗室任務卡) */
+.mi-lewis{margin-top:6px}
+.mi-lewis summary{cursor:pointer;font-weight:700;min-height:32px;display:flex;align-items:center}
+.lewis-svg{display:block;width:100%;height:auto;margin:4px auto;color:var(--text)}
