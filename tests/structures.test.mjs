@@ -126,5 +126,5 @@ test('實驗室配方:每個任務的骨架簽章都不同', async () => {
   const { LAB_TARGETS } = await import('../src/data/molecules.js');
   const sigs = new Set(LAB_TARGETS.map(m => skeletonSignature(m.labPair ? m.labPair.atoms : m.atoms.map(a => a[0]), m.labPair ? m.labPair.bonds : m.bonds)));
   assert.equal(sigs.size, LAB_TARGETS.length);
-  assert.equal(LAB_TARGETS.length, 16);
+  assert.equal(LAB_TARGETS.length, 28);
 });

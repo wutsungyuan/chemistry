@@ -9,7 +9,7 @@ import { T, Tp, L, LH, formulaHTML, state } from '../i18n/index.js';
 import { update, addUnique, progress } from '../game/store.js';
 import { toast } from '../ui/toast.js';
 
-const TRAY = ['H', 'C', 'N', 'O', 'Na', 'Cl'];
+const TRAY = ['H', 'C', 'N', 'O', 'S', 'Na', 'Cl'];
 const SIZE = 1.5;           // 實驗室裡原子放大倍率
 const MAX_ATOMS = 40;
 const UP = new THREE.Vector3(0, 1, 0);
@@ -28,7 +28,7 @@ export function mount(container) {
   const atoms = [];   // {id, sym, mesh, vel, r}
   const bonds = [];   // {a, b, order, group}
   let nextId = 1, dragging = null, scissors = false, hintOpen = false;
-  let missionOpen = !isNarrow();   // 手機預設收合,留空間給原子
+  let listOpen = false, freeMode = false, curM = null, lastSig = '';   // 任務:一次一題常駐在畫面上;清單預設收合
   const bursts = [];
   const celebrated = new Set();   // 已慶祝過的組成(以原子 id 排序做 key)
   const labels = new Map();       // comp key → CSS2DObject
@@ -45,13 +45,14 @@ export function mount(container) {
   tray.className = 'tray';
   container.append(hint, mission, tray);
 
+  const trayBtns = new Map();
   TRAY.forEach(sym => {
     const b = document.createElement('button');
-    b.className = 'atom-btn'; b.textContent = sym;
+    b.className = 'atom-btn'; b.innerHTML = `${sym}<sup class="need"></sup>`;
     b.style.background = BY_SYMBOL[sym].color;
-    b.title = L(BY_SYMBOL[sym].name);
+    b.title = L(BY_SYMBOL[sym].name); b.setAttribute('aria-label', Tp('lab.add', { nm: L(BY_SYMBOL[sym].name) }));
     b.onclick = () => { if (scissors) setScissors(false); spawn(sym); };
-    tray.appendChild(b);
+    tray.appendChild(b); trayBtns.set(sym, b);
   });
   const sep = document.createElement('span'); sep.style.flex = '1'; tray.appendChild(sep);
   const bScissors = document.createElement('button');
@@ -68,6 +69,7 @@ export function mount(container) {
   bClear.className = 'btn alt'; bClear.innerHTML = '🗑️<span class="lbl"> ' + T('lab.clear') + '</span>'; bClear.setAttribute('aria-label', Tp('lab.clear'));
   bClear.onclick = () => { setScissors(false); clearAll(); };
   tray.append(bScissors, bClear);
+  sep.style.order = bScissors.style.order = bClear.style.order = 2;   // 原子在前(需要的排最前),工具鈕在最後
 
   /** 組裝提示:有手寫的 howto 就用,否則依化學鍵自動列出「誰要牽誰」 */
   function howTo(m) {
@@ -77,29 +79,75 @@ export function mount(container) {
     const list = [...cnt].map(([k, n]) => k + (n > 1 ? '×' + n : '')).join(state.lang === 'zh' ? '、' : ', ');
     return Tp('lab.howto', { list });
   }
+  // ---------- 任務:一次一題,常駐在畫面上 ----------
+  const symsOf = m => (m.labPair ? m.labPair.atoms : m.atoms.map(x => x[0]));
+  const compOf = m => composition(symsOf(m));
+  const ORDER = LAB_TARGETS.slice().sort((x, y) => symsOf(x).length - symsOf(y).length);   // 簡單的(原子少的)先
+  const nextTodo = after => {
+    const i = after ? ORDER.indexOf(after) : -1;
+    for (let k = 1; k <= ORDER.length; k++) { const m = ORDER[(i + k) % ORDER.length]; if (m !== after && !built.has(m.id)) return m; }
+    return null;
+  };
+  curM = nextTodo(null);
+  const haveNow = () => { const c = {}; atoms.forEach(a => { c[a.sym] = (c[a.sym] || 0) + 1; }); return c; };
+  const q = state => (state.lang === 'zh' ? ['「', '」'] : ['"', '"']);
+  /** 卡住了:有一堆原子手都牽滿了、又不是任何已知分子,而且還裝得進目前這一題(例如 Na–H 先牽在一起,O 就沒手可以牽)→ 回傳它的算式 */
+  function stuckFormula() {
+    if (!curM) return '';
+    const need = compOf(curM);
+    for (const comp of components()) {
+      if (comp.length < 2 || comp.every(a => a.matched) || !comp.every(a => degree(a) >= valence(a))) continue;
+      const cnt = {}; comp.forEach(a => { cnt[a.sym] = (cnt[a.sym] || 0) + 1; });
+      if (Object.entries(cnt).every(([s, n]) => n <= (need[s] || 0)) && Object.entries(need).some(([s, n]) => n > (cnt[s] || 0))) {
+        return Object.keys(cnt).sort((x, y) => (x === 'C' ? -1 : y === 'C' ? 1 : x === 'H' ? -1 : y === 'H' ? 1 : x < y ? -1 : 1)).map(s => s + (cnt[s] > 1 ? cnt[s] : '')).join('');
+      }
+    }
+    return '';
+  }
+  function missionCard() {
+    if (!curM) return freeMode
+      ? `<div class="mi-card"><div class="mi-title">🧪 ${T('lab.mission.free')}</div><p class="mi-sub">${T('lab.mission.freehint', { n: LAB_TARGETS.length })}</p></div>`
+      : `<div class="mi-card"><div class="mi-title">🏆 ${T('lab.mission.alldone')}</div><p class="mi-sub">${T('lab.mission.freehint', { n: LAB_TARGETS.length })}</p></div>`;
+    const m = curM, have = haveNow(), done = built.has(m.id), [lq, rq] = q(state), stuck = stuckFormula();
+    const toks = Object.entries(compOf(m)).map(([sy, n]) => { const h = have[sy] || 0, ok = h >= n; return `<span class="mi-tok${ok ? ' ok' : ''}"><i style="background:${BY_SYMBOL[sy].color}">${sy}</i><b>×${n}</b><em>${ok ? '✔' : `${h}/${n}`}</em></span>`; }).join('');
+    return `<div class="mi-card${done ? ' done' : ''}">
+      <div class="mi-title">🎯 ${T('lab.mission.make')}${lq}<b>${LH(m.name)}</b>${rq}</div>
+      ${done ? `<div class="mi-done">🎉 ${T('lab.mission.done')} ${formulaHTML(m.display || m.formula)}</div>` : `<div class="mi-toks">${toks}</div>`}
+      ${stuck && !done ? `<p class="mi-warn">⚠️ ${T('lab.mission.stuck', { f: stuck })}</p>` : ''}
+      ${(hintOpen || stuck) && !done ? `<p class="mi-tip">💡 ${howTo(m)}</p>` : ''}
+      <div class="mi-btns">${done ? `<button class="btn" data-a="next">➜ ${T('lab.mission.next')}</button>` : `<button class="btn alt" data-a="tip">💡 ${T('lab.mission.tip')}</button><button class="btn alt" data-a="skip">⟳ ${T('lab.mission.skip')}</button>`}</div>
+    </div>`;
+  }
   function renderMission() {
     const items = LAB_TARGETS.map(m => {
-      const comp = composition(m.labPair ? m.labPair.atoms : m.atoms.map(a => a[0]));
-      const recipe = Object.entries(comp).map(([s, n]) => `${s}${n > 1 ? '×' + n : ''}`).join(' + ');
-      const done = built.has(m.id);
-      return `<button class="btn m-card ${done ? '' : 'alt'}" data-id="${m.id}"><span class="m-name">${done ? '⭐' : '❓'} ${LH(m.name)}</span>${done ? `<small>${formulaHTML(m.display || m.formula)}</small>` : ''}${hintOpen ? `<small class="m-recipe">${recipe}</small>` : ''}</button>`;
+      const done = built.has(m.id), cur = curM === m;
+      return `<button class="btn m-card ${done ? '' : 'alt'}${cur ? ' cur' : ''}" data-id="${m.id}"><span class="m-name">${done ? '⭐' : cur ? '🎯' : '❓'} ${LH(m.name)}</span>${done ? `<small>${formulaHTML(m.display || m.formula)}</small>` : ''}</button>`;
     }).join('');
-    mission.innerHTML = `<b id="m-head" style="cursor:pointer">🎯 ${T('lab.missions')} ${built.size}/${LAB_TARGETS.length} ${missionOpen ? '▾' : '▸'}</b>
+    mission.innerHTML = `<div class="mi-head"><b>🎯 ${T('lab.missions')} ${built.size}/${LAB_TARGETS.length}</b><button class="btn alt mi-list" data-a="list">📋 ${T(listOpen ? 'lab.mission.hidelist' : 'lab.mission.list')}</button></div>
       <div class="progress"><i style="width:${(built.size / LAB_TARGETS.length) * 100}%"></i></div>
-      <div style="display:${missionOpen ? 'block' : 'none'}">
-      <label style="font-size:.85rem"><input type="checkbox" id="hint-chk" ${hintOpen ? 'checked' : ''}> ${T('lab.showrecipe')}</label><div class="m-grid">${items}</div></div>`;
-    mission.querySelector('#m-head').onclick = () => { missionOpen = !missionOpen; renderMission(); };
-    mission.querySelector('#hint-chk').onchange = e => { hintOpen = e.target.checked; renderMission(); };
+      ${listOpen ? `<div class="m-grid"><button class="btn m-card${freeMode && !curM ? ' cur' : ' alt'}" data-id=""><span class="m-name">🧪 ${T('lab.mission.free')}</span></button>${items}</div>` : missionCard()}`;
+    mission.querySelector('[data-a=list]').onclick = () => { listOpen = !listOpen; renderMission(); };
+    mission.querySelector('[data-a=tip]')?.addEventListener('click', () => { hintOpen = !hintOpen; renderMission(); });
+    mission.querySelector('[data-a=skip]')?.addEventListener('click', () => { const n = nextTodo(curM); if (n) curM = n; renderMission(); });
+    mission.querySelector('[data-a=next]')?.addEventListener('click', () => { curM = nextTodo(curM); if (!curM) freeMode = true; hintOpen = false; setScissors(false); clearAll(); renderMission(); });
     mission.querySelectorAll('[data-id]').forEach(b => {
       b.onclick = () => {
-        const m = LAB_TARGETS.find(x => x.id === b.dataset.id);
-        const comp = composition(m.labPair ? m.labPair.atoms : m.atoms.map(a => a[0]));
-        toast(`${L(m.name)}:` + Object.entries(comp).map(([s, n]) => `${s}×${n}`).join(' ') + (built.has(m.id) ? ' ✔' : ''), 3200);
-        if (built.has(m.id)) { setScissors(false); showMolecule(m); }   // 已完成:直接把分子擺出來看
-        dispatchEvent(new CustomEvent('mascot', { detail: { type: 'say', text: howTo(m), ms: 12000 } }));
+        const m = LAB_TARGETS.find(x => x.id === b.dataset.id) || null;
+        curM = m; freeMode = !m; listOpen = false; hintOpen = false;
+        if (m && built.has(m.id)) { setScissors(false); showMolecule(m); }   // 已完成:直接把分子擺出來看
+        renderMission();
       };
     });
+    // 托盤:這題需要的原子排前面、標上需要幾顆;其他稍微變淡(但都還可以點)
+    const comp = curM ? compOf(curM) : null;
+    trayBtns.forEach((btn, sy) => {
+      const need = comp?.[sy] || 0;
+      btn.style.order = need ? 0 : 1; btn.classList.toggle('want', !!need); btn.classList.toggle('dim', !!comp && !need);
+      btn.querySelector('.need').textContent = need ? `×${need}` : '';
+    });
+    lastSig = sigNow();
   }
+  const sigNow = () => `${curM?.id}|${freeMode}|${built.size}|${JSON.stringify(haveNow())}|${stuckFormula()}`;
   renderMission();
 
   // ---------- 原子與鍵 ----------
@@ -107,7 +155,7 @@ export function mount(container) {
     if (atoms.length >= MAX_ATOMS) { toast(Tp('lab.full')); return; }
     const el = BY_SYMBOL[sym];
     const mesh = new THREE.Mesh(sphereGeo, atomMaterial(el.color));
-    const r = atomRadius(sym, 'ball') * SIZE;
+    const r = Math.max(atomRadius(sym, 'ball') * SIZE, 0.4);   // 氫最小,但不要小到難以拖曳
     mesh.scale.setScalar(r);
     const vw = view();
     mesh.position.set(vw.hl + 0.8 + Math.random() * Math.max(1, vw.hw - vw.hl - 1.6), (Math.random() - 0.5) * 3 + 0.5, (Math.random() - 0.5) * 0.6);
@@ -157,7 +205,7 @@ export function mount(container) {
       }
     }
     bonds.forEach(b => rebuildBondMeshes(b));
-    free.forEach((v, a) => { a.free = v; });          // 記下每顆原子還有幾隻空手(給發光提示用)
+    free.forEach((v, a) => { a.free = v; a.want = undefined; });          // 記下每顆原子還有幾隻空手(給發光提示用)
     return free;
   }
   function rebuildBondMeshes(b) {
@@ -191,12 +239,19 @@ export function mount(container) {
     const syms = comp.map(a => a.sym);
     const idx = new Map(comp.map((a, i) => [a, i]));
     const cb = bonds.filter(b => idx.has(b.a)).map(b => [idx.get(b.a), idx.get(b.b)]);
-    const incomplete = comp.filter(a => free.get(a) > 0);
     const m = matchMolecule(syms, cb);
+    // 手被雙鍵/三鍵用光了的原子,其實還能再多牽(加進新原子時,雙鍵會自動變回單鍵):
+    // 當這一堆還裝得進目前的任務時,就用「單鍵還缺幾隻手」來提示,不然會一直看不到提示
+    const cnt = {}; syms.forEach(s => { cnt[s] = (cnt[s] || 0) + 1; });
+    const need = curM ? compOf(curM) : null;
+    const grow = !m && need && Object.entries(cnt).every(([s, n]) => n <= (need[s] || 0)) && Object.entries(need).some(([s, n]) => n > (cnt[s] || 0));
+    comp.forEach(a => { a.want = grow ? valence(a) - degree(a) : undefined; });
+    const incomplete = comp.filter(a => (a.want ?? free.get(a)) > 0);
     if (m) {
       const key = compKey(comp);
       if (!celebrated.has(key)) {
         celebrated.add(key);
+        comp.forEach(a => { a.showUntil = performance.now() + 3500; });   // 剛完成:名字多顯示幾秒
         const c = centroid(comp);
         bursts.push(burst(stage.scene, c, 0xffd23f, 60));
         const wasNew = !built.has(m.id);
@@ -207,11 +262,11 @@ export function mount(container) {
         if (spare) comp.forEach(a => { a.glowUntil = performance.now() + 4500; });
         dispatchEvent(new CustomEvent('mascot', { detail: { type: 'cheer', text: `${Tp('lab.made')}${L(m.name)}!` + (spare ? ' ' + Tp('lab.spare') : '') } }));
         news.forEach(b => setTimeout(() => toast(`${b.icon} ${Tp('badge.new')}${L(b.name)}`), 1800));
-        if (wasNew) renderMission();
+        if (wasNew || m === curM) renderMission();
       }
     } else if (incomplete.length) {
-      const a = incomplete.sort((x, y) => free.get(y) - free.get(x))[0];
-      coach(Tp('lab.wants', { sym: a.sym, n: free.get(a) }));
+      const a = incomplete.sort((x, y) => (y.want ?? free.get(y)) - (x.want ?? free.get(x)))[0];
+      coach(Tp('lab.wants', { sym: a.sym, n: a.want ?? free.get(a) }));
     } else if (comp.length > 1) {
       coach(Tp('lab.unknown'));
     }
@@ -288,9 +343,10 @@ export function mount(container) {
 
   const right = new THREE.Vector3(), a2 = new THREE.Vector3();
   stage.onFrame(dt => {
+    if (sigNow() !== lastSig) renderMission();
     const pulse = 3.1 + Math.sin(performance.now() / 160) * 0.35;
     atoms.forEach(a => {
-      const on = a.free > 0 && degree(a) > 0 && (!a.matched || performance.now() < (a.glowUntil || 0));
+      const on = (a.want ?? a.free) > 0 && degree(a) > 0 && (!a.matched || performance.now() < (a.glowUntil || 0));
       a.glow.visible = on;
       if (on) { a.glow.scale.set(pulse, pulse, 1); a.glow.material.color.set(a.matched ? 0xff9ad5 : 0xffe150); }   // 黃=還想牽手;粉紅=已完成(本來就有空手)
     });
@@ -321,7 +377,9 @@ export function mount(container) {
       comp.forEach(a => { a.matched = !!m; });
       let lab = labels.get(key);
       let text;
-      if (m) text = `${formulaHTML(m.display || m.formula)} · ${LH(m.name)}`;
+      // 平常只顯示算式(短,不擋住分子);剛完成、或手指碰到這個分子的幾秒內,才連名字一起顯示
+      const showName = comp.some(a => (a.showUntil || 0) > performance.now());
+      if (m) text = showName ? `${formulaHTML(m.display || m.formula)} · ${LH(m.name)}` : formulaHTML(m.display || m.formula);
       else {
         // 還不認識的組合:一樣顯示算式,並說明還缺什麼(不要讓小朋友看到空白)
         const cnt = {};
@@ -336,7 +394,7 @@ export function mount(container) {
         lab = new CSS2DObject(div); stage.scene.add(lab); labels.set(key, lab);
       }
       lab.element.innerHTML = text; lab.element.style.display = text ? '' : 'none';
-      const c = centroid(comp); lab.position.set(c.x, c.y + 1.7, c.z);
+      const c = centroid(comp), top = Math.max(...comp.map(a => a.mesh.position.y + a.r)); lab.position.set(c.x, top + 0.6, c.z);   // 放在整個分子的上緣外面,不蓋到原子
     });
     labels.forEach((lab, key) => { if (!seen.has(key)) { stage.scene.remove(lab); lab.element.remove(); labels.delete(key); } });
     for (let i = bursts.length - 1; i >= 0; i--) if (!bursts[i].update(dt)) bursts.splice(i, 1);
@@ -350,11 +408,23 @@ export function mount(container) {
     ray.setFromCamera(ptr, stage.camera);
   }
   stage.el.style.touchAction = 'none';
+  /** 找手指/滑鼠最近的原子:用畫面上的距離判斷,小的原子(氫)也有至少 ~26px 的可點範圍;重疊時選離得最近的 */
+  const pv = new THREE.Vector3();
+  function pickAtom(ev) {
+    const r = stage.el.getBoundingClientRect(); let best = null, bd = 1e9;
+    for (const a of atoms) {
+      pv.copy(a.mesh.position).project(stage.camera);
+      const sx = (pv.x + 1) / 2 * r.width + r.left, sy = (1 - pv.y) / 2 * r.height + r.top;
+      const edge = new THREE.Vector3(a.mesh.position.x + a.r, a.mesh.position.y, a.mesh.position.z).project(stage.camera);
+      const rpx = Math.abs((edge.x - pv.x) / 2 * r.width), d = Math.hypot(ev.clientX - sx, ev.clientY - sy);
+      if (d <= Math.max(rpx + 4, 26) && d / Math.max(rpx, 1) < bd) { bd = d / Math.max(rpx, 1); best = a; }
+    }
+    return best;
+  }
   stage.el.addEventListener('pointerdown', ev => {
     setRay(ev);
-    const h = ray.intersectObjects(atoms.map(a => a.mesh))[0];
-    if (!h) { if (scissors) setScissors(false); return; }
-    const a = h.object.userData.atom;
+    const a = pickAtom(ev);
+    if (!a) { if (scissors) setScissors(false); return; }
     if (scissors) {
       celebrated.clear();
       if (degree(a)) { removeBondsOf(a); toast(Tp('lab.cut')); }       // 有牽手:先剪斷
@@ -366,6 +436,7 @@ export function mount(container) {
       }
       return;
     }
+    const part = components().find(c => c.includes(a)); if (part) part.forEach(x => { x.showUntil = performance.now() + 2000; });   // 碰到分子:名字顯示一下
     dragging = a; plane.constant = -a.mesh.position.z;
     stage.el.setPointerCapture(ev.pointerId);
   });

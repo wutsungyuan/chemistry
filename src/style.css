@@ -528,3 +528,27 @@ body{background:
 .nuc-chart{width:100%;height:auto;display:block;border-radius:8px}
 .nuc-actions{display:flex;flex-wrap:wrap;gap:6px;align-items:center;position:sticky;bottom:-4px;z-index:2;margin:0 -6px;padding:8px 6px 6px;background:#1b2350;border-radius:12px}
 .nuc-actions .btn{white-space:nowrap;line-height:1.5}
+
+/* ---- 分子實驗室:一次一題的任務卡 ---- */
+.side.mission{bottom:auto;width:min(360px,calc(100% - 24px));max-height:calc(100% - 170px);overflow:auto}
+.mi-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.mi-head b{font-size:1.05rem}
+.mi-head .mi-list{white-space:nowrap;margin:0;padding:6px 12px;min-height:40px;font-size:.85rem;flex:none}
+.mi-card{margin-top:4px;padding:10px 12px;border-radius:14px;background:rgba(255,255,255,.08);border:1px solid var(--line)}
+.mi-card.done{background:rgba(61,220,132,.16);border-color:#3ddc84}
+.mi-title{font-size:1.15rem;line-height:1.4}.mi-title b{font-weight:800}
+.mi-sub{margin:4px 0 0;font-size:.9rem;opacity:.9}
+.mi-toks{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.mi-tok{display:inline-flex;align-items:center;gap:5px;padding:3px 10px 3px 4px;border-radius:999px;background:rgba(0,0,0,.25);font-weight:700}
+.mi-tok i{width:28px;height:28px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-style:normal;color:#111;font-weight:800;font-size:.85rem}
+.mi-tok em{font-style:normal;font-size:.85rem;opacity:.85}.mi-tok.ok{background:rgba(61,220,132,.25)}.mi-tok.ok em{color:#7dffb0;opacity:1}
+.mi-done{margin:8px 0;font-weight:700}
+.mi-tip{margin:6px 0;font-size:.9rem;line-height:1.5;color:#ffe9a8}
+.mi-btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}.mi-btns .btn{margin:0;padding:6px 14px;min-height:40px;font-size:.9rem}
+.m-card.cur{outline:2px solid #ffd23f}
+.tray .atom-btn{position:relative}
+.tray .atom-btn .need{position:absolute;top:-6px;right:-6px;font-size:.7rem;background:#ffd23f;color:#111;border-radius:999px;padding:1px 5px;font-weight:800;line-height:1.2}
+.tray .atom-btn .need:empty{display:none}
+.tray .atom-btn.want{outline:3px solid #ffd23f;outline-offset:2px}
+.tray .atom-btn.dim{opacity:.55}
+.mi-warn{margin:6px 0;font-size:.9rem;line-height:1.5;color:#ffb3a1;font-weight:700}

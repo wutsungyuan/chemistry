@@ -362,8 +362,8 @@
    "en": "Build: put 1 N in the middle with 1 O on each side. N keeps one hand free - that is normal!"
   },
   "fact": {
-   "zh": "棕黃色的氣體。它有一隻手永遠牽不滿,所以特別活潑、容易跟別人反應!",
-   "en": "A brown gas. One of its hands can never be filled, so it is very active!"
+   "zh": "棕黃色的氣體。它有一隻手永遠牽不滿,所以特別活潑、容易跟別人反應!畫面上一邊雙鍵、一邊單鍵只是其中一種畫法:真實的兩個 N–O 鍵一樣長、一樣強,多出來的電子是平均分給兩邊的(這叫「共振」)。",
+   "en": "A brown gas. One of its hands can never be filled, so it is very active! Drawing one double bond and one single bond is just one way to write it: in the real molecule both N-O bonds are equally long and strong, because the extra electrons are shared evenly (this is called resonance)."
   },
   "use": {
    "zh": "汽車廢氣和工廠排放的空氣汙染物,是霧霾的原因之一。",
@@ -448,7 +448,16 @@
    "zh": "氯氣",
    "en": "Chlorine gas"
   },
-  "hidden": true
+  "hidden": true,
+  "lab": true,
+  "fact": {
+   "zh": "黃綠色、有刺鼻味道的氣體,有毒。兩個氯手牽手,就變成氯氣。",
+   "en": "A yellow-green gas with a sharp smell, and it is poisonous. Two chlorine atoms holding hands make chlorine gas."
+  },
+  "use": {
+   "zh": "早期用來消毒自來水;現在游泳池和漂白水裡的消毒成分也是含氯的。",
+   "en": "Once widely used to disinfect tap water; pool and bleach disinfectants are chlorine-based too."
+  }
  },
  {
   "id": "NaClp",
@@ -574,7 +583,7 @@
    "en": "Sodium hydroxide"
   },
   "extra": true,
-  "lab": false,
+  "lab": true,
   "fact": {
    "zh": "很強的鹼,會讓皮膚受傷,要小心。",
    "en": "A strong base that can hurt skin."
@@ -592,7 +601,7 @@
    "en": "Sodium hypochlorite (bleach)"
   },
   "extra": true,
-  "lab": false,
+  "lab": true,
   "fact": {
    "zh": "漂白水的主要成分,可以殺死細菌。",
    "en": "The main part of bleach, which kills germs."
@@ -1526,6 +1535,159 @@
   "use": {
    "zh": "門把、小喇叭和銅管樂器。",
    "en": "Door handles and brass instruments."
+  }
+ },
+ {
+  "id": "CH3OH",
+  "formula": "CH3OH",
+  "name": {
+   "zh": "甲醇",
+   "en": "Methanol"
+  },
+  "lab": true,
+  "fact": {
+   "zh": "只有一個碳的酒精,長得很像酒精,但有毒,絕對不能喝!",
+   "en": "An alcohol with just one carbon. It looks like drinking alcohol but is poisonous - never drink it!"
+  },
+  "use": {
+   "zh": "工業上的溶劑和燃料。",
+   "en": "An industrial solvent and fuel."
+  }
+ },
+ {
+  "id": "C2H4",
+  "formula": "C2H4",
+  "name": {
+   "zh": "乙烯",
+   "en": "Ethylene"
+  },
+  "lab": true,
+  "fact": {
+   "zh": "水果自己會放出來的「催熟氣體」。青香蕉和熟蘋果放在一起,香蕉會熟得比較快。",
+   "en": "A gas that fruit gives off to ripen. Put a green banana next to a ripe apple and it ripens faster."
+  },
+  "use": {
+   "zh": "塑膠袋、水管等塑膠(聚乙烯)的原料。",
+   "en": "The raw material for polyethylene plastics such as bags and pipes."
+  }
+ },
+ {
+  "id": "C2H2",
+  "formula": "C2H2",
+  "name": {
+   "zh": "乙炔",
+   "en": "Acetylene"
+  },
+  "lab": true,
+  "fact": {
+   "zh": "兩個碳中間牽了三隻手(三鍵),燃燒時溫度非常高。",
+   "en": "Two carbons hold hands three times (a triple bond). It burns very hot."
+  },
+  "use": {
+   "zh": "焊接和切割金屬的氣體,以前也用在電石燈。",
+   "en": "A gas for welding and cutting metal, once used in carbide lamps."
+  }
+ },
+ {
+  "id": "C4H10",
+  "formula": "C4H10",
+  "name": {
+   "zh": "丁烷(打火機瓦斯)",
+   "en": "Butane"
+  },
+  "lab": true,
+  "fact": {
+   "zh": "四個碳排成一排。稍微加壓它就會變成液體,所以能裝進小小的打火機裡。",
+   "en": "Four carbons in a row. A little pressure turns it into a liquid, so it fits inside a small lighter."
+  },
+  "use": {
+   "zh": "打火機、卡式瓦斯爐的燃料。",
+   "en": "Fuel for lighters and portable gas stoves."
+  }
+ },
+ {
+  "id": "H2CO",
+  "formula": "H2CO",
+  "name": {
+   "zh": "甲醛",
+   "en": "Formaldehyde"
+  },
+  "lab": true,
+  "fact": {
+   "zh": "有刺鼻味道的氣體。新裝潢、新家具可能會慢慢放出來,所以新家要常常開窗通風。",
+   "en": "A sharp-smelling gas. New furniture and paint can release it slowly, so open the windows in a new home."
+  },
+  "use": {
+   "zh": "製作膠合板和塑膠的原料;保存標本用的福馬林是它的水溶液。",
+   "en": "Used to make plywood and plastics; formalin, which preserves specimens, is its water solution."
+  }
+ },
+ {
+  "id": "H2CO3",
+  "formula": "H2CO3",
+  "name": {
+   "zh": "碳酸(汽水)",
+   "en": "Carbonic acid"
+  },
+  "lab": true,
+  "fact": {
+   "zh": "二氧化碳溶進水裡,就有一點點變成碳酸。它不太穩定,很容易又變回二氧化碳,所以汽水一打開就會冒泡泡。",
+   "en": "Carbon dioxide dissolved in water turns a little into carbonic acid. It is unstable and turns back into CO2, which is why soda fizzes when opened."
+  },
+  "use": {
+   "zh": "汽水、氣泡水酸酸的味道。",
+   "en": "The slightly sour taste of soda and sparkling water."
+  }
+ },
+ {
+  "id": "urea",
+  "formula": "CH4N2O",
+  "name": {
+   "zh": "尿素",
+   "en": "Urea"
+  },
+  "lab": true,
+  "fact": {
+   "zh": "身體分解蛋白質之後會產生尿素,再從尿液排出去。",
+   "en": "Your body makes urea when it breaks down protein, and gets rid of it in urine."
+  },
+  "use": {
+   "zh": "農田的氮肥,也是護手霜的保濕成分。",
+   "en": "A nitrogen fertilizer, and a moisturizer in hand creams."
+  }
+ },
+ {
+  "id": "acetone",
+  "formula": "C3H6O",
+  "name": {
+   "zh": "丙酮(去光水)",
+   "en": "Acetone"
+  },
+  "lab": true,
+  "fact": {
+   "zh": "指甲油去光水的味道,就是它!很容易揮發,也很容易著火。",
+   "en": "That smell of nail polish remover is acetone! It evaporates quickly and catches fire easily."
+  },
+  "use": {
+   "zh": "去光水和各種溶劑。",
+   "en": "Nail polish remover and many solvents."
+  }
+ },
+ {
+  "id": "H2S",
+  "formula": "H2S",
+  "name": {
+   "zh": "硫化氫(臭雞蛋味)",
+   "en": "Hydrogen sulfide"
+  },
+  "lab": true,
+  "fact": {
+   "zh": "臭雞蛋、溫泉區和腐爛食物的臭味就是它。濃度高的時候有毒,聞到很濃的臭味要趕快離開。",
+   "en": "The smell of rotten eggs, hot springs and spoiled food. It is poisonous when concentrated, so leave if the smell is very strong."
+  },
+  "use": {
+   "zh": "火山、溫泉和下水道裡都可能出現。",
+   "en": "Found near volcanoes, hot springs and sewers."
   }
  }
 ]

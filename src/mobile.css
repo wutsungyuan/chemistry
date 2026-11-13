@@ -242,3 +242,13 @@
   .nuc-iso .chip { min-height: 34px; min-width: 36px; }
   .cl-bar .chip { min-height: 36px; padding: 4px 10px; }
 }
+
+/* 實驗室(手機):任務卡壓扁,留空間給 3D */
+@media (max-width: 900px), (pointer: coarse) and (max-width: 1400px) {
+  body[data-scene=lab] #app > .side.mission { max-height: 46%; padding: 6px 10px; }
+  body[data-scene=lab] .mi-card { padding: 6px 10px; margin-top: 2px; }
+  body[data-scene=lab] .mi-title { font-size: 1rem; }
+  body[data-scene=lab] .mi-toks { margin: 4px 0; gap: 6px; }
+  body[data-scene=lab] .mi-btns { margin-top: 4px; }
+  body[data-scene=lab] .tray .atom-btn .need { top: -5px; right: -5px; }
+}
