@@ -92,7 +92,7 @@ test('驗證腳本會擋下壞資料:熔點高於沸點、答案不是兩種之�
 test('場景接上:路由、底部導覽、共用的階段選擇與粒子元件、不理會「減少動態效果」', () => {
   const main = read('src/main.js'), scene = read('src/scenes/MatterView.js'), parts = read('src/ui/particles.js');
   assert.match(main, /matter: MatterView/); assert.match(main, /\['matter', 'nav\.matter'/);
-  assert.match(scene, /import \{ levelChipsHTML, bindLevelChips \} from '\.\.\/ui\/levelBar\.js'/);
+  assert.ok(scene.includes("import { getLevel } from '../ui/level.js'") && !/levelChipsHTML|bindLevelChips/.test(scene));
   assert.match(scene, /import \{ createParticleBox \} from '\.\.\/ui\/particles\.js'/);
   assert.ok(!/reduced-motion/.test(scene + parts));
   assert.ok(BADGES.some(b => b.id === 'change10'));

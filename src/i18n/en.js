@@ -6,8 +6,8 @@ export default {
   'nav.reaction': 'Reactions',
   'nav.matter': 'Matter',
   'nav.quiz': 'Quiz',
-  'tool.zhuyin': 'ㄅㄆㄇ Zhuyin',
   'tool.lang': '中文',
+  'tool.level': '🏠 Change level',
   'badge.new': 'New badge: ',
 
   'pt.title': 'Periodic Table',

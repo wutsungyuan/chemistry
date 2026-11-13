@@ -6,8 +6,8 @@ export default {
   'nav.reaction': '反應劇場',
   'nav.matter': '物質變化',
   'nav.quiz': '小測驗',
-  'tool.zhuyin': 'ㄅㄆㄇ 注音',
   'tool.lang': 'English',
+  'tool.level': '🏠 換版本',
   'badge.new': '獲得徽章:',
 
   'pt.title': '元素週期表',

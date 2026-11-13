@@ -4,7 +4,6 @@ import { T, Tp, L, LH, state } from '../i18n/index.js';
 import { BY_Z } from '../data/elements.js';
 import { nuclide, daughter, quarks, averageMass, fractionLeft, lambda, meanLife, decayTimes, countLeft, humanHalfLife, listFor, defaultNuclide, useOf } from '../data/nuclide.js';
 import { getLevel } from '../ui/level.js';
-import { levelChipsHTML, bindLevelChips } from '../ui/levelBar.js';
 import { isNarrow } from '../ui/layout.js';
 import { setNextTab } from './AtomView.js';
 import { escapeHtml as esc } from '../ui/util.js';
@@ -223,7 +222,7 @@ export function mount(container, startZ, { go } = {}) {
       side.dataset.level = level;
       side.innerHTML = `
         <h2>⚛️ ${LH(e.name)} <small>${T('nuc.title')}</small></h2>
-        <div class="cl-bar"><button class="chip nuc-back" aria-label="${Tp('nuc.back')}">←<span class="lbl"> ${T('nuc.back')}</span></button>${levelChipsHTML(level)}</div>
+        <div class="cl-bar"><button class="chip nuc-back" aria-label="${Tp('nuc.back')}">←<span class="lbl"> ${T('nuc.back')}</span></button></div>
         <div><b>${T('nuc.iso')}</b> ${isoChips()}</div>
         ${gh ? '' : resultHTML()}
         <div class="nuc-info">${gh ? ghostHTML() : infoHTML()}</div>
@@ -242,7 +241,6 @@ export function mount(container, startZ, { go } = {}) {
       }
       side.querySelector('.nuc-chartslot')?.appendChild(chartCanvas());
       side.querySelector('.nuc-back').onclick = () => { setNextTab('info'); go('atom', z); };
-      bindLevelChips(side, l => { level = l; render(); });
       side.querySelectorAll('.nuc-iso [data-n]').forEach(b => b.onclick = () => select(z, +b.dataset.n));
       side.querySelector('[data-act=decay]')?.addEventListener('click', startDecay);
       side.querySelector('[data-act=again]')?.addEventListener('click', () => { anim = null; clearEjecta(); buildNucleus(cur.z, cur.n); render(); });

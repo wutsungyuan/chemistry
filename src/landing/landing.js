@@ -2,7 +2,7 @@
 // 背景的化學動態、三張風格卡片、選定後的轉場。選擇寫入 localStorage['level'],再進入主程式。
 import { state, setLang } from '../i18n/index.js';
 import { rubyHTML } from '../i18n/zhuyin.js';
-import { setLevel, LEVELS } from '../ui/level.js';
+import { setLevel, hasLevel, getLevel, LEVELS } from '../ui/level.js';
 import { mountFace, trackPupils, startIdleMoods, setMood } from '../ui/mascotFace.js';
 import { createBackground } from './bg.js';
 
@@ -15,9 +15,9 @@ const TEXT = {
   },
   en: {
     title: 'Kids Chemistry Park', sub: 'Pick the version made for you and explore atoms and molecules!', pick: 'Choose a version', lang: '中文',
-    kid: { name: 'Elementary', grade: 'Elementary · ages 7–12', line: 'Water is made when two hydrogens and one oxygen hold hands!', cta: "Let's go!" },
-    teen: { name: 'Junior high', grade: 'Junior high · ages 13–15', line: 'A water molecule consists of 2 hydrogen atoms and 1 oxygen atom joined by covalent bonds.', cta: 'Start learning' },
-    high: { name: 'Senior high', grade: 'Senior high · ages 16–18', line: 'H₂O: a polar covalent molecule; bond angle 104.5°, O–H bond length ≈ 96 pm.', cta: 'Enter' },
+    kid: { name: 'Elementary', grade: 'Ages 7–12', line: 'Water is made when two hydrogens and one oxygen hold hands!', cta: "Let's go!" },
+    teen: { name: 'Junior high', grade: 'Ages 13–15', line: 'A water molecule consists of 2 hydrogen atoms and 1 oxygen atom joined by covalent bonds.', cta: 'Start learning' },
+    high: { name: 'Senior high', grade: 'Ages 16–18', line: 'H₂O: a polar covalent molecule; bond angle 104.5°, O–H bond length ≈ 96 pm.', cta: 'Enter' },
   },
 };
 
@@ -107,7 +107,7 @@ function choose(level, e) {
   const x = e.clientX || innerWidth / 2, y = e.clientY || innerHeight / 2;
   wipe.style.setProperty('--x', x + 'px'); wipe.style.setProperty('--y', y + 'px');
   wipe.dataset.to = level; wipe.classList.add('on');
-  setTimeout(() => { location.href = './index.html'; }, 650);
+  setTimeout(() => { location.href = './index.html#table'; }, 650);
 }
 
 // 沒有指到任何卡片時,背景自動輪流展示三種風格(手機沒有 hover,靠這個讓使用者看到差異)
@@ -116,4 +116,6 @@ setInterval(() => {
   auto = (auto + 1) % 3; activate(auto);
 }, 4500);
 
-build(); activate(0);
+// 已經選過版本、而且不是從「換版本」進來 → 直接進主程式
+if (hasLevel() && !new URLSearchParams(location.search).has('change')) location.replace('./index.html');
+else { build(); activate(Math.max(0, LEVELS.indexOf(getLevel()))); auto = Math.max(0, LEVELS.indexOf(getLevel())); }

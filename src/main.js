@@ -2,7 +2,9 @@ import './style.css';
 import './mobile.css';
 import { mountDeco } from './ui/deco.js';
 import { mountMascot, mascotScene } from './ui/mascot.js';
-import { T, state, setLang, setZhuyin, onLangChange } from './i18n/index.js';
+import { T, state, setLang, onLangChange } from './i18n/index.js';
+import { applyLevel } from './ui/level.js';
+import { initLayout } from './ui/layout.js';
 import * as PeriodicTable from './scenes/PeriodicTable.js';
 import * as AtomView from './scenes/AtomView.js';
 import * as MoleculeGallery from './scenes/MoleculeGallery.js';
@@ -42,16 +44,14 @@ function renderChrome() {
     b.onclick = () => go(key);
     nav.appendChild(b);
   });
-  const z = document.getElementById('btn-zhuyin');
-  z.innerHTML = T('tool.zhuyin');
-  z.classList.toggle('on', state.zhuyin);
-  z.style.display = state.lang === 'zh' ? '' : 'none';
+  document.getElementById('btn-level').innerHTML = T('tool.level');
   document.getElementById('btn-lang').textContent = state.lang === 'zh' ? 'English' : '中文';
 }
 
-document.getElementById('btn-zhuyin').onclick = () => setZhuyin(!state.zhuyin);
+// 換版本:回入口頁(landing.html?change=1,不會自動跳回)
+document.getElementById('btn-level').onclick = () => { location.href = './landing.html?change=1'; };
 document.getElementById('btn-lang').onclick = () => setLang(state.lang === 'zh' ? 'en' : 'zh');
-// 語言/注音變更 → 重新載入目前頁面(實驗室進度已存檔)
+// 語言變更 → 重新載入目前頁面(實驗室進度已存檔)
 onLangChange(() => go(name, arg));
 
 function fromHash() {
@@ -63,6 +63,8 @@ addEventListener('hashchange', () => {
   const [n, a] = fromHash();
   if (n !== name || a !== arg) go(n, a);
 });
+applyLevel();
+initLayout();
 mountDeco();
 mountMascot();
 go(...fromHash());

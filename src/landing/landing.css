@@ -25,12 +25,12 @@ button{font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:tra
   max-width:1120px;margin:0 auto;padding:max(20px,env(safe-area-inset-top)) 16px max(24px,env(safe-area-inset-bottom))}
 
 /* ---- 標題 ---- */
-.lp-head{text-align:center;position:relative;padding-top:8px}
+.lp-head{text-align:center;position:relative;padding-top:0}
 .lp-head h1{margin:0;font-size:clamp(1.9rem,5.2vw,3.2rem);letter-spacing:.04em;font-weight:800;line-height:1.15}
 .lp-head p{margin:.6em auto 0;max-width:34em;font-size:clamp(1rem,2.4vw,1.2rem);opacity:.85;line-height:1.6}
 body[data-active=kid] .lp-head h1{text-shadow:0 3px 0 #fff,0 6px 14px rgba(255,140,170,.35)}
 body[data-active=high] .lp-head h1{font-weight:600;letter-spacing:.12em}
-.lp-lang{position:absolute;right:0;top:0;min-height:44px;min-width:44px;padding:0 16px;border-radius:999px;border:1.5px solid currentColor;background:rgba(255,255,255,.45);font-weight:700;font-size:.95rem;backdrop-filter:blur(6px);transition:color .8s}
+.lp-lang{position:relative;display:block;margin:0 0 6px auto;min-height:44px;min-width:44px;padding:0 16px;border-radius:999px;border:1.5px solid currentColor;background:rgba(255,255,255,.45);font-weight:700;font-size:.95rem;backdrop-filter:blur(6px);transition:color .8s}
 body[data-active=high] .lp-lang{background:rgba(255,255,255,.06)}
 
 /* ---- 卡片(共通) ---- */
@@ -106,3 +106,16 @@ body[data-active=high] .lp-lang{background:rgba(255,255,255,.06)}
 .lp-kid .lp-line{font-size:1.1rem}
 .lp-kid .lp-grade{font-size:1rem}
 .lp-kid .lp-cta{font-size:1.1rem}
+
+/* 英文版排版:字距與行高另外調(中文的寬字距、注音用的大行高在英文會顯得鬆散;句子不要被截成「...」) */
+html[lang=en] .lp-head h1{letter-spacing:0;font-size:clamp(1.7rem,5vw,3rem);line-height:1.2;text-wrap:balance}
+html[lang=en] body[data-active=high] .lp-head h1{letter-spacing:.02em}
+html[lang=en] .lp-head p{text-wrap:balance}
+html[lang=en] .lp-name{letter-spacing:0;line-height:1.2}
+html[lang=en] .lp-high .lp-name{letter-spacing:.03em}
+html[lang=en] .lp-grade{letter-spacing:0}
+html[lang=en] .lp-line,html[lang=en] .lp-kid .lp-line{line-height:1.55;font-size:1rem;-webkit-line-clamp:unset;display:block;overflow:visible}
+html[lang=en] .lp-high .lp-line{font-size:.92rem}
+html[lang=en] .lp-cta{letter-spacing:0;white-space:nowrap}
+@media (min-width:860px){html[lang=en] .lp-line,html[lang=en] .lp-kid .lp-line{min-height:0}}
+@media (max-width:859px){html[lang=en] .lp-kid .lp-name{padding-right:52px}}

@@ -4,5 +4,5 @@ export default defineConfig({
   base: './',
   server: { port: 5174, strictPort: true, host: '127.0.0.1' },
   preview: { port: 5174, strictPort: true, host: '127.0.0.1' },
-  build: { chunkSizeWarningLimit: 1500 },
+  build: { chunkSizeWarningLimit: 1500, rollupOptions: { input: { main: 'index.html', landing: 'landing.html' } } },
 });

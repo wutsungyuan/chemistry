@@ -20,7 +20,7 @@ test('場景註冊;從底部導覽看起來仍屬於「元素週期表」;原子
 });
 
 test('三個階段共用 ui/level.js;國小/國中/高中各有專屬內容', () => {
-  assert.match(scene, /import \{ levelChipsHTML, bindLevelChips \} from '\.\.\/ui\/levelBar\.js'/);
+  assert.ok(scene.includes("import { getLevel } from '../ui/level.js'") && !/levelChipsHTML|bindLevelChips/.test(scene));
   assert.match(scene, /level === 'kid'/); assert.match(scene, /level !== 'kid'/); assert.match(scene, /level === 'high'/);
   assert.match(scene, /quarks\(cur\.z, cur\.n\)/);                    // 高中:夸克
   assert.match(scene, /lambda\(cur\.hl\)/);                             // 高中:衰變定律

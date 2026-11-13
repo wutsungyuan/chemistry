@@ -6,6 +6,8 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="mobile-web-app-capable" content="yes" />
   <title>兒童化學樂園</title>
+  <!-- 第一次來(還沒選過版本)先到入口頁選國小/國中/高中 -->
+  <script>try{if(!localStorage.getItem('level'))location.replace('landing.html')}catch(e){}</script>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚗️</text></svg>" />
 </head>
 <body>
@@ -15,7 +17,7 @@
     <div class="brand" id="brand"></div>
     <nav id="nav"></nav>
     <div class="tools">
-      <button id="btn-zhuyin" class="tool"></button>
+      <button id="btn-level" class="tool"></button>
       <button id="btn-lang" class="tool"></button>
     </div>
   </header>

@@ -4,6 +4,7 @@ import nuc from './packs/nuc.js';
 import matter from './packs/matter.js';
 import { rubyHTML } from './zhuyin.js';
 import { escapeHtml as esc } from '../ui/util.js';
+import { getLevel } from '../ui/level.js';
 
 // 基本文字 + 各功能自己的文字包(packs/*.js,每包 {zh, en})。新功能的文字請放進新的 pack,不要再往 zh.js/en.js 堆。
 const PACKS = [nuc, matter];
@@ -14,27 +15,34 @@ const store = {
 };
 export const state = {
   lang: store.get('lang', 'zh'),
-  zhuyin: store.get('zhuyin', '0') === '1',
+  /** 注音由階段決定:只有國小版顯示(中文介面),沒有開關 */
+  get zhuyin() { return getLevel() === 'kid'; },
 };
 const listeners = new Set();
 export const onLangChange = fn => { listeners.add(fn); return () => listeners.delete(fn); };
 export function setLang(l) { state.lang = l; store.set('lang', l); listeners.forEach(f => f()); }
-export function setZhuyin(v) { state.zhuyin = v; store.set('zhuyin', v ? '1' : '0'); listeners.forEach(f => f()); }
 
 /** 把純文字轉為 HTML(中文+注音開啟時加上 ruby) */
 export function render(text) {
   text = String(text ?? '');
   return state.lang === 'zh' && state.zhuyin ? rubyHTML(text) : esc(text);
 }
+/**
+ * 依階段取字:先找 'key@kid' / 'key@teen' / 'key@high'(目前語言),再找 'key'(目前語言),最後退回中文。
+ * 只有需要依階段換說法的才寫 @level 版本,其餘共用同一個 key。
+ */
+export function raw(key, lang = state.lang, level = getLevel()) {
+  return dict[lang][`${key}@${level}`] ?? dict[lang][key] ?? dict.zh[`${key}@${level}`] ?? dict.zh[key] ?? key;
+}
 /** UI 文字(依 key);可帶變數 {n} */
 export function T(key, vars) {
-  let s = dict[state.lang][key] ?? dict.zh[key] ?? key;
+  let s = raw(key);
   if (vars) for (const k in vars) s = s.split(`{${k}}`).join(vars[k]);
   return render(s);
 }
 /** 純文字版(給 toast 等) */
 export function Tp(key, vars) {
-  let s = dict[state.lang][key] ?? dict.zh[key] ?? key;
+  let s = raw(key);
   if (vars) for (const k in vars) s = s.split(`{${k}}`).join(vars[k]);
   return s;
 }

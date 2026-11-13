@@ -1,6 +1,5 @@
 import { T, Tp, L, LH, formulaText } from '../i18n/index.js';
 import { getLevel } from '../ui/level.js';
-import { levelChipsHTML, bindLevelChips } from '../ui/levelBar.js';
 import { createParticleBox } from '../ui/particles.js';
 import { SUBSTANCES, HEAT_VALID_MAX_C, substance, phases, stateAt, positionOf, heatNeeded, changeKind, pickRound } from '../data/matter.js';
 import { update } from '../game/store.js';
@@ -29,9 +28,8 @@ export function mount(container, arg) {
     side.dataset.level = level; side.dataset.tab = tab;
     const tabs = ['states', 'quiz'].map(k => `<button class="chip${k === tab ? ' on' : ''}" data-tab="${k}">${T('matter.tab.' + k)}</button>`).join('');
     side.innerHTML = `<h2>🧊 ${T('matter.title')}</h2>
-      <div class="cl-bar">${levelChipsHTML(level)}</div><div class="cl-bar mat-tabs">${tabs}</div>
+      <div class="cl-bar mat-tabs">${tabs}</div>
       <section class="mat-body">${tab === 'states' ? statesHTML() : quizHTML()}</section>`;
-    bindLevelChips(side, l => { level = l; if (level === 'kid') sub = substance('water'); box.setGlyph(sub); resetSlider(); quiz = null; render(); });
     side.querySelectorAll('[data-tab]').forEach(b => { b.onclick = () => { tab = b.dataset.tab; if (tab === 'quiz' && !quiz) newRound(); render(); }; });
     if (tab === 'states') bindStates(); else bindQuiz();
   }

@@ -7,7 +7,6 @@ import { cssColor } from '../ui/spectrum.js';
 import { setNextTab } from './AtomView.js';
 import { isNarrow } from '../ui/layout.js';
 import { getLevel } from '../ui/level.js';
-import { levelChipsHTML, bindLevelChips } from '../ui/levelBar.js';
 
 // 氫原子的電子雲。只做氫:氫只有一顆電子,波函數有精確解;多電子原子沒有精確解,畫出來會誤導。
 // 兩個難度:🌱 國小(「拍照」:每按一次在電子可能出現的地方亮一個點,拍多了雲就浮現)、🔭 國中(完整的雲 + 節點 + 名稱 + 能量)。
@@ -221,8 +220,7 @@ export function mount(container, startId) {
   }
   side.innerHTML = `
     <h2>🌫️ ${T('cloud.title')}</h2>
-    <div class="cl-bar"><button class="chip cl-back">← ${T('cloud.back')}</button>
-      ${levelChipsHTML(level)}</div>
+    <div class="cl-bar"><button class="chip cl-back">← ${T('cloud.back')}</button></div>
     <div class="cl-states">${STATE_IDS.map(s => `<button class="chip" data-state="${s}">${s}</button>`).join('')}${COMPLEX_IDS.map(s => `<button class="chip cl-complex" data-state="${s}">${s.replace('+', '₊')}</button>`).join('')}<button class="chip cl-mixchip" data-state="mix">🌊 ${T('cloud.chip.mix')}</button><button class="chip cl-slice" data-slice>✂️ ${T('cloud.slice')}</button></div>
     <div class="cl-mix"><label>2p <input type="range" class="cl-mixrange" min="0" max="100" step="1" value="50" aria-label="${Tp('cloud.mix.slider')}"> 3d</label><span class="cl-mixread"></span></div>
     <div class="cl-count"></div>
@@ -241,7 +239,6 @@ export function mount(container, startId) {
 
   function refresh() {
     info.innerHTML = infoHTML();
-    side.querySelectorAll('[data-level]').forEach(b => b.classList.toggle('on', b.dataset.level === level));
     side.querySelectorAll('[data-state]').forEach(b => b.classList.toggle('on', b.dataset.state === id));
     side.querySelector('[data-slice]').classList.toggle('on', slice);
     side.querySelector('[data-slice]').innerHTML = (slice ? '✂️ ' : '🧊 ') + T(slice ? 'cloud.slice' : 'cloud.solid');
@@ -262,7 +259,6 @@ export function mount(container, startId) {
     if (shown >= MAX_POINTS && auto) { auto = false; refresh(); } else updateCount();      // 只更新數字;整個面板重畫只在換難度/狀態/連拍開關時
   }
   side.querySelector('.cl-back').onclick = () => { setNextTab('spec'); location.hash = '#atom/1'; };
-  bindLevelChips(side, l => { level = l; auto = false; if (COMPLEX_IDS.includes(id) && level !== 'high') id = '2p'; load(id); refresh(); });
   side.querySelectorAll('[data-state]').forEach(b => b.onclick = () => { auto = false; load(b.dataset.state); refresh(); });
   side.querySelector('[data-slice]').onclick = () => { slice = !slice; auto = false; applyView(); refresh(); };
   side.querySelector('.cl-mixrange').oninput = e => { mixFrac = +e.target.value / 100; recomposeMix(); paintMix(); updateMixRead(); info.innerHTML = infoHTML(); };
