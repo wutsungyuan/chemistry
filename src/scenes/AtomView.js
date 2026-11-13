@@ -13,7 +13,7 @@ import { update, addUnique, badgeName } from '../game/store.js';
 import { toast } from '../ui/toast.js';
 import { getLevel, featureOn } from '../ui/level.js';
 import { atomFacts, catDesc, elFact, elUse } from '../game/atomfacts.js';
-import { speak, canSpeak } from '../ui/speech.js';
+import { speak, canSpeak, stopSpeaking } from '../ui/speech.js';
 
 const protonMat = new THREE.MeshStandardMaterial({ color: 0xff5a5a, roughness: 0.4 });
 const neutronMat = new THREE.MeshStandardMaterial({ color: 0xb0b6d0, roughness: 0.4 });
@@ -410,5 +410,5 @@ export function mount(container, z, { go }) {
   const news = update(d => addUnique(d.elements, el.z));
   news.forEach(b => toast(`${b.icon} ${Tp('badge.new')}${L(badgeName(b, getLevel()))}`));
 
-  return { dispose() { window.speechSynthesis?.cancel?.(); unmountSpectrum(); clearJump(); frameWatcher.disconnect(); stage.dispose(); side.remove(); foundBox?.remove(); zoombar.remove(); } };
+  return { dispose() { stopSpeaking(); unmountSpectrum(); clearJump(); frameWatcher.disconnect(); stage.dispose(); side.remove(); foundBox?.remove(); zoombar.remove(); } };
 }

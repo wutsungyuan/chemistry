@@ -7,7 +7,7 @@ import { T, Tp, L, LH, formulaHTML, state } from '../i18n/index.js';
 import { getLevel, forLevel } from '../ui/level.js';
 import { molFacts, factFor, useFor } from '../game/molfacts.js';
 import { progress } from '../game/store.js';
-import { speak, canSpeak } from '../ui/speech.js';
+import { speak, canSpeak, stopSpeaking } from '../ui/speech.js';
 import { escapeHtml } from '../ui/util.js';
 
 /** 結構是「簡化示意」或「晶體的一小塊」時,誠實地告訴小朋友 */
@@ -141,5 +141,5 @@ export function mount(container, startId) {
   }
   stage.setCenterShift(() => (!isNarrow() ? (side.offsetWidth - list.offsetWidth) / 2 : 0));
   show(id);
-  return { dispose() { window.speechSynthesis?.cancel?.(); stage.dispose(); side.remove(); list.remove(); } };
+  return { dispose() { stopSpeaking(); stage.dispose(); side.remove(); list.remove(); } };
 }

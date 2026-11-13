@@ -9,7 +9,7 @@ import { buildMolecule, molRadius, atomMaterial, atomRadius, sphereGeo } from '.
 import { T, Tp, L, LH, formulaHTML } from '../i18n/index.js';
 import { update, addUnique, badgeName } from '../game/store.js';
 import { toast } from '../ui/toast.js';
-import { speak, canSpeak } from '../ui/speech.js';
+import { speak, canSpeak, stopSpeaking } from '../ui/speech.js';
 import { getLevel, forLevel } from '../ui/level.js';
 import { storyFor, conservation, countText } from '../game/rxfacts.js';
 
@@ -304,5 +304,5 @@ export function mount(container, startId) {
   }
 
   select(cur);
-  return { dispose() { window.speechSynthesis?.cancel?.(); scene3?.dispose(); stage.dispose(); list.remove(); bar.remove(); } };
+  return { dispose() { stopSpeaking(); scene3?.dispose(); stage.dispose(); list.remove(); bar.remove(); } };
 }
