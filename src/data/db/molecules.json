@@ -14,6 +14,23 @@
   "use": {
    "zh": "燃料電池車的燃料,燃燒後只會變成水!",
    "en": "Fuel-cell car fuel. It burns into plain water!"
+  },
+  "level": "kid",
+  "factTeen": {
+   "zh": "兩個氫原子共用一對電子,形成最簡單的分子,也是最輕的氣體。",
+   "en": "Two hydrogen atoms share one pair of electrons, making the simplest molecule and the lightest gas."
+  },
+  "factHigh": {
+   "zh": "兩個 H 原子共用一對電子形成的雙原子分子,是密度最小的氣體。",
+   "en": "A diatomic molecule formed when two H atoms share one electron pair; the least dense of all gases."
+  },
+  "useTeen": {
+   "zh": "燃料電池的燃料,燃燒後只生成水。",
+   "en": "Fuel for fuel cells; it burns to give only water."
+  },
+  "useHigh": {
+   "zh": "作為燃料電池與氫能車的燃料,燃燒產物只有水;也是工業合成氨的原料。",
+   "en": "Fuel for fuel cells and hydrogen vehicles, with water as the only combustion product; also a feedstock for ammonia synthesis."
   }
  },
  {
@@ -31,6 +48,23 @@
   "use": {
    "zh": "我們每一口呼吸都需要它,火也需要它才會燃燒。",
    "en": "Every breath needs it, and fire needs it to burn."
+  },
+  "level": "kid",
+  "factTeen": {
+   "zh": "兩個氧原子共用兩對電子,形成雙鍵。",
+   "en": "Two oxygen atoms share two pairs of electrons, forming a double bond."
+  },
+  "factHigh": {
+   "zh": "兩個氧原子以雙鍵(共用兩對電子)結合;O₂ 是供呼吸、助燃的氣體。",
+   "en": "Two oxygen atoms joined by a double bond (two shared pairs); O₂ is the gas we breathe and the one that supports combustion."
+  },
+  "useTeen": {
+   "zh": "供生物呼吸,也是燃燒必需的助燃氣體。",
+   "en": "Needed for breathing, and the gas that supports burning."
+  },
+  "useHigh": {
+   "zh": "呼吸作用與燃燒的氧化劑,約占空氣體積的 21%。",
+   "en": "The oxidant for respiration and combustion; about 21% of air by volume."
   }
  },
  {
@@ -48,6 +82,23 @@
   "use": {
    "zh": "高空的臭氧層像大雨傘,幫我們擋住太陽的紫外線。",
    "en": "The ozone layer is a giant umbrella blocking the Sun's UV rays."
+  },
+  "level": "kid",
+  "factTeen": {
+   "zh": "三個氧原子排成彎曲形,有特殊的氣味。",
+   "en": "Three oxygen atoms in a bent shape, with a distinctive smell."
+  },
+  "useTeen": {
+   "zh": "高空的臭氧層可以吸收來自太陽的紫外線。",
+   "en": "The ozone layer high above absorbs ultraviolet light from the Sun."
+  },
+  "factHigh": {
+   "zh": "三個氧原子組成的彎曲形分子(鍵角約 117°),是氧的同素異形體,具有共振結構。",
+   "en": "A bent molecule of three oxygen atoms (bond angle about 117°); an allotrope of oxygen with resonance structures."
+  },
+  "useHigh": {
+   "zh": "平流層的臭氧層吸收波長較短的紫外線;近地面的臭氧則是空氣汙染物。",
+   "en": "The stratospheric ozone layer absorbs short-wavelength ultraviolet light; ozone near the ground is an air pollutant."
   }
  },
  {
@@ -65,6 +116,23 @@
   "use": {
    "zh": "佔空氣的 78%;洋芋片包裝充氮氣,可以保持酥脆。",
    "en": "78% of air. Chip bags are filled with it to stay crunchy."
+  },
+  "level": "kid",
+  "factTeen": {
+   "zh": "兩個氮原子以三鍵結合,非常穩定,不容易起反應。",
+   "en": "Two nitrogen atoms joined by a triple bond; very stable and slow to react."
+  },
+  "useTeen": {
+   "zh": "約占空氣的 78%;食品包裝充氮氣可以延緩變質。",
+   "en": "About 78% of air; nitrogen-filled food packaging slows spoilage."
+  },
+  "factHigh": {
+   "zh": "N≡N 叄鍵的鍵能很大(約 945 kJ/mol),所以 N₂ 極不活潑。",
+   "en": "The N≡N triple bond is very strong (about 945 kJ/mol), so N₂ is extremely unreactive."
+  },
+  "useHigh": {
+   "zh": "約占空氣體積的 78%;是合成氨(哈伯法)的原料,液態氮可作冷卻劑。",
+   "en": "About 78% of air by volume; a feedstock for ammonia (Haber process), and liquid nitrogen is used as a coolant."
   }
  },
  {
@@ -82,6 +150,23 @@
   "use": {
    "zh": "生命的泉源!我們身體約有 60% 是水。",
    "en": "The source of life! About 60% of your body is water."
+  },
+  "level": "kid",
+  "factTeen": {
+   "zh": "由一個氧原子和兩個氫原子組成的彎曲形分子。",
+   "en": "A bent molecule made of one oxygen atom and two hydrogen atoms."
+  },
+  "useTeen": {
+   "zh": "生命不可缺少的物質,人體約 60% 是水。",
+   "en": "Essential for life; about 60% of the human body is water."
+  },
+  "factHigh": {
+   "zh": "極性分子(鍵角約 104.5°),分子間有氫鍵,所以沸點比同類的小分子高很多。",
+   "en": "A polar molecule (bond angle about 104.5°) with hydrogen bonding between molecules, so its boiling point is far higher than that of similar small molecules."
+  },
+  "useHigh": {
+   "zh": "極佳的溶劑,是生物體內化學反應的介質;人體重量約 60% 是水。",
+   "en": "An excellent solvent and the medium for reactions in living things; about 60% of body weight is water."
   }
  },
  {
@@ -103,6 +188,15 @@
   "use": {
    "zh": "稀釋後可以幫傷口消毒、漂白衣服(請大人幫忙使用)。",
    "en": "Diluted, it disinfects and bleaches (ask a grown-up)."
+  },
+  "level": "teen",
+  "factHigh": {
+   "zh": "比水多一個氧的過氧化物,含 O–O 單鍵,不穩定,容易分解成水與氧氣。",
+   "en": "A peroxide with one more oxygen than water; it contains an O–O single bond and readily decomposes into water and oxygen."
+  },
+  "useHigh": {
+   "zh": "稀溶液(約 3%)用於消毒與漂白,高濃度則是強氧化劑。",
+   "en": "Dilute solutions (about 3%) are used for disinfection and bleaching; concentrated solutions are strong oxidizers."
   }
  },
  {
@@ -124,6 +218,23 @@
   "use": {
    "zh": "汽水的氣泡就是它!植物也用它來做光合作用。",
    "en": "The bubbles in soda! Plants use it for photosynthesis."
+  },
+  "level": "kid",
+  "factTeen": {
+   "zh": "一個碳原子連著兩個氧原子,排成一直線。",
+   "en": "One carbon atom bonded to two oxygen atoms in a straight line."
+  },
+  "useTeen": {
+   "zh": "汽水的氣泡就是它,植物行光合作用也需要它。",
+   "en": "The bubbles in soda are CO₂, and plants need it for photosynthesis."
+  },
+  "factHigh": {
+   "zh": "直線形分子(O=C=O)。C=O 鍵有極性,但分子對稱,所以整個分子是非極性分子。",
+   "en": "A linear molecule (O=C=O). Each C=O bond is polar, but the molecule is symmetric, so overall it is nonpolar."
+  },
+  "useHigh": {
+   "zh": "光合作用的原料、碳酸飲料的氣體來源,也是主要的溫室氣體之一。",
+   "en": "A raw material for photosynthesis, the gas in carbonated drinks, and one of the main greenhouse gases."
   }
  },
  {
@@ -141,6 +252,15 @@
   "use": {
    "zh": "使用瓦斯熱水器要保持通風,避免中毒。",
    "en": "Keep rooms ventilated when using gas heaters."
+  },
+  "level": "teen",
+  "factHigh": {
+   "zh": "含 C≡O 叄鍵,不完全燃燒時產生;與血紅素的結合力遠大於氧,會使人缺氧中毒。",
+   "en": "It has a C≡O triple bond and forms during incomplete combustion; it binds hemoglobin far more strongly than oxygen does, causing oxygen starvation."
+  },
+  "useHigh": {
+   "zh": "工業上用作還原劑(如煉鐵)與合成氣的成分。",
+   "en": "Used industrially as a reducing agent (for example in ironmaking) and as a component of synthesis gas."
   }
  },
  {
@@ -162,6 +282,15 @@
   "use": {
    "zh": "用來製造肥料,味道很刺鼻。",
    "en": "Used to make fertilizer. It has a sharp smell."
+  },
+  "level": "teen",
+  "factHigh": {
+   "zh": "三角錐形(鍵角約 107°),N 上有一對孤對電子,是極性分子,極易溶於水,水溶液呈弱鹼性。",
+   "en": "Trigonal pyramidal (bond angle about 107°) with a lone pair on N; a polar molecule, very soluble in water, giving a weakly basic solution."
+  },
+  "useHigh": {
+   "zh": "以哈伯法合成,是製造肥料與硝酸的原料。",
+   "en": "Made by the Haber process; a feedstock for fertilizers and nitric acid."
   }
  },
  {
@@ -183,6 +312,23 @@
   "use": {
    "zh": "天然氣的主要成分,家裡煮飯的瓦斯就是它。",
    "en": "The main part of natural gas, used for cooking."
+  },
+  "level": "kid",
+  "factTeen": {
+   "zh": "一個碳原子連著四個氫原子,形狀是正四面體。",
+   "en": "One carbon atom bonded to four hydrogen atoms in a regular tetrahedron."
+  },
+  "useTeen": {
+   "zh": "天然氣的主要成分,家用瓦斯的燃料。",
+   "en": "The main component of natural gas, used as household fuel."
+  },
+  "factHigh": {
+   "zh": "sp³ 混成的正四面體分子,鍵角約 109.5°,是最簡單的烷類(烴)。",
+   "en": "A regular tetrahedral molecule with sp³ hybridization and bond angles of about 109.5°; the simplest alkane (hydrocarbon)."
+  },
+  "useHigh": {
+   "zh": "天然氣的主要成分,也是重要的溫室氣體。",
+   "en": "The main component of natural gas, and an important greenhouse gas."
   }
  },
  {
@@ -200,6 +346,15 @@
   "use": {
    "zh": "幫助胃消化食物(濃度很低);工廠用來清除鐵鏽。",
    "en": "Helps digest food; factories use it to remove rust."
+  },
+  "level": "teen",
+  "factHigh": {
+   "zh": "氣體溶於水即為鹽酸,是強酸,在水中完全解離成 H⁺ 與 Cl⁻。",
+   "en": "The gas dissolves in water to give hydrochloric acid, a strong acid that dissociates completely into H⁺ and Cl⁻."
+  },
+  "useHigh": {
+   "zh": "胃液含有稀鹽酸;工業上用於酸洗除鏽與製造氯化物。",
+   "en": "Gastric juice contains dilute hydrochloric acid; industry uses it for pickling (rust removal) and making chlorides."
   }
  },
  {
@@ -229,6 +384,23 @@
   "use": {
    "zh": "每天的調味料。鈉遇水會爆炸,氯有毒,結合後卻很安全!",
    "en": "Our everyday seasoning. Sodium and chlorine are dangerous alone, yet safe together!"
+  },
+  "level": "kid",
+  "factTeen": {
+   "zh": "鈉離子和氯離子整齊地交錯排列,形成立方體的晶體。",
+   "en": "Sodium ions and chloride ions alternate in an orderly pattern, forming cubic crystals."
+  },
+  "useTeen": {
+   "zh": "食鹽,日常的調味料。",
+   "en": "Table salt, an everyday seasoning."
+  },
+  "factHigh": {
+   "zh": "離子晶體:Na⁺ 與 Cl⁻ 以離子鍵結合,排成面心立方(岩鹽)結構,每個離子被 6 個相反電荷的離子包圍。",
+   "en": "An ionic crystal: Na⁺ and Cl⁻ are held by ionic bonds in a face-centered cubic (rock salt) structure, each ion surrounded by 6 oppositely charged ions."
+  },
+  "useHigh": {
+   "zh": "食鹽的主要成分,用於調味與食品保存;電解熔融的 NaCl 可製得鈉與氯氣。",
+   "en": "The main component of table salt, used for seasoning and preservation; electrolysis of molten NaCl gives sodium and chlorine."
   }
  },
  {
@@ -250,6 +422,23 @@
   "use": {
    "zh": "酒精消毒液可以殺死細菌(兒童不能喝含酒精飲料)。",
    "en": "Rubbing alcohol kills germs."
+  },
+  "level": "kid",
+  "factTeen": {
+   "zh": "由碳、氫、氧三種原子組成的酒精(乙醇)。",
+   "en": "Alcohol (ethanol), made of carbon, hydrogen and oxygen atoms."
+  },
+  "useTeen": {
+   "zh": "消毒用酒精可以殺菌;酒類含有乙醇(未成年人不可飲酒)。",
+   "en": "Rubbing alcohol kills germs; alcoholic drinks contain ethanol (not for minors)."
+  },
+  "factHigh": {
+   "zh": "含羥基(–OH)的醇類,分子式 C₂H₆O,可與水以任意比例互溶。",
+   "en": "An alcohol containing a hydroxyl group (–OH), molecular formula C₂H₆O, miscible with water in any proportion."
+  },
+  "useHigh": {
+   "zh": "常用的溶劑與消毒劑(約 75% 的酒精殺菌效果最佳),也可作為燃料。",
+   "en": "A common solvent and disinfectant (about 75% alcohol works best), and also usable as a fuel."
   }
  },
  {
@@ -271,6 +460,23 @@
   "use": {
    "zh": "廚房的醋,可以拿來調味、清除水垢。",
    "en": "Kitchen vinegar for seasoning and cleaning limescale."
+  },
+  "level": "kid",
+  "factTeen": {
+   "zh": "食用醋的酸味來自它。",
+   "en": "It gives vinegar its sour taste."
+  },
+  "useTeen": {
+   "zh": "廚房的食用醋,可以調味,也能去除水垢。",
+   "en": "Kitchen vinegar, used for seasoning and for removing limescale."
+  },
+  "factHigh": {
+   "zh": "含羧基(–COOH)的弱酸,食用醋中約含 4~5% 的醋酸。",
+   "en": "A weak acid containing a carboxyl group (–COOH); table vinegar contains about 4–5% acetic acid."
+  },
+  "useHigh": {
+   "zh": "食用醋的酸味來源,也是工業上製造醋酸酯與塑膠原料的化學品。",
+   "en": "The source of the sour taste of vinegar, and an industrial chemical for making acetate esters and plastics."
   }
  },
  {
@@ -292,6 +498,23 @@
   "use": {
    "zh": "桶裝瓦斯、露營瓦斯爐的燃料。",
    "en": "Fuel for gas bottles and camping stoves."
+  },
+  "level": "kid",
+  "factTeen": {
+   "zh": "三個碳排成一排,連接八個氫原子。",
+   "en": "Three carbon atoms in a row carrying eight hydrogen atoms."
+  },
+  "useTeen": {
+   "zh": "桶裝瓦斯與露營瓦斯爐的燃料。",
+   "en": "Fuel for bottled gas and camping stoves."
+  },
+  "factHigh": {
+   "zh": "含三個碳的烷類(C₃H₈),加壓即可液化,方便儲存。",
+   "en": "A three-carbon alkane (C₃H₈) that liquefies under modest pressure, which makes it easy to store."
+  },
+  "useHigh": {
+   "zh": "液化石油氣(LPG)的主要成分之一,用作家用與露營燃料。",
+   "en": "A main component of liquefied petroleum gas (LPG), used as household and camping fuel."
   }
  },
  {
@@ -313,6 +536,23 @@
   "use": {
    "zh": "做蛋糕、饅頭讓麵團膨起來,也能去除異味。",
    "en": "Makes cakes rise and removes odors."
+  },
+  "level": "kid",
+  "factTeen": {
+   "zh": "白色粉末,遇到酸會產生二氧化碳氣泡。",
+   "en": "A white powder that fizzes with carbon dioxide when it meets an acid."
+  },
+  "useTeen": {
+   "zh": "烘焙時讓麵團膨脹,也可以用來去除異味。",
+   "en": "Makes dough rise in baking, and can also remove odors."
+  },
+  "factHigh": {
+   "zh": "受熱分解會放出 CO₂ 與水(2NaHCO₃ → Na₂CO₃ + H₂O + CO₂);遇酸也會放出 CO₂。",
+   "en": "It decomposes on heating, releasing CO₂ and water (2NaHCO₃ → Na₂CO₃ + H₂O + CO₂), and also releases CO₂ with acids."
+  },
+  "useHigh": {
+   "zh": "烘焙用的膨鬆劑(小蘇打)、胃藥的成分與清潔劑。",
+   "en": "A leavening agent in baking (baking soda), an antacid ingredient and a cleaning agent."
   }
  },
  {
@@ -330,6 +570,23 @@
   "use": {
    "zh": "補鈣片、粉筆、水泥的原料。",
    "en": "Calcium tablets, chalk and cement."
+  },
+  "level": "kid",
+  "factTeen": {
+   "zh": "雞蛋殼、貝殼和石灰岩的主要成分。",
+   "en": "The main component of eggshells, seashells and limestone."
+  },
+  "useTeen": {
+   "zh": "補鈣片、粉筆與水泥的原料。",
+   "en": "A raw material for calcium tablets, chalk and cement."
+  },
+  "factHigh": {
+   "zh": "遇酸會放出 CO₂;高溫下分解成 CaO 與 CO₂。",
+   "en": "It releases CO₂ with acids, and decomposes at high temperature into CaO and CO₂."
+  },
+  "useHigh": {
+   "zh": "石灰岩與大理石的主要成分,用於製造水泥、石灰與補鈣劑。",
+   "en": "The main component of limestone and marble, used to make cement, lime and calcium supplements."
   }
  },
  {
@@ -347,6 +604,15 @@
   "use": {
    "zh": "是造成酸雨的原因之一,所以要減少汙染。",
    "en": "A cause of acid rain, so we should cut pollution."
+  },
+  "level": "teen",
+  "factHigh": {
+   "zh": "彎曲形分子(鍵角約 119°),燃燒含硫燃料時產生,溶於水形成亞硫酸。",
+   "en": "A bent molecule (bond angle about 119°) produced when sulfur-containing fuels burn; it dissolves in water to form sulfurous acid."
+  },
+  "useHigh": {
+   "zh": "工業上用來製造硫酸與作為食品防腐劑(亞硫酸鹽類),也是酸雨的前驅物。",
+   "en": "Used to make sulfuric acid and, as sulfites, as a food preservative; it is also a precursor of acid rain."
   }
  },
  {
@@ -368,6 +634,19 @@
   "use": {
    "zh": "汽車廢氣和工廠排放的空氣汙染物,是霧霾的原因之一。",
    "en": "A pollutant from car exhaust and factories that adds to smog."
+  },
+  "level": "teen",
+  "factTeen": {
+   "zh": "棕黃色的氣體。它有 1 個沒配對的電子,所以特別活潑。兩個 N–O 鍵其實一樣長,畫面上一雙一單只是「共振」的其中一種畫法。",
+   "en": "A brown-yellow gas. It has one unpaired electron, so it is very reactive. The two N–O bonds are really the same length; the double-plus-single drawing is just one way to show \"resonance\"."
+  },
+  "factHigh": {
+   "zh": "棕色氣體,價電子數為奇數,有 1 個未成對電子。兩個 N–O 鍵等長(鍵級約 1.5),是共振混成的結果,畫面上的一雙一單只是其中一種共振式。",
+   "en": "A brown gas with an odd number of valence electrons and one unpaired electron. The two N–O bonds are equal in length (bond order about 1.5) because of resonance; the double-plus-single drawing is only one resonance form."
+  },
+  "useHigh": {
+   "zh": "燃燒過程產生的空氣汙染物,與水反應可形成硝酸,是酸雨與光化學煙霧的成因之一。",
+   "en": "An air pollutant produced by combustion; it reacts with water to form nitric acid and contributes to acid rain and photochemical smog."
   }
  },
  {
@@ -385,6 +664,15 @@
   "use": {
    "zh": "是我們身體和大腦的能量來源。",
    "en": "The energy source for your body and brain."
+  },
+  "level": "teen",
+  "factHigh": {
+   "zh": "分子式 C₆H₁₂O₆ 的己醣,是光合作用的產物(6CO₂ + 6H₂O → C₆H₁₂O₆ + 6O₂);圖中是 β-D-吡喃葡萄糖。",
+   "en": "A hexose with the formula C₆H₁₂O₆, the product of photosynthesis (6CO₂ + 6H₂O → C₆H₁₂O₆ + 6O₂); the structure shown is β-D-glucopyranose."
+  },
+  "useHigh": {
+   "zh": "細胞呼吸的主要燃料,在體內氧化並釋放能量以合成 ATP。",
+   "en": "The main fuel for cellular respiration; it is oxidized in the body and the energy released is used to make ATP."
   }
  },
  {
@@ -403,6 +691,23 @@
   "use": {
    "zh": "閃亮的寶石,也用來切割堅硬的東西。",
    "en": "Sparkling gems, and cutting tools for hard stuff."
+  },
+  "level": "kid",
+  "factTeen": {
+   "zh": "每個碳原子與四個碳原子以共價鍵相連,形成立體網狀結構,所以非常硬。",
+   "en": "Each carbon atom is covalently bonded to four others in a three-dimensional network, which makes diamond extremely hard."
+  },
+  "factHigh": {
+   "zh": "每個 C 以 sp³ 混成與 4 個 C 形成共價鍵,構成立體網狀的共價晶體,硬度極高、熔點很高。",
+   "en": "Each C forms four covalent bonds to other C atoms through sp³ hybridization, giving a three-dimensional covalent network crystal of extreme hardness and very high melting point."
+  },
+  "useTeen": {
+   "zh": "作為寶石,也用來切割堅硬的材料。",
+   "en": "Used as a gemstone and for cutting hard materials."
+  },
+  "useHigh": {
+   "zh": "寶石與工業切割、研磨材料;熱導率極高。",
+   "en": "A gemstone and an industrial cutting and grinding material; it has very high thermal conductivity."
   }
  },
  {
@@ -421,6 +726,23 @@
   "use": {
    "zh": "鉛筆寫字時,一層層的石墨就留在紙上。",
    "en": "When you write, layers of graphite stay on the paper."
+  },
+  "level": "kid",
+  "factTeen": {
+   "zh": "碳原子排成一層一層的六角形,層與層之間很容易滑動。",
+   "en": "Carbon atoms form layers of hexagons, and the layers slide over each other easily."
+  },
+  "useTeen": {
+   "zh": "鉛筆芯的材料,寫字時一層層的石墨留在紙上。",
+   "en": "The material of pencil leads: layers of graphite are left on the paper as you write."
+  },
+  "factHigh": {
+   "zh": "每個 C 以 sp² 混成與 3 個 C 形成六角形的層;層間以微弱的凡得瓦力結合,層內有可自由移動的電子,所以能導電。",
+   "en": "Each C forms a hexagonal layer with 3 other C atoms through sp² hybridization; layers are held by weak van der Waals forces, and delocalized electrons within the layers let graphite conduct electricity."
+  },
+  "useHigh": {
+   "zh": "鉛筆芯、潤滑劑與電極材料。",
+   "en": "Pencil leads, lubricants and electrode material."
   }
  },
  {
@@ -430,7 +752,8 @@
    "zh": "鈉原子",
    "en": "Sodium atom"
   },
-  "hidden": true
+  "hidden": true,
+  "level": "kid"
  },
  {
   "id": "Fe",
@@ -439,7 +762,8 @@
    "zh": "鐵原子",
    "en": "Iron atom"
   },
-  "hidden": true
+  "hidden": true,
+  "level": "kid"
  },
  {
   "id": "Cl2",
@@ -457,6 +781,23 @@
   "use": {
    "zh": "早期用來消毒自來水;現在游泳池和漂白水裡的消毒成分也是含氯的。",
    "en": "Once widely used to disinfect tap water; pool and bleach disinfectants are chlorine-based too."
+  },
+  "level": "kid",
+  "factTeen": {
+   "zh": "黃綠色、有刺鼻味道的有毒氣體。兩個氯原子共用一對電子形成氯分子。",
+   "en": "A yellow-green, sharp-smelling, poisonous gas. Two chlorine atoms share one pair of electrons to make a chlorine molecule."
+  },
+  "factHigh": {
+   "zh": "黃綠色的有毒氣體,是以 Cl–Cl 單鍵結合的雙原子分子,氧化力強。",
+   "en": "A yellow-green poisonous gas; a diatomic molecule with a Cl–Cl single bond and strong oxidizing power."
+  },
+  "useTeen": {
+   "zh": "早期用來消毒自來水;游泳池與漂白水裡的消毒成分也是含氯的。",
+   "en": "Once widely used to disinfect tap water; the disinfectants in swimming pools and bleach also contain chlorine."
+  },
+  "useHigh": {
+   "zh": "自來水與泳池消毒、製造 PVC 塑膠與漂白劑的原料。",
+   "en": "Used to disinfect tap water and swimming pools, and as a raw material for PVC plastic and bleach."
   }
  },
  {
@@ -466,7 +807,8 @@
    "zh": "食鹽",
    "en": "Salt"
   },
-  "hidden": true
+  "hidden": true,
+  "level": "kid"
  },
  {
   "id": "Fe2O3",
@@ -483,6 +825,23 @@
   "use": {
    "zh": "鐵製品生鏽就是它,也用來做紅色顏料。",
    "en": "What rust is made of; also a red pigment."
+  },
+  "level": "kid",
+  "factTeen": {
+   "zh": "鐵與水和空氣作用後慢慢形成的紅褐色粉末。",
+   "en": "A red-brown powder that forms slowly when iron reacts with water and air."
+  },
+  "useTeen": {
+   "zh": "鐵生鏽的主要產物,也可用作紅色顏料。",
+   "en": "The main product of rusting, and also used as a red pigment."
+  },
+  "factHigh": {
+   "zh": "鐵在潮濕空氣中氧化的主要產物(鐵鏽的主成分),Fe 為 +3 價。",
+   "en": "The main product of iron oxidizing in damp air (the main component of rust), with iron in the +3 state."
+  },
+  "useHigh": {
+   "zh": "紅色顏料與煉鐵的原料(赤鐵礦)。",
+   "en": "A red pigment and an ore for ironmaking (hematite)."
   }
  },
  {
@@ -492,7 +851,8 @@
    "zh": "鐵鏽",
    "en": "Rust"
   },
-  "hidden": true
+  "hidden": true,
+  "level": "kid"
  },
  {
   "id": "CH3COONa",
@@ -501,7 +861,8 @@
    "zh": "醋酸鈉",
    "en": "Sodium acetate"
   },
-  "hidden": true
+  "hidden": true,
+  "level": "kid"
  },
  {
   "id": "HF",
@@ -519,6 +880,19 @@
   "use": {
    "zh": "用來在玻璃上蝕刻花紋,需要大人在實驗室使用。",
    "en": "Used to etch glass, only by experts."
+  },
+  "level": "teen",
+  "factTeen": {
+   "zh": "氫和氟共用一對電子,溶在水裡成為能蝕刻玻璃的氫氟酸。",
+   "en": "Hydrogen and fluorine share one pair of electrons; dissolved in water it becomes hydrofluoric acid, which can etch glass."
+  },
+  "factHigh": {
+   "zh": "H–F 是高極性的共價鍵,HF 分子之間會形成氫鍵;水溶液(氫氟酸)是弱酸,卻能腐蝕玻璃。",
+   "en": "The H–F bond is highly polar and HF molecules hydrogen-bond to each other; the aqueous solution (hydrofluoric acid) is a weak acid yet corrodes glass."
+  },
+  "useHigh": {
+   "zh": "用於蝕刻玻璃與半導體製程;腐蝕性強、毒性高,只能由受過訓練的專業人員處理。",
+   "en": "Used to etch glass and in semiconductor processing; highly corrosive and toxic, to be handled only by trained professionals."
   }
  },
  {
@@ -537,6 +911,15 @@
   "use": {
    "zh": "用來製造藥品和阻燃劑。",
    "en": "Used to make medicines and flame retardants."
+  },
+  "level": "teen",
+  "factHigh": {
+   "zh": "常溫下為紅棕色液體(少數在常溫呈液態的非金屬單質之一),容易揮發。",
+   "en": "A red-brown liquid at room temperature (one of the few nonmetallic elements that is liquid there), and volatile."
+  },
+  "useHigh": {
+   "zh": "製造阻燃劑、藥品與農藥的原料。",
+   "en": "A raw material for flame retardants, drugs and pesticides."
   }
  },
  {
@@ -555,6 +938,15 @@
   "use": {
    "zh": "碘酒可以幫傷口消毒;身體需要一點點碘才能製造甲狀腺素。",
    "en": "Iodine tincture cleans wounds; your body needs a little iodine."
+  },
+  "level": "teen",
+  "factHigh": {
+   "zh": "紫黑色固體,容易昇華成紫色蒸氣。",
+   "en": "A violet-black solid that readily sublimes into violet vapor."
+  },
+  "useHigh": {
+   "zh": "碘酒用於消毒;人體需要碘來合成甲狀腺素。",
+   "en": "Tincture of iodine is used as an antiseptic, and the body needs iodine to make thyroid hormone."
   }
  },
  {
@@ -573,6 +965,15 @@
   "use": {
    "zh": "不沾鍋的塗層,煎蛋不會黏。",
    "en": "The coating of non-stick pans."
+  },
+  "level": "teen",
+  "factHigh": {
+   "zh": "四氟乙烯單體,聚合後成為聚四氟乙烯(PTFE,商品名鐵氟龍);C–F 鍵很強,化學性質非常穩定。",
+   "en": "The tetrafluoroethylene monomer, which polymerizes into PTFE (trade name Teflon); the C–F bond is very strong, making the polymer chemically very stable."
+  },
+  "useHigh": {
+   "zh": "不沾鍋塗層,以及耐腐蝕的管材與墊片。",
+   "en": "Non-stick cookware coatings, and corrosion-resistant tubing and gaskets."
   }
  },
  {
@@ -591,6 +992,15 @@
   "use": {
    "zh": "製作肥皂、通水管的原料(請大人使用)。",
    "en": "Used to make soap and unblock drains (adults only)."
+  },
+  "level": "teen",
+  "factHigh": {
+   "zh": "強鹼(離子化合物),溶於水時放熱並完全解離出 OH⁻;具有強腐蝕性。",
+   "en": "A strong base (ionic compound) that releases heat when dissolved and dissociates completely to give OH⁻; strongly corrosive."
+  },
+  "useHigh": {
+   "zh": "製造肥皂(皂化反應)、紙漿與清潔劑,也用於疏通管道。",
+   "en": "Used to make soap (saponification), paper pulp and cleaners, and to clear drains."
   }
  },
  {
@@ -609,6 +1019,15 @@
   "use": {
    "zh": "消毒、漂白衣服(不能和別的清潔劑混在一起)。",
    "en": "Disinfecting and bleaching (never mix with other cleaners)."
+  },
+  "level": "teen",
+  "factHigh": {
+   "zh": "次氯酸鈉是強氧化劑,是漂白水的有效成分;與酸混合會釋出有毒的氯氣。",
+   "en": "Sodium hypochlorite is a strong oxidizer and the active ingredient of bleach; mixed with acids it releases toxic chlorine gas."
+  },
+  "useHigh": {
+   "zh": "消毒與漂白;切勿與酸性清潔劑混用。",
+   "en": "Disinfection and bleaching; never mix it with acidic cleaners."
   }
  },
  {
@@ -627,6 +1046,15 @@
   "use": {
    "zh": "汽車電池裡有它,工廠也用它做肥料。",
    "en": "Found in car batteries and used to make fertilizer."
+  },
+  "level": "teen",
+  "factHigh": {
+   "zh": "強酸;濃硫酸具有強烈的脫水性與吸水性,稀釋時會放出大量的熱。",
+   "en": "A strong acid; concentrated sulfuric acid is a powerful dehydrating agent and gives off a great deal of heat when diluted."
+  },
+  "useHigh": {
+   "zh": "鉛蓄電池的電解液,也是製造肥料與各種化學品的大宗原料。",
+   "en": "The electrolyte in lead-acid batteries, and a bulk raw material for fertilizers and many chemicals."
   }
  },
  {
@@ -645,6 +1073,19 @@
   "use": {
    "zh": "可樂的酸味來源,也用在肥料裡。",
    "en": "Gives cola its tang and goes into fertilizer."
+  },
+  "level": "teen",
+  "factTeen": {
+   "zh": "磷在中間連著四個氧原子,其中三個氧還連著氫。",
+   "en": "Phosphorus sits in the middle bonded to four oxygen atoms, three of which also carry a hydrogen."
+  },
+  "factHigh": {
+   "zh": "中心的 P 與 4 個 O 相連(1 個 P=O、3 個 P–OH),是三質子酸(弱酸)。",
+   "en": "The central P is bonded to 4 O atoms (one P=O and three P–OH); it is a triprotic weak acid."
+  },
+  "useHigh": {
+   "zh": "可樂等飲料的酸味劑,也用於製造磷肥。",
+   "en": "An acidulant in drinks such as cola, and used to make phosphate fertilizers."
   }
  },
  {
@@ -663,6 +1104,15 @@
   "use": {
    "zh": "磷是火柴頭的原料,也是骨頭和 DNA 需要的元素。",
    "en": "Phosphorus is in match heads, bones and DNA."
+  },
+  "level": "teen",
+  "factHigh": {
+   "zh": "白磷是 P₄ 正四面體分子,P–P–P 鍵角只有 60°,張力大,容易自燃,需保存在水中。",
+   "en": "White phosphorus is a tetrahedral P₄ molecule with P–P–P angles of only 60°; the strain makes it ignite spontaneously, so it is stored under water."
+  },
+  "useHigh": {
+   "zh": "磷是 DNA、ATP 與骨骼的重要元素;白磷用於製造磷酸等化學品。",
+   "en": "Phosphorus is vital in DNA, ATP and bones; white phosphorus is used to make chemicals such as phosphoric acid."
   }
  },
  {
@@ -681,6 +1131,15 @@
   "use": {
    "zh": "溫泉的味道、火柴和火藥都有它。",
    "en": "Found at hot springs, in matches and fireworks."
+  },
+  "level": "teen",
+  "factHigh": {
+   "zh": "S₈ 是皇冠形的環狀分子,常溫下為黃色固體,是硫最穩定的同素異形體(斜方硫)。",
+   "en": "S₈ is a crown-shaped ring molecule, a yellow solid at room temperature and the most stable allotrope of sulfur (orthorhombic sulfur)."
+  },
+  "useHigh": {
+   "zh": "製造硫酸、橡膠硫化與火藥的原料。",
+   "en": "A raw material for sulfuric acid, rubber vulcanization and gunpowder."
   }
  },
  {
@@ -699,6 +1158,15 @@
   "use": {
    "zh": "蓋房子的玻璃、水晶球都是它。",
    "en": "Window glass and crystal balls."
+  },
+  "level": "teen",
+  "factHigh": {
+   "zh": "共價網狀固體,每個 Si 與 4 個 O 相連;α-石英是常見的結晶形式,熔點很高。",
+   "en": "A covalent network solid in which each Si is bonded to 4 O atoms; α-quartz is the common crystal form, with a very high melting point."
+  },
+  "useHigh": {
+   "zh": "石英、玻璃與矽晶片的原料。",
+   "en": "A raw material for quartz, glass and silicon wafers."
   }
  },
  {
@@ -717,6 +1185,15 @@
   "use": {
    "zh": "白色顏料和防曬乳。",
    "en": "White paint and sunscreen."
+  },
+  "level": "high",
+  "factHigh": {
+   "zh": "白色粉末,折射率高、遮蔽力強,也能吸收紫外線。",
+   "en": "A white powder with a high refractive index and strong opacity; it also absorbs ultraviolet light."
+  },
+  "useHigh": {
+   "zh": "白色顏料(塗料、紙張)與防曬乳。",
+   "en": "White pigment (paint, paper) and sunscreen."
   }
  },
  {
@@ -735,6 +1212,15 @@
   "use": {
    "zh": "觸控螢幕和太陽能板的透明導電層。",
    "en": "The transparent conductor in touchscreens."
+  },
+  "level": "high",
+  "factHigh": {
+   "zh": "寬能隙的半導體氧化物,可製成透明導電薄膜。",
+   "en": "A wide-band-gap semiconducting oxide that can be made into transparent conductive films."
+  },
+  "useHigh": {
+   "zh": "透明導電膜(顯示器、太陽能電池)與氣體感測器。",
+   "en": "Transparent conductive films (displays, solar cells) and gas sensors."
   }
  },
  {
@@ -753,6 +1239,15 @@
   "use": {
    "zh": "核能發電廠的燃料(有輻射,只有專家處理)。",
    "en": "Nuclear power fuel, handled only by experts."
+  },
+  "level": "high",
+  "factHigh": {
+   "zh": "黑色的陶瓷狀固體(螢石結構),熔點極高,具有放射性。",
+   "en": "A black ceramic-like solid (fluorite structure) with an extremely high melting point; radioactive."
+  },
+  "useHigh": {
+   "zh": "核電廠的主要核燃料(濃縮鈾燒結成燃料丸)。",
+   "en": "The main nuclear fuel in power plants (enriched uranium sintered into pellets)."
   }
  },
  {
@@ -771,6 +1266,15 @@
   "use": {
    "zh": "寶石、砂紙的磨料,鋁表面的保護膜也是它。",
    "en": "Gems, sandpaper grit and the skin on aluminium."
+  },
+  "level": "high",
+  "factHigh": {
+   "zh": "剛玉結構;含微量 Cr³⁺ 的是紅寶石,含 Fe、Ti 雜質的是藍寶石。",
+   "en": "The corundum structure; with traces of Cr³⁺ it is ruby, and with Fe and Ti impurities it is sapphire."
+  },
+  "useHigh": {
+   "zh": "磨料、耐火材料與陶瓷;鋁表面的保護氧化膜。",
+   "en": "Abrasives, refractories and ceramics; also the protective oxide film on aluminum."
   }
  },
  {
@@ -789,6 +1293,15 @@
   "use": {
    "zh": "泡腳的浴鹽、植物的鎂肥。",
    "en": "Bath salts and plant fertilizer."
+  },
+  "level": "high",
+  "factHigh": {
+   "zh": "常見的水合物是七水合物(瀉鹽,MgSO₄·7H₂O),易溶於水。",
+   "en": "The common hydrate is the heptahydrate (Epsom salt, MgSO₄·7H₂O), which dissolves easily in water."
+  },
+  "useHigh": {
+   "zh": "浴鹽、鎂肥與醫療用瀉劑。",
+   "en": "Bath salts, magnesium fertilizer and a medical laxative."
   }
  },
  {
@@ -807,6 +1320,15 @@
   "use": {
    "zh": "科學實驗長晶體、農場殺菌(有毒,不能吃)。",
    "en": "Growing crystals and farm fungicide (poisonous!)."
+  },
+  "level": "high",
+  "factHigh": {
+   "zh": "五水合物(膽礬,CuSO₄·5H₂O)是藍色晶體,加熱失去結晶水後變成白色粉末。",
+   "en": "The pentahydrate (blue vitriol, CuSO₄·5H₂O) forms blue crystals, which turn into a white powder when heated and lose their water of crystallization."
+  },
+  "useHigh": {
+   "zh": "波爾多液殺菌劑、電鍍,以及實驗室檢驗水的存在。",
+   "en": "Bordeaux mixture fungicide, electroplating, and a laboratory test for the presence of water."
   }
  },
  {
@@ -825,6 +1347,15 @@
   "use": {
    "zh": "手機、電動車的鋰電池。",
    "en": "Phone and electric-car batteries."
+  },
+  "level": "high",
+  "factHigh": {
+   "zh": "白色粉末,微溶於水,是製造鋰化合物的主要原料。",
+   "en": "A white powder, slightly soluble in water and the main raw material for making lithium compounds."
+  },
+  "useHigh": {
+   "zh": "鋰電池材料,也用於玻璃與陶瓷,醫療上用於治療躁鬱症。",
+   "en": "Lithium battery material, also used in glass and ceramics, and medically for bipolar disorder."
   }
  },
  {
@@ -843,6 +1374,15 @@
   "use": {
    "zh": "肥料,也是煙火的材料。",
    "en": "Fertilizer and an ingredient in fireworks."
+  },
+  "level": "high",
+  "factHigh": {
+   "zh": "離子化合物,含有鉀與氮兩種植物養分,也是氧化劑。",
+   "en": "An ionic compound containing the plant nutrients potassium and nitrogen; it is also an oxidizer."
+  },
+  "useHigh": {
+   "zh": "肥料、黑火藥與煙火的成分。",
+   "en": "An ingredient of fertilizer, black powder and fireworks."
   }
  },
  {
@@ -861,6 +1401,15 @@
   "use": {
    "zh": "牙膏裡的氟,幫牙齒抵抗蛀蟲。",
    "en": "The fluoride in toothpaste that protects teeth."
+  },
+  "level": "high",
+  "factHigh": {
+   "zh": "離子化合物(岩鹽結構),氟離子可以強化牙釉質。",
+   "en": "An ionic compound (rock salt structure); fluoride ions strengthen tooth enamel."
+  },
+  "useHigh": {
+   "zh": "牙膏與飲水加氟的氟化物來源。",
+   "en": "A fluoride source for toothpaste and water fluoridation."
   }
  },
  {
@@ -879,6 +1428,15 @@
   "use": {
    "zh": "代用鹽、植物肥料。",
    "en": "Salt substitute and fertilizer."
+  },
+  "level": "teen",
+  "factHigh": {
+   "zh": "離子化合物,與氯化鈉相同,是岩鹽結構的離子晶體。",
+   "en": "An ionic compound with the same rock salt structure as sodium chloride."
+  },
+  "useHigh": {
+   "zh": "鉀肥與低鈉鹽的原料。",
+   "en": "A raw material for potash fertilizer and low-sodium salt."
   }
  },
  {
@@ -897,6 +1455,15 @@
   "use": {
    "zh": "加碘鹽裡的碘,幫身體製造甲狀腺素。",
    "en": "The iodine in iodized salt."
+  },
+  "level": "high",
+  "factHigh": {
+   "zh": "離子化合物(岩鹽結構),易溶於水,能溶解碘形成 I₃⁻。",
+   "en": "An ionic compound (rock salt structure) that dissolves easily in water and dissolves iodine to form I₃⁻."
+  },
+  "useHigh": {
+   "zh": "加碘鹽的碘來源,也用於防止放射性碘進入甲狀腺。",
+   "en": "The iodine source in iodized salt, also used to keep radioactive iodine out of the thyroid."
   }
  },
  {
@@ -915,6 +1482,15 @@
   "use": {
    "zh": "傳統相片的感光材料。",
    "en": "Used in old photo paper."
+  },
+  "level": "high",
+  "factHigh": {
+   "zh": "難溶於水的白色離子化合物,見光會分解出銀而變黑。",
+   "en": "A white, sparingly soluble ionic compound that darkens in light as silver is released."
+  },
+  "useHigh": {
+   "zh": "傳統相紙的感光材料與電極。",
+   "en": "Light-sensitive material for traditional photographic paper, and electrodes."
   }
  },
  {
@@ -933,6 +1509,15 @@
   "use": {
    "zh": "傳統底片就是靠它拍出照片。",
    "en": "Old camera film used it to take pictures."
+  },
+  "level": "high",
+  "factHigh": {
+   "zh": "淡黃色、難溶於水,見光會分解出銀,是傳統底片的感光成分。",
+   "en": "A pale yellow, sparingly soluble compound that releases silver in light; the light-sensitive component of traditional film."
+  },
+  "useHigh": {
+   "zh": "傳統底片與相紙的感光材料。",
+   "en": "Light-sensitive material for traditional film and photographic paper."
   }
  },
  {
@@ -951,6 +1536,15 @@
   "use": {
    "zh": "耐高溫的爐子材料、運動員手上的白粉。",
    "en": "Heat-proof furnace lining and climbers' chalk."
+  },
+  "level": "teen",
+  "factHigh": {
+   "zh": "鎂在空氣中燃燒的產物(2Mg + O₂ → 2MgO),離子晶體,熔點很高。",
+   "en": "The product of magnesium burning in air (2Mg + O₂ → 2MgO); an ionic crystal with a very high melting point."
+  },
+  "useHigh": {
+   "zh": "耐火材料與製藥原料。",
+   "en": "Refractory material and a pharmaceutical raw material."
   }
  },
  {
@@ -969,6 +1563,15 @@
   "use": {
    "zh": "食品乾燥劑,蓋房子也用得到。",
    "en": "Food drying packs and building."
+  },
+  "level": "teen",
+  "factHigh": {
+   "zh": "與水反應生成 Ca(OH)₂ 並放出大量的熱(CaO + H₂O → Ca(OH)₂)。",
+   "en": "It reacts with water to form Ca(OH)₂ and releases a lot of heat (CaO + H₂O → Ca(OH)₂)."
+  },
+  "useHigh": {
+   "zh": "建材(水泥)、煉鋼助熔劑與食品乾燥劑。",
+   "en": "Building material (cement), a flux in steelmaking and a food desiccant."
   }
  },
  {
@@ -987,6 +1590,15 @@
   "use": {
    "zh": "防曬乳、嬰兒痱子粉。",
    "en": "Sunscreen and baby powder."
+  },
+  "level": "high",
+  "factHigh": {
+   "zh": "白色粉末,纖鋅礦結構(每個 Zn 與 4 個 O 相連),可吸收紫外線。",
+   "en": "A white powder with the wurtzite structure (each Zn bonded to 4 O atoms); it absorbs ultraviolet light."
+  },
+  "useHigh": {
+   "zh": "防曬乳、橡膠添加劑與痱子粉。",
+   "en": "Sunscreen, a rubber additive and baby powder."
   }
  },
  {
@@ -1005,6 +1617,15 @@
   "use": {
    "zh": "做鉛玻璃和舊式電池,現在盡量少用。",
    "en": "Lead glass and old batteries; use is shrinking."
+  },
+  "level": "high",
+  "factHigh": {
+   "zh": "有紅色與黃色兩種晶形的粉末,有毒。",
+   "en": "A powder with red and yellow crystal forms; toxic."
+  },
+  "useHigh": {
+   "zh": "製造鉛玻璃與鉛蓄電池,現在因毒性而減少使用。",
+   "en": "Used for lead glass and lead-acid batteries; less used today because of its toxicity."
   }
  },
  {
@@ -1023,6 +1644,15 @@
   "use": {
    "zh": "古時候的紅色顏料(有毒)。",
    "en": "Ancient red pigment (poisonous)."
+  },
+  "level": "high",
+  "factHigh": {
+   "zh": "紅色的朱砂(辰砂),含汞而有毒。",
+   "en": "Red cinnabar; it contains mercury and is toxic."
+  },
+  "useHigh": {
+   "zh": "古代的紅色顏料與中藥材,現在因毒性已很少使用。",
+   "en": "An ancient red pigment and traditional medicine ingredient, rarely used today because of its toxicity."
   }
  },
  {
@@ -1041,6 +1671,15 @@
   "use": {
    "zh": "超硬的鑽頭和刀具,原子筆筆尖。",
    "en": "Tough drill bits, cutters and ballpoint tips."
+  },
+  "level": "high",
+  "factHigh": {
+   "zh": "硬度極高的陶瓷(碳化鎢,六方結構),熔點很高。",
+   "en": "An extremely hard ceramic (tungsten carbide, hexagonal structure) with a very high melting point."
+  },
+  "useHigh": {
+   "zh": "切削刀具、鑽頭與原子筆的筆珠。",
+   "en": "Cutting tools, drill bits and ballpoint pen balls."
   }
  },
  {
@@ -1060,6 +1699,23 @@
   "use": {
    "zh": "氣球、冷卻醫院的核磁共振儀。",
    "en": "Balloons and cooling MRI scanners."
+  },
+  "level": "kid",
+  "factTeen": {
+   "zh": "只有一個原子的氣體,幾乎不和其他物質反應。",
+   "en": "A gas made of single atoms that hardly reacts with anything."
+  },
+  "factHigh": {
+   "zh": "單原子分子的稀有氣體,最外層為填滿的 1s²,化學性質極不活潑。",
+   "en": "A monatomic noble gas with the filled 1s² shell; chemically extremely inert."
+  },
+  "useTeen": {
+   "zh": "氣球與醫院核磁共振儀的冷卻劑。",
+   "en": "Used in balloons and as a coolant for hospital MRI machines."
+  },
+  "useHigh": {
+   "zh": "填充氣球與飛船;液態氦用於超導磁鐵(如核磁共振儀)的冷卻。",
+   "en": "Fills balloons and airships; liquid helium cools superconducting magnets such as those in MRI machines."
   }
  },
  {
@@ -1079,6 +1735,15 @@
   "use": {
    "zh": "霓虹燈招牌。",
    "en": "Neon signs."
+  },
+  "level": "teen",
+  "factHigh": {
+   "zh": "稀有氣體,放電時發出紅橙色的光。",
+   "en": "A noble gas that glows red-orange when an electric current passes through it."
+  },
+  "useHigh": {
+   "zh": "霓虹燈與氦氖雷射。",
+   "en": "Neon signs and helium-neon lasers."
   }
  },
  {
@@ -1098,6 +1763,15 @@
   "use": {
    "zh": "燈泡裡的保護氣體,不讓燈絲燒壞。",
    "en": "Protects light-bulb filaments."
+  },
+  "level": "teen",
+  "factHigh": {
+   "zh": "約占空氣體積的 0.93%,是空氣中含量第三多的氣體,化學性質極不活潑。",
+   "en": "About 0.93% of air by volume, the third most abundant gas in air, and chemically extremely unreactive."
+  },
+  "useHigh": {
+   "zh": "焊接與燈泡的保護氣體。",
+   "en": "A shielding gas for welding and in light bulbs."
   }
  },
  {
@@ -1117,6 +1791,15 @@
   "use": {
    "zh": "攝影用的閃光燈。",
    "en": "Photo flash lamps."
+  },
+  "level": "high",
+  "factHigh": {
+   "zh": "稀有氣體,放電時發出白光。",
+   "en": "A noble gas that glows white when an electric current passes through it."
+  },
+  "useHigh": {
+   "zh": "攝影閃光燈與高效能燈泡。",
+   "en": "Photographic flash lamps and high-efficiency light bulbs."
   }
  },
  {
@@ -1136,6 +1819,15 @@
   "use": {
    "zh": "汽車的氙氣大燈。",
    "en": "Xenon car headlights."
+  },
+  "level": "high",
+  "factHigh": {
+   "zh": "稀有氣體,放電時發出明亮的藍白光;是最容易形成化合物的稀有氣體之一。",
+   "en": "A noble gas that glows bright blue-white in a discharge; one of the noble gases that most readily forms compounds."
+  },
+  "useHigh": {
+   "zh": "氙氣大燈與離子推進器。",
+   "en": "Xenon headlamps and ion thrusters."
   }
  },
  {
@@ -1155,6 +1847,15 @@
   "use": {
    "zh": "手機和電動車的電池。",
    "en": "Phone and car batteries."
+  },
+  "level": "teen",
+  "factHigh": {
+   "zh": "密度最小的金屬(約 0.53 g/cm³),會浮在水面並與水反應。",
+   "en": "The least dense metal (about 0.53 g/cm³); it floats on water and reacts with it."
+  },
+  "useHigh": {
+   "zh": "鋰離子電池的關鍵材料。",
+   "en": "A key material in lithium-ion batteries."
   }
  },
  {
@@ -1174,6 +1875,15 @@
   "use": {
    "zh": "閃光燈、煙火、輕巧的筆電外殼。",
    "en": "Flash bulbs, fireworks and light laptop cases."
+  },
+  "level": "teen",
+  "factHigh": {
+   "zh": "燃燒時發出耀眼的白光,與冷水反應緩慢。",
+   "en": "Burns with a dazzling white light and reacts slowly with cold water."
+  },
+  "useHigh": {
+   "zh": "輕合金(如筆電外殼)、煙火與閃光材料。",
+   "en": "Lightweight alloys (such as laptop cases), fireworks and flash materials."
   }
  },
  {
@@ -1193,6 +1903,15 @@
   "use": {
    "zh": "鋁罐、鋁箔、飛機。",
    "en": "Cans, foil and planes."
+  },
+  "level": "teen",
+  "factHigh": {
+   "zh": "表面形成緻密的氧化鋁薄膜,可保護內部不再氧化。",
+   "en": "A dense film of aluminum oxide forms on the surface and protects the metal beneath from further oxidation."
+  },
+  "useHigh": {
+   "zh": "包裝(鋁罐、鋁箔)與航太結構材料。",
+   "en": "Packaging (cans, foil) and aerospace structural material."
   }
  },
  {
@@ -1212,6 +1931,15 @@
   "use": {
    "zh": "植物和人體都需要它,香蕉裡也有。",
    "en": "Plants and people need it; bananas have it."
+  },
+  "level": "high",
+  "factHigh": {
+   "zh": "很軟的活潑金屬,與水劇烈反應並放出氫氣,火焰呈淡紫色。",
+   "en": "A very soft, reactive metal that reacts violently with water releasing hydrogen, with a lilac flame."
+  },
+  "useHigh": {
+   "zh": "鉀是植物與人體必需的元素(以鉀離子的形式存在於肥料與香蕉等食物中)。",
+   "en": "Potassium is essential to plants and people (as potassium ions in fertilizer and foods such as bananas)."
   }
  },
  {
@@ -1231,6 +1959,15 @@
   "use": {
    "zh": "眼鏡架、飛機、人工關節。",
    "en": "Glasses frames, planes and joints."
+  },
+  "level": "high",
+  "factHigh": {
+   "zh": "強度高、密度小,表面有緻密的氧化膜而耐腐蝕。",
+   "en": "High strength and low density, with a dense oxide film that resists corrosion."
+  },
+  "useHigh": {
+   "zh": "飛機、人工關節與眼鏡架。",
+   "en": "Aircraft, artificial joints and eyeglass frames."
   }
  },
  {
@@ -1250,6 +1987,15 @@
   "use": {
    "zh": "水龍頭的電鍍,也是不鏽鋼的成員。",
    "en": "Tap plating and a part of stainless steel."
+  },
+  "level": "high",
+  "factHigh": {
+   "zh": "銀亮的硬金屬,表面氧化膜使它耐腐蝕。",
+   "en": "A bright, hard metal whose oxide film makes it corrosion resistant."
+  },
+  "useHigh": {
+   "zh": "電鍍,以及不鏽鋼的合金元素。",
+   "en": "Electroplating, and an alloying element of stainless steel."
   }
  },
  {
@@ -1269,6 +2015,23 @@
   "use": {
    "zh": "鋼鐵蓋房子、造橋樑。",
    "en": "Steel for buildings and bridges."
+  },
+  "level": "kid",
+  "factTeen": {
+   "zh": "會被磁鐵吸住,潮濕時容易生鏽。",
+   "en": "Attracted by magnets, and rusts easily when damp."
+  },
+  "useTeen": {
+   "zh": "鋼鐵是建築與橋樑的主要材料。",
+   "en": "Steel is the main material for buildings and bridges."
+  },
+  "factHigh": {
+   "zh": "鐵磁性金屬(室溫為體心立方結構),在潮濕空氣中容易氧化生鏽。",
+   "en": "A ferromagnetic metal (body-centered cubic at room temperature) that oxidizes and rusts easily in damp air."
+  },
+  "useHigh": {
+   "zh": "鋼鐵的主要成分,廣泛用於建築、機械與交通工具。",
+   "en": "The main component of steel, widely used in construction, machinery and vehicles."
   }
  },
  {
@@ -1288,6 +2051,15 @@
   "use": {
    "zh": "硬幣和電池。",
    "en": "Coins and batteries."
+  },
+  "level": "high",
+  "factHigh": {
+   "zh": "銀白色的鐵磁性金屬,耐腐蝕。",
+   "en": "A silvery-white ferromagnetic metal that resists corrosion."
+  },
+  "useHigh": {
+   "zh": "合金(如不鏽鋼)、硬幣與充電電池。",
+   "en": "Alloys (such as stainless steel), coins and rechargeable batteries."
   }
  },
  {
@@ -1307,6 +2079,23 @@
   "use": {
    "zh": "電線、銅鍋。",
    "en": "Electric wires and pots."
+  },
+  "level": "kid",
+  "factTeen": {
+   "zh": "紅橘色,導電與導熱都很好。",
+   "en": "Red-orange, and a good conductor of both electricity and heat."
+  },
+  "useTeen": {
+   "zh": "電線與銅鍋的材料。",
+   "en": "Used for electric wires and copper pots."
+  },
+  "factHigh": {
+   "zh": "紅橙色的面心立方金屬,電導率僅次於銀。",
+   "en": "A red-orange face-centered cubic metal whose electrical conductivity is second only to silver."
+  },
+  "useHigh": {
+   "zh": "電線、電子元件與熱交換器。",
+   "en": "Electric wires, electronic components and heat exchangers."
   }
  },
  {
@@ -1326,6 +2115,15 @@
   "use": {
    "zh": "鍍鋅鐵皮、乾電池。",
    "en": "Galvanized steel and batteries."
+  },
+  "level": "teen",
+  "factHigh": {
+   "zh": "活性比鐵大,可作為犧牲陽極保護鋼鐵(鍍鋅)。",
+   "en": "More reactive than iron, so it can protect steel as a sacrificial anode (galvanizing)."
+  },
+  "useHigh": {
+   "zh": "鍍鋅鐵皮與乾電池的負極材料。",
+   "en": "Galvanized steel sheet and the negative electrode of dry cells."
   }
  },
  {
@@ -1345,6 +2143,23 @@
   "use": {
    "zh": "銀飾、餐具。",
    "en": "Jewelry and cutlery."
+  },
+  "level": "kid",
+  "factTeen": {
+   "zh": "導電性最好的金屬,銀亮有光澤。",
+   "en": "The best conductor of electricity among metals, bright and shiny."
+  },
+  "useTeen": {
+   "zh": "銀飾與餐具。",
+   "en": "Silver jewelry and tableware."
+  },
+  "factHigh": {
+   "zh": "所有金屬中電導率與熱導率最高;表面與含硫物質反應會形成黑色的硫化銀。",
+   "en": "It has the highest electrical and thermal conductivity of all metals; reacting with sulfur compounds forms black silver sulfide on the surface."
+  },
+  "useHigh": {
+   "zh": "飾品、餐具、電子接點、鏡面與傳統底片。",
+   "en": "Jewelry, tableware, electrical contacts, mirrors and traditional photographic film."
   }
  },
  {
@@ -1364,6 +2179,15 @@
   "use": {
    "zh": "焊錫、馬口鐵罐。",
    "en": "Solder and tin cans."
+  },
+  "level": "teen",
+  "factHigh": {
+   "zh": "熔點低(約 232 °C)的軟金屬。",
+   "en": "A soft metal with a low melting point (about 232 °C)."
+  },
+  "useHigh": {
+   "zh": "焊錫與鍍錫鐵皮(馬口鐵)。",
+   "en": "Solder and tin-plated steel sheet (tinplate)."
   }
  },
  {
@@ -1383,6 +2207,15 @@
   "use": {
    "zh": "舊式燈泡裡的燈絲。",
    "en": "Old light-bulb filaments."
+  },
+  "level": "high",
+  "factHigh": {
+   "zh": "熔點最高的金屬(約 3422 °C)。",
+   "en": "The metal with the highest melting point (about 3422 °C)."
+  },
+  "useHigh": {
+   "zh": "白熾燈絲與高溫合金。",
+   "en": "Incandescent filaments and high-temperature alloys."
   }
  },
  {
@@ -1402,6 +2235,15 @@
   "use": {
    "zh": "白金戒指、汽車廢氣過濾器。",
    "en": "Rings and car exhaust cleaners."
+  },
+  "level": "teen",
+  "factHigh": {
+   "zh": "化學穩定性很高的貴金屬,也是良好的催化劑。",
+   "en": "A noble metal of very high chemical stability and a good catalyst."
+  },
+  "useHigh": {
+   "zh": "汽車觸媒轉化器與飾品。",
+   "en": "Automotive catalytic converters and jewelry."
   }
  },
  {
@@ -1421,6 +2263,23 @@
   "use": {
    "zh": "金飾、電子零件。",
    "en": "Jewelry and electronics."
+  },
+  "level": "kid",
+  "factTeen": {
+   "zh": "金黃色,不會生鏽,質地柔軟。",
+   "en": "Golden yellow, never rusts, and is soft."
+  },
+  "useTeen": {
+   "zh": "金飾與電子零件。",
+   "en": "Jewelry and electronic parts."
+  },
+  "factHigh": {
+   "zh": "化學性質很穩定、延展性極佳的金屬;只溶於王水等少數溶液。",
+   "en": "A very stable, highly ductile metal that dissolves only in a few solutions such as aqua regia."
+  },
+  "useHigh": {
+   "zh": "飾品、貨幣儲備與電子連接器的鍍層。",
+   "en": "Jewelry, monetary reserves and coatings for electronic connectors."
   }
  },
  {
@@ -1440,6 +2299,15 @@
   "use": {
    "zh": "老式溫度計(現在已經少用了)。",
    "en": "Old thermometers (now rare)."
+  },
+  "level": "teen",
+  "factHigh": {
+   "zh": "常溫下為液態的金屬,蒸氣有毒。",
+   "en": "A metal that is liquid at room temperature; its vapor is toxic."
+  },
+  "useHigh": {
+   "zh": "早期用於溫度計與血壓計,現在因毒性而大幅減少使用。",
+   "en": "Formerly used in thermometers and blood pressure gauges; much reduced today because of its toxicity."
   }
  },
  {
@@ -1459,6 +2327,15 @@
   "use": {
    "zh": "舊式汽車電池。",
    "en": "Old car batteries."
+  },
+  "level": "teen",
+  "factHigh": {
+   "zh": "密度大、質地軟的有毒重金屬。",
+   "en": "A dense, soft and toxic heavy metal."
+  },
+  "useHigh": {
+   "zh": "鉛蓄電池的材料與輻射屏蔽。",
+   "en": "Lead-acid battery material and radiation shielding."
   }
  },
  {
@@ -1478,6 +2355,15 @@
   "use": {
    "zh": "電腦和手機裡的晶片。",
    "en": "Chips in computers and phones."
+  },
+  "level": "teen",
+  "factHigh": {
+   "zh": "類金屬,具有與鑽石相同的立方晶格,是半導體。",
+   "en": "A metalloid with the same cubic lattice as diamond; it is a semiconductor."
+  },
+  "useHigh": {
+   "zh": "積體電路與太陽能電池的基板材料。",
+   "en": "Substrate material for integrated circuits and solar cells."
   }
  },
  {
@@ -1497,6 +2383,15 @@
   "use": {
    "zh": "鍋子、餐具。",
    "en": "Pots and cutlery."
+  },
+  "level": "high",
+  "factHigh": {
+   "zh": "鐵中加入鉻,表面會形成氧化鉻薄膜,所以不容易生鏽。",
+   "en": "Adding chromium to iron forms a thin chromium oxide film on the surface, so the alloy does not rust easily."
+  },
+  "useHigh": {
+   "zh": "不鏽鋼鍋具與餐具。",
+   "en": "Stainless steel cookware and tableware."
   }
  },
  {
@@ -1516,6 +2411,15 @@
   "use": {
    "zh": "廚房水槽、餐具。",
    "en": "Sinks and cutlery."
+  },
+  "level": "high",
+  "factHigh": {
+   "zh": "再加入鎳可以穩定面心立方結構,提升耐腐蝕性與延展性(如 18-8 不鏽鋼)。",
+   "en": "Adding nickel stabilizes the face-centered cubic structure and improves corrosion resistance and ductility (as in 18-8 stainless steel)."
+  },
+  "useHigh": {
+   "zh": "廚房設備、水槽與食品機械。",
+   "en": "Kitchen equipment, sinks and food machinery."
   }
  },
  {
@@ -1535,6 +2439,15 @@
   "use": {
    "zh": "門把、小喇叭和銅管樂器。",
    "en": "Door handles and brass instruments."
+  },
+  "level": "teen",
+  "factHigh": {
+   "zh": "銅與鋅組成的合金(黃銅)。",
+   "en": "An alloy of copper and zinc (brass)."
+  },
+  "useHigh": {
+   "zh": "機械零件、樂器與水龍頭。",
+   "en": "Machine parts, musical instruments and faucets."
   }
  },
  {
@@ -1552,6 +2465,15 @@
   "use": {
    "zh": "工業上的溶劑和燃料。",
    "en": "An industrial solvent and fuel."
+  },
+  "level": "teen",
+  "factHigh": {
+   "zh": "最簡單的醇,有毒,可造成失明甚至死亡,不可飲用。",
+   "en": "The simplest alcohol; toxic, it can cause blindness or death and must never be drunk."
+  },
+  "useHigh": {
+   "zh": "工業溶劑,以及製造甲醛與燃料的原料。",
+   "en": "An industrial solvent and a raw material for formaldehyde and fuels."
   }
  },
  {
@@ -1569,6 +2491,15 @@
   "use": {
    "zh": "塑膠袋、水管等塑膠(聚乙烯)的原料。",
    "en": "The raw material for polyethylene plastics such as bags and pipes."
+  },
+  "level": "teen",
+  "factHigh": {
+   "zh": "含 C=C 雙鍵的烯類,也是植物激素(催熟劑)。",
+   "en": "An alkene containing a C=C double bond, and also a plant hormone (ripening agent)."
+  },
+  "useHigh": {
+   "zh": "聚合成聚乙烯(PE),是產量最大的塑膠原料之一。",
+   "en": "Polymerizes into polyethylene (PE), one of the highest-volume plastic feedstocks."
   }
  },
  {
@@ -1586,6 +2517,19 @@
   "use": {
    "zh": "焊接和切割金屬的氣體,以前也用在電石燈。",
    "en": "A gas for welding and cutting metal, once used in carbide lamps."
+  },
+  "level": "teen",
+  "factTeen": {
+   "zh": "兩個碳原子之間有三鍵,燃燒時溫度非常高(可用來焊接)。",
+   "en": "There is a triple bond between the two carbon atoms; it burns at a very high temperature (used for welding)."
+  },
+  "factHigh": {
+   "zh": "H–C≡C–H,碳碳之間是叄鍵;乙炔的火焰溫度極高,可用於氧炔焰焊接與切割。",
+   "en": "H–C≡C–H, with a carbon–carbon triple bond; the flame is extremely hot and is used in oxyacetylene welding and cutting."
+  },
+  "useHigh": {
+   "zh": "氧炔焰焊接與切割,也是有機合成的原料。",
+   "en": "Oxyacetylene welding and cutting, and a raw material for organic synthesis."
   }
  },
  {
@@ -1602,6 +2546,15 @@
   },
   "use": {
    "zh": "打火機、卡式瓦斯爐的燃料。",
+   "en": "Fuel for lighters and portable gas stoves."
+  },
+  "level": "teen",
+  "factHigh": {
+   "zh": "含四個碳的烷類(正丁烷),稍加壓即液化,常溫下為氣體。",
+   "en": "A four-carbon alkane (n-butane) that liquefies under slight pressure and is a gas at room temperature."
+  },
+  "useHigh": {
+   "zh": "打火機與卡式瓦斯爐的燃料。",
    "en": "Fuel for lighters and portable gas stoves."
   }
  },
@@ -1620,6 +2573,15 @@
   "use": {
    "zh": "製作膠合板和塑膠的原料;保存標本用的福馬林是它的水溶液。",
    "en": "Used to make plywood and plastics; formalin, which preserves specimens, is its water solution."
+  },
+  "level": "teen",
+  "factHigh": {
+   "zh": "最簡單的醛(甲醛),水溶液稱為福馬林,有刺激性且具致癌性。",
+   "en": "The simplest aldehyde (formaldehyde); its aqueous solution is formalin, which is irritating and carcinogenic."
+  },
+  "useHigh": {
+   "zh": "製造樹脂與膠合板的原料;福馬林用於保存標本。",
+   "en": "A raw material for resins and plywood; formalin is used to preserve specimens."
   }
  },
  {
@@ -1637,6 +2599,15 @@
   "use": {
    "zh": "汽水、氣泡水酸酸的味道。",
    "en": "The slightly sour taste of soda and sparkling water."
+  },
+  "level": "teen",
+  "factHigh": {
+   "zh": "CO₂ + H₂O ⇌ H₂CO₃ 的產物,是不穩定的弱酸,容易分解回 CO₂ 與水。",
+   "en": "The product of CO₂ + H₂O ⇌ H₂CO₃; an unstable weak acid that readily decomposes back to CO₂ and water."
+  },
+  "useHigh": {
+   "zh": "碳酸飲料的酸味來源,也是血液酸鹼緩衝系統的一部分。",
+   "en": "The source of the tang in carbonated drinks, and part of the acid–base buffer system in blood."
   }
  },
  {
@@ -1654,6 +2625,15 @@
   "use": {
    "zh": "農田的氮肥,也是護手霜的保濕成分。",
    "en": "A nitrogen fertilizer, and a moisturizer in hand creams."
+  },
+  "level": "teen",
+  "factHigh": {
+   "zh": "蛋白質代謝產生的含氮廢物,經腎臟隨尿液排出;1828 年維勒由無機物合成出尿素。",
+   "en": "A nitrogen-containing waste of protein metabolism excreted in urine; in 1828 Wöhler synthesized urea from inorganic substances."
+  },
+  "useHigh": {
+   "zh": "重要的氮肥,也是保濕劑。",
+   "en": "An important nitrogen fertilizer, and also a moisturizing agent."
   }
  },
  {
@@ -1671,6 +2651,15 @@
   "use": {
    "zh": "去光水和各種溶劑。",
    "en": "Nail polish remover and many solvents."
+  },
+  "level": "teen",
+  "factHigh": {
+   "zh": "最簡單的酮(丙酮),易揮發、易燃,可與水互溶。",
+   "en": "The simplest ketone (acetone); volatile, flammable and miscible with water."
+  },
+  "useHigh": {
+   "zh": "常用的溶劑,也是去光水的成分。",
+   "en": "A common solvent and an ingredient of nail polish remover."
   }
  },
  {
@@ -1688,6 +2677,15 @@
   "use": {
    "zh": "火山、溫泉和下水道裡都可能出現。",
    "en": "Found near volcanoes, hot springs and sewers."
+  },
+  "level": "teen",
+  "factHigh": {
+   "zh": "彎曲形分子,有臭雞蛋氣味,劇毒;高濃度時會麻痺嗅覺,反而聞不到。",
+   "en": "A bent molecule with a rotten-egg smell and very toxic; at high concentrations it numbs the sense of smell, so it can no longer be detected."
+  },
+  "useHigh": {
+   "zh": "火山氣體、溫泉與腐敗物中的成分;工業上用於製造硫化物。",
+   "en": "A component of volcanic gas, hot springs and decay; used industrially to make sulfides."
   }
  }
 ]

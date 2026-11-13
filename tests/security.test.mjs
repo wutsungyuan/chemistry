@@ -93,7 +93,9 @@ test('外部資料(CIF)進入頁面前必須跳脫:escapeHtml 行為正確,且�
   const { escapeHtml } = await import('../src/ui/util.js');
   assert.equal(escapeHtml('<img src=x onerror=alert(1)>'), '&lt;img src=x onerror=alert(1)&gt;');
   assert.equal(escapeHtml(`a&b"c'd`), 'a&amp;b&quot;c&#39;d');
-  assert.match(read('src/scenes/MoleculeGallery.js'), /escapeHtml\(m\.source\)/);
+  const gal = read('src/scenes/MoleculeGallery.js');
+  assert.match(gal, /escapeHtml\(src\)/);
+  assert.ok(gal.includes("const src = state.lang === 'en' && m.sourceEn ? m.sourceEn : m.source;"));       // src 只會是 m.source 或 m.sourceEn,而且顯示前一定跳脫
 });
 
 test('產生的資料庫裡,CIF 衍生的出處不含 HTML 特殊字元', async () => {

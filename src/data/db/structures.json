@@ -23,7 +23,8 @@
     1,
     1
    ]
-  ]
+  ],
+  "sourceEn": "Typical textbook bond lengths and angles (not yet checked one by one against the original databases)"
  },
  {
   "id": "O2",
@@ -49,7 +50,8 @@
     1,
     2
    ]
-  ]
+  ],
+  "sourceEn": "Typical textbook bond lengths and angles (not yet checked one by one against the original databases)"
  },
  {
   "id": "O3",
@@ -102,7 +104,8 @@
      118
     ]
    ]
-  }
+  },
+  "sourceEn": "Common experimental/literature bond lengths and angles (NIST CCCBDB, textbooks; not yet checked one by one against the original databases)"
  },
  {
   "id": "N2",
@@ -128,7 +131,8 @@
     1,
     3
    ]
-  ]
+  ],
+  "sourceEn": "Typical textbook bond lengths and angles (not yet checked one by one against the original databases)"
  },
  {
   "id": "H2O",
@@ -181,7 +185,8 @@
      105.5
     ]
    ]
-  }
+  },
+  "sourceEn": "Common experimental/literature bond lengths and angles (NIST CCCBDB, textbooks; not yet checked one by one against the original databases)"
  },
  {
   "id": "H2O2",
@@ -245,7 +250,8 @@
      0.98
     ]
    ]
-  }
+  },
+  "sourceEn": "Common experimental/literature bond lengths and angles (NIST CCCBDB, textbooks; not yet checked one by one against the original databases)"
  },
  {
   "id": "CO2",
@@ -282,7 +288,8 @@
     2,
     2
    ]
-  ]
+  ],
+  "sourceEn": "Typical textbook bond lengths and angles (not yet checked one by one against the original databases)"
  },
  {
   "id": "CO",
@@ -308,7 +315,8 @@
     1,
     3
    ]
-  ]
+  ],
+  "sourceEn": "Typical textbook bond lengths and angles (not yet checked one by one against the original databases)"
  },
  {
   "id": "NH3",
@@ -356,7 +364,8 @@
     3,
     1
    ]
-  ]
+  ],
+  "sourceEn": "Calculated from bond length and angle: N–H 1.012 Å, H–N–H 106.7° (three H atoms arranged symmetrically)"
  },
  {
   "id": "CH4",
@@ -415,7 +424,8 @@
     4,
     1
    ]
-  ]
+  ],
+  "sourceEn": "Typical textbook bond lengths and angles (not yet checked one by one against the original databases)"
  },
  {
   "id": "HCl",
@@ -441,7 +451,8 @@
     1,
     1
    ]
-  ]
+  ],
+  "sourceEn": "Typical textbook bond lengths and angles (not yet checked one by one against the original databases)"
  },
  {
   "id": "NaCl",
@@ -590,7 +601,8 @@
      1.45
     ]
    ]
-  }
+  },
+  "sourceEn": "Common experimental/literature bond lengths and angles (NIST CCCBDB, textbooks; not yet checked one by one against the original databases)"
  },
  {
   "id": "CH3COOH",
@@ -710,7 +722,8 @@
      1.38
     ]
    ]
-  }
+  },
+  "sourceEn": "Common experimental/literature bond lengths and angles (NIST CCCBDB, textbooks; not yet checked one by one against the original databases)"
  },
  {
   "id": "C3H8",
@@ -875,7 +888,8 @@
      114
     ]
    ]
-  }
+  },
+  "sourceEn": "Common experimental/literature bond lengths and angles (NIST CCCBDB, textbooks; not yet checked one by one against the original databases)"
  },
  {
   "id": "NaHCO3",
@@ -979,7 +993,9 @@
   },
   "cif": "9011048",
   "label": "小蘇打 nahcolite",
-  "sourceNote": "原始資料沒有氫的座標,氫依氫鍵方向推算"
+  "sourceNote": "原始資料沒有氫的座標,氫依氫鍵方向推算",
+  "labelEn": "nahcolite (baking soda)",
+  "sourceNoteEn": "The original data has no hydrogen coordinates; the hydrogens were placed along the hydrogen-bond directions"
  },
  {
   "id": "CaCO3",
@@ -1020,7 +1036,8 @@
    ]
   },
   "cif": "9000095",
-  "label": "方解石 calcite"
+  "label": "方解石 calcite",
+  "labelEn": "calcite"
  },
  {
   "id": "SO2",
@@ -1073,7 +1090,8 @@
      120.5
     ]
    ]
-  }
+  },
+  "sourceEn": "Common experimental/literature bond lengths and angles (NIST CCCBDB, textbooks; not yet checked one by one against the original databases)"
  },
  {
   "id": "NO2",
@@ -1126,7 +1144,8 @@
      135
     ]
    ]
-  }
+  },
+  "sourceEn": "Common experimental/literature bond lengths and angles (NIST CCCBDB, textbooks; not yet checked one by one against the original databases)"
  },
  {
   "id": "C6H12O6",
@@ -1399,7 +1418,8 @@
     23,
     1
    ]
-  ]
+  ],
+  "sourceEn": "Calculated from bond lengths and angles: β-D-glucopyranose, chair form, all substituents equatorial; C–C 1.53 Å, C–O 1.43 Å, C–H 1.09 Å, O–H 0.96 Å"
  },
  {
   "id": "diamond",
@@ -1424,7 +1444,8 @@
      1.58
     ]
    ]
-  }
+  },
+  "labelEn": "diamond"
  },
  {
   "id": "graphite",
@@ -1449,7 +1470,8 @@
      1.46
     ]
    ]
-  }
+  },
+  "labelEn": "graphite"
  },
  {
   "id": "Na",
@@ -1463,7 +1485,8 @@
     0
    ]
   ],
-  "bonds": []
+  "bonds": [],
+  "sourceEn": "Typical textbook bond lengths and angles (not yet checked one by one against the original databases)"
  },
  {
   "id": "Fe",
@@ -1477,7 +1500,8 @@
     0
    ]
   ],
-  "bonds": []
+  "bonds": [],
+  "sourceEn": "Typical textbook bond lengths and angles (not yet checked one by one against the original databases)"
  },
  {
   "id": "Cl2",
@@ -1503,7 +1527,8 @@
     1,
     1
    ]
-  ]
+  ],
+  "sourceEn": "Typical textbook bond lengths and angles (not yet checked one by one against the original databases)"
  },
  {
   "id": "NaClp",
@@ -1530,7 +1555,8 @@
     1,
     "ionic"
    ]
-  ]
+  ],
+  "sourceEn": "Typical textbook bond lengths and angles (not yet checked one by one against the original databases)"
  },
  {
   "id": "Fe2O3",
@@ -1556,7 +1582,8 @@
    ]
   },
   "cif": "9000139",
-  "label": "赤鐵礦 hematite"
+  "label": "赤鐵礦 hematite",
+  "labelEn": "hematite"
  },
  {
   "id": "Fe2O3p",
@@ -1641,7 +1668,8 @@
      2.05
     ]
    ]
-  }
+  },
+  "sourceEn": "For the reaction animation only: one Fe2O3 formula unit (2 Fe, 3 O), Fe–O about 1.97 Å, schematic; the real structure is shown in the gallery as Fe2O3"
  },
  {
   "id": "CH3COONa",
@@ -1734,7 +1762,8 @@
     7,
     1
    ]
-  ]
+  ],
+  "sourceEn": "Typical textbook bond lengths and angles (not yet checked one by one against the original databases)"
  },
  {
   "id": "HF",
@@ -1760,7 +1789,8 @@
     1,
     1
    ]
-  ]
+  ],
+  "sourceEn": "Typical textbook bond lengths and angles (not yet checked one by one against the original databases)"
  },
  {
   "id": "Br2",
@@ -1786,7 +1816,8 @@
     1,
     1
    ]
-  ]
+  ],
+  "sourceEn": "Typical textbook bond lengths and angles (not yet checked one by one against the original databases)"
  },
  {
   "id": "I2",
@@ -1812,7 +1843,8 @@
     1,
     1
    ]
-  ]
+  ],
+  "sourceEn": "Typical textbook bond lengths and angles (not yet checked one by one against the original databases)"
  },
  {
   "id": "C2F4",
@@ -1898,7 +1930,8 @@
      1.34
     ]
    ]
-  }
+  },
+  "sourceEn": "Common experimental/literature bond lengths and angles (NIST CCCBDB, textbooks; not yet checked one by one against the original databases)"
  },
  {
   "id": "NaOH",
@@ -1936,7 +1969,8 @@
     2,
     1
    ]
-  ]
+  ],
+  "sourceEn": "NIST CCCBDB experimental gas-phase values: Na–O 1.950 Å, O–H 0.941 Å, linear"
  },
  {
   "id": "NaClO",
@@ -1978,7 +2012,8 @@
     2,
     1
    ]
-  ]
+  ],
+  "sourceEn": "Typical textbook bond lengths and angles (not yet checked one by one against the original databases)"
  },
  {
   "id": "H2SO4",
@@ -2059,7 +2094,8 @@
     6,
     1
    ]
-  ]
+  ],
+  "sourceEn": "Calculated from bond lengths and angles: S=O 1.42 Å, S–OH 1.57 Å, O–H 0.97 Å; O=S=O 123°, HO–S–OH 101°"
  },
  {
   "id": "H3PO4",
@@ -2151,7 +2187,8 @@
     7,
     1
    ]
-  ]
+  ],
+  "sourceEn": "Calculated from bond lengths and angles: P=O 1.46 Å, P–OH 1.57 Å, O–H 0.96 Å; O=P–OH 115°"
  },
  {
   "id": "P4",
@@ -2214,7 +2251,8 @@
     3,
     1
    ]
-  ]
+  ],
+  "sourceEn": "Calculated from bond lengths and angles: a regular tetrahedron with P–P 2.21 Å"
  },
  {
   "id": "S8",
@@ -2311,7 +2349,8 @@
     0,
     1
    ]
-  ]
+  ],
+  "sourceEn": "Calculated from bond lengths and angles: a crown-shaped ring with S–S 2.05 Å and S–S–S 108°"
  },
  {
   "id": "SiO2",
@@ -2337,7 +2376,8 @@
    ]
   },
   "cif": "1526860",
-  "label": "α-石英 quartz"
+  "label": "α-石英 quartz",
+  "labelEn": "α-quartz"
  },
  {
   "id": "TiO2",
@@ -2363,7 +2403,8 @@
    ]
   },
   "cif": "9004141",
-  "label": "金紅石 rutile"
+  "label": "金紅石 rutile",
+  "labelEn": "rutile"
  },
  {
   "id": "SnO2",
@@ -2389,7 +2430,8 @@
    ]
   },
   "cif": "1000062",
-  "label": "錫石 cassiterite"
+  "label": "錫石 cassiterite",
+  "labelEn": "cassiterite"
  },
  {
   "id": "UO2",
@@ -2416,7 +2458,9 @@
   },
   "cif": "1541665",
   "label": "二氧化鈾 uraninite",
-  "sourceNote": "早期(1951)的測量"
+  "sourceNote": "早期(1951)的測量",
+  "labelEn": "uraninite",
+  "sourceNoteEn": "An early (1951) measurement"
  },
  {
   "id": "Al2O3",
@@ -2442,7 +2486,8 @@
    ]
   },
   "cif": "9007634",
-  "label": "剛玉 corundum"
+  "label": "剛玉 corundum",
+  "labelEn": "corundum"
  },
  {
   "id": "MgSO4",
@@ -2507,7 +2552,8 @@
    ]
   },
   "cif": "1100089",
-  "label": "瀉鹽 epsomite MgSO4·7H2O(含氫)"
+  "label": "瀉鹽 epsomite MgSO4·7H2O(含氫)",
+  "labelEn": "epsomite MgSO4·7H2O (with hydrogen)"
  },
  {
   "id": "CuSO4",
@@ -2562,7 +2608,8 @@
    ]
   },
   "cif": "9008253",
-  "label": "膽礬 chalcanthite CuSO4·5H2O(含氫)"
+  "label": "膽礬 chalcanthite CuSO4·5H2O(含氫)",
+  "labelEn": "chalcanthite CuSO4·5H2O (with hydrogen)"
  },
  {
   "id": "Li2CO3",
@@ -2600,7 +2647,8 @@
    ]
   },
   "cif": "9009641",
-  "label": "碳酸鋰 zabuyelite"
+  "label": "碳酸鋰 zabuyelite",
+  "labelEn": "zabuyelite"
  },
  {
   "id": "KNO3",
@@ -2638,7 +2686,8 @@
    ]
   },
   "cif": "9012754",
-  "label": "硝石 niter"
+  "label": "硝石 niter",
+  "labelEn": "niter"
  },
  {
   "id": "NaF",
@@ -2773,7 +2822,8 @@
    "en": "A small piece of crystal: the central zinc has 4 oxygens; outer zinc atoms really bond to more oxygens (not drawn). Textbook wurtzite values, not yet checked against a CIF."
   },
   "cif": "9004178",
-  "label": "纖鋅礦 zincite"
+  "label": "纖鋅礦 zincite",
+  "labelEn": "zincite"
  },
  {
   "id": "PbO",
@@ -2799,7 +2849,8 @@
    ]
   },
   "cif": "9012701",
-  "label": "氧化鉛 litharge"
+  "label": "氧化鉛 litharge",
+  "labelEn": "litharge"
  },
  {
   "id": "HgS",
@@ -2832,7 +2883,8 @@
    ]
   },
   "cif": "9012082",
-  "label": "朱砂 cinnabar"
+  "label": "朱砂 cinnabar",
+  "labelEn": "cinnabar"
  },
  {
   "id": "WC",
@@ -2862,7 +2914,8 @@
    "en": "Carbon sits in a trigonal prism of 6 tungsten atoms. Textbook values, not yet checked against a CIF."
   },
   "cif": "1501516",
-  "label": "六方碳化鎢"
+  "label": "六方碳化鎢",
+  "labelEn": "hexagonal tungsten carbide"
  },
  {
   "id": "a-He",
@@ -2876,7 +2929,8 @@
     0
    ]
   ],
-  "bonds": []
+  "bonds": [],
+  "sourceEn": "Typical textbook bond lengths and angles (not yet checked one by one against the original databases)"
  },
  {
   "id": "a-Ne",
@@ -2890,7 +2944,8 @@
     0
    ]
   ],
-  "bonds": []
+  "bonds": [],
+  "sourceEn": "Typical textbook bond lengths and angles (not yet checked one by one against the original databases)"
  },
  {
   "id": "a-Ar",
@@ -2904,7 +2959,8 @@
     0
    ]
   ],
-  "bonds": []
+  "bonds": [],
+  "sourceEn": "Typical textbook bond lengths and angles (not yet checked one by one against the original databases)"
  },
  {
   "id": "a-Kr",
@@ -2918,7 +2974,8 @@
     0
    ]
   ],
-  "bonds": []
+  "bonds": [],
+  "sourceEn": "Typical textbook bond lengths and angles (not yet checked one by one against the original databases)"
  },
  {
   "id": "a-Xe",
@@ -2932,7 +2989,8 @@
     0
    ]
   ],
-  "bonds": []
+  "bonds": [],
+  "sourceEn": "Typical textbook bond lengths and angles (not yet checked one by one against the original databases)"
  },
  {
   "id": "m-Li",
@@ -2957,7 +3015,8 @@
      3.34
     ]
    ]
-  }
+  },
+  "labelEn": "Li metal"
  },
  {
   "id": "m-Mg",
@@ -2982,7 +3041,8 @@
      3.53
     ]
    ]
-  }
+  },
+  "labelEn": "Mg metal"
  },
  {
   "id": "m-Al",
@@ -3007,7 +3067,8 @@
      3.15
     ]
    ]
-  }
+  },
+  "labelEn": "Al metal"
  },
  {
   "id": "m-K",
@@ -3032,7 +3093,8 @@
      4.98
     ]
    ]
-  }
+  },
+  "labelEn": "K metal"
  },
  {
   "id": "m-Ti",
@@ -3057,7 +3119,8 @@
      3.25
     ]
    ]
-  }
+  },
+  "labelEn": "Ti metal"
  },
  {
   "id": "m-Cr",
@@ -3082,7 +3145,8 @@
      2.74
     ]
    ]
-  }
+  },
+  "labelEn": "Cr metal"
  },
  {
   "id": "m-Fe",
@@ -3107,7 +3171,8 @@
      2.73
     ]
    ]
-  }
+  },
+  "labelEn": "Fe metal"
  },
  {
   "id": "m-Ni",
@@ -3132,7 +3197,8 @@
      2.74
     ]
    ]
-  }
+  },
+  "labelEn": "Ni metal"
  },
  {
   "id": "m-Cu",
@@ -3157,7 +3223,8 @@
      2.81
     ]
    ]
-  }
+  },
+  "labelEn": "Cu metal"
  },
  {
   "id": "m-Zn",
@@ -3182,7 +3249,8 @@
      2.93
     ]
    ]
-  }
+  },
+  "labelEn": "Zn metal"
  },
  {
   "id": "m-Ag",
@@ -3207,7 +3275,8 @@
      3.18
     ]
    ]
-  }
+  },
+  "labelEn": "Ag metal"
  },
  {
   "id": "m-Sn",
@@ -3232,7 +3301,8 @@
      3.09
     ]
    ]
-  }
+  },
+  "labelEn": "Sn metal"
  },
  {
   "id": "m-W",
@@ -3257,7 +3327,8 @@
      3.01
     ]
    ]
-  }
+  },
+  "labelEn": "W metal"
  },
  {
   "id": "m-Pt",
@@ -3282,7 +3353,8 @@
      3.05
     ]
    ]
-  }
+  },
+  "labelEn": "Pt metal"
  },
  {
   "id": "m-Au",
@@ -3307,7 +3379,8 @@
      3.17
     ]
    ]
-  }
+  },
+  "labelEn": "Au metal"
  },
  {
   "id": "m-Hg",
@@ -3332,7 +3405,8 @@
      3.3
     ]
    ]
-  }
+  },
+  "labelEn": "Hg metal"
  },
  {
   "id": "m-Pb",
@@ -3357,7 +3431,8 @@
      3.85
     ]
    ]
-  }
+  },
+  "labelEn": "Pb metal"
  },
  {
   "id": "m-Si",
@@ -3382,7 +3457,8 @@
      2.59
     ]
    ]
-  }
+  },
+  "labelEn": "Si metal"
  },
  {
   "id": "m-Fe-Cr",
@@ -3401,7 +3477,9 @@
   "depth": 1,
   "swap": {
    "Cr": 2
-  }
+  },
+  "labelEn": "stainless steel (Fe + Cr)",
+  "sourceNoteEn": "Some atoms of the real Fe lattice are swapped for others; the proportions are schematic"
  },
  {
   "id": "m-Fe-Cr-Ni",
@@ -3421,7 +3499,9 @@
   "swap": {
    "Fe": 8,
    "Cr": 3
-  }
+  },
+  "labelEn": "stainless steel (Fe + Cr + Ni)",
+  "sourceNoteEn": "Some atoms of the real Ni lattice are swapped for others; the proportions are schematic"
  },
  {
   "id": "m-Cu-Zn",
@@ -3440,7 +3520,9 @@
   "depth": 1,
   "swap": {
    "Zn": 4
-  }
+  },
+  "labelEn": "brass (Cu + Zn)",
+  "sourceNoteEn": "Some atoms of the real Cu lattice are swapped for others; the proportions are schematic"
  },
  {
   "id": "CH3OH",
@@ -3532,7 +3614,8 @@
      0.98
     ]
    ]
-  }
+  },
+  "sourceEn": "Common experimental/literature bond lengths and angles (NIST CCCBDB, textbooks; not yet checked one by one against the original databases)"
  },
  {
   "id": "C2H4",
@@ -3624,7 +3707,8 @@
      1.11
     ]
    ]
-  }
+  },
+  "sourceEn": "Common experimental/literature bond lengths and angles (NIST CCCBDB, textbooks; not yet checked one by one against the original databases)"
  },
  {
   "id": "C2H2",
@@ -3682,7 +3766,8 @@
      1.22
     ]
    ]
-  }
+  },
+  "sourceEn": "Common experimental/literature bond lengths and angles (NIST CCCBDB, textbooks; not yet checked one by one against the original databases)"
  },
  {
   "id": "C4H10",
@@ -3889,7 +3974,8 @@
      115
     ]
    ]
-  }
+  },
+  "sourceEn": "Common experimental/literature bond lengths and angles (NIST CCCBDB, textbooks; not yet checked one by one against the original databases)"
  },
  {
   "id": "H2CO",
@@ -3947,7 +4033,8 @@
      1.22
     ]
    ]
-  }
+  },
+  "sourceEn": "Common experimental/literature bond lengths and angles (NIST CCCBDB, textbooks; not yet checked one by one against the original databases)"
  },
  {
   "id": "H2CO3",
@@ -4033,7 +4120,8 @@
      1.36
     ]
    ]
-  }
+  },
+  "sourceEn": "Common experimental/literature bond lengths and angles (NIST CCCBDB, textbooks; not yet checked one by one against the original databases)"
  },
  {
   "id": "urea",
@@ -4153,7 +4241,8 @@
      1.4
     ]
    ]
-  }
+  },
+  "sourceEn": "Common experimental/literature bond lengths and angles (NIST CCCBDB, textbooks; not yet checked one by one against the original databases)"
  },
  {
   "id": "acetone",
@@ -4301,7 +4390,8 @@
      1.53
     ]
    ]
-  }
+  },
+  "sourceEn": "Common experimental/literature bond lengths and angles (NIST CCCBDB, textbooks; not yet checked one by one against the original databases)"
  },
  {
   "id": "H2S",
@@ -4354,6 +4444,7 @@
      94
     ]
    ]
-  }
+  },
+  "sourceEn": "Common experimental/literature bond lengths and angles (NIST CCCBDB, textbooks; not yet checked one by one against the original databases)"
  }
 ]

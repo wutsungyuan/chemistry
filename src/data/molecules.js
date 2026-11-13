@@ -12,7 +12,7 @@ export { skeletonSignature, composition };
 export const MOLECULES = MOLECULE_RECORDS.map(r => {
   const s = STRUCTURES[r.id];
   return {
-    ...r, atoms: s.atoms, bonds: s.bonds, source: s.source,
+    ...r, atoms: s.atoms, bonds: s.bonds, source: s.source, sourceEn: s.sourceEn,
     ...(s.note ? { schem: s.note } : {}),
     ...(s.kind === 'crystal' ? { crystal: true } : {}),
   };

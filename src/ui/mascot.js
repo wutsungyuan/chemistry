@@ -38,6 +38,10 @@ const TIPS = {
   gallery: {
     zh: ['用手指或滑鼠拖曳可以旋轉,點一下原子它會彈跳喔!', '試試切換「球棍模型」和「空間填充」,長得不一樣呢!', '點右邊的名字,認識生活中的分子!'],
     en: ['Drag to rotate, and tap an atom to make it bounce!', 'Try switching between ball-and-stick and space-filling!', 'Pick a name on the right to meet everyday molecules!'],
+    'zh@teen': ['拖曳可以旋轉分子,點原子會彈跳。','切換「球棍模型」和「空間填充」,比較分子的形狀。','點右邊的名字,看看生活中的分子。'],
+    'zh@high': ['拖曳旋轉、滾輪縮放;下方面板列出分子量、鍵長與鍵角。','球棍模型適合看鍵與鍵角,空間填充適合看整體大小。'],
+    'en@teen': ['Drag to rotate; tap an atom to make it bounce.','Switch between ball-and-stick and space-filling to compare shapes.','Pick a name on the right to meet everyday molecules.'],
+    'en@high': ['Drag to rotate, scroll to zoom; the panel lists molar mass, bond lengths and angles.','Ball-and-stick shows bonds and angles; space-filling shows overall size.'],
   },
   lab: {
     zh: ['點下方的原子加進來,把它們拖到一起就會牽手!', 'H 想牽 1 隻手,O 想牽 2 隻手,N 想牽 3 隻手,C 想牽 4 隻手喔!', '黃色光圈表示「還想牽手」。做錯了沒關係,用剪刀剪開再試一次!'],

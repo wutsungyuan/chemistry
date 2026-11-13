@@ -29,6 +29,17 @@ sIds.forEach((id, i) => { if (sIds.indexOf(id) !== i) err(id, 'structures.json �
 ids.forEach(id => { if (!sIds.includes(id)) err(id, '沒有對應的結構記錄'); });
 sIds.forEach(id => { if (!ids.includes(id)) err(id, '結構記錄沒有對應的分子'); });
 for (const r of records) for (const k of ['id', 'formula', 'name']) if (!r[k]) err(r.id, `缺少欄位 ${k}`);
+// 階段:level 是最低適用階段(kid 國小 / teen 國中 / high 高中);每個階段在圖鑑都要有東西可看;factTeen/factHigh 是國中/高中版的說明(可省略)
+for (const r of records) {
+  if (!['kid', 'teen', 'high'].includes(r.level)) err(r.id, 'level 要是 kid / teen / high');
+  for (const f of ['factTeen', 'factHigh', 'useTeen', 'useHigh']) if (r[f] !== undefined && !(r[f].zh && r[f].en)) err(r.id, `${f} 要有中英文`);
+  // 圖鑑看得到的分子:高中版一定要有自己的說明與用途;國小等級的分子(國中也看得到)也要有國中版 —— 說明的語氣必須跟著階段走
+  if (!r.hidden && r.fact) {
+    if (!r.factHigh || !r.useHigh) err(r.id, '缺少高中版的說明(factHigh / useHigh)');
+    if (r.level === 'kid' && (!r.factTeen || !r.useTeen)) err(r.id, '國小等級的分子缺少國中版的說明(factTeen / useTeen)');
+  }
+}
+for (const lv of ['kid', 'teen', 'high']) if (records.filter(r => r.level === lv && !r.hidden).length < 10) err('molecules.json', `階段 ${lv} 的圖鑑分子少於 10 個`);
 
 // ---- 2) CIF:原始資料檔(COD)。解析交給 crystcif-parse,出處由 CIF 內容自動組成 ----
 const cifCache = new Map();
@@ -40,6 +51,13 @@ const sourceOf = s => {
   const who = meta.authors.length ? (meta.authors[0].split(',')[0].trim() + (meta.authors.length > 1 ? ' 等' : '')) : '作者不詳';
   const t = typeof meta.temperature === 'number' ? `${meta.temperature} K` : '溫度未標明';
   return [s.label, `COD ${s.cif}`, `${who} ${meta.year ?? ''}`.trim(), t, s.sourceNote].filter(Boolean).join(' · ');
+};
+/** 英文版資料出處:同樣由 CIF 內容自動組成(作者、年份、溫度),標籤與備註用 labelEn / sourceNoteEn */
+const sourceOfEn = s => {
+  const { meta } = cifOf(s.cif);
+  const who = meta.authors.length ? (meta.authors[0].split(',')[0].trim() + (meta.authors.length > 1 ? ' et al.' : '')) : 'author unknown';
+  const t = typeof meta.temperature === 'number' ? `${meta.temperature} K` : 'temperature not stated';
+  return [s.labelEn, `COD ${s.cif}`, `${who} ${meta.year ?? ''}`.trim(), t, s.sourceNoteEn].filter(Boolean).join(' · ');
 };
 for (const s of structs.filter(x => x.cif)) {
   usedCif.add(s.cif);
@@ -65,6 +83,13 @@ for (const s of structs) {
   const source = s.cif ? sourceOf(s) : s.source;
   if (!source) err(s.id, '缺少資料出處 source');
   if (/[<>]/.test(source || '')) err(s.id, '資料出處含有 < 或 >(來自 CIF 的外部文字不可含 HTML)');
+  let sourceEn = '';
+  try { sourceEn = s.cif ? sourceOfEn(s) : s.sourceEn; } catch { /* CIF 讀不到的錯誤上面已回報 */ }
+  if (!sourceEn) err(s.id, '缺少英文資料出處(sourceEn;CIF 結構要有 labelEn / sourceNoteEn)');
+  else if (/[一-鿿]/.test(sourceEn)) err(s.id, '英文資料出處不可含中文字:' + sourceEn);
+  else if (/[<>]/.test(sourceEn)) err(s.id, '英文資料出處含有 < 或 >');
+  if (s.cif && s.label && !s.labelEn) err(s.id, '有中文 label 卻沒有 labelEn');
+  if (s.cif && s.sourceNote && !s.sourceNoteEn) err(s.id, '有中文 sourceNote 卻沒有 sourceNoteEn');
   if (!atoms.length) { err(s.id, '沒有原子'); continue; }
   atoms.forEach((a, i) => {
     if (!BY_SYMBOL[a[0]]) err(s.id, `原子 ${i} 的元素 ${a[0]} 不存在`);
@@ -114,7 +139,7 @@ for (const s of structs) {
       if (!rec.hidden && !/^(NaClp)$/.test(rec.id)) err(s.id, `化學式 ${rec.formula} 與原子數 ${JSON.stringify(have)} 不一致`);
     }
   }
-  out[s.id] = { kind: s.kind, source, ...(s.note ? { note: s.note } : {}), ...(res.estimatedH ? { estimatedH: true } : {}), atoms, bonds };
+  out[s.id] = { kind: s.kind, source, sourceEn, ...(s.note ? { note: s.note } : {}), ...(res.estimatedH ? { estimatedH: true } : {}), atoms, bonds };
 }
 
 // ---- 4) 實驗室配方:骨架簽章不可重複,而且要能比對回自己 ----
