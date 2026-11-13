@@ -20,7 +20,7 @@ test('高中層:公式、徑向機率圖、複數軌域(相位色環 + 機率流
 });
 
 test('高中層的文字中英文都齊全', () => {
-  for (const k of ['cloud.level.high', 'cloud.lead.high', 'cloud.mix.lead.high', 'cloud.high.graph', 'cloud.high.complex', 'cloud.high.real', 'cloud.high.honest', 'cloud.high.rule', 'cloud.name.2p+1', 'cloud.node.3d+2', 'cloud.desc.3d+2']) {
+  for (const k of ['level.high', 'cloud.lead.high', 'cloud.mix.lead.high', 'cloud.high.graph', 'cloud.high.complex', 'cloud.high.real', 'cloud.high.honest', 'cloud.high.rule', 'cloud.name.2p+1', 'cloud.node.3d+2', 'cloud.desc.3d+2']) {
     assert.ok(zh.includes(`'${k}':`) && en.includes(`'${k}':`), k);
   }
 });

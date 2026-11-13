@@ -1,6 +1,6 @@
 // 學習進度與徽章(存在 localStorage)
 const KEY = 'chem-progress-v1';
-const blank = () => ({ elements: [], built: [], reactions: [], bestStreak: 0, quizRight: 0, spectraSeen: [], spectrumRight: 0 });
+const blank = () => ({ elements: [], built: [], reactions: [], bestStreak: 0, quizRight: 0, spectraSeen: [], spectrumRight: 0, changeRight: 0 });
 let data = blank();
 try { data = { ...blank(), ...JSON.parse(localStorage.getItem(KEY) || '{}') }; } catch {}
 const save = () => { try { localStorage.setItem(KEY, JSON.stringify(data)); } catch {} };
@@ -16,6 +16,7 @@ export const BADGES = [
   { id: 'rainbow',   icon: '🌈', name: { zh: '彩虹觀察員', en: 'Rainbow Watcher' }, desc: { zh: '看過 5 個元素的光譜指紋', en: 'Explore the light fingerprint of 5 elements' }, test: d => d.spectraSeen.length >= 5 },
   { id: 'spec3',     icon: '🕵️', name: { zh: '光譜偵探', en: 'Spectrum Detective' }, desc: { zh: '小測驗答對 3 題光譜指紋', en: '3 correct spectrum questions in the quiz' }, test: d => d.spectrumRight >= 3 },
   { id: 'streak5',   icon: '🏆', name: { zh: '答題高手', en: 'Quiz Master' }, desc: { zh: '小測驗連續答對 5 題', en: '5 correct quiz answers in a row' }, test: d => d.bestStreak >= 5 },
+  { id: 'change10',  icon: '🧊', name: { zh: '變化偵探', en: 'Change Detective' }, desc: { zh: '判斷對 10 題物理/化學變化', en: '10 correct physical/chemical change answers' }, test: d => d.changeRight >= 10 },
 ];
 
 export const progress = () => data;

@@ -8,8 +8,9 @@ import { skeletonSignature, composition } from '../src/data/graph.js';
 import { BY_SYMBOL } from '../src/data/elements.js';
 import { bondLength, angleAt } from '../src/data/geom.js';
 import { loadCif } from './lib/cif.mjs';
-import { ELEMENTS } from '../src/data/elements.js';
-import { VISIBLE, HC_EV_NM } from './lib/asd.mjs';
+import { validateSpectra } from './lib/validate-spectra.mjs';
+import { validateNuclides } from './lib/validate-nuclides.mjs';
+import { validateMatter } from './lib/validate-matter.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DB = p => JSON.parse(fs.readFileSync(path.join(root, 'src/data/db', p), 'utf8'));
@@ -126,80 +127,14 @@ for (const r of records.filter(r => r.lab)) {
   if (sig.has(k)) err(r.id, `實驗室骨架簽章與 ${sig.get(k)} 相同,會被誤認`); else sig.set(k, r.id);
 }
 
-// ---- 5) 元素光譜(src/data/db/spectra.json,來自 NIST ASD;由 scripts/fetch-spectra.mjs 產生)----
+// ---- 5) 其他資料集:各自一個驗證模組(scripts/lib/validate-*.mjs),輸出成獨立的 generated 模組(只在用到的頁面才載入)----
+const dataCtx = { err, warns };
 const SPEC = JSON.parse(fs.readFileSync(path.join(root, 'src/data/db/spectra.json'), 'utf8'));
-{
-  const m = SPEC.meta || {};
-  for (const k of ['source', 'url', 'doi', 'retrieved']) if (!m[k]) err('spectra', `meta 缺少 ${k}(必須標示資料出處)`);
-  if (!(m.calibration?.medianSpearman >= 0.7)) err('spectra', `估算強度的驗證相關度 ${m.calibration?.medianSpearman} 低於 0.7`);
-  const syms = ELEMENTS.map(e => e.sym);
-  for (const sym of syms) if (!SPEC.elements[sym]) err('spectra', `缺少元素 ${sym}`);
-  for (const k of Object.keys(SPEC.elements)) if (!syms.includes(k)) err('spectra', `多出不存在的元素 ${k}`);
-  let withLines = 0;
-  for (const [sym, e] of Object.entries(SPEC.elements)) {
-    if (!e.lines.length) continue;
-    withLines++;
-    if (typeof e.estimated !== 'boolean') err('spectra:' + sym, '缺少 estimated 旗標(強度是實測還是估算)');
-    if (e.lines.length > 60) err('spectra:' + sym, `譜線太多(${e.lines.length})`);
-    let prev = -1, max = 0;
-    for (const [wl, I, ei, ek, li, lk] of e.lines) {
-      if (!(wl >= VISIBLE[0] && wl <= VISIBLE[1])) err('spectra:' + sym, `波長 ${wl} 不在可見光範圍`);
-      if (!(I > 0 && I <= 1)) err('spectra:' + sym, `強度 ${I} 必須在 (0,1]`);
-      if (wl <= prev) err('spectra:' + sym, '譜線沒有依波長由小到大排序');
-      // 能階(eV):上下都有或都沒有;上 > 下 ≥ 0;能量差必須等於光子能量 hc/λ(物理一致性檢查,誤差 < 2%)
-      for (const lab of [li, lk]) if (lab != null && !/^(n=\d+|\d+[spdfg])$/.test(lab)) err('spectra:' + sym, `波長 ${wl} 的能階標籤 "${lab}" 格式不對`);
-      if ((li != null || lk != null) && ei == null) err('spectra:' + sym, `波長 ${wl} 有標籤但沒有能階`);
-      if (sym === 'H') for (const [lab, E] of [[li, ei], [lk, ek]]) {                  // 氫的 n 標籤必須符合玻爾公式 E = 13.6057(1 − 1/n²)
-        const n = lab && /^n=(\d+)$/.exec(lab)?.[1];
-        if (n && Math.abs(13.6057 * (1 - 1 / (n * n)) - E) > 0.02) err('spectra:H', `波長 ${wl} 的 ${lab} 能量 ${E} eV 與玻爾公式不符`);
-      }
-      if ((ei == null) !== (ek == null)) err('spectra:' + sym, `波長 ${wl} 只有一個能階`);
-      else if (ei != null) {
-        const pred = HC_EV_NM / wl;
-        if (!(ei >= 0 && ek > ei)) err('spectra:' + sym, `波長 ${wl} 的能階順序不對(${ei} → ${ek})`);
-        else if (Math.abs(ek - ei - pred) / pred > 0.02) err('spectra:' + sym, `波長 ${wl} 的能階差 ${(ek - ei).toFixed(3)} eV 與光子能量 ${pred.toFixed(3)} eV 不符`);
-      }
-      prev = wl; max = Math.max(max, I);
-    }
-    if (max !== 1) err('spectra:' + sym, `最強的線強度應為 1(目前 ${max})`);
-  }
-  if (withLines < 95) err('spectra', `只有 ${withLines} 個元素有光譜資料(預期 ≥ 95)`);
-  warns.push(`光譜:${withLines}/${syms.length} 個元素有可見光譜線`);
-}
-
-// ---- 5b) 核種(src/data/db/nuclides.json,來自 IAEA LiveChart;由 scripts/fetch-nuclides.mjs 產生)----
+validateSpectra(SPEC, dataCtx);
 const NUC = JSON.parse(fs.readFileSync(path.join(root, 'src/data/db/nuclides.json'), 'utf8'));
-{
-  const m = NUC.meta || {};
-  for (const k of ['source', 'url', 'retrieved', 'extraction']) if (!m[k]) err('nuclides', `meta 缺少 ${k}(必須標示資料出處)`);
-  let total = 0;
-  for (const { z, sym } of ELEMENTS) {
-    const l = NUC.nuclides[z];
-    if (!l?.length) { err('nuclides', `缺少元素 ${sym}(Z=${z}) 的核種`); continue; }
-    total += l.length;
-    let prev = -1, ab = 0;
-    for (const [n, hl, a, dec, pct, mass] of l) {
-      if (!(Number.isInteger(n) && n > prev)) err('nuclides:' + sym, `中子數 ${n} 沒有由小到大排序`);
-      if (!(hl >= 0)) err('nuclides:' + sym, `${z + n} 的半衰期 ${hl} 不合理`);
-      if (hl === 0 && dec) err('nuclides:' + sym, `${z + n} 穩定卻有衰變方式`);
-      if (hl > 0 && !dec) warns.push(`核種 ${sym}-${z + n} 沒有衰變方式資料`);
-      if (a != null) { if (!(a > 0 && a <= 100)) err('nuclides:' + sym, `${z + n} 的豐度 ${a} 不合理`); ab += a; }
-      if (mass != null && Math.abs(mass - (z + n)) > 0.3 * Math.max(1, (z + n) / 10) + 1) err('nuclides:' + sym, `${z + n} 的原子質量 ${mass} u 與質量數差太多`);
-      prev = n;
-    }
-    if (ab && Math.abs(ab - 100) > 0.5) err('nuclides:' + sym, `天然豐度總和 ${ab.toFixed(3)}% 不等於 100%`);
-  }
-  // 錨點:幾個大家熟知的值,資料被改壞時會立刻發現
-  const find = (z, a) => NUC.nuclides[z]?.find(x => x[0] === a - z);
-  const chk = (c, msg) => { if (!c) err('nuclides', '錨點不符:' + msg); };
-  chk(find(1, 1)?.[1] === 0, 'H-1 應穩定'); chk(find(6, 12)?.[5] === 12 && find(6, 12)?.[1] === 0, 'C-12 質量應為 12 u(定義)且穩定');
-  const c14 = find(6, 14)?.[1]; chk(c14 > 1.7e11 && c14 < 1.9e11 && find(6, 14)?.[3] === 'B-', 'C-14 半衰期約 5700 年,β⁻ 衰變');
-  const c11 = find(6, 11)?.[1]; chk(c11 > 1100 && c11 < 1300 && find(6, 11)?.[3] === 'B+', 'C-11 半衰期約 20 分鐘,β⁺ 衰變');
-  const u238 = find(92, 238)?.[1]; chk(u238 > 1.3e17 && u238 < 1.5e17 && find(92, 238)?.[3] === 'A', 'U-238 半衰期約 45 億年,α 衰變');
-  chk(Math.abs(find(17, 35)?.[2] - 75.8) < 0.5 && Math.abs(find(17, 37)?.[2] - 24.2) < 0.5, 'Cl-35/37 天然豐度約 75.8% / 24.2%');
-  if (total < 2500) err('nuclides', `只有 ${total} 個核種(預期 ≥ 2500)`);
-  warns.push(`核種:${total} 個(${ELEMENTS.length} 個元素)`);
-}
+validateNuclides(NUC, dataCtx);
+const MATTER = JSON.parse(fs.readFileSync(path.join(root, 'src/data/db/matter.json'), 'utf8'));
+validateMatter(MATTER, dataCtx);
 
 // ---- 6) 輸出 ----
 if (errors.length) {
@@ -208,11 +143,22 @@ if (errors.length) {
 }
 const genDir = path.join(root, 'src/data/generated');
 fs.mkdirSync(genDir, { recursive: true });
-const header = '// 自動產生,請勿手動修改。來源:src/data/db/*.json;產生器:scripts/build-db.mjs(npm run build-db)\n';
-const body = header + `export const MOLECULE_RECORDS = ${JSON.stringify(records)};\nexport const STRUCTURES = ${JSON.stringify(out)};\n`;
-fs.writeFileSync(path.join(genDir, 'db.js'), body);
-// 光譜另存一個模組(只有元素頁會用到)
-fs.writeFileSync(path.join(genDir, 'spectra.js'), header.replace('src/data/db/*.json', 'src/data/db/spectra.json') + `export const SPECTRA_META = ${JSON.stringify({ source: SPEC.meta.source, url: SPEC.meta.url, doi: SPEC.meta.doi, retrieved: SPEC.meta.retrieved, temperatureK: SPEC.meta.temperatureK })};\nexport const SPECTRA = ${JSON.stringify(SPEC.elements)};\n`);
-// 核種另存一個模組(只有「原子核與同位素」頁會動態載入)
-fs.writeFileSync(path.join(genDir, 'nuclides.js'), header.replace('src/data/db/*.json', 'src/data/db/nuclides.json') + `export const NUCLIDE_META = ${JSON.stringify({ source: NUC.meta.source, url: NUC.meta.url, retrieved: NUC.meta.retrieved, extraction: NUC.meta.extraction })};\n// 每個元素(Z)的核種:[中子數, 半衰期(秒;0=穩定), 天然豐度%, 主要衰變(B-|B+|A|SF|IT|P|N), 該衰變%, 原子質量u]\nexport const NUCLIDES = ${JSON.stringify(NUC.nuclides)};\n`);
+/** 寫出 generated/<name>.js(來源檔 from;exports 是 {名稱: 值})。每個資料集一個模組,只在用到的頁面才載入。 */
+function writeModule(name, from, exports, comments = {}) {
+  const header = `// 自動產生,請勿手動修改。來源:${from};產生器:scripts/build-db.mjs(npm run build-db)\n`;
+  const body = Object.entries(exports).map(([k, v]) => (comments[k] ? `// ${comments[k]}\n` : '') + `export const ${k} = ${JSON.stringify(v)};\n`).join('');
+  fs.writeFileSync(path.join(genDir, name + '.js'), header + body);
+}
+writeModule('db', 'src/data/db/*.json', { MOLECULE_RECORDS: records, STRUCTURES: out });
+writeModule('spectra', 'src/data/db/spectra.json', {
+  SPECTRA_META: { source: SPEC.meta.source, url: SPEC.meta.url, doi: SPEC.meta.doi, retrieved: SPEC.meta.retrieved, temperatureK: SPEC.meta.temperatureK },
+  SPECTRA: SPEC.elements,
+});
+writeModule('nuclides', 'src/data/db/nuclides.json', {
+  NUCLIDE_META: { source: NUC.meta.source, url: NUC.meta.url, retrieved: NUC.meta.retrieved, extraction: NUC.meta.extraction },
+  NUCLIDES: NUC.nuclides,
+}, { NUCLIDES: '每個元素(Z)的核種:[中子數, 半衰期(秒;0=穩定), 天然豐度%, 主要衰變(B-|B+|A|SF|IT|P|N), 該衰變%, 原子質量u]' });
+writeModule('matter', 'src/data/db/matter.json', {
+  MATTER_META: MATTER.meta, PLASMA_START_C: MATTER.plasmaStartC, SUBSTANCES: MATTER.substances, CHANGES: MATTER.changes,
+});
 console.log(`結構資料庫 OK:${records.length} 個分子、${structs.length} 筆結構`, stats, warns.length ? `\n${warns.join('\n')}` : '');

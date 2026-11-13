@@ -1,9 +1,13 @@
 import zh from './zh.js';
 import en from './en.js';
+import nuc from './packs/nuc.js';
+import matter from './packs/matter.js';
 import { rubyHTML } from './zhuyin.js';
 import { escapeHtml as esc } from '../ui/util.js';
 
-const dict = { zh, en };
+// 基本文字 + 各功能自己的文字包(packs/*.js,每包 {zh, en})。新功能的文字請放進新的 pack,不要再往 zh.js/en.js 堆。
+const PACKS = [nuc, matter];
+const dict = { zh: Object.assign({}, zh, ...PACKS.map(p => p.zh)), en: Object.assign({}, en, ...PACKS.map(p => p.en)) };
 const store = {
   get(k, d) { try { return localStorage.getItem(k) ?? d; } catch { return d; } },
   set(k, v) { try { localStorage.setItem(k, v); } catch {} },
@@ -42,3 +46,5 @@ export const LH = o => render(L(o));
 export function formulaHTML(f) {
   return esc(f).replace(/(\d+)/g, '<sub>$1</sub>');
 }
+/** 化學式的純文字版(下標用 Unicode 小數字,給放進 T()/toast 的變數用:H2O → H₂O) */
+export const formulaText = f => String(f).replace(/\d/g, d => '₀₁₂₃₄₅₆₇₈₉'[d]);

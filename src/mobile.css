@@ -252,3 +252,9 @@
   body[data-scene=lab] .mi-btns { margin-top: 4px; }
   body[data-scene=lab] .tray .atom-btn .need { top: -5px; right: -5px; }
 }
+
+/* 物質的變化(手機):粒子圖在上、說明在下;小測驗時粒子圖縮小,把空間留給題目 */
+@media (max-width: 900px), (pointer: coarse) and (max-width: 1400px) {
+  #app:has(> .side[data-tab=quiz]) > .canvas-wrap { flex: 0 0 clamp(120px, 20%, 220px); min-height: 120px; }
+  #nav button { padding-left: 2px; padding-right: 2px; }
+}

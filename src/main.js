@@ -11,9 +11,10 @@ import * as ReactionTheater from './scenes/ReactionTheater.js';
 import * as Quiz from './scenes/Quiz.js';
 import * as ElectronCloud from './scenes/ElectronCloud.js';
 import * as NuclearView from './scenes/NuclearView.js';
+import * as MatterView from './scenes/MatterView.js';
 
-const SCENES = { table: PeriodicTable, atom: AtomView, gallery: MoleculeGallery, lab: MoleculeLab, reaction: ReactionTheater, quiz: Quiz, cloud: ElectronCloud, nucleus: NuclearView };
-const NAV = [['table', 'nav.table', '🧪'], ['gallery', 'nav.gallery', '🔬'], ['lab', 'nav.lab', '⚗️'], ['reaction', 'nav.reaction', '🔥'], ['quiz', 'nav.quiz', '🎯']];
+const SCENES = { table: PeriodicTable, atom: AtomView, gallery: MoleculeGallery, lab: MoleculeLab, reaction: ReactionTheater, quiz: Quiz, cloud: ElectronCloud, nucleus: NuclearView, matter: MatterView };
+const NAV = [['table', 'nav.table', '🧪'], ['gallery', 'nav.gallery', '🔬'], ['lab', 'nav.lab', '⚗️'], ['matter', 'nav.matter', '🧊'], ['reaction', 'nav.reaction', '🔥'], ['quiz', 'nav.quiz', '🎯']];
 
 const app = document.getElementById('app');
 let current = null, name = 'table', arg = null;

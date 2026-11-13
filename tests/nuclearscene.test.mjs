@@ -7,7 +7,8 @@ import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const read = p => fs.readFileSync(path.join(root, p), 'utf8');
-const scene = read('src/scenes/NuclearView.js'), main = read('src/main.js'), atom = read('src/scenes/AtomView.js'), zh = read('src/i18n/zh.js'), en = read('src/i18n/en.js');
+const scene = read('src/scenes/NuclearView.js'), main = read('src/main.js'), atom = read('src/scenes/AtomView.js'), zh = read('src/i18n/packs/nuc.js');   // 文字在各功能自己的 pack(中英文同一個檔)
+const PACK = (await import('../src/i18n/packs/nuc.js')).default;
 
 test('場景註冊;從底部導覽看起來仍屬於「元素週期表」;原子頁有入口;核種資料動態載入(不拖慢其他頁)', () => {
   assert.match(main, /nucleus: NuclearView/);
@@ -19,7 +20,7 @@ test('場景註冊;從底部導覽看起來仍屬於「元素週期表」;原子
 });
 
 test('三個階段共用 ui/level.js;國小/國中/高中各有專屬內容', () => {
-  assert.match(scene, /import \{ LEVELS, getLevel, setLevel \} from '\.\.\/ui\/level\.js'/);
+  assert.match(scene, /import \{ levelChipsHTML, bindLevelChips \} from '\.\.\/ui\/levelBar\.js'/);
   assert.match(scene, /level === 'kid'/); assert.match(scene, /level !== 'kid'/); assert.match(scene, /level === 'high'/);
   assert.match(scene, /quarks\(cur\.z, cur\.n\)/);                    // 高中:夸克
   assert.match(scene, /lambda\(cur\.hl\)/);                             // 高中:衰變定律
@@ -39,8 +40,7 @@ test('不理會「減少動態效果」:這個頁面不看 prefers-reduced-motio
 });
 
 test('所有 nuc.* 文字中英文都有,而且程式用到的都有定義', () => {
-  const keys = s => new Set([...s.matchAll(/'(nuc\.[\w.+-]+)':/g)].map(m => m[1]));
-  const kz = keys(zh), ke = keys(en);
+  const kz = new Set(Object.keys(PACK.zh)), ke = new Set(Object.keys(PACK.en));
   assert.deepEqual([...kz].sort(), [...ke].sort());
   assert.ok(kz.size >= 55, 'nuc 文字數量 ' + kz.size);
   for (const k of scene.matchAll(/T\('(nuc\.[\w.+-]+)'/g)) if (!k[1].endsWith('.')) assert.ok(kz.has(k[1]), '程式用到但沒有定義:' + k[1]);   // 結尾是 . 的是動態組合的,下面逐一檢查

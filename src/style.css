@@ -552,3 +552,39 @@ body{background:
 .tray .atom-btn.want{outline:3px solid #ffd23f;outline-offset:2px}
 .tray .atom-btn.dim{opacity:.55}
 .mi-warn{margin:6px 0;font-size:.9rem;line-height:1.5;color:#ffb3a1;font-weight:700}
+
+/* ---- 物質的變化(三態與溫度、物理 vs 化學變化)---- */
+.side.mat-side{top:12px;bottom:12px;width:min(400px,calc(100% - 24px));max-height:none;overflow:auto}
+.mat-tabs{margin-top:6px}
+.mat-lead{margin:8px 0}
+.mat-subs{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 8px}
+.mat-slider{display:block;margin:10px 0 4px;font-weight:700}
+.mat-slider input{width:100%;height:36px}
+.mat-read{margin:4px 0}.mat-phase{font-size:1.15rem}.mat-phase .ph{font-size:1.3rem;font-weight:700}
+.ph-solid{color:#8ec5ff}.ph-liquid{color:#6ee7d8}.ph-gas{color:#ffc27a}.ph-plasma{color:#ff9be8}
+.mat-temp{font-weight:700;margin:2px 0}
+.mat-read em,.mat-kinds em{font-style:normal;font-size:.8rem;padding:1px 8px;border-radius:999px}
+em.absorb{background:rgba(255,150,90,.3)}em.release{background:rgba(110,170,255,.3)}
+.mat-plateau{color:#ffe9a8}
+.mat-box{margin:10px 0;padding:10px 12px;border-radius:14px;background:rgba(255,255,255,.07);border:1px solid var(--line)}
+.mat-box ul{margin:4px 0 6px;padding-left:20px}
+.mat-curve svg{width:100%;height:auto;display:block}
+.mat-kinds{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:6px 0}
+.mat-note{font-size:.85rem;opacity:.85;line-height:1.5;margin:6px 0}.mat-src{font-size:.75rem;opacity:.6;margin:4px 0}
+.mat-card{margin:10px 0;padding:12px 14px;border-radius:14px;background:rgba(255,255,255,.1);border:1px solid var(--line)}
+.mat-q{font-size:1.2rem;line-height:1.5;margin:6px 0 0;font-weight:700}
+.mat-row{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}.mat-row .btn{flex:1 1 120px;margin:0}
+.btn.good{background:#2fbf71;color:#08210f}.btn.bad{background:#e0566a;color:#fff}
+.mat-fb{margin:8px 0;padding:10px 12px;border-radius:14px}.mat-fb.ok{background:rgba(61,220,132,.18)}.mat-fb.no{background:rgba(255,110,130,.18)}
+.mat-fb p{margin:6px 0}.mat-clue{color:#ffe9a8;font-weight:700}
+/* 被選中的小標籤(階段、分頁、物質…):各頁共用 */
+.chip.on{background:var(--accent);color:#222;font-weight:700}
+.mat-phase{line-height:2.1}
+/* 滑桿下面的變化點(熔點/沸點…)*/
+.mat-marks{position:relative;height:3.4em;margin:0 12px 6px}
+.mat-mark{position:absolute;top:0;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;text-align:center;font-size:.72rem;line-height:1.45;width:8em;max-width:34%}
+.mat-mark i{display:block;width:2px;height:8px;background:#ffe9a8;border-radius:1px;margin-bottom:2px}
+.mat-mark span:first-of-type{color:#ffe9a8;font-weight:700}
+.mat-mark .alt{font-weight:400;color:#ffe9a8;font-size:.68rem}
+.mat-marks{height:4.6em}
+.mat-marks{margin-top:-8px}

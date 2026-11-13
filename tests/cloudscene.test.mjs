@@ -27,7 +27,7 @@ test('週期表光譜模式下點元素,直接進原子頁的光譜分頁;一般
 });
 
 test('國小/國中/高中三層;預設立體,可切換「切開看」;切開時鏡頭正對剖面、不自動旋轉', () => {
-  assert.match(cloud, /import \{ LEVELS, getLevel, setLevel \} from '\.\.\/ui\/level\.js'/);                // 三個階段與「記住上次選的」在 ui/level.js,和原子核頁共用
+  assert.match(cloud, /import \{ levelChipsHTML, bindLevelChips \} from '\.\.\/ui\/levelBar\.js'/);          // 三個階段的選擇鈕在 ui/levelBar.js、「記住上次選的」在 ui/level.js,各頁共用
   assert.match(read('src/ui/level.js'), /LEVELS = \['kid', 'teen', 'high'\]/);
   assert.match(cloud, /slice = false/);                                        // 預設立體;切開看是選項
   assert.match(cloud, /if \(sliced\) stage\.camera\.position\.set\(0, 0, L\)/);       // 切開看時鏡頭正對剖面,不用再轉
@@ -48,7 +48,7 @@ test('所有 cloud.* 文字中英文都有,而且沒有漏掉的變數', () => {
   assert.deepEqual([...kz].sort(), [...ke].sort());
   assert.ok(kz.size >= 35, 'cloud 文字數量 ' + kz.size);
   for (const k of cloud.matchAll(/T\('(cloud\.[\w.]+)'/g)) if (!k[1].endsWith('.')) assert.ok(kz.has(k[1]), '程式用到但沒有定義:' + k[1]);   // 結尾是 . 的是動態組合的,下面逐一檢查
-  for (const k of ['lead.kid', 'lead.teen', 'level.kid', 'level.teen', 'l.s', 'l.p', 'l.d', 'solid', 'teen.slice', 'teen.solid']) assert.ok(kz.has('cloud.' + k), 'cloud.' + k);
+  for (const k of ['lead.kid', 'lead.teen', 'l.s', 'l.p', 'l.d', 'solid', 'teen.slice', 'teen.solid']) assert.ok(kz.has('cloud.' + k), 'cloud.' + k);
   for (const id of ['1s', '2s', '2p', '3d']) for (const p of ['name', 'desc', 'node']) assert.ok(kz.has(`cloud.${p}.${id}`), `cloud.${p}.${id}`);
 });
 

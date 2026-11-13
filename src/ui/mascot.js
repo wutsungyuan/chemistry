@@ -16,6 +16,10 @@ const TIPS = {
     zh: ['按「拍照」,電子可能出現的地方會亮一個點!', '拍越多張,雲的形狀就越清楚,不同的能階形狀不一樣喔!', '電子不是繞圈圈的小球,而是一團機率的雲!'],
     en: ['Tap "Snap" and a dot lights up where the electron might be!', 'The more you snap, the clearer the shape!', 'An electron is not a little ball going round - it is a cloud of probability!'],
   },
+  matter: {
+    zh: ['拉動滑桿加熱或冷卻,看看分子怎麼動!', '變成冰、水、水蒸氣,每個分子都還是 H₂O 喔!', '正在融化或沸騰的時候,溫度會停住不上升。', '判斷物理還是化學變化:有沒有產生新的物質?'],
+    en: ['Drag the slider to heat or cool and watch the molecules!', 'Ice, water and steam: every molecule is still H2O!', 'While melting or boiling, the temperature stops rising.', 'Physical or chemical? Ask: is a new substance made?'],
+  },
   nucleus: {
     zh: ['紅球是質子,灰球是中子。質子數一樣、中子數不一樣的,就是同位素!', '按「看它變身」,看看不穩定的原子核會發生什麼事!', '半衰期:一大堆原子裡,有一半變身掉所要的時間。', '點上面的數字,換一種同位素看看!'],
     en: ['Red = proton, gray = neutron. Same protons, different neutrons: isotopes!', 'Press "Watch it change" to see what an unstable nucleus does!', 'Half-life: the time for half of a big pile of atoms to change.', 'Tap a number above to try another isotope!'],
