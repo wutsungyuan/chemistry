@@ -167,7 +167,6 @@ button:focus-visible,input:focus-visible{outline:3px solid #fff;outline-offset:2
 .badge.got{background:linear-gradient(180deg,#ffe066,#ffbf2e);box-shadow:0 2px 0 #b97a00}
 /* 提示訊息 */
 #toast{background:linear-gradient(180deg,#ffe066,#ffbf2e);box-shadow:0 8px 24px rgba(0,0,0,.4);border:2px solid #fff6;font-size:1.05rem}
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 
 /* ---------- 窄版面(手機 + iPad 直式,≤900px):面板上下堆疊 ---------- */
 @media (max-width:900px){
@@ -288,7 +287,6 @@ body{background:
 /* 點擊閃光 */
 .spark{position:fixed;z-index:99;pointer-events:none;font-size:18px;transform:translate(-50%,-50%);animation:spark .7s ease-out forwards}
 @keyframes spark{to{transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) scale(1.4) rotate(120deg);opacity:0}}
-@media (prefers-reduced-motion:reduce){.bench .b{animation:none}.spark{display:none}}
 
 /* 教室感:頂端彩旗 + 木質實驗桌 */
 .bench{height:104px;background:linear-gradient(180deg,#f0b868 0,#d9954a 12px,#8a5428 12px,#5e3519 100%);border-top:2px solid #ffd9a0;box-shadow:0 -6px 18px rgba(0,0,0,.25)}
@@ -342,7 +340,6 @@ body{background:
 /* 提示已整合進小博士,實驗室頂部的獨立提示條不再需要 */
 .hint{display:none!important}
 @media (max-width:900px){#tipbar{min-height:46px;padding:3px 10px 3px 8px}.m-body{width:40px;height:44px}.m-bubble{font-size:.85rem;line-height:1.7;padding:5px 12px}}
-@media (prefers-reduced-motion:reduce){.m-body,.m-orbits,.m-arm,.m-eyes{animation:none}}
 
 /* ---------- 標題列 + 小博士提示列合為同一塊(少一層、不突兀);彩旗改成垂掛在下緣的裝飾 ---------- */
 #head{position:relative;z-index:0;flex:none;

@@ -31,10 +31,10 @@ const store = { get(k, d) { try { return localStorage.getItem(k) ?? d; } catch {
 
 export function mount(container, startId) {
   const stage = createStage(container, { camPos: [0, 1.2, 8.5] });
-  stage.controls.autoRotate = !matchMedia('(prefers-reduced-motion: reduce)').matches;
+  stage.controls.autoRotate = true;
   stage.controls.autoRotateSpeed = 0.9;
   stage.controls.enablePan = false;
-  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const reduced = false;   // 不理會系統的「減少動態效果」
 
   let level = LEVELS.includes(store.get('cloudLevel', 'kid')) ? store.get('cloudLevel', 'kid') : 'kid';
   let id = STATES[startId] || startId === 'mix' ? startId : '1s';

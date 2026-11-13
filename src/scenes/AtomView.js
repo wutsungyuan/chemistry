@@ -28,7 +28,7 @@ function mountSpectrum(box, sym, onSelect = () => {}) {
   }
   const lines = completeLines(sp.lines), top = brightest(lines, 5), uid = 'sp' + sym;   // 沒有能階記錄的線也補上(對得出來就用真的,否則畫示意),每一條線都有躍遷動畫
   let mode = 'emit', sel = -1, dragging = false, lastW = 0, lastLH = 0, seen = false, lastKey = '';
-  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const reduced = false;   // 不理會系統的「減少動態效果」
   const anyLevels = lines.some(hasLevels);
   box.innerHTML = `
     <h3 class="spec-h">🌈 ${T('sp.title')}</h3>
@@ -232,7 +232,7 @@ export function mount(container, z, { go }) {
   // 影子的濃淡 = 在那一層的機率(躍遷時一層變淡、另一層變濃)。軌道半徑只是示意,見 ui/orbitJump.js。
   const outerShell = shellGroups[shellGroups.length - 1], outerElectron = outerShell?.electrons[0];
   const jump = { plan: null, mode: 'emit', t0: 0, color: null, rings: [], labels: [], photon: null, ghost: null, origMat: null, matLow: null, matUp: null };
-  const wv = new THREE.Vector3(), reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const wv = new THREE.Vector3(), reducedMotion = false;
   function clearJump() {
     jump.rings.forEach(r => { outerShell.g.remove(r); r.geometry.dispose(); r.material.dispose(); });
     jump.labels.forEach(o => { outerShell.g.remove(o); o.element.remove(); });
@@ -300,7 +300,8 @@ export function mount(container, z, { go }) {
   }
   stage.onFrame(() => {
     if (!jump.plan || !outerElectron) return;
-    const st = reducedMotion ? { pUp: 0.5, pLow: 0.5, photon: null } : jumpState(jump.mode, performance.now() / 1000 - jump.t0);   // 減少動態:兩層各一半濃(=混合)
+    const st = jumpState(jump.mode, performance.now() / 1000 - jump.t0);   // 淡入淡出只是明暗變化、沒有位移,「減少動態效果」的裝置也照常播放;只是不飛光子
+    if (reducedMotion) st.photon = null;
     jump.matLow.opacity = st.pLow; jump.matUp.opacity = st.pUp;
     jump.ghost.visible = st.pUp > 0.01; outerElectron.m.visible = st.pLow > 0.01;
     jump.ghost.position.set(Math.cos(outerElectron.a) * jump.plan.rHi, 0, Math.sin(outerElectron.a) * jump.plan.rHi);   // 影子跟著同一顆電子繞行

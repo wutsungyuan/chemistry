@@ -59,7 +59,7 @@ const SVG = `<svg viewBox="0 0 120 130" width="100%" height="100%" aria-hidden="
   <circle cx="41" cy="62" r="4" fill="#ff9aa8" opacity=".6"/><circle cx="79" cy="62" r="4" fill="#ff9aa8" opacity=".6"/>
 </svg>`;
 
-const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const reduced = false;   // 不理會系統的「減少動態效果」(遠端桌面常會自動開啟),動畫照常呈現
 
 let bar, bubble, body, scene = 'table', holdTimer, holding = false, asleep = false, lastMove = Date.now();
 const idx = {};
