@@ -52,7 +52,7 @@ function zyHTML(c, z) {
   const neutral = z.startsWith('˙');
   const tone = /[ˊˇˋ]$/.test(z) ? z.slice(-1) : '';
   const syms = z.replace(/^˙/, '').replace(/[ˊˇˋ]$/, '');
-  return `<span class="zy"><span class="zh">${c}</span><span class="zp"><b>${neutral ? '˙' : ''}${syms}</b>${tone ? `<i>${tone}</i>` : ''}</span></span>`;
+  return `<span class="zy"><span class="zh">${c}</span><span class="zp"><span class="zs">${neutral ? '˙' : ''}${syms}</span>${tone ? `<span class="zt">${tone}</span>` : ''}</span></span>`;
 }
 
 // 注音模式下標點改全形:字寬與注音欄位一致,不會和下一個字黏在一起

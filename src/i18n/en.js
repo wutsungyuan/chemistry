@@ -128,6 +128,7 @@ export default {
   'lab.unknown': 'This combo is not a mission molecule yet. Snip it apart and try again, or tap Hint on the mission card!',
   'lab.scissors.on': 'Scissors on! Tap an atom to cut its bonds, or a lone atom to remove it. Tap empty space to turn them off.',
   'lab.howto': 'Bonds to make: {list}.',
+  'lab.order.2': ' (double bond)', 'lab.order.3': ' (triple bond)',
   'lab.add': 'Add {nm} atom',
   'lab.mission.make': 'Make ',
   'lab.mission.done': 'Done!',

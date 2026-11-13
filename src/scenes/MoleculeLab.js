@@ -75,7 +75,8 @@ export function mount(container) {
   function howTo(m) {
     if (m.howto) return L(m.howto);
     const cnt = new Map();
-    m.bonds.forEach(([i, j]) => { const k = [m.atoms[i][0], m.atoms[j][0]].sort().join('–'); cnt.set(k, (cnt.get(k) || 0) + 1); });
+    const SIGN = { 1: '–', 2: '=', 3: '≡' };                                 // 鍵級:單鍵、雙鍵、三鍵,不能都寫成「–」
+    m.bonds.forEach(([i, j, ord = 1]) => { const k = [m.atoms[i][0], m.atoms[j][0]].sort().join(SIGN[ord] ?? '–') + (ord > 1 ? Tp('lab.order.' + ord) : ''); cnt.set(k, (cnt.get(k) || 0) + 1); });
     const list = [...cnt].map(([k, n]) => k + (n > 1 ? '×' + n : '')).join(state.lang === 'zh' ? '、' : ', ');
     return Tp('lab.howto', { list });
   }

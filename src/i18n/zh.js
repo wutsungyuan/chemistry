@@ -128,6 +128,7 @@ export default {
   'lab.unknown': '這個組合還不是任務的分子。可以用剪刀剪開重拼,或點任務卡上的「提示」看怎麼牽!',
   'lab.scissors.on': '剪刀開啟了!點原子的手可以剪斷,點單獨的原子可以移走。點畫面空白處就會關閉剪刀。',
   'lab.howto': '要牽的手:{list}。',
+  'lab.order.2': '(雙鍵)', 'lab.order.3': '(三鍵)',
   'lab.add': '加入{nm}原子',
   'lab.mission.make': '做出',
   'lab.mission.done': '完成了!',

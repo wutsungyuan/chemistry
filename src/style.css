@@ -9,8 +9,8 @@ body{display:flex;flex-direction:column;overflow:hidden}
 button{font:inherit;cursor:pointer}
 .zy{display:inline-flex;align-items:center;vertical-align:middle;height:1em;line-height:1}
 .zp{display:inline-flex;align-items:center;margin-left:1px}
-.zp b{font-weight:400;font-size:.33em;line-height:1;height:auto;writing-mode:vertical-rl;text-orientation:upright;letter-spacing:0;opacity:.95}
-.zp i{font-style:normal;font-size:.4em;line-height:1;margin-left:1px;opacity:.95}
+.zp .zs{font-weight:400;font-size:.33em;line-height:1;height:auto;writing-mode:vertical-rl;text-orientation:upright;letter-spacing:0;opacity:.95}
+.zp .zt{font-style:normal;font-size:.4em;line-height:1;margin-left:1px;opacity:.95}
 #topbar{display:flex;align-items:center;gap:12px;padding:8px 14px;background:var(--panel);flex-wrap:wrap}
 .brand{font-weight:800;font-size:1.2rem;color:var(--accent)}
 #nav{display:flex;gap:6px;flex:1;flex-wrap:wrap}
