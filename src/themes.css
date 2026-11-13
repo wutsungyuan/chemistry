@@ -1,0 +1,80 @@
+/* 三個版本的視覺主題。
+   國小(kid)就是 style.css / mobile.css 的預設樣子(歡樂教室風),這裡不需要改;
+   國中(teen)稍嚴謹正式、高中(high)專業正式,只覆蓋「外觀」(顏色、圓角、裝飾、吉祥物),不改版面結構與功能。
+   規則:每條規則都必須以 html[data-level=teen] 或 html[data-level=high] 開頭(tests/level.test.mjs 會檢查),
+   所以不會影響國小版;要新增主題細節請加在這裡,不要在各場景檔裡寫死顏色。 */
+
+/* ================= 國中版:收斂的藍灰、整齊、少量插圖 ================= */
+html[data-level=teen] {
+  --bg: #131b2e; --panel: #1c2742; --panel2: #2a3857; --glass: rgba(28,39,66,.92); --line: rgba(160,190,230,.24);
+  --text: #eef3fb; --muted: #aebbd6; --accent: #6db3f2; --radius: 12px;
+}
+html[data-level=teen], html[data-level=teen] body { background: #131b2e; }
+html[data-level=teen] body { background: radial-gradient(900px 500px at 12% 0, rgba(80,130,210,.22), transparent 60%), linear-gradient(180deg, #17213a, #0f1626); }
+html[data-level=teen] #deco .bench, html[data-level=teen] #head #bunting, html[data-level=teen] .spark { display: none; }
+html[data-level=teen] #head { background: linear-gradient(180deg, #243352, #1b2744); border-bottom: 1px solid var(--line); box-shadow: 0 2px 10px rgba(0,0,0,.35); }
+html[data-level=teen] .brand { background: none; color: #dbe9ff; -webkit-background-clip: border-box; background-clip: border-box; filter: none; font-weight: 700; }
+html[data-level=teen] #nav button, html[data-level=teen] .tool { background: #26344f; border: 1px solid rgba(160,190,230,.28); border-radius: 10px; box-shadow: none; color: var(--text); }
+html[data-level=teen] #nav button:hover, html[data-level=teen] .btn:hover { transform: none; background: #31456a; }
+html[data-level=teen] #nav button.active, html[data-level=teen] .tool.on { background: var(--accent); border-color: var(--accent); color: #0b1730; box-shadow: none; }
+html[data-level=teen] .btn { border-radius: 10px; }
+html[data-level=teen] .btn.alt { background: var(--panel2); color: var(--text); }
+html[data-level=teen] .chip { border-radius: 8px; }
+html[data-level=teen] .m-bubble { border-radius: 10px; background: #f1f5fc; color: #1c2742; font-weight: 600; }
+html[data-level=teen] .m-bubble::before { border-right-color: #f1f5fc; }
+html[data-level=teen] .side { background: var(--glass); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: 0 6px 20px rgba(0,0,0,.3); }
+html[data-level=teen] .canvas-wrap { background: radial-gradient(ellipse at 50% 45%, rgba(255,255,255,.05) 0, rgba(5,10,25,.3) 100%); }
+html[data-level=teen] .pt-grid .el { background: color-mix(in srgb, var(--c) 82%, #1c2742); border: 1px solid color-mix(in srgb, var(--c) 55%, #fff); box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; border-radius: 6px; color: #0d1a33; }
+html[data-level=teen] .pt-grid .el::before { display: none; }
+html[data-level=teen] .pt-grid .el .sym { color: #0d1a33; text-shadow: none; }
+html[data-level=teen] .pt-grid .el .nm, html[data-level=teen] .pt-grid .el .z { color: #1c2742; text-shadow: none; }
+html[data-level=teen] .pt-grid .el:hover { background: color-mix(in srgb, var(--c) 95%, #fff); box-shadow: 0 6px 16px rgba(0,0,0,.4); }
+
+/* ================= 高中版:低彩度深色、細線條、資料導向、沒有吉祥物與裝飾 ================= */
+html[data-level=high] {
+  --bg: #0a0f1c; --panel: #111a2e; --panel2: #18233d; --glass: rgba(12,19,36,.93); --line: rgba(143,200,255,.28);
+  --text: #e6efff; --muted: #93a4c4; --accent: #8fc8ff; --radius: 6px;
+}
+html[data-level=high], html[data-level=high] body { background: #0a0f1c; }
+html[data-level=high] body {
+  background:
+    linear-gradient(rgba(120,180,255,.05) 1px, transparent 1px) 0 0 / 34px 34px,
+    linear-gradient(90deg, rgba(120,180,255,.05) 1px, transparent 1px) 0 0 / 34px 34px,
+    radial-gradient(ellipse at 50% 0, #14264d 0, transparent 70%), #0a0f1c;
+}
+html[data-level=high] #deco .bench, html[data-level=high] #head #bunting, html[data-level=high] .spark { display: none; }
+html[data-level=high] #head { background: #0d1426; border-bottom: 1px solid var(--line); box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; }
+html[data-level=high] .brand { background: none; color: #cfe8ff; -webkit-background-clip: border-box; background-clip: border-box; filter: none; font-weight: 600; letter-spacing: .06em; }
+html[data-level=high] #nav button, html[data-level=high] .tool { background: transparent; border: 1px solid var(--line); border-radius: 4px; box-shadow: none; color: var(--text); font-weight: 500; letter-spacing: .03em; }
+html[data-level=high] #nav button:hover, html[data-level=high] .btn:hover { transform: none; background: rgba(143,200,255,.12); }
+html[data-level=high] #nav button.active, html[data-level=high] .tool.on { background: rgba(143,200,255,.18); border-color: var(--accent); color: #bfe3ff; box-shadow: none; }
+html[data-level=high] #nav .ico { display: none; }
+html[data-level=high] .btn { border-radius: 4px; background: var(--accent); color: #07101f; font-weight: 600; }
+html[data-level=high] .btn.alt { background: var(--panel2); color: var(--text); border: 1px solid var(--line); }
+html[data-level=high] .chip { border-radius: 3px; background: var(--panel2); border: 1px solid rgba(143,200,255,.18); }
+html[data-level=high] .m-body { display: none; }                                    /* 沒有吉祥物;提示文字留著,改成安靜的一行字 */
+html[data-level=high] #tipbar { min-height: 0; padding: 4px 14px 6px; }
+html[data-level=high] .m-bubble { background: transparent; color: var(--muted); box-shadow: none; padding: 0; font-weight: 400; font-size: .9rem; line-height: 1.6; border-radius: 0; }
+html[data-level=high] .m-bubble::before { display: none; }
+html[data-level=high] .side { background: var(--glass); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: 0 0 0 1px rgba(143,200,255,.05) inset, 0 8px 24px rgba(0,0,0,.4); }
+html[data-level=high] .side h2 { font-weight: 600; letter-spacing: .03em; }
+html[data-level=high] .canvas-wrap { background: radial-gradient(ellipse at 50% 45%, rgba(255,255,255,.04) 0, rgba(2,6,18,.4) 100%); }
+html[data-level=high] .pt-grid .el { background: #131d33; border: 1px solid color-mix(in srgb, var(--c) 45%, transparent); border-top: 3px solid var(--c); box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; border-radius: 3px; color: var(--text); }
+html[data-level=high] .pt-grid .el::before { display: none; }
+html[data-level=high] .pt-grid .el .sym { color: var(--text); text-shadow: none; }
+html[data-level=high] .pt-grid .el .nm, html[data-level=high] .pt-grid .el .z { color: var(--muted); text-shadow: none; }
+html[data-level=high] .pt-grid .el:hover { background: #1b2745; box-shadow: 0 0 14px color-mix(in srgb, var(--c) 40%, transparent); }
+
+/* ================= 手機/平板的底部導覽列(條件與 mobile.css 相同):不再是木頭實驗桌 ================= */
+@media (max-width: 900px), (pointer: coarse) and (max-width: 1400px) {
+  html[data-level=teen] #nav { background: #1b2744; border-top: 1px solid var(--line); box-shadow: 0 -2px 10px rgba(0,0,0,.35); }
+  html[data-level=high] #nav { background: #0d1426; border-top: 1px solid var(--line); box-shadow: none; }
+  html[data-level=teen] #nav button, html[data-level=high] #nav button { background: transparent; border-color: transparent; color: var(--muted); }
+  html[data-level=teen] #nav button.active { background: rgba(109,179,242,.2); border-color: var(--accent); color: #dcecff; }
+  html[data-level=high] #nav button.active { background: rgba(143,200,255,.14); border-color: var(--accent); color: #bfe3ff; }
+  html[data-level=high] #nav button { border-radius: 4px; }
+}
+
+/* 週期表「左右滑動」提示標籤(手機):配合各版本的色調 */
+html[data-level=teen] body[data-scene=table] #app::before { background: rgba(109,179,242,.95); color: #0b1730; font-weight: 700; border-radius: 8px; }
+html[data-level=high] body[data-scene=table] #app::before { background: rgba(143,200,255,.16); color: #bfe3ff; border: 1px solid var(--accent); font-weight: 500; border-radius: 3px; }

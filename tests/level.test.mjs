@@ -41,3 +41,4 @@ test('用語依階段:key@kid / key@teen / key@high 優先,沒有就用 key,再�
   assert.equal(i18n.raw(k, 'zh', 'kid'), i18n.raw(k, 'zh', 'high'));                   // 沒有 @ 版本 → 三個階段共用
   assert.equal(i18n.raw('no.such.key', 'zh', 'kid'), 'no.such.key');                    // 完全沒有 → 回傳 key 本身
 });
+

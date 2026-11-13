@@ -1,5 +1,6 @@
 import './style.css';
 import './mobile.css';
+import './themes.css';
 import { mountDeco } from './ui/deco.js';
 import { mountMascot, mascotScene } from './ui/mascot.js';
 import { T, state, setLang, onLangChange } from './i18n/index.js';
