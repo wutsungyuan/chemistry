@@ -21,7 +21,7 @@ function topLevelBlocks(src) {
 test('mobile.css:最上層只有 @media(手機寬度/橫放矮螢幕)與 @keyframes,沒有會影響桌面的裸規則', () => {
   for (const b of topLevelBlocks(css)) {
     const head = b.slice(0, b.indexOf('{')).trim();
-    assert.match(head, /^@(media\s*\((max-width:\s*600px\)(\s*and\s*\(max-height:\s*640px\))?, \(pointer:\s*coarse\)\s*and\s*\(max-width:\s*1400px\)|max-width:\s*600px\)$|max-height:\s*480px\)\s*and\s*\(max-width:\s*950px)|keyframes\s)/, `會影響所有裝置的規則:${head.slice(0, 60)}`);
+    assert.match(head, /^@(media\s*\((max-width:\s*(?:600|900)px\)(\s*and\s*\(max-height:\s*640px\))?, \(pointer:\s*coarse\)\s*and\s*\(max-width:\s*1400px\)|max-width:\s*600px\)$|max-height:\s*480px\)\s*and\s*\(max-width:\s*950px)|keyframes\s)/, `會影響所有裝置的規則:${head.slice(0, 60)}`);
   }
 });
 
@@ -83,7 +83,7 @@ test('操作列:順序是 ◀ 回週期表 念給我聽 ▶;按 ◀ ▶ 換元�
 
 test('iPad(觸控、寬度 ≤ 1400px)與手機共用同一套版面;JS 判斷(layout.js)和 CSS 條件要一致', () => {
   const lay = fs.readFileSync(path.join(root, 'src/ui/layout.js'), 'utf8');
-  assert.match(lay, /PHONE_QUERY = '\(max-width: 600px\), \(pointer: coarse\) and \(max-width: 1400px\)'/);
+  assert.match(lay, /PHONE_QUERY = '\(max-width: 900px\), \(pointer: coarse\) and \(max-width: 1400px\)'/);
   assert.match(lay, /isNarrow = \(\) => window\.innerWidth <= NARROW_MAX \|\| matchMedia\(PHONE_QUERY\)\.matches/);
   const raw = fs.readFileSync(path.join(root, 'src/mobile.css'), 'utf8');
   const heads = [...raw.matchAll(/^@media ([^{]+)\{/gm)].map(m => m[1].trim()).filter(h => !/max-height:\s*480px/.test(h));

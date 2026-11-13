@@ -248,7 +248,7 @@ export function mount(container, z, { go }) {
     line.computeLineDistances();
     return line;
   };
-  const specTab = () => side?.dataset.tab === 'spec';
+  const specTab = () => side?.dataset.tab === 'spec' && isNarrow();   // 取景調整只給手機/平板(3D 區域小);桌機的光譜分頁不動鏡頭
   /** 讓半徑 r 的軌道(含傾斜,實際投影到畫面上)填滿 3D 區域約 88%:算軌道投影後的最大範圍,據此調整鏡頭距離,重複幾次就會收斂 */
   function fitRing(r) {
     const pts = Array.from({ length: 36 }, (_, k) => new THREE.Vector3(Math.cos((k / 36) * Math.PI * 2) * r, 0, Math.sin((k / 36) * Math.PI * 2) * r));
@@ -361,7 +361,7 @@ export function mount(container, z, { go }) {
   side.querySelectorAll('.side-tabs [data-tab]').forEach(b => {
     b.onclick = () => {
       side.dataset.tab = b.dataset.tab;
-      if (b.dataset.tab === 'info') setDist(dist0); else requestAnimationFrame(() => requestAnimationFrame(reframe));   // 回到原子資訊:恢復原本取景;進光譜分頁:等版面套用完再取景
+      if (!isNarrow()) { /* 桌機:3D 取景不變 */ } else if (b.dataset.tab === 'info') setDist(dist0); else requestAnimationFrame(() => requestAnimationFrame(reframe));   // 回到原子資訊:恢復原本取景;進光譜分頁:等版面套用完再取景
       side.querySelectorAll('.side-tabs [data-tab]').forEach(x => x.classList.toggle('on', x === b));
       side.scrollTop = 0;
     };

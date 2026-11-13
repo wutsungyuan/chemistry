@@ -8,7 +8,7 @@
    4. 觸控目標 ≥ 44px;用 dvh 與 safe-area,避開瀏覽器工具列。
    場景用 body[data-scene] 區分(由 main.js / mascot.js 設定)。
    ============================================================ */
-@media (max-width: 600px), (pointer: coarse) and (max-width: 1400px) {
+@media (max-width: 900px), (pointer: coarse) and (max-width: 1400px) {
   :root { --nav-h: 60px; --stage-h: 42%; }
   html, body { font-size: 15px; }
   body { padding-bottom: calc(var(--nav-h) + env(safe-area-inset-bottom)); }
@@ -160,13 +160,13 @@
 }
 
 /* 手機:光譜區塊的觸控目標要夠大 */
-@media (max-width: 600px), (pointer: coarse) and (max-width: 1400px) {
+@media (max-width: 900px), (pointer: coarse) and (max-width: 1400px) {
   .spec-modes .chip, .spec-top .chip { min-height: 42px; padding: 6px 14px; }
   .spec-strip { margin: 4px -2px; }
 }
 
 /* 手機:元素頁面板分頁(原子資訊 | 光譜) */
-@media (max-width: 600px), (pointer: coarse) and (max-width: 1400px) {
+@media (max-width: 900px), (pointer: coarse) and (max-width: 1400px) {
   .side-tabs { display: flex; gap: 6px; margin: 4px 0 8px; }
   .side-tabs .chip { flex: 1; text-align: center; min-height: 40px; margin: 0; border: 0; color: var(--text); cursor: pointer; font-size: .95rem; }
   .side-tabs .chip.on { background: var(--accent); color: #222; font-weight: 700; }
@@ -179,7 +179,7 @@
    空間怎麼分:3D(約 26% 高)→ 標題與分頁一列 → 「發光/吸收 + 最亮的幾條線 + ⓘ」一列 → 光譜條 → 讀數 → 階梯圖(吃掉剩下的高度)→ 精簡的操作列。
    長篇說明是一張蓋住下方面板的獨立面板(實心背景、有 ✕),不和圖疊在一起;原子博士提示列與縮放滑桿在這一頁隱藏
    (滑桿的位置用百分比算,畫布有最小高度時會對不上而蓋住原子)。3D 的取景由 AtomView 依畫布大小自動算(fitRing)。 */
-@media (max-width: 600px), (pointer: coarse) and (max-width: 1400px) {
+@media (max-width: 900px), (pointer: coarse) and (max-width: 1400px) {
   body:has(#app > .side[data-tab=spec]) #head #tipbar { display: none; }
   #app:has(> .side[data-tab=spec]) > .canvas-wrap { flex: 0 0 clamp(150px, 26%, 340px); min-height: 150px; }
   #app:has(> .side[data-tab=spec]) > .zoombar { display: none; }
@@ -221,12 +221,12 @@
 }
 
 /* 手機很矮(例如 iPhone SE、或瀏覽器工具列佔很多):階梯圖下方的一行說明先收起來,空間留給三個圖(完整說明仍在「ⓘ 說明」) */
-@media (max-width: 600px) and (max-height: 640px), (pointer: coarse) and (max-width: 1400px) and (max-height: 640px) {
+@media (max-width: 900px) and (max-height: 640px), (pointer: coarse) and (max-width: 1400px) and (max-height: 640px) {
   .spec-ladder-read { display: none; }
 }
 
 /* 手機:操作列的順序是 ◀ 回週期表 念給我聽 ▶ —— 左右箭頭固定在兩側,中間兩個按鈕平分剩下的空間 */
-@media (max-width: 600px), (pointer: coarse) and (max-width: 1400px) {
+@media (max-width: 900px), (pointer: coarse) and (max-width: 1400px) {
   #app > .side:not(.mission) > div:last-child { justify-content: space-between; }
   #app > .side:not(.mission) > div:last-child #prev, #app > .side:not(.mission) > div:last-child #next { flex: none; min-width: 48px; }
   #app > .side:not(.mission) > div:last-child #back, #app > .side:not(.mission) > div:last-child #say { flex: 1 1 auto; }
