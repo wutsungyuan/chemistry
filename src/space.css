@@ -45,7 +45,7 @@ html[data-level=teen] #deco::before {                           /* 國中星:右
 }
 html[data-level] #deco .bench, html[data-level] #head #bunting { display: none; }      /* 原本的木頭實驗桌與彩旗(歡樂教室風)都收起來 */
 
-/* ---- 國小星:糖果色的太空基地 ---- */
+/* ---- 國小星:標題列與 3D 舞台(深色太空;面板的樣式在檔案最後) ---- */
 html[data-level=kid] #head {
   background: linear-gradient(180deg, rgba(24,30,84,.92), rgba(13,18,54,.9));
   border-bottom: 3px solid transparent; border-image: linear-gradient(90deg, #ff7fb0, #ffd23f, #7ee8c8, #7cc4ff) 1;     /* 糖果色的一條光帶 */
@@ -75,44 +75,68 @@ html[data-level=kid] .canvas-wrap {                             /* 3D 舞台:更
 html[data-level=teen] #head { background: linear-gradient(180deg, rgba(36,51,82,.9), rgba(22,32,58,.86)); }
 html[data-level=high] #head { background: rgba(9,14,30,.82); }
 
-/* ================= 國小星:糖果色的太空基地 =================
-   深色星空是「窗外」;介面是基地裡的艙室與控制台:圓滾滾的艙板、會發光的糖果色邊框、膠囊形的大按鈕。
-   四個糖果色:粉 #ff7fb0、黃 #ffd23f、薄荷 #7ee8c8、天藍 #7cc4ff。字級、注音、版面都不動。 */
-html[data-level=kid] { --candy: linear-gradient(90deg, #ff7fb0, #ffd23f, #7ee8c8, #7cc4ff); --radius: 24px; }
+/* ================= 國小星:棒棒糖星球 =================
+   配色直接取自入口頁那顆棒棒糖星球與它的說明卡:白色的卡片、糖果黃的粗框、粉紅的標題與主要按鈕、天藍的次要按鈕、薄荷綠的提示。
+   深色星空只當背景(窗外的太空);所有拿來讀字、按按鈕的面板都是明亮的。字級、注音、版面都不動。 */
+html[data-level=kid] { --radius: 24px; }
 
-/* 艙板(資訊面板、清單、工具列、測驗與故事的卡片):深色玻璃 + 圓角 + 糖果色的發光邊框 */
+/* 面板(資訊面板、清單、工具列、測驗與故事的卡片):白底 + 黃色粗框 + 底下一道厚度,像入口頁的國小星說明卡。
+   面板裡的文字顏色跟著改成深色(重新定義這些變數,裡面用 var(--text) 的地方都會跟著變) */
 html[data-level=kid] .side, html[data-level=kid] .list, html[data-level=kid] .tray, html[data-level=kid] .stage-bar, html[data-level=kid] .quiz {
-  border-radius: 26px; border: 2px solid transparent;
-  background: linear-gradient(180deg, rgba(30,38,104,.94), rgba(16,22,66,.94)) padding-box, var(--candy) border-box;
-  box-shadow: 0 0 0 1px rgba(255,255,255,.06) inset, 0 10px 30px rgba(0,0,0,.45), 0 0 22px rgba(255,127,176,.16);
+  --text: #2b2f6b; --muted: #5d639c; --panel: #ffffff; --panel2: #eef2ff; --line: rgba(43,47,107,.16); --glass: rgba(255,255,255,.97);
+  color: #2b2f6b; background: rgba(255,255,255,.97); border: 4px solid #ffd23f; border-radius: 26px;
+  box-shadow: 0 6px 0 #ffb703, 0 14px 30px rgba(0,0,0,.4); -webkit-backdrop-filter: none; backdrop-filter: none;
 }
-html[data-level=kid] .tipbox { border-radius: 18px; border-left: 0; background: rgba(126,232,200,.14); box-shadow: inset 4px 0 0 #7ee8c8; }
+html[data-level=kid] .side h2, html[data-level=kid] .quiz h2, html[data-level=kid] .side h3, html[data-level=kid] .quiz h3 { color: #ff5c7a; text-shadow: none; }
+html[data-level=kid] .tipbox { border-radius: 18px; border-left: 0; background: #e3faf2; color: #1d4a41; box-shadow: inset 5px 0 0 #5fd9b4; }
+html[data-level=kid] .side .chip, html[data-level=kid] .quiz .chip { border-radius: 999px; }
 
-/* 按鈕:膠囊形、有厚度、按下去會沉;主要按鈕是糖果黃,次要按鈕是天藍 */
-html[data-level=kid] .btn { border-radius: 999px; padding: 9px 18px; background: linear-gradient(180deg, #ffe680, #ffc22e); color: #3a2400; box-shadow: 0 4px 0 #c98a00, 0 0 16px rgba(255,210,63,.35); }
-html[data-level=kid] .btn:active { transform: translateY(4px); box-shadow: 0 0 0 #c98a00; }
-html[data-level=kid] .btn.alt { background: linear-gradient(180deg, #8fd0ff, #5aa9f0); color: #0b1c44; box-shadow: 0 4px 0 #2f6fb5, 0 0 14px rgba(124,196,255,.3); }
-html[data-level=kid] .btn.alt:active { box-shadow: 0 0 0 #2f6fb5; }
+/* 按鈕:膠囊形、有厚度、按下去會沉。主要按鈕是棒棒糖的粉紅,次要按鈕是天藍 */
+html[data-level=kid] .btn { border-radius: 999px; padding: 9px 18px; background: linear-gradient(180deg, #ff7f98, #ff5c7a); color: #fff; box-shadow: 0 4px 0 #d93d5c; }
+html[data-level=kid] .btn:active { transform: translateY(4px); box-shadow: 0 0 0 #d93d5c; }
+html[data-level=kid] .btn.alt { background: linear-gradient(180deg, #9fd6ff, #6db8f5); color: #12305c; box-shadow: 0 4px 0 #3f86c9; }
+html[data-level=kid] .btn.alt:active { box-shadow: 0 0 0 #3f86c9; }
 html[data-level=kid] .chip { border-radius: 999px; }
-html[data-level=kid] .tool { border-radius: 999px; background: rgba(124,196,255,.16); border: 1.5px solid rgba(124,196,255,.55); color: #eaf3ff; }
+html[data-level=kid] .tool { border-radius: 999px; background: rgba(255,255,255,.14); border: 1.5px solid rgba(255,255,255,.5); color: #fff; }
 
-/* 清單(分子、物質…):一顆一顆的膠囊;選到的那顆是發光的糖果黃 */
-html[data-level=kid] .list button { border-radius: 18px; border: 1.5px solid rgba(255,255,255,.16); background: rgba(255,255,255,.07); }
-html[data-level=kid] .list button.active { background: linear-gradient(180deg, #ffe680, #ffc22e); color: #3a2400; border-color: #fff3; box-shadow: 0 3px 0 #c98a00, 0 0 16px rgba(255,210,63,.4); }
+/* 清單(分子、物質…):淡藍色的膠囊;選到的那顆是糖果黃 */
+html[data-level=kid] .list button { border-radius: 18px; border: 2px solid #d5defa; background: #f3f6ff; color: #2b2f6b; }
+html[data-level=kid] .list button:hover { background: #e4ebff; }
+html[data-level=kid] .list button.active { background: linear-gradient(180deg, #ffe680, #ffd23f); color: #3a2400; border-color: #ffb703; box-shadow: 0 3px 0 #e09a00; }
 
-/* 導覽列 = 控制台:每顆按鈕是一顆發光的糖果色按鍵(顏色沿用各自的 --nc),目前所在的那顆亮起來 */
-html[data-level=kid] #nav button:not(.active) { border-radius: 999px; border: 1.5px solid color-mix(in srgb, var(--nc) 70%, transparent); box-shadow: 0 0 12px color-mix(in srgb, var(--nc) 30%, transparent), inset 0 1px 0 rgba(255,255,255,.18); }
-html[data-level=kid] #nav button.active { border-radius: 999px; background: linear-gradient(180deg, #ffe680, #ffc22e); color: #3a2400; box-shadow: 0 3px 0 #c98a00, 0 0 20px rgba(255,210,63,.6); }
+/* 測驗的選項、故事卡片:白色的大按鍵,天藍色的框 */
+html[data-level=kid] .opts button { border-radius: 20px; border: 3px solid #8cc9ff; background: #f3f9ff; color: #2b2f6b; box-shadow: 0 4px 0 #6db8f5; }
+html[data-level=kid] .opts button.right { background: #d9f7e6; border-color: #4cc98a; box-shadow: 0 4px 0 #36a86f; }
+html[data-level=kid] .opts button.wrong { background: #ffe1e6; border-color: #ff7f98; box-shadow: 0 4px 0 #d93d5c; }
+html[data-level=kid] .story-card { border-radius: 22px; border: 3px solid #ffc2d4; background: #fff7fa; color: #2b2f6b; box-shadow: 0 4px 0 #ff9ab8; }
+html[data-level=kid] .story-card:hover { border-color: #ff5c7a; }
+html[data-level=kid] .pt-grid .el { border-radius: 12px; }
+
+/* 導覽列:目前所在的那一顆是粉紅色(和「出發!」按鈕同一個顏色) */
+html[data-level=kid] #nav button:not(.active) { border-radius: 999px; border: 1.5px solid color-mix(in srgb, var(--nc) 75%, transparent); }
+html[data-level=kid] #nav button.active { border-radius: 999px; background: linear-gradient(180deg, #ff7f98, #ff5c7a); color: #fff; border-color: transparent; box-shadow: 0 3px 0 #d93d5c; }
 @media (max-width: 700px) {
-  html[data-level=kid] #nav button:not(.active) { border: 0; box-shadow: none; border-radius: 16px; }
-  html[data-level=kid] #nav button.active { border-radius: 16px; box-shadow: 0 2px 0 #c98a00, 0 0 16px rgba(255,210,63,.55); }
+  /* 手機底部的導覽列:白色的糖果盤,上緣一道黃色粗邊 */
+  html[data-level=kid] #nav { background: #fff; border-top: 4px solid #ffd23f; border-image: none; box-shadow: 0 -6px 20px rgba(0,0,0,.45); }
+  html[data-level=kid] #nav button:not(.active) { border: 0; border-radius: 16px; color: #4a4f8c; background: transparent; }
+  html[data-level=kid] #nav button.active { border-radius: 16px; box-shadow: 0 2px 0 #d93d5c; }
 }
 
-/* 原子寶寶的對話框:像通訊螢幕,白底、糖果色的邊 */
-html[data-level=kid] .m-bubble { border-radius: 20px; border: 2px solid transparent; background: linear-gradient(#fff, #fff) padding-box, var(--candy) border-box; box-shadow: 0 4px 14px rgba(0,0,0,.35); }
-
-/* 故事卡片、週期表的格子:更圓一點,和艙板一致 */
-html[data-level=kid] .story-card { border-radius: 22px; border: 2px solid rgba(255,255,255,.14); background: linear-gradient(180deg, rgba(42,51,128,.9), rgba(26,33,88,.9)); box-shadow: 0 6px 18px rgba(0,0,0,.35); }
-html[data-level=kid] .story-card:hover { border-color: #ffd23f; }
-html[data-level=kid] .pt-grid .el { border-radius: 12px; }
-html[data-level=kid] .opts button { border-radius: 20px; border: 1.5px solid rgba(124,196,255,.45); box-shadow: 0 4px 0 rgba(10,14,44,.6); }     /* 測驗的選項也是圓潤的大按鍵 */
+/* 原子寶寶的對話框:白底、黃色的框 */
+html[data-level=kid] .m-bubble { border-radius: 20px; border: 3px solid #ffd23f; background: #fff; box-shadow: 0 4px 0 #ffb703, 0 8px 16px rgba(0,0,0,.3); }
+/* 白色面板裡:原本給深色底用的亮黃、亮綠文字改成深一點的琥珀與綠(白底上才看得清楚);面板底部黏住的按鈕列也改成白底 */
+html[data-level=kid] .side, html[data-level=kid] .list, html[data-level=kid] .tray, html[data-level=kid] .stage-bar, html[data-level=kid] .quiz { --accent: #d97706; --good: #1f9d63; --bad: #d93d5c; }
+html[data-level=kid] #app > .side[data-tab] > div:last-child, html[data-level=kid] .nuc-actions { background: #fff; }
+html[data-level=kid] .cloud-side .cl-actions { background: linear-gradient(180deg, rgba(255,255,255,0), #fff 28%); }
+html[data-level=kid] .nuc-actions, html[data-level=kid] #app > .side[data-tab] > div:last-child { background: #fff !important; }
+html[data-level=kid] .nuc-iso .chip.st, html[data-level=kid] .nuc-iso .chip.ra { color: #fff; }
+html[data-level=kid] .nuc-iso .chip.on { color: #fff; box-shadow: 0 0 0 2px #2b2f6b; }
+html[data-level=kid] .nuc-result, html[data-level=kid] .nuc-use, html[data-level=kid] .nuc-dotsbox { background: #f1f4ff; }
+html[data-level=kid] .mat-mark i { background: #d97706; }
+html[data-level=kid] .mat-mark span:first-of-type, html[data-level=kid] .mat-mark .alt { color: #b45309; }
+/* 狀態名稱原本是給深色底用的亮色;白底上直接換成深一點的顏色。(不能用 filter 壓深:iPhone 上有注音的字套 filter 會被裁掉一半) */
+html[data-level=kid] .ph-solid { color: #1d6fc2; } html[data-level=kid] .ph-liquid { color: #0b8f7f; } html[data-level=kid] .ph-gas { color: #c2620a; } html[data-level=kid] .ph-plasma { color: #b83a9c; }
+html[data-level=kid] .mat-mark { font-size: .82rem; color: #2b2f6b; }
+html[data-level=kid] .mat-mark span:first-of-type, html[data-level=kid] .mat-mark .alt { color: #a14a00; font-weight: 800; }
+html[data-level=kid] .mat-mark .alt { font-size: .76rem; font-weight: 700; }
+html[data-level=kid] #app > .side:not(.mission) > div:last-child, html[data-level=kid] .spec-more-head { background: #fff !important; }
