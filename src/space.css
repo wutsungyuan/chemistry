@@ -52,7 +52,7 @@ html[data-level=kid] #head {
   box-shadow: 0 6px 22px rgba(0,0,0,.45);
 }
 html[data-level=kid] #nav button:not(.active) { background: color-mix(in srgb, var(--nc) 26%, rgba(14,20,60,.7)); }
-@media (max-width: 700px) {
+@media (max-width: 900px), (pointer: coarse) and (max-width: 1400px) {
   /* 手機底部的導覽列:木頭桌邊 → 太空船的控制台(深色玻璃、上緣一條糖果色光帶) */
   html[data-level=kid] #nav {
     background: linear-gradient(180deg, rgba(26,33,92,.96), rgba(10,14,44,.98)); border-top: 3px solid transparent;
@@ -115,7 +115,7 @@ html[data-level=kid] .pt-grid .el { border-radius: 12px; }
 /* 導覽列:目前所在的那一顆是粉紅色(和「出發!」按鈕同一個顏色) */
 html[data-level=kid] #nav button:not(.active) { border-radius: 999px; border: 1.5px solid color-mix(in srgb, var(--nc) 75%, transparent); }
 html[data-level=kid] #nav button.active { border-radius: 999px; background: linear-gradient(180deg, #ff7f98, #ff5c7a); color: #fff; border-color: transparent; box-shadow: 0 3px 0 #d93d5c; }
-@media (max-width: 700px) {
+@media (max-width: 900px), (pointer: coarse) and (max-width: 1400px) {
   /* 手機底部的導覽列:白色的糖果盤,上緣一道黃色粗邊 */
   html[data-level=kid] #nav { background: #fff; border-top: 4px solid #ffd23f; border-image: none; box-shadow: 0 -6px 20px rgba(0,0,0,.45); }
   html[data-level=kid] #nav button:not(.active) { border: 0; border-radius: 16px; color: #4a4f8c; background: transparent; }
@@ -154,3 +154,18 @@ html[data-level=kid] .m-body { filter: none; }
 html[data-level=kid] .m-body > canvas, html[data-level=kid] .m-body > svg { position: absolute; left: 67%; top: 41%; width: 31% !important; height: 66% !important; transform: translate(-50%, -50%); }
 @media (max-width: 900px) { html[data-level=kid] .m-body { width: 88px; height: 44px; } }
 @media (max-width: 700px) { html[data-level=kid] .m-body { width: 76px; height: 38px; } }
+
+/* ---- 國小星:其餘零件也用棒棒糖配色 ---- */
+/* 「看實驗動畫」的海報:粉紅到糖果黃(原本是藍紫色) */
+html[data-level=kid] .anim-poster { background: linear-gradient(135deg, #ff5c7a, #ff9a6b 60%, #ffd23f); box-shadow: 0 5px 0 #d93d5c, 0 12px 22px rgba(255,92,122,.3); border-radius: 22px; }
+html[data-level=kid] .anim-note { color: #5d639c; opacity: 1; }
+/* 全螢幕的動畫播放器(深色底):控制鈕是粉紅的膠囊,目前的步驟是糖果黃 */
+html[data-level=kid] .anim-bar button { border-radius: 999px; background: #ff5c7a; color: #fff; box-shadow: 0 3px 0 #d93d5c; }
+html[data-level=kid] .anim-card.full .anim-cap { background: #fff; color: #2b2f6b; border: 3px solid #ffd23f; border-radius: 18px; }
+html[data-level=kid] .anim-card.full .anim-steps button { background: rgba(255,255,255,.14); color: #fff; border-radius: 999px; }
+html[data-level=kid] .anim-card.full .anim-steps button.on { background: #ffd23f; color: #3a2400; }
+html[data-level=kid] .anim-card.full .anim-leg, html[data-level=kid] .anim-card.full .anim-tm { color: #e9edff; }
+/* 3D 舞台上的縮放列、獲得徽章的提示 */
+html[data-level=kid] .zoombar { background: rgba(255,255,255,.95); border: 3px solid #ffd23f; border-radius: 999px; }
+html[data-level=kid] .zoombar .zb { background: #6db8f5; color: #12305c; border-radius: 50%; }
+html[data-level=kid] #toast { background: #fff; color: #2b2f6b; border: 3px solid #ffd23f; border-radius: 999px; box-shadow: 0 4px 0 #ffb703, 0 10px 20px rgba(0,0,0,.35); }

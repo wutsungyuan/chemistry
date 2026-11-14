@@ -103,7 +103,7 @@ export function mountTablePlanet(host, opts) {
     R = (H / 2) / (camera.position.z * Math.tan(camera.fov / 2 * Math.PI / 180));                                                           // 星球在螢幕上的半徑(px),拖曳多少就轉多少
   }
   const ro = new ResizeObserver(size); ro.observe(host); size();
-  canvas.addEventListener('pointerdown', e => { down = { x: e.clientX, y: e.clientY, id: e.pointerId }; moved = 0; vy = 0; touched = true; canvas.setPointerCapture?.(e.pointerId); });
+  canvas.addEventListener('pointerdown', e => { down = { x: e.clientX, y: e.clientY, id: e.pointerId }; goal = null; moved = 0; vy = 0; touched = true; canvas.setPointerCapture?.(e.pointerId); });
   canvas.addEventListener('pointermove', e => {
     if (!down || e.pointerId !== down.id) return; const dx = e.clientX - down.x, dy = e.clientY - down.y; down.x = e.clientX; down.y = e.clientY; moved += Math.abs(dx) + Math.abs(dy);
     yaw += dx / R; vy = dx / R * 60; pitch = Math.max(-0.95, Math.min(0.95, pitch + dy / R));
@@ -119,17 +119,35 @@ export function mountTablePlanet(host, opts) {
   const up = e => { if (!down || e.pointerId !== down.id) return; const tap = moved < 8; down = null; if (tap) { vy = 0; const el = pick(e.clientX, e.clientY); if (el) opts.onPick(el); } };
   canvas.addEventListener('pointerup', up); canvas.addEventListener('pointercancel', () => { down = null; });
 
+  /** 把星球轉到某一類元素最密集的經度(和緯度):先找「連續 5 族(約 100°,一眼看得到的寬度)裡這一類元素最多」的那一段,再取這一段裡的平均位置 */
+  let goal = null;
+  function focus(cat) {
+    const els = ELEMENTS.filter(e => e.cat === cat); if (!els.length) return;
+    const count = new Array(COLS + 1).fill(0); els.forEach(e => { count[e.col]++; });
+    let best = 1, bestScore = -1;
+    for (let c = 1; c <= COLS; c++) { let sc = 0; for (let d = -2; d <= 2; d++) sc += count[((c - 1 + d + COLS) % COLS) + 1] * (3 - Math.abs(d)); if (sc > bestScore) { bestScore = sc; best = c; } }
+    let n = 0, dSum = 0, slotSum = 0;
+    for (const e of els) { let d = e.col - best; if (d > COLS / 2) d -= COLS; if (d < -COLS / 2) d += COLS; if (Math.abs(d) <= 2) { n++; dSum += d; slotSum += slotOf(e.row) + 0.5; } }
+    const u = (best - 0.5 + dSum / n) / COLS, lat = (LAT_TOP - slotSum / n * ROW_DEG) * Math.PI / 180;      // 這一段的中心:經度(0~1)與緯度(弧度,北正)
+    let ty = Math.PI / 2 - u * Math.PI * 2; ty += Math.round((yaw - ty) / (Math.PI * 2)) * Math.PI * 2;     // 球面貼圖 u 朝向鏡頭時 yaw = π/2 − 2πu;取離目前角度最近的那一圈
+    goal = { yaw: ty, pitch: Math.max(-0.95, Math.min(0.95, lat)) }; touched = true;
+  }
+  if (filter) focus(filter);
+
   let raf = 0, last = performance.now(), alive = true;
   (function frame(now) {
     if (!alive) return; raf = requestAnimationFrame(frame); const dt = Math.min(0.05, Math.max(0.001, (now - last) / 1000)); last = now;
     if (document.hidden) return;
-    if (!down) { if (!touched) yaw -= dt * 0.1; else if (Math.abs(vy) > 0.01) { yaw += vy * dt; vy *= Math.exp(-2.6 * dt); } }
+    if (!down && goal) {                                             // 篩選分類後:平順地轉到那一類元素最密集的地方(手一碰就停)
+      const k = 1 - Math.exp(-4 * dt); yaw += (goal.yaw - yaw) * k; pitch += (goal.pitch - pitch) * k; vy = 0;
+      if (Math.abs(goal.yaw - yaw) < 0.002 && Math.abs(goal.pitch - pitch) < 0.002) goal = null;
+    } else if (!down) { if (!touched) yaw -= dt * 0.1; else if (Math.abs(vy) > 0.01) { yaw += vy * dt; vy *= Math.exp(-2.6 * dt); } }
     planet.rotation.y = yaw; tilt.rotation.x = pitch; renderer.render(scene, camera);
   })(last);
 
-  canvas.__api = { pickAt: (x, y) => pick(x, y)?.sym || null, center: () => { const b = canvas.getBoundingClientRect(); return [b.left + b.width / 2, b.top + b.height / 2]; }, setYaw: v => { yaw = v; touched = true; vy = 0; } };   // 給 E2E 用
+  canvas.__api = { pickAt: (x, y) => pick(x, y)?.sym || null, center: () => { const b = canvas.getBoundingClientRect(); return [b.left + b.width / 2, b.top + b.height / 2]; }, setYaw: v => { yaw = v; goal = null; touched = true; vy = 0; }, settled: () => !goal };   // 給 E2E 用
   return {
-    setFilter(f) { filter = f || null; draw(); },
+    setFilter(f) { filter = f || null; draw(); if (filter) focus(filter); },
     dispose() { alive = false; cancelAnimationFrame(raf); ro.disconnect(); tex.dispose(); mat.dispose(); planet.children[0].geometry.dispose(); glow.geometry.dispose(); glow.material.dispose(); if (ring) { ring.geometry.dispose(); ring.material.map.dispose(); ring.material.dispose(); } renderer.dispose(); canvas.remove(); },
   };
 }
