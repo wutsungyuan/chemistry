@@ -20,7 +20,7 @@ export function validateStories(S, ctx, { err }) {
     if (!Array.isArray(zh) || !Array.isArray(en) || zh.length < 2 || zh.length > 5 || zh.length !== en.length) { err(id, 'body.zh 與 body.en 要各有 2~5 段,且段數相同'); continue; }
     if ([...zh, ...en].some(p => typeof p !== 'string' || !p.trim())) err(id, 'body 有空白的段落');
     const zhLen = zh.join('').length, enWords = en.join(' ').split(/\s+/).length;
-    if (zhLen < 120 || zhLen > 420) err(id, `中文長度 ${zhLen} 字不在 120~420 之間(要給國小生聽,不能太短也不能太長)`);
+    if (zhLen < 120 || zhLen > 300) err(id, `中文長度 ${zhLen} 字不在 120~300 之間(要給國小生聽,不能太短也不能太長)`);
     if (enWords < 50 || enWords > 260) err(id, `英文長度 ${enWords} 個字不在 50~260 之間`);
     if (en.some(p => CJK.test(p))) err(id, 'body.en 含中文字');
     const q = s.quiz;

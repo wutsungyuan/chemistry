@@ -17,10 +17,13 @@ const W = {
   跟著: 'gēn zhe', 接著: 'jiē zhe', 溶著: 'róng zhe', 帶著: 'dài zhe', 拿著: 'ná zhe', 看著: 'kàn zhe', 穿著: 'chuān zhe', 圍著: 'wéi zhe', 抓著: 'zhuā zhe', 躺著: 'tǎng zhe', 坐著: 'zuò zhe', 站著: 'zhàn zhe', 藏著: 'cáng zhe', 含著: 'hán zhe', 連著: 'lián zhe', 背著: 'bēi zhe', 走著: 'zǒu zhe',
   // 得:放在動詞或形容詞後面是輕聲 de;得到、獲得仍是 dé
   變得: 'biàn de', 洗得: 'xǐ de', 覺得: 'jué de', 做得: 'zuò de', 跑得: 'pǎo de', 長得: 'zhǎng de', 吃得: 'chī de', 記得: 'jì de', 值得: 'zhí de', 懂得: 'dǒng de', 曉得: 'xiǎo de', 顯得: 'xiǎn de', 使得: 'shǐ de', 弄得: 'nòng de', 看得: 'kàn de', 聽得: 'tīng de', 說得: 'shuō de', 寫得: 'xiě de', 玩得: 'wán de', 走得: 'zǒu de', 飛得: 'fēi de', 來得: 'lái de',
+  輕得: 'qīng de', 冷得: 'lěng de', 熱得: 'rè de', 撐得: 'chēng de', 裝得: 'zhuāng de', 凍得: 'dòng de', 脹得: 'zhàng de', 漂得: 'piāo de', 亮得: 'liàng de', 大得: 'dà de', 小得: 'xiǎo de', 高得: 'gāo de', 快得: 'kuài de', 慢得: 'màn de', 重得: 'zhòng de', 軟得: 'ruǎn de', 硬得: 'yìng de', 薄得: 'báo de', 美得: 'měi de', 好得: 'hǎo de', 多得: 'duō de', 少得: 'shǎo de', 遠得: 'yuǎn de', 近得: 'jìn de', 笑得: 'xiào de', 唱得: 'chàng de', 畫得: 'huà de', 排得: 'pái de', 包得: 'bāo de', 煮得: 'zhǔ de', 烤得: 'kǎo de', 長得: 'zhǎng de',
   // 了:輕聲 le 為主;了解、了不起 liǎo
   了解: 'liǎo jiě', 了不起: 'liǎo bù qǐ', 受不了: 'shòu bù liǎo', 吃不了: 'chī bù liǎo', 忍不了: 'rěn bù liǎo', 來不了: 'lái bù liǎo', 做不了: 'zuò bù liǎo',
   // 的:輕聲 de 為主;目的、的確
   目的: 'mù dì', 的確: 'dí què', 標的: 'biāo dì',
+  // 部分、養分:台灣讀 ㄈㄣˋ(不是輕聲);數量的「量」是第四聲;模樣讀 ㄇㄨˊ
+  部分: 'bù fèn', 養分: 'yǎng fèn', 數量: 'shù liàng', 模樣: 'mú yàng',
   // 單字的預設
   嗎啡: 'mǎ fēi', 呢喃: 'ní nán',
   // 麼:什麼、怎麼、那麼、這麼的「麼」是輕聲 me(ㄇㄜ˙)

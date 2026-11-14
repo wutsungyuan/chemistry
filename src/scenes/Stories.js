@@ -6,7 +6,7 @@ import { speak, canSpeak, stopSpeaking } from '../ui/speech.js';
 
 // 化學故事(國小版):列表 → 一則故事(朗讀、安全提醒、三選一小問題、連到元素與圖鑑)。
 // 網址:#stories(列表)、#stories/fire(單一故事)。資料見 data/db/stories.json。
-const ICON = { fire: '🔥', iron: '🛠️', phosphorus: '✨', lavoisier: '⚖️', soda: '🫧', salt: '🧂', soap: '🧼', mendeleev: '🃏', curie: '☢️', fireworks: '🎆' };
+const ICON = { fire: '🔥', iron: '🛠️', phosphorus: '✨', lavoisier: '⚖️', soda: '🫧', salt: '🧂', soap: '🧼', mendeleev: '🃏', curie: '☢️', fireworks: '🎆', photosynthesis: '🌱', bread: '🍞', carbon: '💎', helium: '🎈', ice: '🧊', gold: '🥇', air: '🌬️', dryice: '☁️', cabbage: '🥬', fluoride: '🪥' };
 const LETTERS = 'ABC';
 
 export function mount(container, arg, { go }) {

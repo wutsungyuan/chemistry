@@ -15,18 +15,18 @@ const ctx = { elements: new Set(ELEMENTS.map(e => e.sym)), molecules: new Set(Ob
 const run = S => { const errs = []; validateStories(S, ctx, { err: (id, m) => errs.push(id + ': ' + m) }); return errs; };
 const raw = () => JSON.parse(fs.readFileSync(new URL('../src/data/db/stories.json', import.meta.url), 'utf8'));
 
-test('現有的 10 則故事通過驗證;有出處與限制說明', () => {
+test('現有的 20 則故事通過驗證;有出處與限制說明', () => {
   assert.deepEqual(run(raw()), []);
-  assert.equal(STORIES.length, 10);
+  assert.equal(STORIES.length, 20);
   assert.ok(STORIES_META.source && STORIES_META.note && STORIES_META.retrieved);
-  assert.equal(Object.keys(STORY_BY_ID).length, 10);
+  assert.equal(Object.keys(STORY_BY_ID).length, 20);
 });
 
 test('每一則:給國小生聽的長度、3 選 1 的小問題、連結的元素與圖鑑分子國小都看得到', () => {
   const kidMols = new Set(forLevel(GALLERY, 'kid').map(m => m.id));
   for (const s of STORIES) {
     assert.equal(s.level, 'kid');
-    const n = s.body.zh.join('').length; assert.ok(n >= 120 && n <= 420, `${s.id} ${n} 字`);
+    const n = s.body.zh.join('').length; assert.ok(n >= 120 && n <= 300, `${s.id} ${n} 字`);
     assert.equal(s.quiz.options.length, 3); assert.equal(s.quiz.options.filter(o => o.ok).length, 1);
     for (const mid of s.molecules) assert.ok(kidMols.has(mid), `${s.id} 連到國小看不到的分子 ${mid}`);
     for (const sym of s.elements) assert.ok(ELEMENTS.some(e => e.sym === sym), `${s.id} ${sym}`);
@@ -74,4 +74,13 @@ test('驗證腳本:缺安全提醒、選項不是 3 個、英文含中文字、�
   assert.ok(bad(x => { x.stories[6].body.zh = ['太短。', '太短。']; x.stories[6].body.en = ['a', 'b']; }).some(e => /長度/.test(e)));
   assert.ok(bad(x => { x.stories.push({ ...x.stories[0] }); }).some(e => /重複/.test(e)));
   assert.ok(bad(x => { delete x.meta.note; }).some(e => /meta/.test(e)));
+});
+
+test('每一則都有插圖;中文欄位的標點是全形(，。！？：；（）),不能混入半形標點', async () => {
+  const { ILLUS } = await import('../src/data/storyArt.js');
+  for (const s of STORIES) {
+    assert.ok(ILLUS[s.id] && ILLUS[s.id].startsWith('<svg') && ILLUS[s.id].endsWith('</svg>'), `${s.id} 沒有插圖`);
+    const zh = [s.title.zh, ...s.body.zh, s.quiz.q.zh, s.quiz.explain.zh, ...s.quiz.options.map(o => o.zh), ...(s.safety ? [s.safety.zh] : [])];
+    for (const t of zh) assert.ok(!/[,!?;:()]/.test(t), `${s.id} 有半形標點:${t.slice(0, 24)}`);
+  }
 });

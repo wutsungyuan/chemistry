@@ -67,6 +67,15 @@ test('破音字用台灣的讀法:還(ㄏㄞˊ)、幾(ㄐㄧˇ)、只(ㄓˇ)、�
   assert.equal(zy('房間'), '房ㄈㄤˊ 間ㄐㄧㄢ'); assert.equal(zy('間隔'), '間ㄐㄧㄢˋ 隔ㄍㄜˊ');     // 房間 jiān、間隔 jiàn
 });
 
+test('補充:得(形容詞、動詞後輕聲)、部分、養分、數量、模樣的台灣讀法', () => {
+  assert.equal(zy('輕得多'), '輕ㄑㄧㄥ 得˙ㄉㄜ 多ㄉㄨㄛ');
+  assert.equal(zy('冷得凝結'), '冷ㄌㄥˇ 得˙ㄉㄜ 凝ㄋㄧㄥˊ 結ㄐㄧㄝˊ');
+  assert.equal(zy('部分'), '部ㄅㄨˋ 分ㄈㄣˋ');
+  assert.equal(zy('養分'), '養ㄧㄤˇ 分ㄈㄣˋ');
+  assert.equal(zy('數量'), '數ㄕㄨˋ 量ㄌㄧㄤˋ');
+  assert.equal(zy('模樣'), '模ㄇㄨˊ 樣ㄧㄤˋ');
+});
+
 test('所有化學故事:輕聲字都有注音,且故事裡的破音字讀法正確', () => {
   const fs2 = fs.readFileSync(new URL('../src/data/db/stories.json', import.meta.url), 'utf8');
   const S = JSON.parse(fs2).stories;
