@@ -1,0 +1,946 @@
+{
+  "meta": {
+    "source": "依故事(db/stories.json)逐句整理的實驗動畫腳本;事實與簡化處見 .claude/skills/chem-story-to-animation/references/science-checklist.md",
+    "note": "steps 的 refs 必須是故事原文;capZh 中文 ≤ 30 字、capEn 英文 ≤ 20 個字;動畫只示意,時間與劑量被壓縮",
+    "retrieved": "2026-11-14"
+  },
+  "experiments": {
+    "candle": {
+      "storyId": "fire",
+      "afterPara": 2,
+      "forbidden": [
+        "被燒完",
+        "氧氣用完",
+        "氧氣燒完"
+      ],
+      "titleZh": "🧪 小實驗:蠟燭蓋玻璃杯",
+      "titleEn": "🧪 Experiment: a candle under a glass",
+      "legZh": "紅球 = 氧分子;灰+紅 = 二氧化碳(示意)",
+      "legEn": "Red = oxygen; grey + red = carbon dioxide (illustration)",
+      "steps": [
+        {
+          "key": "intro",
+          "nZh": "開頭",
+          "nEn": "Intro",
+          "d0": 3,
+          "io": 1,
+          "capZh": "今天的小實驗:蠟燭蓋玻璃杯。要請大人陪你一起做喔!",
+          "capEn": "Today's experiment: a candle under a glass. Ask a grown-up to do it with you!",
+          "refs": [
+            {
+              "para": 2,
+              "quote": "我們可以請大人幫忙，做一個小實驗"
+            },
+            {
+              "para": "safety",
+              "quote": "一定要請大人陪你做"
+            }
+          ],
+          "status": "match",
+          "note": ""
+        },
+        {
+          "key": "table",
+          "nZh": "桌上的東西",
+          "nEn": "On the table",
+          "d0": 2.5,
+          "capZh": "桌上有一根蠟燭和一個玻璃杯。",
+          "capEn": "There is a candle and a glass on the table.",
+          "refs": [
+            {
+              "para": 2,
+              "quote": "點亮一根蠟燭，再用玻璃杯把它蓋起來"
+            }
+          ],
+          "status": "extra",
+          "note": "故事沒有單獨寫這一步;動畫先交代桌上有哪些東西(鋪陳),內容仍來自故事第 2 段。"
+        },
+        {
+          "key": "light",
+          "nZh": "大人點火",
+          "nEn": "Light it",
+          "d0": 3.5,
+          "capZh": "請大人用打火機把蠟燭點起來,小朋友在旁邊看就好。",
+          "capEn": "A grown-up lights the candle with a lighter. Kids just watch.",
+          "refs": [
+            {
+              "para": 2,
+              "quote": "點亮一根蠟燭"
+            }
+          ],
+          "status": "match",
+          "note": "故事沒說用什麼點火;動畫用打火機(長嘴型),由大人操作,小朋友只在旁邊看。"
+        },
+        {
+          "key": "cover",
+          "nZh": "蓋上杯子",
+          "nEn": "Cover it",
+          "d0": 4,
+          "capZh": "大人把玻璃杯翻過來,慢慢蓋在蠟燭上。",
+          "capEn": "The grown-up flips the glass over and slowly covers the candle.",
+          "refs": [
+            {
+              "para": 2,
+              "quote": "再用玻璃杯把它蓋起來"
+            }
+          ],
+          "status": "match",
+          "note": "動畫補上「翻面」:杯口要朝下才能罩住蠟燭。"
+        },
+        {
+          "key": "shrink",
+          "nZh": "火慢慢變小",
+          "nEn": "Flame shrinks",
+          "d0": 5,
+          "capZh": "氧氣變少、變成二氧化碳,火就慢慢變小…",
+          "capEn": "Oxygen turns into carbon dioxide, so the flame slowly shrinks…",
+          "refs": [
+            {
+              "para": 2,
+              "quote": "火就慢慢熄掉了"
+            },
+            {
+              "para": 3,
+              "quote": "杯子裡的氧氣變少了，不夠火繼續燒"
+            }
+          ],
+          "status": "match",
+          "note": "已把故事第 3 段從「氧氣被燒完了」改成「氧氣變少了,不夠火繼續燒」,與動畫(剩約 75% 的氧氣)一致。"
+        },
+        {
+          "key": "end",
+          "nZh": "結尾",
+          "nEn": "Ending",
+          "d0": 3.5,
+          "io": 1,
+          "capZh": "火熄掉了!火要燒,一定要有足夠的氧氣。",
+          "capEn": "The flame is out! A fire needs enough oxygen to keep burning.",
+          "refs": [
+            {
+              "para": 2,
+              "quote": "過一會兒，火就慢慢熄掉了"
+            },
+            {
+              "para": 3,
+              "quote": "火要燒起來，一定要有足夠的氧氣"
+            }
+          ],
+          "status": "match",
+          "note": ""
+        }
+      ],
+      "uncovered": [
+        {
+          "para": 1,
+          "quote": "人類第一次學會用火",
+          "why": "人類用火的歷史,不是這個實驗的內容。"
+        },
+        {
+          "para": 4,
+          "quote": "這三樣少了任何一樣，火就會熄掉",
+          "why": "燃燒三要素(氧氣、可燃物、溫度)與滅火方法;動畫只示範「氧氣」這一項,可另做一支。"
+        }
+      ]
+    },
+    "cabbage": {
+      "storyId": "cabbage",
+      "afterPara": 2,
+      "titleZh": "🧪 小實驗:紫色高麗菜變色",
+      "titleEn": "🧪 Experiment: purple cabbage changes color",
+      "legZh": "紫 → 粉紅(酸)/ 藍綠(鹼)",
+      "legEn": "Purple → pink (acid) / teal (base)",
+      "steps": [
+        {
+          "key": "intro",
+          "nZh": "開頭",
+          "nEn": "Intro",
+          "d0": 3,
+          "io": 1,
+          "capZh": "今天的小實驗:紫色高麗菜會變色!要請大人陪你一起做喔!",
+          "capEn": "Today's experiment: purple cabbage changes color! Ask a grown-up to help.",
+          "refs": [
+            {
+              "para": "safety",
+              "quote": "做實驗要請大人陪你"
+            }
+          ],
+          "status": "match",
+          "note": ""
+        },
+        {
+          "key": "soak",
+          "nZh": "泡菜汁",
+          "nEn": "Make the juice",
+          "d0": 6,
+          "capZh": "把切碎的紫色高麗菜用熱水泡一泡,就得到紫色的菜汁。",
+          "capEn": "Chopped purple cabbage soaked in hot water makes purple juice.",
+          "refs": [
+            {
+              "para": 1,
+              "quote": "把紫色高麗菜切碎，用熱水泡一泡，會得到紫色的菜汁"
+            }
+          ],
+          "status": "match",
+          "note": "動畫直接用「已切碎的菜」,不示範用刀(安全);熱水由大人倒。顏色從水中慢慢變紫是時間壓縮(實際要幾分鐘)。"
+        },
+        {
+          "key": "cups",
+          "nZh": "三杯菜汁",
+          "nEn": "Three cups",
+          "d0": 2.5,
+          "capZh": "桌上有三杯紫色高麗菜汁,是漂亮的紫色。",
+          "capEn": "On the table are three cups of purple cabbage juice.",
+          "refs": [
+            {
+              "para": 1,
+              "quote": "這杯菜汁是個變色小魔術師，滴進不同的東西，顏色就會變"
+            }
+          ],
+          "status": "extra",
+          "note": "故事只說「這杯菜汁」;動畫分成三杯,第三杯不加東西當對照組(場景設計,不改變科學內容)。"
+        },
+        {
+          "key": "vinegar",
+          "nZh": "滴醋",
+          "nEn": "Add vinegar",
+          "d0": 5.5,
+          "capZh": "大人在第一杯滴幾滴醋,醋是酸性的,菜汁變成粉紅色。",
+          "capEn": "The grown-up drops vinegar into the first cup. Vinegar is an acid, so the juice turns pink.",
+          "refs": [
+            {
+              "para": 2,
+              "quote": "滴一點醋進去，菜汁會變成粉紅色"
+            },
+            {
+              "para": 3,
+              "quote": "醋是酸性的"
+            }
+          ],
+          "status": "match",
+          "note": "故事寫「一點」,動畫滴兩滴。真實的變化要看份量,正式版步驟卡要寫清楚。"
+        },
+        {
+          "key": "soda",
+          "nZh": "滴小蘇打水",
+          "nEn": "Add baking soda",
+          "d0": 5.5,
+          "capZh": "第二杯滴小蘇打水,小蘇打水是鹼性的,菜汁變成藍綠色。",
+          "capEn": "Baking-soda water goes into the second cup. It is a base, so the juice turns blue-green.",
+          "refs": [
+            {
+              "para": 2,
+              "quote": "滴一點小蘇打水進去，菜汁會變成藍綠色"
+            },
+            {
+              "para": 3,
+              "quote": "小蘇打水是鹼性的"
+            }
+          ],
+          "status": "match",
+          "note": ""
+        },
+        {
+          "key": "compare",
+          "nZh": "比一比",
+          "nEn": "Compare",
+          "d0": 3,
+          "capZh": "比一比:加醋變粉紅,加小蘇打水變藍綠,沒有加的還是紫色。",
+          "capEn": "Compare: vinegar gives pink, baking soda gives blue-green, and the plain cup stays purple.",
+          "refs": [
+            {
+              "para": 3,
+              "quote": "科學家也會用這樣的方法，來分辨東西是酸還是鹼"
+            }
+          ],
+          "status": "extra",
+          "note": "「沒有加的還是紫色」是對照組的說明,故事沒寫,但不衝突。"
+        },
+        {
+          "key": "end",
+          "nZh": "結尾",
+          "nEn": "Ending",
+          "d0": 3.5,
+          "io": 1,
+          "capZh": "紫色高麗菜汁能分辨酸和鹼!請大人陪你做,菜汁不要喝。",
+          "capEn": "Purple cabbage juice tells acids from bases! Do it with a grown-up, and never drink it.",
+          "refs": [
+            {
+              "para": 3,
+              "quote": "你在家裡可以和大人一起試試看喔"
+            },
+            {
+              "para": "safety",
+              "quote": "不要喝進肚子裡"
+            }
+          ],
+          "status": "match",
+          "note": "結尾補上故事的安全提醒「不要喝」。"
+        }
+      ],
+      "uncovered": [
+        {
+          "para": 4,
+          "quote": "檸檬汁是酸性的，會讓菜汁變紅",
+          "why": "故事第 4 段是「你還可以找找看」的延伸建議(檸檬汁、肥皂水、變色表),不是實驗步驟;動畫沒做,可另做一支「變色表」。"
+        }
+      ]
+    },
+    "iron": {
+      "storyId": "iron",
+      "afterPara": 4,
+      "forbidden": [
+        "不鏽鋼一定吸不住",
+        "不鏽鋼都吸不住",
+        "吸得住的就會生鏽"
+      ],
+      "titleZh": "🔎 觀察:廚房找鐵與不鏽鋼",
+      "titleEn": "🔎 Look: Iron or stainless steel in the kitchen",
+      "legZh": "示意:放大圖裡灰球是鐵、綠球是鉻、金球是鎳;大小不是真的。",
+      "legEn": "Sketch: grey balls are iron, green chromium, gold nickel. Not to scale.",
+      "steps": [
+        {
+          "key": "intro",
+          "nZh": "開頭",
+          "nEn": "Intro",
+          "d0": 3.2,
+          "io": 1,
+          "capZh": "拿著磁鐵,請大人陪你,一起到廚房找找看!",
+          "capEn": "Grab a magnet and a grown-up, and let's explore the kitchen!",
+          "refs": [
+            {
+              "para": 4,
+              "quote": "你可以到廚房找找看"
+            }
+          ],
+          "status": "match",
+          "note": "「請大人陪你」是安全提醒(動畫補充);磁鐵與小朋友是動畫的設定。"
+        },
+        {
+          "key": "kitchen",
+          "nZh": "廚房",
+          "nEn": "Kitchen",
+          "d0": 4.2,
+          "capZh": "流理台上有鐵鍋、不鏽鋼鍋和不鏽鋼湯匙。",
+          "capEn": "On the counter: an iron pan, a stainless steel pot and a stainless steel spoon.",
+          "refs": [
+            {
+              "para": 4,
+              "quote": "哪些東西是鐵做的，哪些是不鏽鋼做的"
+            },
+            {
+              "para": 4,
+              "quote": "廚房裡的鍋子和湯匙常常是用它做的"
+            }
+          ],
+          "status": "match",
+          "note": "鐵鍋、不鏽鋼鍋、不鏽鋼湯匙是示範用的三樣東西(故事只說鍋子和湯匙常常是不鏽鋼做的)。"
+        },
+        {
+          "key": "pan",
+          "nZh": "吸鐵鍋",
+          "nEn": "Iron pan",
+          "d0": 5.8,
+          "capZh": "磁鐵靠近鐵鍋,啪!被吸住了。",
+          "capEn": "The magnet nears the iron pan. Clack! It sticks.",
+          "refs": [
+            {
+              "para": 4,
+              "quote": "它會被磁鐵吸住"
+            }
+          ],
+          "status": "match",
+          "note": "磁鐵越靠近吸力越大,所以越飛越快、貼上去有一點回彈;時間放慢了(真實只要不到一秒)。"
+        },
+        {
+          "key": "spoon",
+          "nZh": "吸湯匙",
+          "nEn": "Spoon",
+          "d0": 7,
+          "capZh": "這支不鏽鋼湯匙吸不住。有的不鏽鋼吸得住,有的吸不住。",
+          "capEn": "This stainless spoon won't stick. Some stainless steel sticks, some does not.",
+          "refs": [
+            {
+              "para": 4,
+              "quote": "有一種叫「不鏽鋼」的金屬"
+            }
+          ],
+          "status": "extra",
+          "note": "動畫補充(故事沒寫):常見的 304 不鏽鋼(含鉻與鎳)幾乎不被磁鐵吸,但 430 等不鏽鋼吸得住;所以字幕寫「有的」,不寫「不鏽鋼都吸不住」。吸得住也不代表一定會生鏽。"
+        },
+        {
+          "key": "why",
+          "nZh": "為什麼",
+          "nEn": "Why",
+          "d0": 6.2,
+          "capZh": "不鏽鋼是鐵加了鉻等金屬,表面有保護膜,不容易生鏽。",
+          "capEn": "Stainless steel is iron mixed with chromium and more. A thin skin on top protects it from rust.",
+          "refs": [
+            {
+              "para": 4,
+              "quote": "裡面除了鐵，還加了別的金屬，所以不容易生鏽"
+            }
+          ],
+          "status": "match",
+          "note": "「別的金屬」具體畫成鉻(約 10.5% 以上才算不鏽鋼,304 約 18%)與鎳(304 約 8%);保護膜是鉻碰到空氣中的氧形成的極薄氧化膜,動畫把幾秒壓縮成示意,原子數量與排列都是示意。"
+        },
+        {
+          "key": "end",
+          "nZh": "結尾",
+          "nEn": "Ending",
+          "d0": 4.2,
+          "io": 1,
+          "capZh": "到廚房用磁鐵找找看吧!磁鐵不要放進嘴巴。",
+          "capEn": "Go and test things with a magnet! Never put a magnet in your mouth.",
+          "refs": [
+            {
+              "para": 4,
+              "quote": "哪些東西是鐵做的，哪些是不鏽鋼做的"
+            }
+          ],
+          "status": "match",
+          "note": "「磁鐵不要放進嘴巴」是安全提醒(動畫補充)。"
+        }
+      ],
+      "uncovered": []
+    },
+    "salt": {
+      "storyId": "salt",
+      "afterPara": 4,
+      "forbidden": [],
+      "titleZh": "🔎 觀察:用放大鏡看鹽粒",
+      "titleEn": "🔎 Look: A salt grain under a magnifier",
+      "legZh": "紫 = 鈉離子(較小)、綠 = 氯離子(較大)(示意)",
+      "legEn": "Purple = Na⁺ (smaller), green = Cl⁻ (larger) (not to scale)",
+      "steps": [
+        {
+          "key": "intro",
+          "nZh": "開頭",
+          "nEn": "Intro",
+          "d0": 3.5,
+          "io": 1,
+          "capZh": "桌上有一小碟粗鹽粒,我們來看看它長什麼樣子!",
+          "capEn": "A dish of coarse salt. Let's see what the grains look like!",
+          "refs": [
+            {
+              "para": 4,
+              "quote": "所以把鹽粒拿放大鏡看"
+            }
+          ],
+          "status": "match",
+          "note": "用粗鹽:顆粒大,比較容易看出立方體。"
+        },
+        {
+          "key": "look",
+          "nZh": "放大鏡",
+          "nEn": "Magnifier",
+          "d0": 4,
+          "capZh": "拿放大鏡看,鹽粒是一顆一顆小小的正方體。",
+          "capEn": "Under a magnifier, each grain is a tiny cube.",
+          "refs": [
+            {
+              "para": 4,
+              "quote": "會看到一顆一顆小小的正方體"
+            }
+          ],
+          "status": "match",
+          "note": "很細的精製鹽或海鹽不一定看得出立方體,粗鹽比較明顯(寫在事實表)。"
+        },
+        {
+          "key": "zoom",
+          "nZh": "再放大",
+          "nEn": "Zoom in",
+          "d0": 4.5,
+          "capZh": "再放大……每一顆鹽粒,都是一個小小的結晶!",
+          "capEn": "Zooming in: every grain is a tiny crystal of salt!",
+          "refs": [
+            {
+              "para": 4,
+              "quote": "會看到一顆一顆小小的正方體"
+            }
+          ],
+          "status": "extra",
+          "note": "鏡頭推進與閃白轉場是影片手法,不是放大鏡真的能看到原子;「結晶」是動畫補充的說法。"
+        },
+        {
+          "key": "ions",
+          "nZh": "電子轉移",
+          "nEn": "Electron hop",
+          "d0": 6,
+          "capZh": "鈉和氯碰在一起:鈉給氯一個電子,變成氯化鈉。",
+          "capEn": "Sodium and chlorine meet: sodium gives one electron to chlorine, making sodium chloride.",
+          "refs": [
+            {
+              "para": 4,
+              "quote": "鈉和氯碰在一起，變成的東西叫做「氯化鈉」"
+            }
+          ],
+          "status": "extra",
+          "note": "「電子轉移、離子」是動畫補充的科學說明(故事沒寫);只畫一個鈉與一個氯,實際是大量原子,氯氣是 Cl2 分子。電子守恆:鈉失去 1 個變 Na⁺,氯得到 1 個變 Cl⁻。"
+        },
+        {
+          "key": "lattice",
+          "nZh": "整齊排好",
+          "nEn": "In neat rows",
+          "d0": 7,
+          "capZh": "鈉離子與氯離子一顆隔一顆,排得整整齊齊,像小方塊積木。",
+          "capEn": "Sodium ions and chloride ions alternate in neat rows, like little building blocks.",
+          "refs": [
+            {
+              "para": 4,
+              "quote": "不是亂七八糟擠在一起，而是排得整整齊齊，像小方塊積木一樣"
+            }
+          ],
+          "status": "match",
+          "note": "畫 4×4×4 個離子的一小塊晶格(岩鹽結構);真正的鹽粒有數以兆計的離子。球棍風是示意,真實的離子是互相接觸的球。"
+        },
+        {
+          "key": "end",
+          "nZh": "結尾",
+          "nEn": "Ending",
+          "d0": 3.5,
+          "io": 1,
+          "capZh": "整整齊齊排好的小方塊,堆成一顆顆正方體的鹽粒!",
+          "capEn": "Neat little blocks stack up into cube-shaped salt grains!",
+          "refs": [
+            {
+              "para": 4,
+              "quote": "所以把鹽粒拿放大鏡看，會看到一顆一顆小小的正方體"
+            }
+          ],
+          "status": "match",
+          "note": ""
+        }
+      ],
+      "uncovered": []
+    },
+    "fireworks": {
+      "storyId": "fireworks",
+      "afterPara": 3,
+      "forbidden": [],
+      "titleZh": "🔎 觀察:煙火的顏色",
+      "titleEn": "🔎 Look: Colors of fireworks",
+      "legZh": "鈉黃、鍶紅、鋇綠、銅藍綠(煙火在遠處,由專業人員施放)",
+      "legEn": "Na yellow, Sr red, Ba green, Cu blue-green (set off far away by professionals)",
+      "steps": [
+        {
+          "key": "intro",
+          "nZh": "開頭",
+          "nEn": "Intro",
+          "d0": 3,
+          "io": 1,
+          "capZh": "看煙火囉!要請大人陪你,站在安全的地方。",
+          "capEn": "Fireworks time! Stay with a grown-up, in a safe place.",
+          "refs": [
+            {
+              "para": "safety",
+              "quote": "一定要在大人帶領下，到安全的地方觀賞"
+            },
+            {
+              "para": 1,
+              "quote": "夜空裡的煙火"
+            }
+          ],
+          "status": "match",
+          "note": "人物先面向鏡頭打招呼,再轉身望向夜空;煙火都在很遠的地方,畫面裡沒有人點火或操作。"
+        },
+        {
+          "key": "launch",
+          "nZh": "升空",
+          "nEn": "Launch",
+          "d0": 3,
+          "capZh": "煙火從遠遠的地方,升上了夜空。",
+          "capEn": "Far away, a firework climbs into the night sky.",
+          "refs": [
+            {
+              "para": 1,
+              "quote": "夜空裡的煙火"
+            }
+          ],
+          "status": "extra",
+          "note": "升空與減速依重力;發射由遠處的專業人員負責(不畫人)。"
+        },
+        {
+          "key": "na",
+          "nZh": "鈉黃",
+          "nEn": "Sodium",
+          "d0": 3.5,
+          "capZh": "鈉(Na)燒起來,會發出黃色的光。",
+          "capEn": "Sodium (Na) glows yellow when it burns.",
+          "refs": [
+            {
+              "para": 2,
+              "quote": "鈉是黃色"
+            },
+            {
+              "para": 4,
+              "quote": "往四面八方推開，就開成了一朵花"
+            }
+          ],
+          "status": "match",
+          "note": "爆開成球形的「星」,往四面八方飛(第 4 段的內容);第 4 段的火藥原理留給下一段文字。"
+        },
+        {
+          "key": "sr",
+          "nZh": "鍶紅",
+          "nEn": "Strontium",
+          "d0": 3.2,
+          "capZh": "鍶(Sr)會發出紅色的光。",
+          "capEn": "Strontium (Sr) glows red.",
+          "refs": [
+            {
+              "para": 2,
+              "quote": "鍶是紅色"
+            }
+          ],
+          "status": "match",
+          "note": ""
+        },
+        {
+          "key": "ba",
+          "nZh": "鋇綠",
+          "nEn": "Barium",
+          "d0": 3.2,
+          "capZh": "鋇(Ba)會發出綠色的光。",
+          "capEn": "Barium (Ba) glows green.",
+          "refs": [
+            {
+              "para": 2,
+              "quote": "鋇是綠色"
+            }
+          ],
+          "status": "match",
+          "note": ""
+        },
+        {
+          "key": "cu",
+          "nZh": "銅藍綠",
+          "nEn": "Copper",
+          "d0": 3.2,
+          "capZh": "銅(Cu)會發出藍綠色的光。",
+          "capEn": "Copper (Cu) glows blue-green.",
+          "refs": [
+            {
+              "para": 2,
+              "quote": "銅是藍綠色"
+            }
+          ],
+          "status": "match",
+          "note": ""
+        },
+        {
+          "key": "mix",
+          "nZh": "五彩",
+          "nEn": "Colors",
+          "d0": 4,
+          "capZh": "煙火師傅把這些金屬放進煙火裡,調出五顏六色的花朵。",
+          "capEn": "Fireworks makers put these metals in to make flowers of every color.",
+          "refs": [
+            {
+              "para": 3,
+              "quote": "煙火師傅就把這些金屬放進煙火裡，調出五顏六色的花朵"
+            }
+          ],
+          "status": "match",
+          "note": "一次放出很多朵;其中一朵紫色是紅(鍶)與藍綠(銅)調出來的示意。"
+        },
+        {
+          "key": "guess",
+          "nZh": "猜猜看",
+          "nEn": "Guess",
+          "d0": 3.5,
+          "capZh": "下次看煙火,猜猜看是哪一種元素在發光?",
+          "capEn": "Next time, can you guess which element is glowing?",
+          "refs": [
+            {
+              "para": 3,
+              "quote": "你可以猜猜看，是哪一種元素在發光呢？"
+            }
+          ],
+          "status": "match",
+          "note": "小朋友頭上冒出問號。"
+        },
+        {
+          "key": "end",
+          "nZh": "結尾",
+          "nEn": "Ending",
+          "d0": 3.5,
+          "io": 1,
+          "capZh": "煙火很危險,要在大人陪同下,到安全的地方欣賞喔!",
+          "capEn": "Fireworks are dangerous. Watch with a grown-up, from a safe place!",
+          "refs": [
+            {
+              "para": "safety",
+              "quote": "煙火很危險"
+            },
+            {
+              "para": "safety",
+              "quote": "不要自己玩"
+            }
+          ],
+          "status": "match",
+          "note": ""
+        }
+      ],
+      "uncovered": [
+        {
+          "para": 1,
+          "quote": "煙火最早是中國古代的人發明的",
+          "why": "歷史背景,與顏色無關,動畫不演。"
+        },
+        {
+          "para": 4,
+          "quote": "煙火裡有火藥，點著以後，會很快產生很多熱氣",
+          "why": "火藥與熱氣在煙火外殼裡面,看不見;動畫只畫爆開後的星,原理由第 4 段文字說明。"
+        }
+      ]
+    },
+    "air": {
+      "storyId": "air",
+      "afterPara": 3,
+      "titleZh": "🔎 觀察:零食袋裡的氮氣",
+      "titleEn": "🔎 Look: Nitrogen in a snack bag",
+      "legZh": "藍球 = 氮分子 N₂;紅球 = 氧分子 O₂;灰球 = 氬原子 Ar(示意:大小放大、運動放慢)",
+      "legEn": "Blue = nitrogen N₂; red = oxygen O₂; grey = argon Ar (illustration: enlarged and slowed down)",
+      "steps": [
+        {
+          "key": "intro",
+          "nZh": "開頭",
+          "nEn": "Intro",
+          "d0": 3.5,
+          "io": 1,
+          "capZh": "空氣看不見,卻一直在你身邊。來看看零食袋吧!",
+          "capEn": "Air is invisible, but it is always around you. Let's look at a snack bag!",
+          "refs": [
+            {
+              "para": 1,
+              "quote": "空氣看不見也摸不到，但它一直都在你的身邊"
+            }
+          ],
+          "status": "match",
+          "note": ""
+        },
+        {
+          "key": "hundred",
+          "nZh": "分成一百份",
+          "nEn": "100 parts",
+          "d0": 7,
+          "capZh": "把空氣分成一百份:氮氣 78、氧氣 21、其他 1。",
+          "capEn": "Split air into 100 parts: 78 nitrogen, 21 oxygen, 1 other.",
+          "refs": [
+            {
+              "para": 1,
+              "quote": "如果把空氣分成一百份，大約有七十八份是氮氣，二十一份是氧氣，剩下的一份是氬氣、二氧化碳和其他的氣體"
+            }
+          ],
+          "status": "match",
+          "note": "立方體裡 100 個氣體分子(示意):78 個氮分子、21 個氧分子、1 個氬原子;二氧化碳約 0.04%,取整後併入「其他 1」,不另外畫。分子大小放大、運動放慢,碰撞只畫碰到牆壁(分子之間的碰撞省略)。"
+        },
+        {
+          "key": "pillow",
+          "nZh": "氮氣墊子",
+          "nEn": "Pillow",
+          "d0": 8,
+          "capZh": "零食袋裡充滿氮氣,像軟枕頭保護餅乾,食物也不易壞。",
+          "capEn": "A snack bag full of nitrogen is a soft pillow, and the food stays fresh longer.",
+          "refs": [
+            {
+              "para": 3,
+              "quote": "有些零食袋裡會充滿氮氣，像一個軟軟的枕頭，保護餅乾不被壓碎，也讓食物比較不容易壞掉"
+            },
+            {
+              "para": 2,
+              "quote": "數量最多的氮氣很安靜，不容易和別的東西起反應"
+            }
+          ],
+          "status": "match",
+          "note": "用透明剖面看袋子裡面;只畫氮分子(簡化:實際袋內還有極少量氧氣,通常只剩百分之幾以下)。球壓在袋上只微微壓凹,餅乾沒有被壓到;袋外的氧分子碰到袋子被彈開,進不去。"
+        },
+        {
+          "key": "open",
+          "nZh": "打開袋子",
+          "nEn": "Open it",
+          "d0": 7,
+          "capZh": "大人拉開袋子,氮氣嘶一聲跑出來,和空氣混在一起。",
+          "capEn": "A grown-up opens the bag. Nitrogen rushes out with a hiss and mixes with the air.",
+          "refs": [
+            {
+              "para": 3,
+              "quote": "下次打開零食袋"
+            }
+          ],
+          "status": "extra",
+          "note": "故事只寫「打開零食袋」;開袋後氣體往外擴散、袋子消氣、餅乾仍完好,是依氣體性質補上的內容。分子運動用隨機方向與彈性碰撞牆壁表示,出口附近氣流較強;時間經過壓縮。"
+        },
+        {
+          "key": "think",
+          "nZh": "想一想",
+          "nEn": "Think",
+          "d0": 5,
+          "capZh": "氮氣看不見也聞不到。下次開袋,想一想有沒有氮氣?",
+          "capEn": "Nitrogen is invisible and has no smell. Next time you open a bag, think: is there nitrogen inside?",
+          "refs": [
+            {
+              "para": 3,
+              "quote": "下次打開零食袋，可以想一想，裡面是不是有氮氣呢？"
+            }
+          ],
+          "status": "match",
+          "note": "氮氣無色無味,跑出袋子的分子慢慢淡出,表示看不到;「看不見也聞不到」是補充的科學事實。"
+        },
+        {
+          "key": "end",
+          "nZh": "結尾",
+          "nEn": "Ending",
+          "d0": 3.5,
+          "io": 1,
+          "capZh": "氮氣是空氣裡最多的氣體,默默保護著零食!",
+          "capEn": "Nitrogen is the most plentiful gas in air, and it quietly protects our snacks!",
+          "refs": [
+            {
+              "para": 2,
+              "quote": "數量最多的氮氣很安靜"
+            }
+          ],
+          "status": "match",
+          "note": ""
+        }
+      ],
+      "uncovered": [
+        {
+          "para": 2,
+          "quote": "我們呼吸要用的是氧氣，可是氧氣只佔五分之一",
+          "why": "呼吸與氧氣的用途不是這個動畫的重點;動畫只用 21 個紅球表示氧氣約佔五分之一。"
+        },
+        {
+          "para": 4,
+          "quote": "空氣雖然輕，卻也有重量",
+          "why": "大氣壓力與高山稀薄空氣是另一個主題,可另做一支。"
+        }
+      ]
+    },
+    "mendeleev": {
+      "storyId": "mendeleev",
+      "afterPara": 4,
+      "forbidden": [
+        "完全不會",
+        "絕對不會",
+        "永遠不會"
+      ],
+      "titleZh": "🔎 觀察:週期表最右邊一排",
+      "titleEn": "🔎 Look: The last column of the periodic table",
+      "legZh": "示意圖(玻爾模型):紅=質子、灰=中子、藍=電子、黃=最外層電子",
+      "legEn": "Simplified (Bohr model): red = protons, grey = neutrons, blue = electrons, yellow = outer electrons",
+      "steps": [
+        {
+          "key": "intro",
+          "nZh": "開頭",
+          "nEn": "Intro",
+          "d0": 3,
+          "io": 1,
+          "capZh": "來看看現在的元素週期表!",
+          "capEn": "Let's look at today's periodic table!",
+          "refs": [
+            {
+              "para": 4,
+              "quote": "現在的週期表"
+            }
+          ],
+          "status": "match",
+          "note": ""
+        },
+        {
+          "key": "count",
+          "nZh": "118 個",
+          "nEn": "118",
+          "d0": 6.5,
+          "capZh": "現在的週期表,已經有 118 個元素。",
+          "capEn": "Today's periodic table has 118 elements.",
+          "refs": [
+            {
+              "para": 4,
+              "quote": "已經有一百一十八個元素"
+            }
+          ],
+          "status": "match",
+          "note": "格子依原子序一個一個彈出來(場景效果)。主表 18 欄 7 列,鑭系與錒系照 App 放在下面兩列;格子顏色是 App 的元素類別色。"
+        },
+        {
+          "key": "column",
+          "nZh": "最右排",
+          "nEn": "Far right",
+          "d0": 6,
+          "capZh": "同一直排的元素,個性常常很像。看,最右邊那一排!",
+          "capEn": "Elements in one column are often alike. Look at the far right!",
+          "refs": [
+            {
+              "para": 4,
+              "quote": "排在同一直排的元素，個性常常很像"
+            },
+            {
+              "para": 4,
+              "quote": "最右邊那一排"
+            }
+          ],
+          "status": "match",
+          "note": "鏡頭移到第 18 族,這一排發亮,小朋友伸手指向它。"
+        },
+        {
+          "key": "electrons",
+          "nZh": "電子",
+          "nEn": "Electrons",
+          "d0": 7,
+          "capZh": "氦的最外層有 2 個電子,氖和氬有 8 個,都排滿了。",
+          "capEn": "Helium's outer shell has 2 electrons; neon's and argon's have 8. All full.",
+          "refs": [
+            {
+              "para": 4,
+              "quote": "氦、氖、氬"
+            }
+          ],
+          "status": "extra",
+          "note": "故事沒寫電子;這是「為什麼不愛結合」的科學解釋。玻爾模型只是示意,畫面上有標示。氬的第三層可容納 18 個,8 個是 s、p 軌域排滿(八隅體),見事實表。"
+        },
+        {
+          "key": "bounce",
+          "nZh": "不結合",
+          "nEn": "No bonds",
+          "d0": 7.5,
+          "capZh": "所以它們很不愛和別人結合:別的原子撞上來,只會彈開。",
+          "capEn": "So they hardly join others: another atom just bounces off.",
+          "refs": [
+            {
+              "para": 4,
+              "quote": "都很不愛和別人結合"
+            }
+          ],
+          "status": "match",
+          "note": "鈉撞上氬,做彈性碰撞(質心系靜止、動量守恆)。真實的原子碰撞更複雜(只有很弱的吸引力),此處是示意。"
+        },
+        {
+          "key": "end",
+          "nZh": "結尾",
+          "nEn": "Ending",
+          "d0": 3.5,
+          "io": 1,
+          "capZh": "你也可以到週期表裡找找看喔!",
+          "capEn": "Go and look for them in the periodic table!",
+          "refs": [
+            {
+              "para": 4,
+              "quote": "你也可以到週期表裡找找看喔"
+            }
+          ],
+          "status": "match",
+          "note": "一道光從最左邊掃到最右邊,提醒小朋友自己去找。"
+        }
+      ],
+      "uncovered": [
+        {
+          "para": 4,
+          "quote": "而且還有科學家在努力研究",
+          "why": "旁白沒有演;118 個元素裡最後幾個(例如 Og)是人工合成、只存在極短時間,性質多半靠理論推測。"
+        }
+      ]
+    }
+  }
+}

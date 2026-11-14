@@ -48,6 +48,21 @@ description: 把「兒童化學樂園」的一則化學故事,做成有科學根
 ## 目前已做過的實驗
 | 腳本 key | 故事 | 狀態 |
 |---|---|---|
-| candle | fire「火是怎麼來的?」 | 預覽通過審稿(故事第 3 段已改成「氧氣變少了」) |
-| cabbage | cabbage「會變色的紫色高麗菜」 | 預覽通過審稿 |
-尚未接進 App(只在審稿頁預覽)。
+| candle | fire「火是怎麼來的?」 | 已在 App(故事第 3 段已改成「氧氣變少了」) |
+| cabbage | cabbage「會變色的紫色高麗菜」 | 已在 App |
+| iron | iron「鐵:會變壞的好朋友」第 4 段(廚房找鐵與不鏽鋼) | 已在 App;事實表 references/science/iron.md |
+| salt | salt「食鹽的大祕密」第 4 段(放大鏡看鹽粒 → 離子晶格) | 已在 App;references/science/salt.md |
+| fireworks | fireworks「煙火為什麼有那麼多顏色?」(焰色) | 已在 App;references/science/fireworks.md |
+| air | air「空氣裡有什麼?」第 3 段(零食袋裡的氮氣) | 已在 App;references/science/air.md |
+| mendeleev | mendeleev「讓元素排排站」第 4 段(週期表最右邊一排) | 已在 App;references/science/mendeleev.md |
+已接進 App 的化學故事頁(國小版)。
+
+## 在 App 裡的位置(已整合)
+- 資料:`src/data/db/experiments.json`(實驗腳本,`afterPara` = 動畫卡片放在故事第幾段後面)→ `src/data/experiments.js`;驗證:`scripts/lib/validate-experiments.mjs`(`npm run dev` / `build` 前由 `scripts/build-db.mjs` 自動執行,與故事對不起來就中止)。
+- 引擎:`src/anim/engine.js`(three 0.187.0,從 reference-impl 移植:`createEngine(host, EXP, { key, lang, hooks })`);播放器:`src/anim/player.js`(海報按鈕 → 按需載入引擎、字幕與注音、播放控制、步驟列、捲出視窗暫停、離開釋放)。
+- 故事頁:`src/scenes/Stories.js` 在 `afterPara` 那段後面放動畫卡片;寬螢幕(≥ 900px)文字環繞,手機上下排。CSS 在 `src/style.css` 結尾的「實驗動畫卡片」。
+- 測試:`tests/experiments.test.mjs`(單元)、`scripts/e2e.mjs` 的 F 區(真的播放、逐格掃描、暫停、切換語言會釋放)。
+- **場景**:`candle`、`cabbage` 是 `src/anim/engine.js` 內建的(`buildS1`、`buildS2`);其他每個實驗一個模組 `src/anim/scenes/<key>.js`(`build(ctx, E)`,契約見 `references/scene-authoring.md`),由 `src/anim/registry.js` 按需載入。
+- **新增一個實驗**:(1) 在 `experiments.json` 加一份腳本(從 `templates/` 開始,用 `scripts/set-exp.mjs` 寫入);(2) 寫 `src/anim/scenes/<key>.js` 並在 `registry.js` 登記;(3) 用 `scripts/app-shot.mjs` 在真的 App 截圖檢查、`--sweep` 掃描骨架;(4) 事實表放 `references/science/<key>.md`;(5) 跑 `npm test` 與 `npm run e2e`(E2E 的 `EXP_LIST` 要加上新的一支);(6) 更新這個技能的「已做過的實驗」表。
+- **多人同時做**:每個人只改自己的場景檔與自己的事實表;`experiments.json` 一律用 `set-exp.mjs` 寫入;不要同時改 `engine.js`。
+- 同步修改:改動 `src/anim/engine.js` 時,`reference-impl/anim-proto.js`(審稿頁預覽用)要一併更新,兩份只差 three 版本與播放器介面。

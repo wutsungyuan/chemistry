@@ -15,7 +15,9 @@ const root = path.resolve(here, '../../../..');
 const scriptFile = opt('script'), storiesFile = opt('stories', path.join(root, 'src/data/db/stories.json'));
 if (!scriptFile) { console.error('用法:node check-sync.mjs --script <exp-scripts.json> [--stories <stories.json>]'); process.exit(2); }
 const LIMITS = { zhChars: 30, enWords: 20 };
-const EXP = JSON.parse(fs.readFileSync(scriptFile, 'utf8'));
+let EXP = JSON.parse(fs.readFileSync(scriptFile, 'utf8'));
+if (EXP.experiments) EXP = EXP.experiments;                                   // 整份 experiments.json
+else if (EXP.steps) EXP = { [path.basename(scriptFile, '.json')]: EXP };        // 單一實驗的片段(set-exp.mjs 用的格式)
 const S = JSON.parse(fs.readFileSync(storiesFile, 'utf8'));
 const errors = []; let nSteps = 0, nRefs = 0;
 for (const [name, E] of Object.entries(EXP)) {

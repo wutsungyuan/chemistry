@@ -13,6 +13,7 @@ import { validateNuclides } from './lib/validate-nuclides.mjs';
 import { validateMatter } from './lib/validate-matter.mjs';
 import { validateElements, validateElementUses } from './lib/validate-elements.mjs';
 import { validateStories } from './lib/validate-stories.mjs';
+import { validateExperiments } from './lib/validate-experiments.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DB = p => JSON.parse(fs.readFileSync(path.join(root, 'src/data/db', p), 'utf8'));
@@ -167,6 +168,8 @@ validateElements(ELEM, dataCtx);
 validateElementUses(DB('element-uses.json'), ELEM, dataCtx);
 // 化學故事:連結的元素與分子必須存在
 validateStories(DB('stories.json'), { elements: new Set(Object.keys(BY_SYMBOL)), molecules: new Set(ids) }, dataCtx);
+// 實驗動畫:步驟與字幕要和故事原文對得起來
+validateExperiments(DB('experiments.json'), DB('stories.json'), dataCtx);
 
 // ---- 6) 輸出 ----
 if (errors.length) {

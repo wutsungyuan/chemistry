@@ -4,6 +4,8 @@ import { BY_SYMBOL } from '../data/elements.js';
 import { ILLUS } from '../data/storyArt.js';
 import { speak, canSpeak, stopSpeaking } from '../ui/speech.js';
 import { prepare, keepInView } from '../ui/readalong.js';
+import { EXPERIMENT_BY_STORY } from '../data/experiments.js';
+import { canAnimate, animPosterHTML, startAnim } from '../anim/player.js';
 
 // 化學故事(國小版):列表 → 一則故事(朗讀、安全提醒、三選一小問題、連到元素與圖鑑)。
 // 網址:#stories(列表)、#stories/fire(單一故事)。資料見 data/db/stories.json。
@@ -14,6 +16,7 @@ export function mount(container, arg, { go }) {
   const page = document.createElement('div');
   page.className = 'page';
   container.appendChild(page);
+  let player = null;                                          // 實驗動畫播放器(有按下「看實驗動畫」才會有)
   const story = typeof arg === 'string' ? STORY_BY_ID[arg] : null;
 
   function list() {
@@ -27,6 +30,7 @@ export function mount(container, arg, { go }) {
   function show(s) {
     const body = s.body[state.lang] ?? s.body.zh;
     const idx = STORIES.findIndex(x => x.id === s.id), nxt = STORIES[(idx + 1) % STORIES.length];
+    const anim = canAnimate() ? EXPERIMENT_BY_STORY[s.id] : null;          // 這則故事有實驗動畫(而且這個裝置能畫 3D)
     const els = s.elements.map(sym => BY_SYMBOL[sym]).filter(Boolean);
     const links = [...els.map(e => `<button class="chip" data-atom="${e.z}">${e.sym} ${LH(e.name)}</button>`), ...s.molecules.map(m => `<button class="chip" data-mol="${m}">${formulaHTML(m)}</button>`)].join('');
     page.innerHTML = `<article class="quiz story">
@@ -34,13 +38,15 @@ export function mount(container, arg, { go }) {
       <h2>${ICON[s.id] || '📖'} <span class="rd-seg">${LH(s.title)}</span></h2>
       <figure class="story-art">${ILLUS[s.id] || ''}</figure>
       ${canSpeak() ? `<button class="btn" id="say">🔊 ${T('stories.say')}</button>` : ''}
-      ${body.map(p => `<p class="story-p"><span class="rd-seg">${render(p)}</span></p>`).join('')}
+      ${body.map((p, i) => `<p class="story-p"><span class="rd-seg">${render(p)}</span></p>${anim && i + 1 === anim.afterPara ? animPosterHTML(anim.key) : ''}`).join('')}
       ${s.safety ? `<p class="story-safety">⚠️ <span class="rd-seg">${LH(s.safety)}</span></p>` : ''}
       <div class="story-q"><h3>${T('stories.quiz')}</h3><div class="q">${LH(s.quiz.q)}</div>
         <div class="opts">${s.quiz.options.map((o, i) => `<button data-i="${i}">${LETTERS[i]}. ${LH(o)}</button>`).join('')}</div>
         <div class="story-fb" aria-live="polite"></div></div>
       ${links ? `<h3>${T('stories.links')}</h3><div class="story-links">${links}</div>` : ''}
       <button class="btn alt" id="next">${T('stories.next')} →</button></article>`;
+    const card = page.querySelector('.anim-card');
+    card?.querySelector('.anim-poster').addEventListener('click', async () => { try { player = await startAnim(card, card.dataset.key); } catch (e) { console.warn('實驗動畫無法播放', e); } });
     page.querySelector('#back').onclick = () => go('stories');
     page.querySelector('#next').onclick = () => go('stories', nxt.id);
     // 朗讀 + 跟著唸:標題、每一段、安全提醒各是一段;念到哪個字,哪個字亮起來
@@ -70,5 +76,5 @@ export function mount(container, arg, { go }) {
   }
 
   if (story) show(story); else list();
-  return { dispose() { stopSpeaking(); page.remove(); } };
+  return { dispose() { stopSpeaking(); player?.dispose(); page.remove(); } };
 }

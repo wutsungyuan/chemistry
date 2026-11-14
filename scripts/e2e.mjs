@@ -201,6 +201,53 @@ for (const [lang, bound] of [['zh', true], ['zh', false], ['en', true]]) {
   eachErr(tag);
 }
 
+// ---------------------------------------------------------------- F. 化學故事的實驗動畫(真的 3D、真的播放)
+console.log('F. 化學故事的實驗動畫');
+// 每一支動畫都要測一次(中英文交錯,兩種語言的字幕都會被測到);--quick 只測前兩支
+const EXP_LIST = [['zh', 'candle', 'fire'], ['en', 'cabbage', 'cabbage'], ['zh', 'iron', 'iron'], ['en', 'salt', 'salt'], ['zh', 'fireworks', 'fireworks'], ['en', 'air', 'air'], ['zh', 'mendeleev', 'mendeleev']];
+for (const [lang, key, story] of (QUICK ? EXP_LIST.slice(0, 2) : EXP_LIST)) {
+  await page.viewport(390, 780, true);
+  await setup('kid', lang);
+  await page.goto(url('index.html#stories/' + story), 1200);
+  const tag = `F ${lang} ${key}`;
+  check(`${tag}:故事頁有動畫卡片(海報按鈕)`, await page.eval(`!!document.querySelector('.anim-card .anim-poster')`));
+  check(`${tag}:動畫卡片放在實驗那一段的後面,不在故事最前面`, await page.eval(`(() => { const c = document.querySelector('.anim-card'); return !!c.previousElementSibling && c.previousElementSibling.classList.contains('story-p'); })()`));
+  await page.eval(`document.querySelector('.anim-poster').click()`); await page.sleep(2500);
+  check(`${tag}:按下去後有 3D 畫面`, await page.eval(`!!document.querySelector('.anim-stage canvas')`));
+  check(`${tag}:動畫用的是自己的腳本(步驟數與腳本一致,不是別的實驗的)`, await page.eval(`document.querySelectorAll('.anim-steps button').length`) === await page.eval(`(() => { const a = document.querySelector('.anim-stage canvas').__api; return a.steps().length; })()`) && (await page.eval(`document.querySelector('.anim-stage canvas').__api.key`)) === key);
+  check(`${tag}:字幕、播放鈕、進度條、步驟列都有`, await page.eval(`!!document.querySelector('.anim-cap')?.textContent.trim() && !!document.querySelector('.anim-play') && !!document.querySelector('.anim-seek') && document.querySelectorAll('.anim-steps button').length >= 5`));
+  const sw = JSON.parse(await page.eval(`JSON.stringify(document.querySelector('.anim-stage canvas').__api.sweep())`));
+  check(`${tag}:逐格掃描:關節超限 0、手離目標 ≤ 0.2`, sw.length === 2 && sw.every(r => r.maxViolations === 0 && r.maxReachErr <= 0.2), JSON.stringify(sw));
+  check(`${tag}:兩種語言的動畫長度都在 45 秒內`, sw.every(r => r.total > 10 && r.total <= 45), sw.map(r => r.total).join(','));
+  const info = JSON.parse(await page.eval(`JSON.stringify(document.querySelector('.anim-stage canvas').__api.info())`));
+  check(`${tag}:有畫質等級(0~2),預設從全開(2)開始往下調`, [0, 1, 2].includes(await page.eval(`document.querySelector('.anim-stage canvas').__api.quality()`)));
+  check(`${tag}:繪製呼叫數在預算內(< 400)`, info.calls > 0 && info.calls < 400, JSON.stringify(info));
+  await page.eval(`document.querySelector('.anim-play').click()`); await page.sleep(200);
+  check(`${tag}:按暫停後不再往前播`, await (async () => { const a = await page.eval(`document.querySelector('.anim-stage canvas').__api.time()`); await page.sleep(500); return Math.abs(a - await page.eval(`document.querySelector('.anim-stage canvas').__api.time()`)) < 0.05; })());
+  check(`${tag}:手機沒有橫向捲動`, !(await snap()).overflow);
+  eachErr(tag);
+  // 放大模式:畫面撐滿視窗(比例跟著視窗),3D 畫面跟著變大;再按一次回到原位
+  await page.eval(`document.querySelector('.anim-full').click()`); await page.sleep(600);
+  check(`${tag}:放大模式:動畫撐滿視窗,3D 畫面與容器一樣大`, await page.eval(`(() => { const s = document.querySelector('.anim-stage'), c = s.querySelector('canvas'); return document.querySelector('.anim-card').classList.contains('full') && s.clientWidth >= innerWidth - 40 && s.clientHeight >= innerHeight * 0.3 && Math.abs(c.clientWidth - s.clientWidth) < 2 && Math.abs(c.clientHeight - s.clientHeight) < 2; })()`));
+  await page.eval(`document.querySelector('.anim-full').click()`); await page.sleep(400);
+  check(`${tag}:離開放大模式後回到故事裡`, await page.eval(`!document.querySelector('.anim-card.full') && !!document.querySelector('.story .anim-card')`));
+  await page.eval(`document.getElementById('btn-lang').click()`); await page.sleep(900);
+  check(`${tag}:切換語言後動畫會釋放(回到海報),沒有殘留的 3D 畫面`, await page.eval(`!document.querySelector('.anim-stage canvas') && !!document.querySelector('.anim-poster')`));
+  eachErr(tag + ' 切換語言');
+}
+
+// F2. 不同尺寸:桌機不能是窄畫面;橫式手機放大模式也要能用(畫面比例跟著容器,鏡頭自動適應)
+for (const [name, w, h, mobile, minW] of [['桌機 1280x800', 1280, 800, false, 600], ['橫式手機 844x390', 844, 390, true, 500], ['平板 820x1180', 820, 1180, true, 600]]) {
+  await page.viewport(w, h, mobile); await setup('kid', 'zh');
+  await page.goto(url('index.html#stories/fire'), 1200);
+  await page.eval(`document.querySelector('.anim-poster').click()`); await page.sleep(2200);
+  const sz = JSON.parse(await page.eval(`(() => { const s = document.querySelector('.anim-stage'), c = s.querySelector('canvas'); return JSON.stringify([s.clientWidth, s.clientHeight, c.clientWidth, c.clientHeight]); })()`));
+  check(`F ${name}:動畫畫面夠大(寬 ≥ ${minW}px),3D 畫面與容器一樣大`, sz[0] >= minW && Math.abs(sz[0] - sz[2]) < 2 && Math.abs(sz[1] - sz[3]) < 2, sz.join('x'));
+  await page.eval(`document.querySelector('.anim-full').click()`); await page.sleep(600);
+  const fz = JSON.parse(await page.eval(`(() => { const s = document.querySelector('.anim-stage'); return JSON.stringify([s.clientWidth, s.clientHeight, innerWidth, innerHeight]); })()`));
+  check(`F ${name}:放大模式撐滿視窗寬度、高度有一定大小`, fz[0] >= fz[2] - 40 && fz[1] >= fz[3] * 0.25, fz.join('x'));
+  eachErr('F ' + name);
+}
 await page.close?.();
 await chrome.close();
 await server.close();
