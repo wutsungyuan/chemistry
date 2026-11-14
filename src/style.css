@@ -609,7 +609,8 @@ em.absorb{background:rgba(255,150,90,.3)}em.release{background:rgba(110,170,255,
 .story-links{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
 .story-note{font-size:.85rem;opacity:.8}
 .story-art{margin:10px 0}.story-art svg{display:block;width:100%;height:auto;border-radius:14px}
-.story-card .si{width:100%;font-size:2.2rem}.story-card .si svg{display:block;width:100%;height:auto;border-radius:10px}
+.story-card .si{position:relative;width:100%;font-size:2.2rem}
+.anim-badge{position:absolute;top:5px;right:5px;padding:0 7px;border-radius:999px;background:rgba(15,20,50,.6);color:#fff;font-size:.66rem;font-weight:600;line-height:1.5;white-space:nowrap;opacity:.85}.story-card .si svg{display:block;width:100%;height:auto;border-radius:10px}
 .story-links{display:flex;flex-wrap:wrap;gap:10px}
 .story-links .chip{margin:0;padding:10px 20px;min-height:52px;display:inline-flex;align-items:center;gap:8px;font-size:1.35rem;line-height:1.9;border-radius:999px}
 .story-links .chip sub{font-size:.7em}
@@ -642,7 +643,7 @@ html[lang="en"] .anim-cap{font-size:1.08rem;line-height:1.6;min-height:3.6em}
 .story-q{clear:both}
 /* 畫面大小與比例跟著裝置:手機 4:3、一般 16:10、桌機 16:9;動畫卡片在桌機也撐滿故事欄(不繞圖),要更大可以按「放大」(撐滿視窗,比例跟著視窗) */
 @media (max-width:520px){.anim-stage{aspect-ratio:4/3}}
-@media (min-width:900px){.story:has(.anim-card){max-width:980px}.anim-stage{aspect-ratio:16/9}}
+@media (min-width:900px){.anim-stage{aspect-ratio:16/9}}
 .anim-bar .anim-full{font-size:1.05rem}
 html.anim-lock,html.anim-lock body{overflow:hidden}
 .anim-card.full{position:fixed;inset:0;z-index:60;margin:0;box-sizing:border-box;display:flex;flex-direction:column;gap:6px;overflow:auto;background:#0b1030;padding:max(8px,env(safe-area-inset-top)) max(10px,env(safe-area-inset-right)) max(8px,env(safe-area-inset-bottom)) max(10px,env(safe-area-inset-left))}

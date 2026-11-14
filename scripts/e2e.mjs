@@ -212,7 +212,9 @@ for (const [lang, key, story] of (QUICK ? EXP_LIST.slice(0, 2) : EXP_LIST)) {
   const tag = `F ${lang} ${key}`;
   check(`${tag}:故事頁有動畫卡片(海報按鈕)`, await page.eval(`!!document.querySelector('.anim-card .anim-poster')`));
   check(`${tag}:動畫卡片放在實驗那一段的後面,不在故事最前面`, await page.eval(`(() => { const c = document.querySelector('.anim-card'); return !!c.previousElementSibling && c.previousElementSibling.classList.contains('story-p'); })()`));
+  await page.eval(`window.__cancels = 0; const c0 = speechSynthesis.cancel.bind(speechSynthesis); speechSynthesis.cancel = () => { __cancels++; return c0(); }; document.querySelector('#say').click(); window.__c1 = __cancels; 0`);
   await page.eval(`document.querySelector('.anim-poster').click()`); await page.sleep(2500);
+  check(`${tag}:開啟動畫不會打斷朗讀(沒有呼叫停止朗讀)`, await page.eval(`__cancels === __c1`));
   check(`${tag}:按下去後有 3D 畫面`, await page.eval(`!!document.querySelector('.anim-stage canvas')`));
   check(`${tag}:動畫用的是自己的腳本(步驟數與腳本一致,不是別的實驗的)`, await page.eval(`document.querySelectorAll('.anim-steps button').length`) === await page.eval(`(() => { const a = document.querySelector('.anim-stage canvas').__api; return a.steps().length; })()`) && (await page.eval(`document.querySelector('.anim-stage canvas').__api.key`)) === key);
   check(`${tag}:字幕、播放鈕、進度條、步驟列都有`, await page.eval(`!!document.querySelector('.anim-cap')?.textContent.trim() && !!document.querySelector('.anim-play') && !!document.querySelector('.anim-seek') && document.querySelectorAll('.anim-steps button').length >= 5`));
@@ -226,11 +228,16 @@ for (const [lang, key, story] of (QUICK ? EXP_LIST.slice(0, 2) : EXP_LIST)) {
   check(`${tag}:按暫停後不再往前播`, await (async () => { const a = await page.eval(`document.querySelector('.anim-stage canvas').__api.time()`); await page.sleep(500); return Math.abs(a - await page.eval(`document.querySelector('.anim-stage canvas').__api.time()`)) < 0.05; })());
   check(`${tag}:手機沒有橫向捲動`, !(await snap()).overflow);
   eachErr(tag);
-  // 放大模式:畫面撐滿視窗(比例跟著視窗),3D 畫面跟著變大;再按一次回到原位
-  await page.eval(`document.querySelector('.anim-full').click()`); await page.sleep(600);
-  check(`${tag}:放大模式:動畫撐滿視窗,3D 畫面與容器一樣大`, await page.eval(`(() => { const s = document.querySelector('.anim-stage'), c = s.querySelector('canvas'); return document.querySelector('.anim-card').classList.contains('full') && s.clientWidth >= innerWidth - 40 && s.clientHeight >= innerHeight * 0.3 && Math.abs(c.clientWidth - s.clientWidth) < 2 && Math.abs(c.clientHeight - s.clientHeight) < 2; })()`));
-  await page.eval(`document.querySelector('.anim-full').click()`); await page.sleep(400);
-  check(`${tag}:離開放大模式後回到故事裡`, await page.eval(`!document.querySelector('.anim-card.full') && !!document.querySelector('.story .anim-card')`));
+  // 動畫一律在全螢幕裡播放(畫面撐滿視窗,3D 畫面與容器一樣大);✕ 關閉後海報放回文章原位,文章不跳動
+  check(`${tag}:動畫在全螢幕裡播放,3D 畫面與容器一樣大`, await page.eval(`(() => { const s = document.querySelector('.anim-stage'), c = s.querySelector('canvas'); return document.querySelector('.anim-card').classList.contains('full') && s.clientWidth >= innerWidth - 40 && s.clientHeight >= innerHeight * 0.3 && Math.abs(c.clientWidth - s.clientWidth) < 2 && Math.abs(c.clientHeight - s.clientHeight) < 2; })()`));
+  check(`${tag}:文章裡原位留著同高的佔位(文章不會因為動畫而縮短或跳動)`, await page.eval(`(() => { const p = document.querySelector('.story-p + div:not(.anim-card)'); return !!p && p.offsetHeight > 40 && p.offsetHeight < 400; })()`));
+  await page.eval(`document.querySelector('.anim-full').click()`); await page.sleep(500);
+  check(`${tag}:按 ✕ 關閉:回到文章裡的海報,3D 畫面已釋放,捲動鎖解除`, await page.eval(`!document.querySelector('.anim-card.full') && !document.querySelector('.anim-stage canvas') && !!document.querySelector('.story .anim-card .anim-poster') && !document.documentElement.classList.contains('anim-lock')`));
+  await page.eval(`document.querySelector('.anim-poster').click()`); await page.sleep(1800);
+  check(`${tag}:關閉後可以再次開啟`, await page.eval(`!!document.querySelector('.anim-card.full .anim-stage canvas')`));
+  await page.eval(`document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }))`); await page.sleep(400);
+  check(`${tag}:Esc 也能關閉`, await page.eval(`!document.querySelector('.anim-card.full') && !!document.querySelector('.story .anim-card .anim-poster')`));
+  await page.eval(`document.querySelector('.anim-poster').click()`); await page.sleep(1800);
   await page.eval(`document.getElementById('btn-lang').click()`); await page.sleep(900);
   check(`${tag}:切換語言後動畫會釋放(回到海報),沒有殘留的 3D 畫面`, await page.eval(`!document.querySelector('.anim-stage canvas') && !!document.querySelector('.anim-poster')`));
   eachErr(tag + ' 切換語言');
@@ -241,11 +248,9 @@ for (const [name, w, h, mobile, minW] of [['桌機 1280x800', 1280, 800, false, 
   await page.viewport(w, h, mobile); await setup('kid', 'zh');
   await page.goto(url('index.html#stories/fire'), 1200);
   await page.eval(`document.querySelector('.anim-poster').click()`); await page.sleep(2200);
-  const sz = JSON.parse(await page.eval(`(() => { const s = document.querySelector('.anim-stage'), c = s.querySelector('canvas'); return JSON.stringify([s.clientWidth, s.clientHeight, c.clientWidth, c.clientHeight]); })()`));
-  check(`F ${name}:動畫畫面夠大(寬 ≥ ${minW}px),3D 畫面與容器一樣大`, sz[0] >= minW && Math.abs(sz[0] - sz[2]) < 2 && Math.abs(sz[1] - sz[3]) < 2, sz.join('x'));
-  await page.eval(`document.querySelector('.anim-full').click()`); await page.sleep(600);
-  const fz = JSON.parse(await page.eval(`(() => { const s = document.querySelector('.anim-stage'); return JSON.stringify([s.clientWidth, s.clientHeight, innerWidth, innerHeight]); })()`));
-  check(`F ${name}:放大模式撐滿視窗寬度、高度有一定大小`, fz[0] >= fz[2] - 40 && fz[1] >= fz[3] * 0.25, fz.join('x'));
+  const sz = JSON.parse(await page.eval(`(() => { const s = document.querySelector('.anim-stage'), c = s.querySelector('canvas'); return JSON.stringify([s.clientWidth, s.clientHeight, c.clientWidth, c.clientHeight, innerWidth, innerHeight]); })()`));
+  check(`F ${name}:全螢幕動畫畫面夠大(寬 ≥ ${minW}px),3D 畫面與容器一樣大`, sz[0] >= minW && Math.abs(sz[0] - sz[2]) < 2 && Math.abs(sz[1] - sz[3]) < 2, sz.join('x'));
+  check(`F ${name}:撐滿視窗寬度、高度有一定大小`, sz[0] >= sz[4] - 40 && sz[1] >= sz[5] * 0.25, sz.join('x'));
   eachErr('F ' + name);
 }
 await page.close?.();

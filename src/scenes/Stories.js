@@ -19,10 +19,12 @@ export function mount(container, arg, { go }) {
   let player = null;                                          // 實驗動畫播放器(有按下「看實驗動畫」才會有)
   const story = typeof arg === 'string' ? STORY_BY_ID[arg] : null;
 
+  const hasAnim = id => canAnimate() && !!EXPERIMENT_BY_STORY[id];      // 列表上用:這則故事有實驗動畫(而且這個裝置能畫 3D)
+
   function list() {
     page.innerHTML = `<div class="quiz story-list">
       <h2>📖 ${T('stories.title')}</h2><p>${T('stories.lead')}</p>
-      <div class="story-cards">${STORIES.map(s => `<button class="story-card" data-id="${s.id}"><span class="si">${ILLUS[s.id] || ICON[s.id] || '📖'}</span><span class="st">${LH(s.title)}</span></button>`).join('')}</div>
+      <div class="story-cards">${STORIES.map(s => `<button class="story-card" data-id="${s.id}"><span class="si">${ILLUS[s.id] || ICON[s.id] || '📖'}${hasAnim(s.id) ? `<span class="anim-badge">🎬 ${state.lang === 'en' ? 'Animated' : '有動畫'}</span>` : ''}</span><span class="st">${LH(s.title)}</span></button>`).join('')}</div>
       <p class="story-note">${T('stories.note')}</p></div>`;
     page.querySelectorAll('[data-id]').forEach(b => { b.onclick = () => go('stories', b.dataset.id); });
   }
@@ -45,8 +47,16 @@ export function mount(container, arg, { go }) {
         <div class="story-fb" aria-live="polite"></div></div>
       ${links ? `<h3>${T('stories.links')}</h3><div class="story-links">${links}</div>` : ''}
       <button class="btn alt" id="next">${T('stories.next')} →</button></article>`;
+    // 動畫在全螢幕裡播放;文章裡只留一個海報按鈕(朗讀不會被打斷,可以一邊聽故事一邊看動畫;關閉後海報放回原位)
     const card = page.querySelector('.anim-card');
-    card?.querySelector('.anim-poster').addEventListener('click', async () => { try { player = await startAnim(card, card.dataset.key); } catch (e) { console.warn('實驗動畫無法播放', e); } });
+    if (card) {
+      const posterHTML = card.innerHTML;
+      const arm = () => card.querySelector('.anim-poster').addEventListener('click', async () => {
+        try { player = await startAnim(card, card.dataset.key, () => { player = null; card.className = 'anim-card'; card.innerHTML = posterHTML; arm(); }); }
+        catch (e) { console.warn('實驗動畫無法播放', e); }
+      });
+      arm();
+    }
     page.querySelector('#back').onclick = () => go('stories');
     page.querySelector('#next').onclick = () => go('stories', nxt.id);
     // 朗讀 + 跟著唸:標題、每一段、安全提醒各是一段;念到哪個字,哪個字亮起來

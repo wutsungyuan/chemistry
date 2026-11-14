@@ -21,6 +21,7 @@ export default {
     'anim.replay': '重播',
     'anim.seek': '拖動進度',
     'anim.full': '放大或縮小',
+    'anim.close': '關閉動畫',    'anim.stopsay': '停止朗讀',
   },
   en: {
     'nav.stories': 'Stories',
@@ -43,5 +44,6 @@ export default {
     'anim.replay': 'Replay',
     'anim.seek': 'Seek',
     'anim.full': 'Enlarge or shrink',
+    'anim.close': 'Close the animation',    'anim.stopsay': 'Stop reading aloud',
   },
 };

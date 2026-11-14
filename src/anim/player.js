@@ -3,6 +3,7 @@
 import { T, render, state } from '../i18n/index.js';
 import { EXPERIMENTS } from '../data/experiments.js';
 import { SCENE_LOADERS } from './registry.js';
+import { isSpeaking, stopSpeaking } from '../ui/speech.js';
 
 /** 這個裝置能不能畫 3D(不能就不顯示動畫卡片,故事照常能看) */
 export function canAnimate() {
@@ -20,7 +21,8 @@ const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(
 const fmt = s => { s = Math.max(0, Math.floor(s)); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); };
 
 /** 在 card 裡建立播放器並開始播放;回傳 { dispose } */
-export async function startAnim(card, key) {
+export async function startAnim(card, key, onClose) {
+  const posterH = card.offsetHeight;                           // 文章裡的位置只留海報那麼高,動畫搬到全螢幕後文章不會跳動
   card.classList.add('on');
   card.innerHTML = `<p class="anim-loading">${T('anim.loading')}</p>`;
   let mod;
@@ -29,7 +31,7 @@ export async function startAnim(card, key) {
   card.innerHTML = `<div class="anim-stage" role="img"></div>
     <div class="anim-leg"></div>
     <div class="anim-cap" aria-live="polite"></div>
-    <div class="anim-bar"><button class="anim-play" type="button" aria-label="${plain('anim.playpause')}">⏸</button><button class="anim-re" type="button" aria-label="${plain('anim.replay')}">↻</button><button class="anim-full" type="button" aria-label="${plain('anim.full')}">⛶</button><input class="anim-seek" type="range" min="0" max="1000" value="0" aria-label="${plain('anim.seek')}"><span class="anim-tm"></span></div>
+    <div class="anim-bar"><button class="anim-play" type="button" aria-label="${plain('anim.playpause')}">⏸</button><button class="anim-re" type="button" aria-label="${plain('anim.replay')}">↻</button>${isSpeaking() ? `<button class="anim-say" type="button" aria-label="${plain('anim.stopsay')}">🔇</button>` : ''}<button class="anim-full" type="button" aria-label="${plain('anim.full')}">⛶</button><input class="anim-seek" type="range" min="0" max="1000" value="0" aria-label="${plain('anim.seek')}"><span class="anim-tm"></span></div>
     <div class="anim-steps"></div><p class="anim-note">${T('anim.note')}</p>`;
   const q = s => card.querySelector(s), stage = q('.anim-stage'), cap = q('.anim-cap'), leg = q('.anim-leg'), play = q('.anim-play'), seek = q('.anim-seek'), tm = q('.anim-tm'), stepsEl = q('.anim-steps');
   let sig = '', dragging = false, lastTm = '';
@@ -53,14 +55,17 @@ export async function startAnim(card, key) {
   // 放大時把卡片搬到 <body>(父層如果有 transform,position:fixed 會被困在父層裡),原位留一個同高的佔位;離開時搬回來。
   let holder = null;
   const setFull = on => {
-    if (on && !holder) { holder = document.createElement('div'); holder.style.height = card.offsetHeight + 'px'; card.replaceWith(holder); document.body.appendChild(card); }
+    if (on && !holder) { holder = document.createElement('div'); holder.style.height = posterH + 'px'; card.replaceWith(holder); document.body.appendChild(card); }
     else if (!on && holder) { holder.replaceWith(card); holder = null; }
-    card.classList.toggle('full', on); document.documentElement.classList.toggle('anim-lock', on); fullBtn.textContent = on ? '✕' : '⛶';
-    if (on) document.addEventListener('keydown', onKey); else { document.removeEventListener('keydown', onKey); card.scrollIntoView({ block: 'center' }); }
+    card.classList.toggle('full', on); document.documentElement.classList.toggle('anim-lock', on);
+    if (on) document.addEventListener('keydown', onKey); else document.removeEventListener('keydown', onKey);
     eng.resize();
   };
-  const onKey = ev => { if (ev.key === 'Escape') setFull(false); };
-  const fullBtn = q('.anim-full'); fullBtn.onclick = () => setFull(!card.classList.contains('full'));
+  // 動畫一律在全螢幕裡播放(不夾在文章中間:朗讀的自動捲動、字幕高度變化都會讓文章跳動);✕ 或 Esc 關閉 = 釋放 3D 並把海報放回原位
+  const close = () => { setFull(false); handle.dispose(); onClose?.(); };
+  const onKey = ev => { if (ev.key === 'Escape') close(); };
+  const sayBtn = q('.anim-say'); if (sayBtn) sayBtn.onclick = () => { stopSpeaking(); sayBtn.remove(); };   // 故事正在朗讀時,動畫旁多一顆「停止朗讀」(朗讀不會被動畫打斷)
+  const fullBtn = q('.anim-full'); fullBtn.textContent = '✕'; fullBtn.setAttribute('aria-label', plain('anim.close')); fullBtn.onclick = close;
   seek.oninput = () => { dragging = true; eng.seek(seek.value / 1000); }; seek.onchange = () => { dragging = false; };
   stepsEl.onclick = ev => { const b = ev.target.closest('button[data-i]'); if (b) { eng.seekTime(eng.stepStart(+b.dataset.i)); eng.play(); } };
   let vis = true, inView = true;
@@ -68,6 +73,8 @@ export async function startAnim(card, key) {
   const onVis = () => { vis = document.visibilityState === 'visible'; sync(); };
   document.addEventListener('visibilitychange', onVis);
   const io = typeof IntersectionObserver !== 'undefined' ? new IntersectionObserver(es => { inView = es[0].isIntersecting; sync(); }, { threshold: 0.05 }) : null; io?.observe(card);
+  setFull(true);
   eng.play();
-  return { eng, dispose() { if (holder) { card.remove(); holder.remove(); holder = null; } document.documentElement.classList.remove('anim-lock'); document.removeEventListener('keydown', onKey); document.removeEventListener('visibilitychange', onVis); io?.disconnect(); eng.dispose(); } };
+  const handle = { eng, dispose() { if (holder) { card.remove(); holder.remove(); holder = null; } document.documentElement.classList.remove('anim-lock'); document.removeEventListener('keydown', onKey); document.removeEventListener('visibilitychange', onVis); io?.disconnect(); eng.dispose(); } };
+  return handle;
 }
