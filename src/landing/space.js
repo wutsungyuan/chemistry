@@ -5,7 +5,7 @@ import * as THREE from 'three';
 import { createFigureEight, T0 } from './orbit.js';
 import { buildPlanet } from './planets.js';
 import { buildShip } from './ship.js';
-import { buildCosmos, buildStar } from './cosmos.js';
+import { buildCosmos, buildStar, buildBelt } from './cosmos.js';
 
 const LEVELS = ['kid', 'teen', 'high'];
 const S = 3, R = 0.21 * S;            // 軌道放大倍數;星球半徑(8 字軌道上三顆最近 0.69*S,含星環也不會碰到)
@@ -31,7 +31,7 @@ export function mountSpace(host, { labels, texts, onPick }) {
   const sun = new THREE.DirectionalLight(0xfff1d6, 3.6), sunDir = new THREE.Vector3(0, 0, 1), star = buildStar(1.3), STAR_DEPTH = 16; scene.add(sun, star.group);
 
   const low = Math.min(innerWidth, innerHeight) < 500 && (navigator.hardwareConcurrency || 4) <= 4;
-  const cosmos = buildCosmos({ count: low ? 26 : 42, stars: low ? 700 : 1200 }); scene.add(cosmos.group);
+  const cosmos = buildCosmos({ stars: low ? 700 : 1200 }), belt = buildBelt({ tiles: low ? 30 : 50, dust: low ? 1200 : 2800 }); scene.add(cosmos.group, belt.group);   // 星空與星雲;繞著恆星的星塵帶(元素小方塊 + 塵粒)
 
   // 軌道:外層旋轉(直式手機把 8 字轉成直的)→ 傾斜 → 星球
   const orbitRoot = new THREE.Group(), tilt = new THREE.Group(); tilt.rotation.set(TILT, YAW, 0); orbitRoot.add(tilt); scene.add(orbitRoot);
@@ -83,6 +83,7 @@ export function mountSpace(host, { labels, texts, onPick }) {
     const availH0 = Math.max(120, H - headB - 100), port0 = W / availH0 < 1.05, [ew, eh] = port0 ? EXT_PORT : EXT_LAND;
     const d0 = (H / 2) / (Math.min(W / (2 * ew), availH0 / (2 * eh)) * TAN), hh = (d0 + STAR_DEPTH) * TAN, hw = hh * W / H;
     star.group.position.set((port0 ? -0.6 : -0.66) * hw, (port0 ? 0.16 : 0.4) * hh, -STAR_DEPTH);
+    belt.setCenter(star.group.position);
     sun.position.copy(star.group.position); sunDir.copy(star.group.position).normalize(); planets.forEach(p => p.userData.setSun(sunDir));
   }
   const layoutSoon = () => { clearTimeout(layoutTimer); layoutTimer = setTimeout(layout, 30); requestAnimationFrame(layout); };
@@ -114,21 +115,33 @@ export function mountSpace(host, { labels, texts, onPick }) {
   const sh = { pos: new THREE.Vector3(), prev: new THREE.Vector3(), vel: new THREE.Vector3(1, 0, 0), mode: 'orbit', target: 0, th: 0, sweep: 0, prevDiff: NaN, tr: null, init: false, arrived: false, flip: 0, stay: 0, next: -1, from: -1, hops: [] };
   const pvel = [new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3()], wpPrev = [new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3()];
   const tmp = new THREE.Vector3(), ref = new THREE.Vector3(), fwd = new THREE.Vector3(), side = new THREE.Vector3(), up = new THREE.Vector3(), upF = new THREE.Vector3(), basis = new THREE.Matrix4(), qT = new THREE.Quaternion();
+  let snap = false;
   const acc = new THREE.Vector3(), accS = new THREE.Vector3(), lastVel = new THREE.Vector3();
   /** 從目前的位置與速度,開一條到星球 B 繞行軌道的轉移軌道 */
-  function startTransfer(B) {
+  function startTransfer(B, T) {
     let A = 0, best = Infinity; for (let i = 0; i < 3; i++) { const d = sh.pos.distanceTo(wp[i]); if (d < best) { best = d; A = i; } }
     const thIn = tangentAngle(tmp.copy(wp[B]).sub(sh.pos));                         // 抵達點:切線方向順著飛過去的方向,到了就直接接著繞
     const r1 = ringPoint(ZERO, thIn, new THREE.Vector3()), v1 = new THREE.Vector3().copy(U).multiplyScalar(-Math.sin(thIn)).addScaledVector(V, Math.cos(thIn)).multiplyScalar(RO * OMEGA);
     const dist = tmp.copy(wp[B]).add(r1).distanceTo(sh.pos);
-    sh.tr = { A, B, r0: sh.pos.clone().sub(wp[A]), m0: sh.vel.clone().sub(pvel[A]), r1, v1, thIn, T: clamp(dist / (2 * RO * OMEGA), 2.4, 5), s: 0 };   // 時間比「等速飛過去」短:出發時加速、中途較快、入軌前要減速
+    sh.tr = { A, B, r0: sh.pos.clone().sub(wp[A]), m0: sh.vel.clone().sub(pvel[A]), r1, v1, thIn, T: T || clamp(dist / (2 * RO * OMEGA), 2.4, 5), s: 0 };   // 時間比「等速飛過去」短:出發時加速、中途較快、入軌前要減速
     sh.from = A; sh.next = -1; sh.mode = 'fly'; sh.target = B;
   }
-  ship.userData.focus = i => { if (sh.init && !(sh.target === i)) startTransfer(i); };
+  ship.userData.focus = i => { if (sh.init && (sh.mode === 'intro' || sh.target !== i)) startTransfer(i); };
   function stepShip(dt) {
-    for (let i = 0; i < 3; i++) { if (sh.init) pvel[i].copy(wp[i]).sub(wpPrev[i]).divideScalar(dt); wpPrev[i].copy(wp[i]); }   // 星球的速度(轉移軌道兩端要用)
+    for (let i = 0; i < 3; i++) { if (sh.init) pvel[i].copy(wp[i]).sub(wpPrev[i]).divideScalar(dt); wpPrev[i].copy(wp[i]); }
+    if (!sh.init) sh.prev.copy(sh.pos);   // 星球的速度(轉移軌道兩端要用)
+    // 開場(像電影的開場鏡頭):飛船從畫面左邊外面、貼著鏡頭前方橫掃進來——看到的是飛船的側面,佔掉大半個畫面——一邊掃過一邊往遠處飛,
+    // 1.5 秒後接上平常的轉移軌道,飛向國小星、掉頭、減速入軌,然後照平常的規則巡航。這一段的位置是相對於鏡頭算的(開場時版面還在調整,鏡頭會動)。
+    let skipVel = false;
+    if (!sh.init) { sh.mode = 'intro'; sh.it = 0; sh.init = true; snap = true; }
+    if (sh.mode === 'intro') {
+      sh.it += dt; const D = 1.5, u = Math.min(1, sh.it / D), hh = 1.3 * TAN, hw = hh * W / H, x0 = -hw - 0.8, x1 = hw * 0.35;
+      sh.pos.set(camera.position.x + x0 + (x1 - x0) * u, camera.position.y - hh * 0.3 + 0.2 * u, camera.position.z - 1.3 - 1.5 * u * u);
+      sh.vel.set((x1 - x0) / D, 0.2 / D, -3 * u / D); skipVel = true;               // 速度用「相對於鏡頭」的,機頭才會朝著掃過畫面的方向
+      if (u >= 1) startTransfer(0, clamp(sh.pos.distanceTo(wp[0]) / 3, 3.6, 6));
+    }
     const P = wp[sh.target];
-    if (sh.mode === 'fly') {
+    if (skipVel) { /* 開場階段:位置已經算好 */ } else if (sh.mode === 'fly') {
       const tr = sh.tr, raw = tr.s + dt / tr.T, left = Math.max(0, raw - 1) * tr.T; tr.s = Math.min(1, raw);   // left:這一格裡轉移軌道結束後剩下的時間,接著拿去繞行
       const u = tr.s, u2 = u * u, u3 = u2 * u, h00 = 2 * u3 - 3 * u2 + 1, h10 = u3 - 2 * u2 + u, h01 = -2 * u3 + 3 * u2, h11 = u3 - u2;       // 三次 Hermite 基底
       sh.pos.copy(wp[tr.A]).add(tr.r0).multiplyScalar(h00).addScaledVector(tr.m0, h10 * tr.T);
@@ -141,7 +154,7 @@ export function mountSpace(host, { labels, texts, onPick }) {
     } else {
       sh.th += dt * OMEGA; sh.sweep += dt * OMEGA; ringPoint(P, sh.th, sh.pos);
     }
-    if (sh.init) sh.vel.copy(sh.pos).sub(sh.prev).divideScalar(dt); sh.prev.copy(sh.pos); sh.init = true;
+    if (!skipVel) sh.vel.copy(sh.pos).sub(sh.prev).divideScalar(dt); sh.prev.copy(sh.pos);
     if (sh.mode === 'orbit' && selected < 0 && sh.sweep > Math.PI * 2 * LAPS[sh.stay % LAPS.length]) {   // 繞滿 3~5 圈(依序 3、4、5 圈輪流)之後準備出發
       if (sh.next < 0) {                                                           // 下一站:當下離得最遠的那一顆(飛得遠、飛得快,入軌前的煞車減速才明顯)。
         const [a, b] = [0, 1, 2].filter(i => i !== sh.target), far = P.distanceTo(wp[a]) >= P.distanceTo(wp[b]) ? a : b, other = far === a ? b : a;
@@ -167,11 +180,12 @@ export function mountSpace(host, { labels, texts, onPick }) {
     const flip = sh.mode === 'fly' ? sm(0.36, 0.66, sh.tr.s) : (sh.arrived ? 1 - sm(0.15, 1.4, sh.sweep) : 0), rcs = flip > sh.flip + 1e-4 ? 1 : flip < sh.flip - 1e-4 ? -1 : 0; sh.flip = flip;
     const ca = Math.cos(flip * Math.PI), sa = Math.sin(flip * Math.PI); upF.copy(up).multiplyScalar(ca).addScaledVector(fwd, -sa); fwd.multiplyScalar(ca).addScaledVector(up, sa).normalize(); upF.normalize();
     basis.makeBasis(fwd, upF, side); qT.setFromRotationMatrix(basis);
-    ship.quaternion.slerp(qT, 1 - Math.exp(-9 * dt)); ship.position.copy(sh.pos); ship.scale.setScalar(SHIP_SCALE);
+    if (snap) { ship.quaternion.copy(qT); snap = false; } else ship.quaternion.slerp(qT, 1 - Math.exp(-9 * dt));   // 第一格直接擺好姿態(不要從預設姿態轉過來)
+    ship.position.copy(sh.pos); ship.scale.setScalar(SHIP_SCALE);
     // 引擎:繞行時熄火滑行(軌道運動不需要推力);離開軌道(轉移的前段)與進入下一個軌道(轉移的後段)時重新點火,中途滑行。
     // 噴口擺角由這一格實際的橫向加速度決定:軌道要往哪邊彎,推力就往哪邊偏(噴口與火焰往反方向擺)。
     acc.copy(sh.vel).sub(lastVel).divideScalar(Math.max(dt, 1e-3)); lastVel.copy(sh.vel); accS.lerp(acc, Math.min(1, dt * 8));
-    const burn = sh.mode === 'fly' && (sh.tr.s < 0.28 || sh.tr.s > 0.7);                   // 0.7 之後已經掉頭完成,引擎朝前:這次點火是減速入軌
+    const burn = sh.mode === 'intro' || (sh.mode === 'fly' && (sh.tr.s < 0.28 || sh.tr.s > 0.7));                   // 0.7 之後已經掉頭完成,引擎朝前:這次點火是減速入軌
     ship.userData.update(tNow, dt, { burn, rcs, gy: burn ? clamp(accS.dot(upF) * 0.16, -0.32, 0.32) : 0, gz: burn ? clamp(accS.dot(side) * 0.16, -0.32, 0.32) : 0 });
   }
 
@@ -180,7 +194,7 @@ export function mountSpace(host, { labels, texts, onPick }) {
   function frame(now) {
     if (!alive) return; raf = requestAnimationFrame(frame);
     if (document.hidden) { last = now; return; }
-    const dt = Math.min(0.05, (now - last) / 1000); last = now; tNow += dt;
+    const dt = clamp((now - last) / 1000, 0.001, 0.05); last = now; tNow += dt;
     // 畫質:平均每格太慢就降低像素比(只降不升)
     slow = slow * 0.95 + dt * 1000 * 0.05; if (++frames > 120 && slow > 30 && quality > 0) { quality--; pr = quality === 1 ? Math.min(pr, 1.25) : 1; renderer.setPixelRatio(pr); layout(); frames = 0; slow = 0; }
     sim.step(dt * T0 / PERIOD);
@@ -192,7 +206,7 @@ export function mountSpace(host, { labels, texts, onPick }) {
     const sx = Math.sin(tNow * 0.23) * 0.22, sy = Math.cos(tNow * 0.17) * 0.12;                  // 鏡頭微微飄動,透視感更明顯
     camera.position.set(cam.x + sx, cam.y + sy, cam.z); camera.lookAt(cam.x + sx, cam.y + sy, cam.z - 10);
     camera.setViewOffset(W, H, -cam.shiftX, -cam.shift, W, H);
-    stepShip(dt); cosmos.update(dt); star.update(tNow); cosmos.tint(selected >= 0 ? LEVELS[selected] : null, Math.min(1, dt * 1.4));
+    stepShip(dt); belt.update(dt); star.update(tNow); cosmos.tint(selected >= 0 ? LEVELS[selected] : null, Math.min(1, dt * 1.4));
     renderer.render(scene, camera);
     // 把按鈕放到各星球目前的螢幕位置(大小跟著透視)
     const half = H / 2;
@@ -203,20 +217,29 @@ export function mountSpace(host, { labels, texts, onPick }) {
       b.style.zIndex = String(Math.round(100 - dz * 3)); b.style.setProperty('--r', rpx.toFixed(1) + 'px');
       scr[i][0] = x; scr[i][1] = y; scr[i][2] = rpx; scr[i][3] = dz;
     }
-    // 星球會前後互相遮擋:如果某顆星球的名稱(在星球正下方)落在一顆比較近的星球上,就先淡出,免得後面星球的名字蓋在前面的星球上
+    // 名稱的位置:平常在星球正下方。兩顆星球靠近、名稱會互相重疊時,比較遠的那顆把名稱移到星球上方(分開後再移回來;進出用不同的門檻,才不會閃)。
+    if (++labelTick % 40 === 1) btns.forEach((b, i) => { const l = b.firstElementChild; if (l) { lsz[i][0] = l.offsetWidth; lsz[i][1] = l.offsetHeight; } });   // 名稱的寬高(偶爾量一次就好)
+    const top = i => scr[i][1] + scr[i][2] + 2, wantUp = [false, false, false];
+    for (let i = 0; i < 3; i++) for (let j = i + 1; j < 3; j++) {
+      const far = scr[i][3] >= scr[j][3] ? i : j, m = raised[far] ? 16 : 0;       // 已經移上去的,要分開得夠遠才移回來
+      if (Math.abs(scr[i][0] - scr[j][0]) < (lsz[i][0] + lsz[j][0]) / 2 + m && Math.abs(top(i) - top(j)) < Math.max(lsz[i][1], lsz[j][1]) + m) wantUp[far] = true;
+    }
+    // 星球會前後互相遮擋:如果某顆星球的名稱落在一顆比較近的星球上,就先淡出,免得後面星球的名字蓋在前面的星球上
     for (let i = 0; i < 3; i++) {
-      let hid = false; const lx = scr[i][0], ly = scr[i][1] + scr[i][2] + 14;
+      if (wantUp[i] !== raised[i]) raised[i] = wantUp[i];
+      const lift = raised[i] ? -(2 * scr[i][2] + lsz[i][1] + 4) : 0; btns[i].style.setProperty('--ly', lift.toFixed(1) + 'px');
+      let hid = false; const lx = scr[i][0], ly = top(i) + lift + lsz[i][1] / 2;
       for (let j = 0; j < 3; j++) if (j !== i && scr[j][3] < scr[i][3] && Math.hypot(lx - scr[j][0], ly - scr[j][1]) < scr[j][2] * 1.05) hid = true;
       if (hid !== hidden[i]) { hidden[i] = hid; btns[i].classList.toggle('behind', hid); }
     }
   }
-  const scr = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], hidden = [false, false, false];
-  canvas.__api = { shipState: () => ({ target: sh.target, mode: sh.mode, selected, t: tNow, throttle: ship.userData.throttle, flip: sh.flip, hops: sh.hops, pos: sh.pos.toArray(), vel: sh.vel.toArray() }) };                  // 給 E2E 與除錯用
-  setLabels(labels, texts); layout(); { const t0 = camTarget(); cam.z = t0.z + 6; cam.shift = t0.shift; cam.shiftX = t0.shiftX; } raf = requestAnimationFrame(frame);
+  const scr = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]], hidden = [false, false, false], raised = [false, false, false], lsz = [[80, 34], [80, 34], [80, 34]]; let labelTick = 0;
+  canvas.__api = { labels: () => btns.map((b, i) => { const r = b.firstElementChild.getBoundingClientRect(); return { x: r.left, y: r.top, w: r.width, h: r.height, hidden: hidden[i] }; }), shipState: () => ({ target: sh.target, mode: sh.mode, selected, t: tNow, throttle: ship.userData.throttle, flip: sh.flip, hops: sh.hops, shipAt: ship.position.toArray(), pos: sh.pos.toArray(), vel: sh.vel.toArray() }) };                  // 給 E2E 與除錯用
+  setLabels(labels, texts); layout(); { const t0 = camTarget(); cam.z = t0.z + 0.8; cam.shift = t0.shift; cam.shiftX = t0.shiftX; } raf = requestAnimationFrame(frame);
 
   return {
     setLabels, select,
     get selected() { return selected; },
-    dispose() { alive = false; cancelAnimationFrame(raf); clearTimeout(layoutTimer); cosmos.dispose(); star.dispose(); planets.forEach(p => p.userData.dispose()); ship.userData.dispose(); renderer.dispose(); canvas.remove(); layer.remove(); document.body.classList.remove('sp-sel', 'sp-dive'); },
+    dispose() { alive = false; cancelAnimationFrame(raf); clearTimeout(layoutTimer); cosmos.dispose(); belt.dispose(); star.dispose(); planets.forEach(p => p.userData.dispose()); ship.userData.dispose(); renderer.dispose(); canvas.remove(); layer.remove(); document.body.classList.remove('sp-sel', 'sp-dive'); },
   };
 }

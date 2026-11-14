@@ -44,6 +44,7 @@ const ART = {
     <text x="60" y="64" text-anchor="middle" font-size="7.5" fill="#8fc8ff">104.5°</text></svg>`,
 };
 
+const lt = document.querySelector('.lp-loader-txt'); if (lt) lt.textContent = state.lang === 'en' ? 'Heading to Planet Element…' : '正在前往元素星球…';
 const root = document.getElementById('lp');
 const bgEls = [...document.querySelectorAll('.lp-bg-layer')];
 const bg = createBackground(document.querySelector('.lp-canvas'), bgEls);
@@ -51,6 +52,7 @@ const THEME_COLOR = { kid: '#fff8e8', teen: '#f3f6fb', high: '#070e22' };
 let hover = -1, auto = 0, mascotEl = null, stopIdle = null, stopTrack = null;
 
 function activate(i) {
+  if (document.documentElement.classList.contains('sp-pre') || document.body.classList.contains('lp-space')) { bg.setTarget(i); return; }   // 3D 入口:畫面是深色太空,不套用卡片的主題色
   bg.setTarget(i);
   const th = LEVELS[i];
   document.body.dataset.active = th;
@@ -113,9 +115,9 @@ async function initSpace() {
     const { mountSpace } = await import('./space.js');
     const L = TEXT[state.lang];
     space = mountSpace(host, { labels: [], texts: L, onPick: (lv, e) => choose(lv, e) });
-    document.body.classList.add('lp-space'); document.querySelector('meta[name=theme-color]')?.setAttribute('content', '#050a1c');
+    document.body.classList.add('lp-space'); document.documentElement.classList.remove('sp-pre'); document.querySelector('meta[name=theme-color]')?.setAttribute('content', '#050a1c');
     build();
-  } catch (err) { console.warn('3D 入口無法使用,改用卡片', err); host.remove(); space = null; }
+  } catch (err) { console.warn('3D 入口無法使用,改用卡片', err); host.remove(); space = null; document.documentElement.classList.remove('sp-pre'); activate(auto); }   // 只有不支援 3D 時才顯示卡片
 }
 
 function choose(level, e) {
@@ -135,7 +137,7 @@ function choose(level, e) {
 
 // 沒有指到任何卡片時,背景自動輪流展示三種風格(手機沒有 hover,靠這個讓使用者看到差異)
 setInterval(() => {
-  if (hover >= 0 || document.hidden) return;
+  if (hover >= 0 || document.hidden || space || document.documentElement.classList.contains('sp-pre')) return;   // 3D 入口(或正在載入)時不輪播卡片的主題
   auto = (auto + 1) % 3; activate(auto);
 }, 4500);
 

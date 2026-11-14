@@ -654,3 +654,14 @@ html.anim-lock,html.anim-lock body{overflow:hidden}
 .brand{display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
 .brand-logo{display:inline-flex;flex:none;filter:none;-webkit-text-fill-color:initial}
 .brand-logo .logo{display:block;width:1.7em;height:1.7em;min-width:26px;min-height:26px}
+
+/* 週期表星球(scenes/tablePlanet.js):整張週期表是一顆星球的表皮;星球模式下不需要表格的最小寬度(手機不用左右滑) */
+.pt-wrap.planet{min-width:0!important;width:auto!important}
+.pt-wrap.planet .pt-grid{display:none!important}
+body[data-ptview=planet] #app::before,body[data-ptview=planet] #app::after{display:none!important}      /* 星球模式沒有左右滑動 */
+.ptp-stage{position:relative;width:100%;height:min(100vw,calc(100dvh - 330px),820px);min-height:300px;margin:0 auto 3.6em;touch-action:none}
+.ptp-stage[hidden]{display:none}
+.ptp-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab;touch-action:none}
+.ptp-canvas:active{cursor:grabbing}
+.ptp-tip{position:absolute;left:0;right:0;top:100%;margin:0;text-align:center;font-size:.9rem;line-height:1.9;color:var(--muted);pointer-events:none;z-index:1}
+.chip.view-toggle,html[data-level] .chip.view-toggle{border:0;cursor:pointer;background:#ffd23f!important;color:#222!important;font-weight:800;opacity:1}

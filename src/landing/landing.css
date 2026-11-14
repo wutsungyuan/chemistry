@@ -164,7 +164,7 @@ body.lp-space .lp-head{transition:opacity .4s}
 body.sp-sel.lp-space .lp-head h1,body.sp-sel.lp-space .lp-head p{opacity:0}
 .sp-planet{position:absolute;left:0;top:0;padding:0;border:0;border-radius:50%;background:transparent;color:#fff;cursor:pointer;pointer-events:auto;-webkit-tap-highlight-color:transparent;font:inherit}
 .sp-planet:focus-visible{outline:3px solid #ffd23f;outline-offset:-3px}
-.sp-label{position:absolute;left:50%;top:calc(50% + var(--r,40px) + 2px);transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:1px;white-space:nowrap;text-shadow:0 2px 10px rgba(0,0,0,.85);pointer-events:none;transition:opacity .35s}
+.sp-label{position:absolute;left:50%;top:calc(50% + var(--r,40px) + 2px);transform:translate(-50%,var(--ly,0px));display:flex;flex-direction:column;align-items:center;gap:1px;white-space:nowrap;text-shadow:0 2px 10px rgba(0,0,0,.85);pointer-events:none;transition:opacity .35s,transform .3s}
 .sp-name{font-weight:800;font-size:1.2rem;line-height:1.6}
 body.sp-sel .sp-planet:not(.on) .sp-label{opacity:.5}
 body.sp-sel .sp-planet.on .sp-label{opacity:0}
@@ -201,3 +201,29 @@ html[lang=en] .sp-pline{line-height:1.55}html[lang=en] .sp-panel.sp-kid .sp-plin
 .lp-wipe.fade{clip-path:none;opacity:0;transition:none}                       /* 3D 入口:先是透明的 */
 .lp-wipe.fade.on{clip-path:none;opacity:1;transition:opacity .45s .6s}              /* 鏡頭飛進星球後才淡入目標版本的底色 */
 .sp-planet.behind .sp-label{opacity:0}
+
+/* ---- 三顆星球的說明卡:樣式統一(同樣的圓角、邊框粗細、字級、字重、按鈕形狀),只有配色不同 ---- */
+.sp-panel,.sp-panel.sp-kid,.sp-panel.sp-teen,.sp-panel.sp-high{border-radius:22px;border:3px solid var(--pb);background:var(--pbg);color:var(--pfg);box-shadow:0 10px 30px rgba(0,0,0,.4);padding:16px 18px}
+.sp-panel .sp-pname,.sp-panel.sp-kid .sp-pname,.sp-panel.sp-teen .sp-pname,.sp-panel.sp-high .sp-pname{font-size:1.7rem;font-weight:800;letter-spacing:.04em;line-height:1.5;color:var(--pt)}
+.sp-panel .sp-pgrade,.sp-panel.sp-kid .sp-pgrade,.sp-panel.sp-high .sp-pgrade{font-family:inherit;font-size:.95rem;letter-spacing:0;line-height:1.8;opacity:.75}
+.sp-panel .sp-pline,.sp-panel.sp-kid .sp-pline{font-size:1.02rem;line-height:1.8;margin:8px 0 14px}
+.sp-panel .sp-go,.sp-panel.sp-kid .sp-go,.sp-panel.sp-teen .sp-go,.sp-panel.sp-high .sp-go{min-height:48px;padding:0 30px;border:0;border-radius:999px;background:var(--pa);color:var(--pat);font-size:1.1rem;font-weight:800;letter-spacing:.06em;box-shadow:0 4px 0 var(--pas)}
+.sp-panel.sp-kid{--pbg:rgba(255,255,255,.96);--pfg:#2b2f6b;--pb:#ffd23f;--pt:#ff5c7a;--pa:#ff5c7a;--pat:#fff;--pas:#d93d5c}
+.sp-panel.sp-teen{--pbg:rgba(240,244,251,.96);--pfg:#1f3350;--pb:#4a6fa5;--pt:#27456e;--pa:#4a6fa5;--pat:#fff;--pas:#33527f}
+.sp-panel.sp-high{--pbg:rgba(10,22,52,.9);--pfg:#e6efff;--pb:#8fc8ff;--pt:#fff;--pa:#8fc8ff;--pat:#0a1634;--pas:#5d9bd6}
+.sp-panel.sp-kid .sp-pline,.sp-panel.sp-kid .sp-pgrade{line-height:2.1}                  /* 國小有注音,行高要大一點才放得下 */
+html[lang=en] .sp-panel .sp-pline,html[lang=en] .sp-panel.sp-kid .sp-pline,html[lang=en] .sp-panel.sp-kid .sp-pgrade{line-height:1.55}
+html[lang=en] .sp-panel .sp-pname,html[lang=en] .sp-panel .sp-go{letter-spacing:0}
+@media (max-height:520px) and (orientation:landscape){.sp-panel .sp-pname,.sp-panel.sp-kid .sp-pname{font-size:1.35rem}.sp-panel .sp-pline,.sp-panel.sp-kid .sp-pline{font-size:.94rem;margin:4px 0 8px}.sp-panel .sp-go{min-height:44px}}
+
+/* ---- 載入畫面:3D 宇宙入口準備好之前顯示(深色太空底 + 轉動的小星球);準備好就淡出。不支援 3D 的裝置不會看到它,直接顯示卡片 ---- */
+.lp-loader{position:fixed;inset:0;z-index:5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:#050a1c;color:#cfe0ff;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .5s,visibility .5s}
+html.sp-pre .lp-loader{opacity:1;visibility:visible}
+html.sp-pre body,html.sp-pre body[data-active]{background:#050a1c}
+html.sp-pre .lp-bg,html.sp-pre .lp-canvas,html.sp-pre #lp{visibility:hidden}
+.lp-loader-logo{width:92px;height:92px;filter:drop-shadow(0 0 18px rgba(110,170,255,.55))}
+.lp-loader-orbit{transform-origin:32px 32px;animation:lp-orbit 1.6s linear infinite}
+@keyframes lp-orbit{to{transform:rotate(360deg)}}
+.lp-loader-txt{margin:0;font-size:1.05rem;letter-spacing:.08em;opacity:.85}
+/* 入口頁不顯示星球名稱(畫面保持乾淨;點了星球,說明卡上就有名稱)。名稱留在 DOM 裡給螢幕閱讀器與測試用 */
+.sp-label{display:none}

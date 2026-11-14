@@ -49,7 +49,7 @@ if (SHOTS) fs.mkdirSync(outDir, { recursive: true });
 /** 設定使用者的階段與語言(必須先開過同一個網站才能寫 localStorage) */
 async function setup(level, lang, extra = {}) {
   await page.goto(url('landing.html?change=1'), 200);
-  await page.eval(`localStorage.clear(); ${level ? `localStorage.setItem('level', '${level}');` : ''} localStorage.setItem('lang', '${lang}');` +
+  await page.eval(`localStorage.clear(); ${level ? `localStorage.setItem('level', '${level}');` : ''} localStorage.setItem('lang', '${lang}'); localStorage.setItem('ptview', 'flat');` +   // 既有的週期表檢查都針對表格;星球模式另外在 A3 測
     Object.entries(extra).map(([k, v]) => `localStorage.setItem('${k}', ${JSON.stringify(JSON.stringify(v))});`).join(' '));
 }
 const SNAP = `(() => { const d = document, de = d.documentElement, m = d.querySelector('.m-body'), side = d.querySelector('.side');
@@ -127,6 +127,27 @@ for (const [name, w, h, mobile] of [['桌機', 1280, 800, false], ['橫式手機
   check(`A2 ${name}:三顆星球夠大(≥56px)`, q.length === 3 && q.every(x => x >= 56), q.join(','));
   eachErr('A2 ' + name);
 }
+
+// A3. 週期表星球:預設把週期表畫成星球的表皮;點一格進入元素;可以切回表格(而且會記住);篩選分類不出錯
+console.log('A3. 週期表星球');
+await page.viewport(390, 780, true);
+await setup('kid', 'zh'); await page.eval(`(localStorage.removeItem('ptview'), 0)`);
+await page.goto(url('index.html#table'), 2500);
+check('A3 預設是星球模式(有 3D 畫布,表格隱藏,手機沒有橫向捲動)', await page.eval(`!!document.querySelector('.ptp-canvas') && getComputedStyle(document.querySelector('.pt-grid')).display === 'none'`) && !(await snap()).overflow);
+const ptSize = JSON.parse(await page.eval(`(() => { const r = document.querySelector('.ptp-stage').getBoundingClientRect(); return JSON.stringify([Math.round(r.width), Math.round(r.height), r.left >= 0 && r.right <= innerWidth + 1]); })()`));
+check('A3 星球夠大而且在畫面內', ptSize[0] >= 300 && ptSize[1] >= 300 && ptSize[2], ptSize.join(','));
+const picked = await page.eval(`(() => { const a = document.querySelector('.ptp-canvas').__api; a.setYaw(0.2 * Math.PI); const c = a.center(); return new Promise(r => setTimeout(() => r(a.pickAt(c[0], c[1])), 200)); })()`);
+check('A3 星球中央對得到一個元素', typeof picked === 'string' && picked.length > 0, String(picked));
+await page.eval(`(document.querySelector('.pt-legend .chip:not(.view-toggle):not(.spec-toggle)').click(), 0)`); await page.sleep(300);
+check('A3 星球模式下篩選分類會顯示說明', await page.eval(`!document.querySelector('.cat-info').hidden`));
+await page.eval(`(() => { const cv = document.querySelector('.ptp-canvas'), a = cv.__api, c = a.center(), o = { clientX: c[0], clientY: c[1], pointerId: 1, bubbles: true }; cv.dispatchEvent(new PointerEvent('pointerdown', o)); cv.dispatchEvent(new PointerEvent('pointerup', o)); return 0; })()`); await page.sleep(1200);
+s = await snap(); check('A3 點星球上的一格 → 進入那個元素的原子頁', s.scene === 'atom' && s.hash.startsWith('#atom/'), s.scene + s.hash);
+await page.goto(url('index.html#table'), 2000);
+await page.eval(`(document.querySelector('.view-toggle').click(), 0)`); await page.sleep(400);
+check('A3 切到表格:表格出現、3D 畫布釋放', await page.eval(`getComputedStyle(document.querySelector('.pt-grid')).display !== 'none' && !document.querySelector('.ptp-canvas') && document.querySelectorAll('.pt-grid .el').length >= 118`));
+await page.goto(url('index.html#table'), 1500);
+check('A3 重新進來還是表格(記住選擇)', await page.eval(`!document.querySelector('.ptp-canvas') && getComputedStyle(document.querySelector('.pt-grid')).display !== 'none'`));
+eachErr('A3');
 
 // ---------------------------------------------------------------- B. 階段 × 語言 × 版面 × 頁面
 console.log(`B. 頁面矩陣(${LEVELS.length} 階段 × ${LANGS.length} 語言 × ${Object.keys(DEVICES).length} 版面 × ${SCENES.length} 頁)`);

@@ -8,6 +8,8 @@
   <title>元素星球 · Planet Element</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><g transform='rotate(-24 32 32)'><path d='M5 32 A27 9 0 0 1 59 32' fill='none' stroke='%23b9d9ff' stroke-width='3'/><circle cx='32' cy='32' r='17' fill='%233f8cff'/><circle cx='26' cy='25' r='5' fill='%23fff' opacity='.4'/><path d='M59 32 A27 9 0 0 1 5 32' fill='none' stroke='%23b9d9ff' stroke-width='3'/><circle cx='54' cy='37' r='6' fill='%23ff5d78'/></g></svg>" />
   <link rel="stylesheet" href="/src/landing/landing.css">
+  <!-- 支援 3D(WebGL)就先顯示載入畫面,等宇宙入口準備好;不支援(或網址加 ?space=0)才顯示卡片版 -->
+  <script>try{if(!/[?&]space=0/.test(location.search)){var c=document.createElement('canvas');if(c.getContext('webgl2')||c.getContext('webgl')){document.documentElement.className+=' sp-pre';document.querySelector('meta[name=theme-color]').setAttribute('content','#050a1c')}}}catch(e){}</script>
 </head>
 <body data-active="kid">
   <div class="lp-bg" aria-hidden="true">
@@ -17,6 +19,10 @@
   </div>
   <canvas class="lp-canvas" aria-hidden="true"></canvas>
   <main id="lp"></main>
+  <div class="lp-loader" role="status" aria-live="polite">
+    <svg class="lp-loader-logo" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="13" fill="#3f8cff"/><circle cx="27" cy="27" r="4" fill="#fff" opacity=".4"/><g class="lp-loader-orbit"><ellipse cx="32" cy="32" rx="27" ry="10" fill="none" stroke="#cfe8ff" stroke-width="1.6" opacity=".7"/><circle cx="59" cy="32" r="4.2" fill="#ffc21f"/><circle cx="5" cy="32" r="3.6" fill="#ff5d78"/></g></svg>
+    <p class="lp-loader-txt"></p>
+  </div>
   <div class="lp-wipe" aria-hidden="true"></div>
   <script type="module" src="/src/landing/landing.js"></script>
 </body>
