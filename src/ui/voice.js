@@ -85,10 +85,17 @@ const SOFT = new Set(['，', ',', '：', ':']);                       // 逗號�
 const HARD = new Set(['。', '；', ';', '、', '！', '？', '!', '?', '…', '\n']);   // 句號、分號、頓號… → stop
 const CLOSERS = new Set(['」', '』', '）', ')', '”', '’', '"']);
 /** 依標點把文字切成短句,並記下每句念完後要停多久:[{ t, gap }]。英文的 . 只在後面是空白或結尾時才算句號(避免切到 4.2) */
-export function chunkWithPauses(text, max = 110) {
+export function chunkWithPauses(text, max = 110) { return chunkSpans(text, max).map(({ t, gap }) => ({ t, gap })); }
+
+/** 同上,但每句多帶 s、e:這句在原文裡的起訖位置(text.slice(s, e) === t),給「念到哪、哪裡亮起來」用 */
+export function chunkSpans(text, max = 110) {
   const s = String(text), out = [];
-  let buf = '';
-  const push = gap => { const t = buf.trim(); buf = ''; if (t) out.push({ t, gap }); };
+  let buf = '', start = 0;
+  const push = gap => {
+    const t = buf.trim(), at = start + (buf.length - buf.trimStart().length);
+    start += buf.length; buf = '';
+    if (t) out.push({ t, gap, s: at, e: at + t.length });
+  };
   for (let i = 0; i < s.length; i++) {
     const c = s[i]; buf += c;
     const end = i + 1 >= s.length || /\s/.test(s[i + 1]);
@@ -102,5 +109,12 @@ export function chunkWithPauses(text, max = 110) {
   }
   push(0);
   // 太長的一段(幾乎不會發生)再用 chunkText 的老辦法切
-  return out.flatMap(o => o.t.length <= max ? [o] : chunkText(o.t, max).map((t, k, a) => ({ t, gap: k === a.length - 1 ? o.gap : 0 })));
+  return out.flatMap(o => {
+    if (o.t.length <= max) return [o];
+    let from = o.s;
+    return chunkText(o.t, max).map((t, k, a) => {
+      const at = s.indexOf(t, from); from = at + t.length;
+      return { t, gap: k === a.length - 1 ? o.gap : 0, s: at, e: from };
+    });
+  });
 }

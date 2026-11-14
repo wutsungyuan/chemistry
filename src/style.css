@@ -613,3 +613,7 @@ em.absorb{background:rgba(255,150,90,.3)}em.release{background:rgba(110,170,255,
 .story-links{display:flex;flex-wrap:wrap;gap:10px}
 .story-links .chip{margin:0;padding:10px 20px;min-height:52px;display:inline-flex;align-items:center;gap:8px;font-size:1.35rem;line-height:1.9;border-radius:999px}
 .story-links .chip sub{font-size:.7em}
+/* 朗讀跟著唸:目前這一句有淡底色,念到的字亮起來 */
+.rd-line{background:rgba(255,215,90,.16);border-radius:6px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.rd-now{background:#ffd75a !important;color:#1b1b2f !important;border-radius:6px;box-shadow:0 0 0 3px #ffd75a}
+.rd-now .zp,.rd-now .zs,.rd-now .zt{color:#1b1b2f}

@@ -3,6 +3,7 @@ import { STORIES, STORY_BY_ID } from '../data/stories.js';
 import { BY_SYMBOL } from '../data/elements.js';
 import { ILLUS } from '../data/storyArt.js';
 import { speak, canSpeak, stopSpeaking } from '../ui/speech.js';
+import { prepare, keepInView } from '../ui/readalong.js';
 
 // 化學故事(國小版):列表 → 一則故事(朗讀、安全提醒、三選一小問題、連到元素與圖鑑)。
 // 網址:#stories(列表)、#stories/fire(單一故事)。資料見 data/db/stories.json。
@@ -25,17 +26,16 @@ export function mount(container, arg, { go }) {
 
   function show(s) {
     const body = s.body[state.lang] ?? s.body.zh;
-    const say = [L(s.title), ...body, s.safety ? L(s.safety) : ''].filter(Boolean), sayGaps = [900, ...body.map(() => 500)];   // 標題後停久一點,段落之間也停一下
     const idx = STORIES.findIndex(x => x.id === s.id), nxt = STORIES[(idx + 1) % STORIES.length];
     const els = s.elements.map(sym => BY_SYMBOL[sym]).filter(Boolean);
     const links = [...els.map(e => `<button class="chip" data-atom="${e.z}">${e.sym} ${LH(e.name)}</button>`), ...s.molecules.map(m => `<button class="chip" data-mol="${m}">${formulaHTML(m)}</button>`)].join('');
     page.innerHTML = `<article class="quiz story">
       <button class="btn alt" id="back">← ${T('stories.back')}</button>
-      <h2>${ICON[s.id] || '📖'} ${LH(s.title)}</h2>
+      <h2>${ICON[s.id] || '📖'} <span class="rd-seg">${LH(s.title)}</span></h2>
       <figure class="story-art">${ILLUS[s.id] || ''}</figure>
       ${canSpeak() ? `<button class="btn" id="say">🔊 ${T('stories.say')}</button>` : ''}
-      ${body.map(p => `<p class="story-p">${render(p)}</p>`).join('')}
-      ${s.safety ? `<p class="story-safety">⚠️ ${LH(s.safety)}</p>` : ''}
+      ${body.map(p => `<p class="story-p"><span class="rd-seg">${render(p)}</span></p>`).join('')}
+      ${s.safety ? `<p class="story-safety">⚠️ <span class="rd-seg">${LH(s.safety)}</span></p>` : ''}
       <div class="story-q"><h3>${T('stories.quiz')}</h3><div class="q">${LH(s.quiz.q)}</div>
         <div class="opts">${s.quiz.options.map((o, i) => `<button data-i="${i}">${LETTERS[i]}. ${LH(o)}</button>`).join('')}</div>
         <div class="story-fb" aria-live="polite"></div></div>
@@ -43,7 +43,18 @@ export function mount(container, arg, { go }) {
       <button class="btn alt" id="next">${T('stories.next')} →</button></article>`;
     page.querySelector('#back').onclick = () => go('stories');
     page.querySelector('#next').onclick = () => go('stories', nxt.id);
-    page.querySelector('#say')?.addEventListener('click', () => speak(say, 'story-' + s.id, sayGaps));
+    // 朗讀 + 跟著唸:標題、每一段、安全提醒各是一段;念到哪個字,哪個字亮起來
+    let readers = null;
+    page.querySelector('#say')?.addEventListener('click', () => {
+      readers ||= [...page.querySelectorAll('.rd-seg')].map(prepare);
+      const gaps = readers.map((_, i) => (i === 0 ? 900 : 500));      // 標題後停久一點,段落之間也停一下
+      const clearAll = () => readers.forEach(r => r.clear());
+      speak(readers.map(r => r.text), 'story-' + s.id, gaps, {
+        onLine: (i, a, b) => { clearAll(); keepInView(readers[i].line(a, b)); },
+        onWord: (i, a, b) => { readers[i].mark(a, b); },
+        onDone: clearAll,
+      });
+    });
     page.querySelectorAll('[data-atom]').forEach(b => { b.onclick = () => go('atom', +b.dataset.atom); });
     page.querySelectorAll('[data-mol]').forEach(b => { b.onclick = () => go('gallery', b.dataset.mol); });
     const fb = page.querySelector('.story-fb');

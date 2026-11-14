@@ -177,6 +177,30 @@ for (const level of LEVELS) {
 }
 eachErr('D');
 
+// ---------------------------------------------------------------- E. 故事朗讀「跟著唸」(用假的 speechSynthesis,不需要真的出聲)
+console.log('E. 故事朗讀:念到哪個字,哪個字亮起來');
+const FAKE_TTS = (bound) => `(() => { window.__bound = ${bound};
+  const fake = { speaking: false, cancel() {}, getVoices: () => [], addEventListener() {},
+    speak(u) { setTimeout(() => { u.onstart && u.onstart(); if (window.__bound) u.onboundary && u.onboundary({ name: 'word', charIndex: 1, charLength: 1 }); setTimeout(() => u.onend && u.onend(), 4000); }, 10); } };
+  Object.defineProperty(window, 'speechSynthesis', { value: fake, configurable: true }); })()`;
+const NOW = `[...document.querySelectorAll('.rd-now')].map(e => e.textContent.replace(/[ㄅ-ㄩˊˇˋ˙]/g, '')).join('|')`;
+for (const [lang, bound] of [['zh', true], ['zh', false], ['en', true]]) {
+  await setup('kid', lang);
+  await page.goto(url('index.html'), 700);
+  await page.eval(FAKE_TTS(bound));
+  await page.eval(`location.hash = '#stories/fire'`); await page.sleep(500);
+  const tag = `E ${lang}${bound ? '(引擎有回報)' : '(沒回報,用時間估算)'}`;
+  check(`${tag}:有朗讀鈕`, await page.eval(`!!document.querySelector('#say')`));
+  await page.eval(`document.querySelector('#say').click()`); await page.sleep(bound ? 300 : 900);
+  const n1 = await page.eval(`document.querySelectorAll('.rd-line').length`), w1 = await page.eval(NOW);
+  check(`${tag}:這一句有淡底色`, n1 > 0, String(n1));
+  check(`${tag}:念到的字亮起來`, w1.length > 0 && !w1.includes('|') || lang === 'en', w1);
+  if (!bound) { await page.sleep(700); const w2 = await page.eval(NOW); check(`${tag}:亮的字會往後移`, w2 !== w1 && w2.length > 0, `${w1} → ${w2}`); }
+  await page.eval(`document.querySelector('#say').click()`); await page.sleep(200);
+  check(`${tag}:再按一次停止後,亮的都消失`, await page.eval(`document.querySelectorAll('.rd-line, .rd-now').length === 0`));
+  eachErr(tag);
+}
+
 await page.close?.();
 await chrome.close();
 await server.close();
