@@ -6,6 +6,7 @@ import { mountMascot, mascotScene } from './ui/mascot.js';
 import { T, state, setLang, onLangChange } from './i18n/index.js';
 import { applyLevel, sceneAllowed } from './ui/level.js';
 import { initLayout } from './ui/layout.js';
+import { logoSVG } from './ui/logo.js';
 import * as PeriodicTable from './scenes/PeriodicTable.js';
 import * as AtomView from './scenes/AtomView.js';
 import * as MoleculeGallery from './scenes/MoleculeGallery.js';
@@ -35,8 +36,8 @@ function go(n, a = null) {
 
 function renderChrome() {
   document.documentElement.lang = state.lang === 'zh' ? 'zh-Hant' : 'en';
-  document.title = state.lang === 'zh' ? '兒童化學樂園' : 'Kids Chemistry Park';
-  document.getElementById('brand').innerHTML = T('brand');
+  document.title = T('brand');
+  document.getElementById('brand').innerHTML = `<span class="brand-logo">${logoSVG(30, 'bl')}</span><span class="brand-name">${T('brand')}</span>`;
   const nav = document.getElementById('nav');
   nav.innerHTML = '';
   NAV.filter(([key]) => sceneAllowed(key)).forEach(([key, label, icon]) => {          // 國小版沒有分子實驗室與反應劇場

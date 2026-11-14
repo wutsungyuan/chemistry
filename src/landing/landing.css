@@ -26,6 +26,10 @@ button{font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:tra
 
 /* ---- 標題 ---- */
 .lp-head{text-align:center;position:relative;padding-top:0}
+.lp-logo{display:block;width:clamp(56px,11vw,84px);margin:0 auto .25em;filter:drop-shadow(0 6px 14px rgba(40,70,200,.35));animation:lp-float 5s ease-in-out infinite}
+.lp-logo .logo{display:block;width:100%;height:auto}
+@keyframes lp-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@media (max-height:520px){.lp-logo{display:none}}
 .lp-head h1{margin:0;font-size:clamp(1.9rem,5.2vw,3.2rem);letter-spacing:.04em;font-weight:800;line-height:1.15}
 .lp-head p{margin:.6em auto 0;max-width:34em;font-size:clamp(1rem,2.4vw,1.2rem);opacity:.85;line-height:1.6}
 body[data-active=kid] .lp-head h1{text-shadow:0 3px 0 #fff,0 6px 14px rgba(255,140,170,.35)}
@@ -119,3 +123,81 @@ html[lang=en] .lp-high .lp-line{font-size:.92rem}
 html[lang=en] .lp-cta{letter-spacing:0;white-space:nowrap}
 @media (min-width:860px){html[lang=en] .lp-line,html[lang=en] .lp-kid .lp-line{min-height:0}}
 @media (max-width:859px){html[lang=en] .lp-kid .lp-name{padding-right:52px}}
+
+/* ---- 元素星球:以星球與宇宙為發想的主視覺 ---- */
+/* 星空(三種版本各自的風格):國小是彩色糖果星球與閃光,國中是淡淡的星點與軌道線,高中是深色太空與遠方的行星弧線 */
+.lp-bg-kid::before{content:"";position:absolute;inset:0;background:
+  radial-gradient(circle at 50% 50%,#fff 0 2px,transparent 3px) 8% 14%/90px 90px,
+  radial-gradient(circle at 50% 50%,#fff 0 1.5px,transparent 2.5px) 60% 70%/70px 70px,
+  radial-gradient(circle 46px at 92% 78%,#ffd9a0 0,#ffb86b 55%,transparent 56%),
+  radial-gradient(circle 30px at 6% 66%,#c9b8ff 0,#9b8cff 60%,transparent 61%),
+  radial-gradient(circle 64px at 104% 4%,#ffc2dc 0,#ff8fb8 58%,transparent 59%);opacity:.5}
+.lp-bg-teen::before{content:"";position:absolute;inset:0;background:
+  radial-gradient(circle at 50% 50%,#8aa3c4 0 1.2px,transparent 2px) 0 0/120px 120px,
+  radial-gradient(circle at 50% 50%,#8aa3c4 0 1px,transparent 1.8px) 60px 60px/120px 120px;opacity:.45}
+.lp-bg-teen::after{content:"";position:absolute;right:-90px;top:-70px;width:300px;height:300px;border-radius:50%;border:1.5px solid rgba(70,90,120,.22);box-shadow:0 0 0 38px rgba(70,90,120,.05),0 0 0 39px rgba(70,90,120,.14)}
+.lp-bg-high::before{content:"";position:absolute;inset:0;background:
+  radial-gradient(1.6px 1.6px at 8% 18%,#fff,transparent 60%),radial-gradient(1.2px 1.2px at 21% 62%,#cfe3ff,transparent 60%),radial-gradient(1.8px 1.8px at 33% 9%,#fff,transparent 60%),
+  radial-gradient(1.2px 1.2px at 47% 41%,#cfe3ff,transparent 60%),radial-gradient(1.6px 1.6px at 58% 15%,#fff,transparent 60%),radial-gradient(1.2px 1.2px at 69% 72%,#cfe3ff,transparent 60%),
+  radial-gradient(1.8px 1.8px at 77% 28%,#fff,transparent 60%),radial-gradient(1.2px 1.2px at 88% 55%,#cfe3ff,transparent 60%),radial-gradient(1.6px 1.6px at 94% 12%,#fff,transparent 60%),
+  radial-gradient(1.2px 1.2px at 14% 84%,#cfe3ff,transparent 60%),radial-gradient(1.4px 1.4px at 52% 88%,#fff,transparent 60%),radial-gradient(1.2px 1.2px at 83% 90%,#cfe3ff,transparent 60%);
+  animation:lp-twinkle 6s ease-in-out infinite}
+.lp-bg-high::after{content:"";position:absolute;left:-20%;right:-20%;bottom:-62%;height:80%;border-radius:50%;background:radial-gradient(ellipse at 50% 0,rgba(90,150,255,.55) 0,rgba(40,80,200,.28) 18%,rgba(10,20,60,.9) 46%,transparent 47%);box-shadow:0 -2px 60px 6px rgba(110,170,255,.28)}
+@keyframes lp-twinkle{0%,100%{opacity:1}50%{opacity:.55}}
+/* 主視覺:星球標誌放大,後面一圈柔光;三種版本的光色不同 */
+.lp-logo{position:relative;width:clamp(84px,18vw,132px);margin-bottom:.2em}
+.lp-logo::before{content:"";position:absolute;inset:-22%;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.75) 0,rgba(120,190,255,.28) 45%,transparent 70%);z-index:-1}
+body[data-active=high] .lp-logo::before{background:radial-gradient(circle,rgba(120,180,255,.5) 0,rgba(60,110,255,.18) 48%,transparent 70%)}
+body[data-active=high] .lp-logo{filter:drop-shadow(0 0 18px rgba(110,170,255,.55))}
+@media (max-height:700px){.lp-logo{width:72px}}
+
+/* ---- 3D 宇宙入口(space.js):三顆星球取代三張卡片;沒有 WebGL 時這些規則都不會生效(body 沒有 lp-space),維持卡片 ---- */
+.sp-host{position:fixed;inset:0;z-index:1}
+.sp-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:manipulation}
+.sp-layer{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+body.lp-space,body.lp-space[data-active]{background:#050a1c;color:#eaf1ff}
+body.lp-space .lp-bg,body.lp-space .lp-canvas,body.lp-space .lp-cards,body.lp-space .lp-logo{display:none}
+body.lp-space #lp{pointer-events:none;justify-content:flex-start;gap:0}
+body.lp-space .lp-lang{pointer-events:auto;background:rgba(255,255,255,.08);color:#eaf1ff}
+body.lp-space .lp-head h1{text-shadow:0 2px 20px rgba(110,160,255,.65);font-weight:800;letter-spacing:.14em}
+body.lp-space .lp-head{transition:opacity .4s}
+body.sp-sel.lp-space .lp-head h1,body.sp-sel.lp-space .lp-head p{opacity:0}
+.sp-planet{position:absolute;left:0;top:0;padding:0;border:0;border-radius:50%;background:transparent;color:#fff;cursor:pointer;pointer-events:auto;-webkit-tap-highlight-color:transparent;font:inherit}
+.sp-planet:focus-visible{outline:3px solid #ffd23f;outline-offset:-3px}
+.sp-label{position:absolute;left:50%;top:calc(50% + var(--r,40px) + 2px);transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:1px;white-space:nowrap;text-shadow:0 2px 10px rgba(0,0,0,.85);pointer-events:none;transition:opacity .35s}
+.sp-name{font-weight:800;font-size:1.2rem;line-height:1.6}
+.sp-grade{font-size:.78rem;opacity:.85;line-height:1.6}
+body.sp-sel .sp-planet:not(.on) .sp-label{opacity:.5}
+body.sp-sel .sp-planet.on .sp-label{opacity:0}
+.sp-hint{position:absolute;left:0;right:0;bottom:max(14px,env(safe-area-inset-bottom));margin:0;text-align:center;font-size:.95rem;opacity:.8;pointer-events:none;transition:opacity .4s;text-shadow:0 2px 8px #000}
+body.sp-sel .sp-hint,body.sp-dive .sp-hint{opacity:0}
+.sp-back{position:absolute;top:max(12px,env(safe-area-inset-top));left:12px;min-height:44px;padding:0 16px 0 10px;border-radius:999px;border:1.5px solid rgba(255,255,255,.5);background:rgba(10,18,50,.6);color:#fff;font:inherit;font-weight:700;pointer-events:auto;opacity:0;visibility:hidden;transition:opacity .35s,visibility .35s;cursor:pointer}
+.sp-back i{font-style:normal;font-size:1.4em;line-height:1;margin-right:4px;vertical-align:-.1em}
+body.sp-sel:not(.sp-dive) .sp-back{opacity:1;visibility:visible}
+.sp-panel{position:absolute;left:50%;bottom:max(14px,env(safe-area-inset-bottom));width:min(92vw,560px);padding:14px 18px 14px;border-radius:22px;text-align:center;pointer-events:auto;opacity:0;visibility:hidden;transform:translate(-50%,26px);transition:opacity .35s,transform .35s,visibility .35s;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.sp-panel.on{opacity:1;visibility:visible;transform:translate(-50%,0)}
+body.sp-dive .sp-panel{opacity:0}
+.sp-pname{font-size:1.6rem;font-weight:800;line-height:1.5}
+.sp-pgrade{font-size:.95rem;opacity:.75;line-height:1.7}
+.sp-pline{margin:8px 0 12px;font-size:1rem;line-height:1.8}
+.sp-go{min-height:48px;padding:0 28px;border:0;font:inherit;font-weight:800;font-size:1.05rem;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.sp-go i{font-style:normal;font-size:1.3em;line-height:1}
+.sp-panel.sp-kid{background:rgba(255,255,255,.96);color:#2b2f6b;border:4px solid #ffd23f;box-shadow:0 6px 0 #ffb703,0 12px 30px rgba(255,150,120,.3)}
+.sp-panel.sp-kid .sp-pname{color:#ff5c7a;font-size:1.8rem}.sp-panel.sp-kid .sp-pline{font-size:1.1rem;line-height:2.1}.sp-panel.sp-kid .sp-pgrade{line-height:1.9;font-size:1rem}
+.sp-panel.sp-kid .sp-go{background:#ff5c7a;color:#fff;border-radius:999px;box-shadow:0 4px 0 #d93d5c;font-size:1.15rem}
+.sp-panel.sp-teen{background:rgba(244,247,252,.95);color:#1f3350;border:1px solid #c6d2e3;border-top:4px solid #4a6fa5;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+.sp-panel.sp-teen .sp-pname{color:#27456e;font-weight:700}
+.sp-panel.sp-teen .sp-go{background:transparent;color:#27456e;border:1.5px solid #4a6fa5;border-radius:8px;font-weight:700}
+.sp-panel.sp-high{background:rgba(10,22,52,.86);color:#e6efff;border:1px solid rgba(143,200,255,.5);border-radius:8px;box-shadow:0 0 0 1px rgba(143,200,255,.08) inset,0 10px 30px rgba(0,0,0,.45)}
+.sp-panel.sp-high .sp-pname{font-weight:600;letter-spacing:.1em}.sp-panel.sp-high .sp-pgrade{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.82rem;letter-spacing:.04em}
+.sp-panel.sp-high .sp-go{background:transparent;color:#8fc8ff;border:1px solid rgba(143,200,255,.6);border-radius:3px;font-weight:600;letter-spacing:.1em}
+html[lang=en] .sp-pline{line-height:1.55}html[lang=en] .sp-panel.sp-kid .sp-pline{line-height:1.55;font-size:1.02rem}
+@media (max-height:520px){body.lp-space .lp-head p{display:none}.sp-panel{width:min(60vw,520px)}}
+@media (max-height:520px) and (orientation:landscape){
+  .sp-panel{left:auto;right:max(12px,env(safe-area-inset-right));bottom:auto;top:50%;width:min(48vw,440px);transform:translate(26px,-50%)}
+  .sp-panel.on{transform:translate(0,-50%)}
+  .sp-pname{font-size:1.3rem}.sp-panel.sp-kid .sp-pname{font-size:1.5rem}.sp-pline{margin:4px 0 8px;font-size:.92rem;line-height:1.7}.sp-panel.sp-kid .sp-pline{font-size:.98rem;line-height:1.95}
+  .sp-go{min-height:44px}
+}
+.lp-wipe.fade{clip-path:none;opacity:0;transition:none}                       /* 3D 入口:先是透明的 */
+.lp-wipe.fade.on{clip-path:none;opacity:1;transition:opacity .45s .6s}              /* 鏡頭飛進星球後才淡入目標版本的底色 */

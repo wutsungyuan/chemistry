@@ -85,6 +85,49 @@ await page.eval(`document.querySelector('.lp-high').click()`); await page.sleep(
 check('改選高中 → 無注音、吉祥物隱藏', s.level === 'high' && s.zp === 0 && s.mascotDisplay === 'none', JSON.stringify({ l: s.level, zp: s.zp, m: s.mascotDisplay }));
 eachErr('A');
 
+// A2. 3D 宇宙入口:三顆星球(按鈕)、選了會出現說明面板、可返回、再按「出發」進入;?space=0 退回卡片;切語言標籤跟著換
+console.log('A2. 3D 宇宙入口');
+await page.viewport(390, 780, true);
+await page.goto(url('landing.html?change=1'), 200); await page.eval('localStorage.clear()');
+await page.goto(url('landing.html?change=1'), 3500);
+check('A2 入口頁是 3D 宇宙(body.lp-space、有畫布)', await page.eval(`document.body.classList.contains('lp-space') && !!document.querySelector('.sp-canvas')`));
+const pl = JSON.parse(await page.eval(`JSON.stringify([...document.querySelectorAll('.sp-planet')].map(b => { const r = b.getBoundingClientRect(); return [b.dataset.level, Math.round(r.width), r.left >= -r.width && r.right <= innerWidth + r.width && r.top >= -r.height && r.bottom <= innerHeight + r.height]; }))`));
+check('A2 三顆星球按鈕(國小、國中、高中),夠大(≥56px)而且在畫面內', pl.length === 3 && pl.every(([, w, inside]) => w >= 56 && inside), JSON.stringify(pl));
+check('A2 手機沒有橫向捲動', !(await snap()).overflow);
+await page.eval(`(document.querySelector('.sp-planet.sp-kid').click(), 0)`); await page.sleep(1200);
+check('A2 點國小星球 → 出現國小說明面板與返回鈕', await page.eval(`document.body.classList.contains('sp-sel') && !!document.querySelector('.sp-panel.sp-kid.on .sp-go') && getComputedStyle(document.querySelector('.sp-back')).visibility === 'visible'`));
+await page.eval(`(document.querySelector('.sp-planet.sp-high').click(), 0)`); await page.sleep(800);
+check('A2 選中時再點另一顆星球 → 換成高中面板', await page.eval(`!!document.querySelector('.sp-panel.sp-high.on')`));
+await page.eval(`(document.querySelector('.sp-back').click(), 0)`); await page.sleep(600);
+check('A2 按返回 → 回到三顆星球', await page.eval(`!document.body.classList.contains('sp-sel') && !document.querySelector('.sp-panel.on')`));
+await page.eval(`(document.querySelector('.lp-lang').click(), 0)`); await page.sleep(600);
+check('A2 切成英文,星球標籤跟著換', await page.eval(`document.querySelector('.sp-planet.sp-kid .sp-name').textContent.trim() === 'Elementary'`));
+await page.eval(`(document.querySelector('.lp-lang').click(), 0)`); await page.sleep(400);
+await page.eval(`(document.querySelector('.sp-planet.sp-teen').click(), 0)`); await page.sleep(900);
+await page.eval(`(document.querySelector('.sp-go').click(), 0)`); await page.sleep(2000); s = await snap();
+check('A2 按「出發」→ 進入國中版主程式', s.path.endsWith('index.html') && s.level === 'teen', s.path + ' ' + s.level);
+eachErr('A2');
+if (!QUICK) {
+  // 飛船的軌跡:逐格量速度與加速度(約 50 秒,涵蓋好幾次「繞行 → 轉移 → 繞行」),位置與速度都要連續;巡航順序要是 國小 → 國中 → 高中 → 國小
+  await page.viewport(390, 780, true); await page.goto(url('landing.html?change=1'), 3500);
+  await page.eval(`(() => { const api = document.querySelector('.sp-canvas').__api, d = (a, b) => Math.hypot(a[0]-b[0], a[1]-b[1], a[2]-b[2]);
+    const m = window.__m = { maxSpeed: 0, maxAcc: 0, n: 0, seq: [] }; let lp = null, lv = null, lt = 0, lk = -1;
+    (function loop() { const s = api.shipState(); if (lp && s.t > lt + 1e-6) { const dt = s.t - lt; m.n++; m.maxSpeed = Math.max(m.maxSpeed, d(s.pos, lp) / dt); if (m.n > 5) m.maxAcc = Math.max(m.maxAcc, d(s.vel, lv) / dt); }
+      if (s.target !== lk) { m.seq.push(s.target); lk = s.target; } lp = s.pos; lv = s.vel; lt = s.t; requestAnimationFrame(loop); })(); return 0; })()`);
+  await page.sleep(50000);
+  const m = JSON.parse(await page.eval(`JSON.stringify(window.__m)`));
+  check('A2 飛船軌跡連續:沒有瞬間位移(速度 < 4)、沒有速度突變(加速度 < 15)', m.n > 200 && m.maxSpeed < 4 && m.maxAcc < 15, JSON.stringify({ n: m.n, speed: +m.maxSpeed.toFixed(2), acc: +m.maxAcc.toFixed(2) }));
+  check('A2 飛船依序巡航(國小 → 國中 → 高中 → 國小…),至少飛了兩段', m.seq.length >= 3 && m.seq.every((x, i) => i === 0 || x === (m.seq[i - 1] + 1) % 3), m.seq.join('→'));
+}
+await page.goto(url('landing.html?change=1&space=0'), 900);
+check('A2 ?space=0 → 退回三張卡片(沒有 3D)', await page.eval(`!document.body.classList.contains('lp-space') && document.querySelectorAll('.lp-card').length === 3 && !document.querySelector('.sp-canvas')`));
+for (const [name, w, h, mobile] of [['桌機', 1280, 800, false], ['橫式手機', 844, 390, true]]) {
+  await page.viewport(w, h, mobile); await page.goto(url('landing.html?change=1'), 3500);
+  const q = JSON.parse(await page.eval(`JSON.stringify([...document.querySelectorAll('.sp-planet')].map(b => Math.round(b.getBoundingClientRect().width)))`));
+  check(`A2 ${name}:三顆星球夠大(≥56px)`, q.length === 3 && q.every(x => x >= 56), q.join(','));
+  eachErr('A2 ' + name);
+}
+
 // ---------------------------------------------------------------- B. 階段 × 語言 × 版面 × 頁面
 console.log(`B. 頁面矩陣(${LEVELS.length} 階段 × ${LANGS.length} 語言 × ${Object.keys(DEVICES).length} 版面 × ${SCENES.length} 頁)`);
 for (const [dev, [w, h, mobile]] of Object.entries(DEVICES)) {

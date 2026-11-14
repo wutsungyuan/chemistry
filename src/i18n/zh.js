@@ -1,5 +1,5 @@
 export default {
-  brand: '⚗️ 兒童化學樂園',
+  brand: '元素星球',
   'nav.table': '元素週期表',
   'nav.gallery': '分子圖鑑',
   'nav.lab': '分子實驗室',

@@ -1,5 +1,5 @@
 export default {
-  brand: '⚗️ Kids Chemistry Park',
+  brand: 'Planet Element',
   'nav.table': 'Elements',
   'nav.gallery': 'Molecules',
   'nav.lab': 'Lab',
