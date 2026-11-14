@@ -71,6 +71,10 @@ const TIPS = {
     'en@teen': ['Press play and watch the atoms regroup into new substances.','The kinds and numbers of atoms stay the same: conservation of atoms.','Drag the progress bar to go step by step.'],
     'en@high': ['Play the animation and compare it with the equation: coefficients give the ratio of molecules.','Below: conservation of atoms, reaction type, conditions and enthalpy change.','Drag the progress bar to watch bonds break and form step by step.'],
   },
+  stories: {
+    zh: ['選一則故事,按「念給我聽」,我們一起聽!', '聽完故事,記得回答小問題喔!', '故事最下面的小按鈕,點一下就能去認識故事裡的元素和分子!'],
+    en: ['Pick a story and press "Read to me". Let us listen together!', 'After the story, try the quick question!', 'Tap the little buttons at the bottom to meet the elements and molecules in the story!'],
+  },
   quiz: {
     zh: ['答對越多,徽章越多,加油!', '不確定的話,先去週期表逛逛再回來!'],
     en: ['More right answers, more badges. You can do it!', 'Not sure? Visit the periodic table first, then come back!'],

@@ -595,3 +595,18 @@ em.absorb{background:rgba(255,150,90,.3)}em.release{background:rgba(110,170,255,
 
 /* 反應劇場:國中/高中的補充資訊 */
 .rx-info{margin:4px 0 6px;line-height:1.7;color:var(--muted);font-size:.92rem}
+
+/* 化學故事(scenes/Stories.js) */
+.story-list,.story{max-width:680px}
+.story-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+.story-card{display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 8px;border:0;border-radius:14px;background:var(--panel2);color:var(--text);font-size:1.15rem;font-weight:700}
+.story-card .si{font-size:2.2rem}
+.story-p{font-size:1.2rem;line-height:2.1;margin:10px 0}
+.story-safety{padding:10px 12px;border-radius:12px;background:rgba(255,190,60,.18);font-weight:700;line-height:2}
+.story-q{margin:16px 0;padding:12px;border-radius:14px;background:var(--panel2)}
+.story .opts{grid-template-columns:1fr}
+.story-fb{margin-top:10px;line-height:2;min-height:2em}
+.story-links{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.story-note{font-size:.85rem;opacity:.8}
+.story-art{margin:10px 0}.story-art svg{display:block;width:100%;height:auto;border-radius:14px}
+.story-card .si{width:100%;font-size:2.2rem}.story-card .si svg{display:block;width:100%;height:auto;border-radius:10px}

@@ -1,0 +1,31 @@
+// 化學故事(scenes/Stories.js)的介面文字。故事本文在 data/db/stories.json。
+export default {
+  zh: {
+    'nav.stories': '化學故事',
+    'stories.title': '化學故事',
+    'stories.lead': '選一則故事來聽聽看吧!',
+    'stories.back': '回到故事列表',
+    'stories.say': '念給我聽',
+    'stories.stop': '停止朗讀',
+    'stories.quiz': '小問題',
+    'stories.right': '答對了!太棒了!',
+    'stories.wrong': '再想一想,正確答案已經亮起來囉!',
+    'stories.links': '故事裡的小幫手',
+    'stories.next': '下一則故事',
+    'stories.note': '故事是依課本常見的說法改寫的,「據說」表示是流傳的說法。',
+  },
+  en: {
+    'nav.stories': 'Stories',
+    'stories.title': 'Chemistry Stories',
+    'stories.lead': 'Pick a story to listen to!',
+    'stories.back': 'Back to stories',
+    'stories.say': 'Read to me',
+    'stories.stop': 'Stop reading',
+    'stories.quiz': 'Quick question',
+    'stories.right': 'Right! Great job!',
+    'stories.wrong': 'Think again. The right answer is lit up!',
+    'stories.links': 'Meet the helpers in this story',
+    'stories.next': 'Next story',
+    'stories.note': 'These stories are retold from common textbook accounts. "They say" marks a popular legend.',
+  },
+};

@@ -22,6 +22,6 @@ export const levelRank = l => RANK[l] ?? 0;
 // 各階段不提供的頁面與功能(國小版:先專心看元素、圖鑑、物質變化與小測驗,不放分子實驗室、反應劇場、光譜與電子雲)。
 // 電子雲(氫的電子雲)的入口本來在原子頁的光譜分頁裡;國小沒有光譜,所以電子雲也一併不提供,直接開網址會回週期表。
 // 頁面名稱見 main.js 的 SCENES;功能名稱目前有 'spectrum'(原子頁的光譜分頁、週期表的光譜模式、小測驗的光譜題)。
-const OFF = { kid: { scenes: ['lab', 'reaction', 'cloud'], features: ['spectrum'] } };
+const OFF = { kid: { scenes: ['lab', 'reaction', 'cloud'], features: ['spectrum'] }, teen: { scenes: ['stories'] }, high: { scenes: ['stories'] } };   // 化學故事只有國小版
 export const sceneAllowed = (name, level = getLevel()) => !(OFF[level]?.scenes || []).includes(name);
 export const featureOn = (feature, level = getLevel()) => !(OFF[level]?.features || []).includes(feature);

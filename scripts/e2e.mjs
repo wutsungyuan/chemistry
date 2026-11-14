@@ -74,7 +74,7 @@ await page.eval(`document.querySelector('.lp-kid').click()`); await page.sleep(1
 s = await snap();
 check('選國小 → 進入主程式', s.path.endsWith('index.html') && s.hash === '#table', s.path + s.hash);
 check('選國小後 data-level=kid、有注音、沒有舊的注音按鈕', s.level === 'kid' && s.zp > 0 && !s.zhuyinBtn);
-check('國小導覽只有 4 項(沒有分子實驗室、反應劇場;光譜與電子雲也不提供)', s.navCount === 4, `nav=${s.navCount}`);
+check('國小導覽有 5 項(含化學故事)(沒有分子實驗室、反應劇場;光譜與電子雲也不提供)', s.navCount === 5, `nav=${s.navCount}`);
 for (const hidden of ['lab', 'reaction', 'cloud']) { await page.goto(url('index.html#' + hidden), 700); const h = await snap(); check(`國小直接開 #${hidden} 會回到週期表`, h.scene === 'table' && h.hash === '#table', h.scene + h.hash); }
 await page.goto(url('index.html#table'), 500);
 await page.goto(url('landing.html'), 900); s = await snap();
@@ -103,7 +103,7 @@ for (const [dev, [w, h, mobile]] of Object.entries(DEVICES)) {
       check(`${id}:沒有殘留文字(undefined/NaN/{變數})`, !/undefined|NaN|\{[a-z]+\}|\[object/.test(x.text), (x.text.match(/.{0,15}(undefined|NaN|\{[a-z]+\}|\[object).{0,15}/) || [''])[0]);
       check(`${id}:沒有橫向溢出`, !x.overflow);
       check(`${id}:導覽有選中項目`, x.navActive);
-      check(`${id}:導覽按鈕數(國小 4、其他 6)`, x.navCount === (level === 'kid' ? 4 : 6), `nav=${x.navCount}`);
+      check(`${id}:導覽按鈕數(國小 5、其他 6)`, x.navCount === (level === 'kid' ? 5 : 6), `nav=${x.navCount}`);
       if (base === 'atom') check(`${id}:光譜分頁${level === 'kid' ? '(國小沒有)' : ''}`, x.specTab === (level !== 'kid'));
       if (base === 'table') check(`${id}:週期表光譜模式${level === 'kid' ? '(國小沒有)' : ''}`, x.specBtn === (level !== 'kid'));
       check(`${id}:吉祥物`, level === 'high' ? x.mascotDisplay === 'none' : (x.mascotDisplay !== 'none' && x.mascotArt), x.mascotDisplay);
