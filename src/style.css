@@ -614,6 +614,11 @@ em.absorb{background:rgba(255,150,90,.3)}em.release{background:rgba(110,170,255,
 .story-links .chip{margin:0;padding:10px 20px;min-height:52px;display:inline-flex;align-items:center;gap:8px;font-size:1.35rem;line-height:1.9;border-radius:999px}
 .story-links .chip sub{font-size:.7em}
 /* 朗讀跟著唸:目前這一句有淡底色,念到的字亮起來 */
-.rd-line{background:rgba(255,215,90,.16);border-radius:6px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.rd-line{background:rgba(255,215,90,.16)}
 .rd-now{background:#ffd75a !important;color:#1b1b2f !important;border-radius:6px;box-shadow:0 0 0 3px #ffd75a}
 .rd-now .zp,.rd-now .zs,.rd-now .zt{color:#1b1b2f}
+/* 英文版故事:中文字型(Noto Sans TC)排英文會讓連字號變成長橫線、字距也怪,改用拉丁字型;行距也不必像注音那麼大 */
+html[lang="en"] .story{font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
+html[lang="en"] .story-p{font-size:1.15rem;line-height:1.75;hyphens:manual}
+html[lang="en"] .story-safety{line-height:1.6}
+html[lang="en"] .story h2{line-height:1.3;text-wrap:balance}

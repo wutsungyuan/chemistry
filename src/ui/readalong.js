@@ -6,7 +6,7 @@
 const TOKEN = /([　-〿㐀-鿿＀-￯])|(\s+)|([^\s　-〿㐀-鿿＀-￯]+)/g;
 
 export function prepare(root) {
-  const units = [];                                    // { el: 元素或 null(空白), t: 文字, at: 起始位置 }
+  const units = [];                                    // { el: 元素, t: 文字, at: 起始位置 }(英文的空白也是一格,這樣整句的底色是連續的)
   let pos = 0;
   const add = (el, t) => { units.push({ el, t, at: pos }); pos += t.length; };
 
@@ -15,7 +15,6 @@ export function prepare(root) {
       if (n.nodeType === 3) {
         const frag = document.createDocumentFragment();
         for (const m of n.data.matchAll(TOKEN)) {
-          if (m[2]) { frag.append(m[0]); add(null, m[0]); continue; }
           const sp = document.createElement('span'); sp.className = 'rd-u'; sp.textContent = m[0];
           frag.append(sp); add(sp, m[0]);
         }
