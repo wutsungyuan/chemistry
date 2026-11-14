@@ -84,3 +84,9 @@ test('chunkWithPauses:逗號停 250、句號/分號/頓號停 300;英文的小�
     { t: 'Hello,', gap: 250 }, { t: 'it is 4.2 K.', gap: 300 }, { t: 'Bye', gap: 0 }]);
   assert.deepEqual(chunkWithPauses('他說「好」。'), [{ t: '他說「好」。', gap: 300 }]);
 });
+
+test('speakable:「重」當重量念(很重、半重。、重量)時換成同音的「仲」,重新/重複不動', () => {
+  assert.equal(speakable('金將近是鐵的兩倍半重。'), '金將近是鐵的兩倍半仲。');
+  assert.equal(speakable('它很重,重量不輕,比氫重一點'), '它很仲,仲量不輕,比氫仲一點');
+  assert.equal(speakable('重新開始,重複做'), '重新開始,重複做');
+});
