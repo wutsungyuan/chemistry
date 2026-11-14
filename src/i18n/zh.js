@@ -7,7 +7,7 @@ export default {
   'nav.matter': '物質變化',
   'nav.quiz': '小測驗',
   'tool.lang': 'English',
-  'tool.level': '🏠 換版本',
+  'tool.level': '🪐 換星球',
   'badge.new': '獲得徽章:',
 
   'pt.title': '元素週期表',

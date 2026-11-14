@@ -7,7 +7,7 @@ export default {
   'nav.matter': 'Matter',
   'nav.quiz': 'Quiz',
   'tool.lang': '中文',
-  'tool.level': '🏠 Change level',
+  'tool.level': '🪐 Change planet',
   'badge.new': 'New badge: ',
 
   'pt.title': 'Periodic Table',

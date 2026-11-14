@@ -52,6 +52,10 @@ export function buildShip() {
     jet.add(flame, core, flash); engines.push({ eng, jet, flash, ph: k * 2.1 });
   }
 
+  // 姿態控制噴氣(掉頭時用):機頭與機尾各一小團白色氣體,一個噴向腹部、一個噴向背部,把機身垂直翻過去
+  const puffs = new THREE.Group(); ship.add(puffs);
+  for (const [x, y] of [[0.8, -0.14], [-0.56, 0.25]]) { const m = new THREE.Mesh(new THREE.SphereGeometry(0.05, 12, 8), additive(0xffffff, 0)); m.scale.set(1, 2.4, 1); m.position.set(x, y, 0); puffs.add(m); }
+
   // 背部的舷窗:金色圓框 + 玻璃罩;裡面是原子寶寶(臉朝外,頭朝機頭方向)
   const port = new THREE.Group(); port.position.set(0.16, 0.172, 0); port.scale.setScalar(0.74);
   port.quaternion.setFromRotationMatrix(new THREE.Matrix4().makeBasis(new THREE.Vector3(0, 0, 1), new THREE.Vector3(1, 0, 0), new THREE.Vector3(0, 1, 0)));   // 舷窗的 +z(朝外)= 飛船的 +y(背部)
@@ -75,9 +79,9 @@ export function buildShip() {
   const electron = new THREE.Mesh(new THREE.SphereGeometry(0.02, 12, 10), new THREE.MeshBasicMaterial({ color: 0xffd23f })); baby.add(electron);
 
   const tmp = new THREE.Vector3(), q = new THREE.Quaternion();
-  const st = { throttle: 0, flash: 0, burning: false, gy: 0, gz: 0 };
+  const st = { throttle: 0, flash: 0, burning: false, gy: 0, gz: 0, rcs: 0 };
   ship.userData = {
-    /** t:時間;dt:這一格多長;ctl:{ burn 引擎是否點火, gy/gz 噴口擺角(弧度;gy 讓推力偏向背/腹,gz 偏向左右) } */
+    /** t:時間;dt:這一格多長;ctl:{ burn 引擎是否點火, gy/gz 噴口擺角(弧度;gy 讓推力偏向背/腹,gz 偏向左右), rcs 姿態控制噴氣(+1/−1 = 往哪一邊轉,0 = 沒有) } */
     update(t, dt = 0.016, ctl = {}) {
       const burn = !!ctl.burn; if (burn && !st.burning) st.flash = 1;                  // 重新點火的瞬間:閃一下
       st.burning = burn; st.throttle += ((burn ? 1 : 0) - st.throttle) * (1 - Math.exp(-(burn ? 9 : 6) * dt)); st.flash *= Math.exp(-6 * dt);
@@ -88,6 +92,8 @@ export function buildShip() {
         e.jet.visible = th > 0.02 || st.flash > 0.02; e.jet.scale.set(0.55 + 0.45 * th, Math.max(0.001, th * (0.92 + (f - 1) * 2.6)), 0.55 + 0.45 * th);
         const fs = 0.03 + st.flash * 0.11; e.flash.scale.set(fs / e.jet.scale.x, fs / e.jet.scale.y, fs / e.jet.scale.z); e.flash.material.opacity = st.flash * 0.9;
       }
+      st.rcs += ((ctl.rcs ? 1 : 0) - st.rcs) * (1 - Math.exp(-10 * dt)); if (ctl.rcs) puffs.scale.y = ctl.rcs;      // 反方向轉就噴另一側
+      puffs.children.forEach((m, i) => { m.material.opacity = st.rcs * (0.55 + 0.3 * Math.sin(t * 50 + i * 2)); });
       baby.position.y = Math.sin(t * 2.2) * 0.008;
       const blink = (t % 3.4) > 3.25 ? 0.1 : 1; eyes.forEach(e => { e.scale.y = blink; });
       const an = t * 3;                                                              // 電子沿著傾斜的軌道圈跑

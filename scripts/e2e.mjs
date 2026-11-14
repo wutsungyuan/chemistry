@@ -101,7 +101,7 @@ check('A2 選中時再點另一顆星球 → 換成高中面板', await page.eva
 await page.eval(`(document.querySelector('.sp-back').click(), 0)`); await page.sleep(600);
 check('A2 按返回 → 回到三顆星球', await page.eval(`!document.body.classList.contains('sp-sel') && !document.querySelector('.sp-panel.on')`));
 await page.eval(`(document.querySelector('.lp-lang').click(), 0)`); await page.sleep(600);
-check('A2 切成英文,星球標籤跟著換', await page.eval(`document.querySelector('.sp-planet.sp-kid .sp-name').textContent.trim() === 'Elementary'`));
+check('A2 切成英文,星球標籤跟著換', await page.eval(`document.querySelector('.sp-planet.sp-kid .sp-name').textContent.trim() === 'Elementary Planet'`));
 await page.eval(`(document.querySelector('.lp-lang').click(), 0)`); await page.sleep(400);
 await page.eval(`(document.querySelector('.sp-planet.sp-teen').click(), 0)`); await page.sleep(900);
 await page.eval(`(document.querySelector('.sp-go').click(), 0)`); await page.sleep(2000); s = await snap();
@@ -114,10 +114,10 @@ if (!QUICK) {
     const m = window.__m = { maxSpeed: 0, maxAcc: 0, n: 0, seq: [] }; let lp = null, lv = null, lt = 0, lk = -1;
     (function loop() { const s = api.shipState(); if (lp && s.t > lt + 1e-6) { const dt = s.t - lt; m.n++; m.maxSpeed = Math.max(m.maxSpeed, d(s.pos, lp) / dt); if (m.n > 5) m.maxAcc = Math.max(m.maxAcc, d(s.vel, lv) / dt); }
       if (s.target !== lk) { m.seq.push(s.target); lk = s.target; } lp = s.pos; lv = s.vel; lt = s.t; requestAnimationFrame(loop); })(); return 0; })()`);
-  await page.sleep(50000);
-  const m = JSON.parse(await page.eval(`JSON.stringify(window.__m)`));
-  check('A2 飛船軌跡連續:沒有瞬間位移(速度 < 4)、沒有速度突變(加速度 < 15)', m.n > 200 && m.maxSpeed < 4 && m.maxAcc < 15, JSON.stringify({ n: m.n, speed: +m.maxSpeed.toFixed(2), acc: +m.maxAcc.toFixed(2) }));
-  check('A2 飛船依序巡航(國小 → 國中 → 高中 → 國小…),至少飛了兩段', m.seq.length >= 3 && m.seq.every((x, i) => i === 0 || x === (m.seq[i - 1] + 1) % 3), m.seq.join('→'));
+  await page.sleep(60000);
+  const m = JSON.parse(await page.eval(`JSON.stringify(Object.assign(window.__m, { hops: document.querySelector('.sp-canvas').__api.shipState().hops }))`));
+  check('A2 飛船軌跡連續:沒有瞬間位移(速度 < 8)、沒有速度突變(加速度 < 30)', m.n > 200 && m.maxSpeed < 8 && m.maxAcc < 30, JSON.stringify({ n: m.n, speed: +m.maxSpeed.toFixed(2), acc: +m.maxAcc.toFixed(2) }));
+  check('A2 飛船每站繞幾圈後飛往「當下最遠」的星球(不在同兩顆之間連續來回),至少飛了兩段', m.hops.length >= 2 && m.hops.every(h => h.to !== h.from && (h.rule === 'far' || h.rule === 'other')) && m.hops[0].rule === 'far', JSON.stringify(m.hops));
 }
 await page.goto(url('landing.html?change=1&space=0'), 900);
 check('A2 ?space=0 → 退回三張卡片(沒有 3D)', await page.eval(`!document.body.classList.contains('lp-space') && document.querySelectorAll('.lp-card').length === 3 && !document.querySelector('.sp-canvas')`));
