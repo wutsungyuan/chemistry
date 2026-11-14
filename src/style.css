@@ -610,3 +610,6 @@ em.absorb{background:rgba(255,150,90,.3)}em.release{background:rgba(110,170,255,
 .story-note{font-size:.85rem;opacity:.8}
 .story-art{margin:10px 0}.story-art svg{display:block;width:100%;height:auto;border-radius:14px}
 .story-card .si{width:100%;font-size:2.2rem}.story-card .si svg{display:block;width:100%;height:auto;border-radius:10px}
+.story-links{display:flex;flex-wrap:wrap;gap:10px}
+.story-links .chip{margin:0;padding:10px 20px;min-height:52px;display:inline-flex;align-items:center;gap:8px;font-size:1.35rem;line-height:1.9;border-radius:999px}
+.story-links .chip sub{font-size:.7em}

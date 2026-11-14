@@ -3,7 +3,7 @@
 // 用法:speak(text) 開始朗讀;同一段正在念時再按一次 = 停止;換頁時呼叫 stopSpeaking()。
 import { state } from '../i18n/index.js';
 import { getLevel } from './level.js';
-import { pickVoice, prosodyFor, speakable, chunkText, SPEECH_LANG } from './voice.js';
+import { pickVoice, prosodyFor, speakable, chunkWithPauses, SPEECH_LANG } from './voice.js';
 
 const synth = () => (typeof window !== 'undefined' && window.speechSynthesis) || null;
 export const canSpeak = () => !!synth();
@@ -18,20 +18,30 @@ export const isSpeaking = () => current !== null;
 /** 目前語言會用哪個聲音(給除錯或之後的設定畫面用) */
 export const currentVoice = () => pickVoice(voices.length ? voices : synth()?.getVoices() || [], SPEECH_LANG[state.lang] || SPEECH_LANG.zh);
 
-export function speak(text, id = text) {
+/** text 可以是字串,或「段落陣列」:段落之間(例如標題與內文之間)會停一下,聽起來才有頓挫。gaps[i] = 第 i 段念完後的停頓毫秒數 */
+export function speak(text, id = Array.isArray(text) ? text.join('|') : text, gaps = []) {
   const s = synth(); if (!s) return;
   if (current === id) { stopSpeaking(); return; }                     // 再按一次 = 停止
   stopSpeaking();
   const lang = SPEECH_LANG[state.lang] || SPEECH_LANG.zh;
-  const chunks = chunkText(speakable(text, lang)); if (!chunks.length) return;
+  const items = [];                                                    // { t: 要念的字, gap: 念完後停幾毫秒 }
+  (Array.isArray(text) ? text : [text]).forEach((seg, si) => {
+    const cs = chunkWithPauses(speakable(seg, lang));                // 逗號 250、句號/分號/頓號 300(見 voice.js 的 PAUSE)
+    cs.forEach((c, ci) => items.push({ t: c.t, gap: ci === cs.length - 1 && gaps[si] != null ? gaps[si] : c.gap }));
+  });
+  if (!items.length) return;
   const my = ++token; current = id;
   const voice = pickVoice(voices.length ? voices : s.getVoices(), lang);
   const { rate, pitch } = prosodyFor(getLevel(), state.lang);
-  chunks.forEach((c, i) => {
-    const u = new SpeechSynthesisUtterance(c);
+  const play = i => {
+    if (token !== my) return;
+    if (i >= items.length) { current = null; return; }
+    const u = new SpeechSynthesisUtterance(items[i].t);
     u.lang = voice?.lang || lang; if (voice) u.voice = voice;
     u.rate = rate; u.pitch = pitch;
-    u.onend = u.onerror = () => { if (token === my && i === chunks.length - 1) current = null; };
+    let done = false;
+    u.onend = u.onerror = () => { if (done) return; done = true; setTimeout(() => play(i + 1), items[i].gap); };
     s.speak(u);
-  });
+  };
+  play(0);
 }

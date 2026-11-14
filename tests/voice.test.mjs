@@ -1,7 +1,7 @@
 // 朗讀:挑聲音(不要機械的 Google 聲音)、依階段的語速、符號整理、切句子。
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { scoreVoice, pickVoice, prosodyFor, SPEECH_LANG, speakable, chunkText } from '../src/ui/voice.js';
+import { scoreVoice, pickVoice, prosodyFor, SPEECH_LANG, speakable, chunkText, chunkWithPauses } from '../src/ui/voice.js';
 
 const V = (name, lang, localService = true) => ({ name, lang, localService });
 // 這台 Windows 電腦實際列出來的聲音(中文 3 個 Microsoft 本機聲音,英文只有 Google 的雲端聲音)
@@ -75,4 +75,12 @@ test('chunkText:一句一段;很長的句子在逗號或空白處再切;每段�
   assert.ok(parts.length > 3 && parts.every(p => p.length <= 61), parts.map(p => p.length).join(','));
   assert.equal(parts.join('').replace(/\s/g, ''), long.replace(/\s/g, ''));
   assert.deepEqual(chunkText(''), []);
+});
+
+test('chunkWithPauses:逗號停 250、句號/分號/頓號停 300;英文的小數點不切', () => {
+  assert.deepEqual(chunkWithPauses('鈉，是金屬；會冒泡、爆炸。'), [
+    { t: '鈉，', gap: 250 }, { t: '是金屬；', gap: 300 }, { t: '會冒泡、', gap: 300 }, { t: '爆炸。', gap: 300 }]);
+  assert.deepEqual(chunkWithPauses('Hello, it is 4.2 K. Bye'), [
+    { t: 'Hello,', gap: 250 }, { t: 'it is 4.2 K.', gap: 300 }, { t: 'Bye', gap: 0 }]);
+  assert.deepEqual(chunkWithPauses('他說「好」。'), [{ t: '他說「好」。', gap: 300 }]);
 });

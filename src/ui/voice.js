@@ -78,3 +78,29 @@ export function chunkText(text, max = 110) {
   }
   return out;
 }
+
+/** 標點後的停頓(毫秒):逗號 250;句號、分號、頓號、問號、驚嘆號 300(使用者指定) */
+export const PAUSE = { comma: 250, stop: 300 };
+const SOFT = new Set(['，', ',', '：', ':']);                       // 逗號、冒號 → comma
+const HARD = new Set(['。', '；', ';', '、', '！', '？', '!', '?', '…', '\n']);   // 句號、分號、頓號… → stop
+const CLOSERS = new Set(['」', '』', '）', ')', '”', '’', '"']);
+/** 依標點把文字切成短句,並記下每句念完後要停多久:[{ t, gap }]。英文的 . 只在後面是空白或結尾時才算句號(避免切到 4.2) */
+export function chunkWithPauses(text, max = 110) {
+  const s = String(text), out = [];
+  let buf = '';
+  const push = gap => { const t = buf.trim(); buf = ''; if (t) out.push({ t, gap }); };
+  for (let i = 0; i < s.length; i++) {
+    const c = s[i]; buf += c;
+    const end = i + 1 >= s.length || /\s/.test(s[i + 1]);
+    let gap = 0;
+    if (SOFT.has(c)) gap = (c === ',' || c === ':') && !end ? 0 : PAUSE.comma;
+    else if (HARD.has(c)) gap = (c === ';' || c === '!' || c === '?') && !end ? 0 : PAUSE.stop;
+    else if (c === '.' && end) gap = PAUSE.stop;
+    if (!gap) continue;
+    while (i + 1 < s.length && CLOSERS.has(s[i + 1])) buf += s[++i];
+    push(gap);
+  }
+  push(0);
+  // 太長的一段(幾乎不會發生)再用 chunkText 的老辦法切
+  return out.flatMap(o => o.t.length <= max ? [o] : chunkText(o.t, max).map((t, k, a) => ({ t, gap: k === a.length - 1 ? o.gap : 0 })));
+}

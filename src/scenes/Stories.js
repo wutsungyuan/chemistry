@@ -25,7 +25,7 @@ export function mount(container, arg, { go }) {
 
   function show(s) {
     const body = s.body[state.lang] ?? s.body.zh;
-    const say = [L(s.title), ...body, s.safety ? L(s.safety) : ''].filter(Boolean).join('\n');
+    const say = [L(s.title), ...body, s.safety ? L(s.safety) : ''].filter(Boolean), sayGaps = [900, ...body.map(() => 500)];   // 標題後停久一點,段落之間也停一下
     const idx = STORIES.findIndex(x => x.id === s.id), nxt = STORIES[(idx + 1) % STORIES.length];
     const els = s.elements.map(sym => BY_SYMBOL[sym]).filter(Boolean);
     const links = [...els.map(e => `<button class="chip" data-atom="${e.z}">${e.sym} ${LH(e.name)}</button>`), ...s.molecules.map(m => `<button class="chip" data-mol="${m}">${formulaHTML(m)}</button>`)].join('');
@@ -43,7 +43,7 @@ export function mount(container, arg, { go }) {
       <button class="btn alt" id="next">${T('stories.next')} →</button></article>`;
     page.querySelector('#back').onclick = () => go('stories');
     page.querySelector('#next').onclick = () => go('stories', nxt.id);
-    page.querySelector('#say')?.addEventListener('click', () => speak(say, 'story-' + s.id));
+    page.querySelector('#say')?.addEventListener('click', () => speak(say, 'story-' + s.id, sayGaps));
     page.querySelectorAll('[data-atom]').forEach(b => { b.onclick = () => go('atom', +b.dataset.atom); });
     page.querySelectorAll('[data-mol]').forEach(b => { b.onclick = () => go('gallery', b.dataset.mol); });
     const fb = page.querySelector('.story-fb');
