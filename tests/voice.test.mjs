@@ -1,7 +1,7 @@
 // 朗讀:挑聲音(不要機械的 Google 聲音)、依階段的語速、符號整理、切句子。
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { scoreVoice, pickVoice, prosodyFor, speakable, chunkText } from '../src/ui/voice.js';
+import { scoreVoice, pickVoice, prosodyFor, SPEECH_LANG, speakable, chunkText } from '../src/ui/voice.js';
 
 const V = (name, lang, localService = true) => ({ name, lang, localService });
 // 這台 Windows 電腦實際列出來的聲音(中文 3 個 Microsoft 本機聲音,英文只有 Google 的雲端聲音)
@@ -40,10 +40,21 @@ test('排名順序:自然 > 增強 > 本機內建 > Google > 簡易合成聲', (
   assert.ok(s('Google US English') > s('eSpeak English'));
 });
 
+test('英式英文:有 en-GB 的 Daniel 時,國小英文朗讀會選它(使用者的選擇),沒有時退到其他英文聲音', () => {
+  assert.equal(pickVoice(IPHONE, 'en-GB').name, 'Daniel');
+  assert.equal(pickVoice(WINDOWS, 'en-GB')?.lang.startsWith('en'), true);
+  assert.equal(SPEECH_LANG.en, 'en-GB'); assert.equal(SPEECH_LANG.zh, 'zh-TW');
+  assert.equal(pickVoice([V('美佳', 'zh-TW'), V('美佳(增強音質)', 'zh-TW')], 'zh-TW').name, '美佳(增強音質)');
+});
+
 test('語速與音高:國小慢而活潑、國中平穩、高中接近正式旁白;未知階段用國小', () => {
-  const k = prosodyFor('kid'), t = prosodyFor('teen'), h = prosodyFor('high');
-  assert.ok(k.rate < t.rate && t.rate < h.rate + 1e-9 && k.pitch > t.pitch && t.pitch > h.pitch);
-  assert.deepEqual(prosodyFor('x'), k);
+  for (const lang of ['zh', 'en']) {
+    const k = prosodyFor('kid', lang), t = prosodyFor('teen', lang), h = prosodyFor('high', lang);
+    assert.ok(k.rate < t.rate && t.rate <= h.rate && k.pitch >= t.pitch && t.pitch >= h.pitch, lang);
+    assert.deepEqual(prosodyFor('x', lang), k);
+  }
+  assert.deepEqual(prosodyFor('kid', 'zh'), { rate: 0.85, pitch: 1.0 });      // 使用者在試聽台選定的值
+  assert.deepEqual(prosodyFor('kid', 'en'), { rate: 0.7, pitch: 0.95 });
 });
 
 test('speakable:下標、箭頭、單位、希臘字母都整理成好念的文字(中英文)', () => {

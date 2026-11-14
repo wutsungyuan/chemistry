@@ -15,7 +15,7 @@ export function scoreVoice(v, lang) {
   if (/premium|enhanced|高品質|增強|擴充/i.test(name)) s += 60;                      // Apple 下載的高品質聲音
   if (/siri/i.test(name)) s += 55;
   if (/^microsoft /i.test(name)) s += 25;                                           // Windows 內建的 Hanhan、Yating、Zhiwei、Zira…
-  if (/mei-?jia|ting-?ting|sin-?ji|samantha|karen|daniel|moira|tessa|ava|allison/i.test(name)) s += 25;   // Apple 的常見好聲音
+  if (/mei-?jia|美佳|ting-?ting|sin-?ji|samantha|karen|daniel|moira|tessa|ava|allison/i.test(name)) s += 25;   // Apple 的常見好聲音
   if (v.localService) s += 10;                                                      // 本機聲音:離線也能用、聲音一致
   if (/google/i.test(name)) s -= 70;                                                // 機械感重的雲端聲音(使用者明確不要)
   if (/compact|espeak|festival|pico/i.test(name)) s -= 90;                          // 簡易/開源合成聲
@@ -30,9 +30,15 @@ export function pickVoice(voices, lang) {
   return bestScore === -Infinity ? null : best;
 }
 
-/** 各階段的語速與音高:國小慢一點、活潑一點;高中像正式的旁白 */
-export const PROSODY = { kid: { rate: 0.86, pitch: 1.12 }, teen: { rate: 0.95, pitch: 1.0 }, high: { rate: 1.0, pitch: 0.96 } };
-export const prosodyFor = level => PROSODY[level] || PROSODY.kid;
+/** 各階段的語速與音高。國小的兩組是使用者在審稿頁的試聽台聽過後親自選的(中文:美佳 .85 / 1.00;英文:英式 Daniel .70 / .95);國中、高中沿用較快的正式旁白 */
+export const PROSODY = {
+  kid: { zh: { rate: 0.85, pitch: 1.0 }, en: { rate: 0.7, pitch: 0.95 } },
+  teen: { zh: { rate: 0.95, pitch: 1.0 }, en: { rate: 0.95, pitch: 0.95 } },
+  high: { zh: { rate: 1.0, pitch: 0.96 }, en: { rate: 1.0, pitch: 0.94 } },
+};
+/** 朗讀用的語言代碼:中文用台灣國語;英文用英式(使用者選的是 en-GB;沒有時 scoreVoice 會退到其他英文聲音) */
+export const SPEECH_LANG = { zh: 'zh-TW', en: 'en-GB' };
+export const prosodyFor = (level, lang = 'zh') => (PROSODY[level] || PROSODY.kid)[lang === 'en' ? 'en' : 'zh'];
 
 const SUB = { '₀': '0', '₁': '1', '₂': '2', '₃': '3', '₄': '4', '₅': '5', '₆': '6', '₇': '7', '₈': '8', '₉': '9', '⁺': '+', '⁻': '-' };
 const SUPER = { '⁰': '0', '¹': '1', '²': '2', '³': '3', '⁴': '4', '⁵': '5', '⁶': '6', '⁷': '7', '⁸': '8', '⁹': '9' };
