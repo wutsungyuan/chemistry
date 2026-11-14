@@ -16,13 +16,13 @@
         "zh": [
           "很久很久以前，人類第一次學會用火。火可以把食物煮熟，變得又香又好吃；可以取暖；晚上還能照亮四周，把野獸趕跑。",
           "火是怎麼燒起來的呢？我們可以請大人幫忙，做一個小實驗：點亮一根蠟燭，再用玻璃杯把它蓋起來。過一會兒，火就慢慢熄掉了！",
-          "這是因為杯子裡的氧氣被燒完了。原來，火要燒起來，一定要有氧氣。",
+          "這是因為杯子裡的氧氣變少了，不夠火繼續燒。原來，火要燒起來，一定要有足夠的氧氣。",
           "火要燒起來，除了氧氣，還要有可以燒的東西，和夠高的溫度。這三樣少了任何一樣，火就會熄掉。所以用鍋蓋蓋住鍋裡的小火，是把氧氣隔開；用水澆熄營火，是把溫度降下來。玩火很危險，一定要有大人陪著喔！"
         ],
         "en": [
           "A very, very long time ago, people learned to use fire for the first time. Fire cooks food so it tastes good, keeps us warm, lights up the night and scares wild animals away.",
           "What makes a fire burn? With a grown-up's help we can try a little experiment: light a candle and cover it with a glass. After a moment, the flame slowly goes out!",
-          "That is because the oxygen inside the glass has been used up. A fire can only burn when there is oxygen.",
+          "That is because the oxygen inside the glass has run low, and there is not enough left for the fire. A fire needs enough oxygen to keep burning.",
           "For a fire you need oxygen, something that can burn, and enough heat. Take away any one of the three and the fire goes out. Putting a lid over a small fire in a pot shuts out the oxygen, and pouring water on a campfire cools it down. Fire is dangerous, so always have a grown-up with you!"
         ]
       },
@@ -37,8 +37,8 @@
             "en": "The flame is afraid of the cold"
           },
           {
-            "zh": "杯子裡的氧氣用完了",
-            "en": "The oxygen in the glass is used up",
+            "zh": "杯子裡的氧氣變少了",
+            "en": "The oxygen in the glass has run low",
             "ok": true
           },
           {
@@ -47,8 +47,8 @@
           }
         ],
         "explain": {
-          "zh": "火要有氧氣才能燃燒。杯子裡的氧氣用完了，火就熄掉了。",
-          "en": "A fire needs oxygen to burn. When the oxygen in the glass runs out, the flame goes out."
+          "zh": "火要有足夠的氧氣才能燃燒。杯子裡的氧氣變少了，火就熄掉了。",
+          "en": "A fire needs enough oxygen to burn. When the oxygen in the glass runs low, the flame goes out."
         }
       },
       "elements": [
@@ -63,7 +63,7 @@
       },
       "checks": [
         "人類控制用火的證據至少有幾十萬年,故事只用「很久很久以前」,不寫確切年代",
-        "燃燒需要氧氣:蠟燭蓋杯子會熄滅(氧氣被消耗)",
+        "燃燒需要氧氣:蠟燭蓋杯子會熄滅。密閉杯中的氧氣約從 21% 降到約 16% 火焰就會熄滅,氧氣並沒有用完,所以故事寫「變少、不夠」而不是「燒完」",
         "燃燒三要素：可燃物、助燃物（氧氣）、足夠溫度；鍋蓋滅火為隔絕氧氣，澆水為降溫"
       ]
     },

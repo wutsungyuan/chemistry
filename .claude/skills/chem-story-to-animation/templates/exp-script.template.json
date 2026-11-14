@@ -1,0 +1,31 @@
+{
+  "_說明": "每個實驗一個 key(例如 candle)。steps 依故事順序;refs 的 quote 必須是故事該段的原文片段(check-sync 會檢查)。status:match 一致 / extra 動畫補充 / diff 有出入 / missing 動畫缺少(後兩者不應留到交付)。",
+  "myExperiment": {
+    "storyId": "故事 id(stories.json 的 id)",
+    "forbidden": ["與動畫矛盾的說法(出現在故事文字裡就視為錯誤)"],
+    "titleZh": "🧪 小實驗:…",
+    "titleEn": "🧪 Experiment: …",
+    "legZh": "圖例(中)",
+    "legEn": "Legend (en)",
+    "steps": [
+      { "key": "intro", "nZh": "開頭", "nEn": "Intro", "d0": 3, "io": 1,
+        "capZh": "今天的小實驗:…要請大人陪你一起做喔!",
+        "capEn": "Today's experiment: … Ask a grown-up to do it with you!",
+        "refs": [{ "para": "safety", "quote": "故事安全提醒的原文片段" }],
+        "status": "match", "note": "" },
+      { "key": "step1", "nZh": "步驟名", "nEn": "Step name", "d0": 4,
+        "capZh": "一句中文(≤ 30 字)。",
+        "capEn": "One English sentence (≤ 20 words).",
+        "refs": [{ "para": 2, "quote": "故事第 2 段的原文片段" }],
+        "status": "match", "note": "動畫與故事的差異、簡化處、時間壓縮說明" },
+      { "key": "end", "nZh": "結尾", "nEn": "Ending", "d0": 3.5, "io": 1,
+        "capZh": "結果與安全提醒。",
+        "capEn": "Result and safety reminder.",
+        "refs": [{ "para": 3, "quote": "故事結論的原文片段" }],
+        "status": "match", "note": "" }
+    ],
+    "uncovered": [
+      { "para": 4, "quote": "故事有、動畫沒有的原文片段", "why": "刻意不做的原因" }
+    ]
+  }
+}
