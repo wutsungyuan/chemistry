@@ -52,6 +52,8 @@ html[data-level=high] #nav .ico { display: none; }
 html[data-level=high] .btn { border-radius: 4px; background: var(--accent); color: #07101f; font-weight: 600; }
 html[data-level=high] .btn.alt { background: var(--panel2); color: var(--text); border: 1px solid var(--line); }
 html[data-level=high] .chip { border-radius: 3px; background: var(--panel2); border: 1px solid rgba(143,200,255,.18); }
+/* 光譜模式按鈕維持彩虹底色:上一行的深色底會蓋掉它,深色字就看不清楚了 */
+html[data-level=high] .pt-legend .spec-toggle { background: linear-gradient(90deg,#ff5c8a,#ffd23f,#4ade80,#4cc9ff,#a78bfa); border: 0; }
 html[data-level=high] .m-body { display: none; }                                    /* 沒有吉祥物;提示文字留著,改成安靜的一行字 */
 html[data-level=high] #tipbar { min-height: 0; padding: 4px 14px 6px; }
 html[data-level=high] .m-bubble { background: transparent; color: var(--muted); box-shadow: none; padding: 0; font-weight: 400; font-size: .9rem; line-height: 1.6; border-radius: 0; }
