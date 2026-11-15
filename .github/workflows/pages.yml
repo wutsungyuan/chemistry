@@ -1,0 +1,51 @@
+# 正式版網站:每次推送到 main,就在 GitHub 上重新 build 並發布到 GitHub Pages(https://wutsungyuan.github.io/chemistry/)。
+# 網站是純靜態檔案(dist/),放在 GitHub 上,不需要任何人的電腦開著。
+#
+# 供應鏈安全:
+#   - 用到的 action 都是 GitHub 官方的,而且固定在某一個 commit(後面註解是對應的版本號),不會因為別人改了版本標籤就換成別的程式。
+#   - npm ci 只照 package-lock.json 安裝;.npmrc 的 ignore-scripts=true 讓套件的安裝腳本不會執行。
+#   - 權限只給「讀程式碼」和「發布 Pages」。
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 同時只跑一個發布;新的推送進來時,讓正在發布的那一個跑完(不要中途取消)
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      # ignore-scripts=true 會讓 npm 跳過 prebuild,所以資料庫要自己先產生
+      - run: npm run build-db
+      - run: npm test
+      - run: npx vite build
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
