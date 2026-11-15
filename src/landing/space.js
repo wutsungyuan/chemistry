@@ -186,7 +186,8 @@ export function mountSpace(host, { labels, texts, onPick }) {
     // 噴口擺角由這一格實際的橫向加速度決定:軌道要往哪邊彎,推力就往哪邊偏(噴口與火焰往反方向擺)。
     acc.copy(sh.vel).sub(lastVel).divideScalar(Math.max(dt, 1e-3)); lastVel.copy(sh.vel); accS.lerp(acc, Math.min(1, dt * 8));
     const burn = sh.mode === 'intro' || (sh.mode === 'fly' && (sh.tr.s < 0.28 || sh.tr.s > 0.7));                   // 0.7 之後已經掉頭完成,引擎朝前:這次點火是減速入軌
-    ship.userData.update(tNow, dt, { burn, rcs, gy: burn ? clamp(accS.dot(upF) * 0.16, -0.32, 0.32) : 0, gz: burn ? clamp(accS.dot(side) * 0.16, -0.32, 0.32) : 0 });
+    ship.userData.update(tNow, dt, { burn: burn ? 'vac' : false, rcs,       // 在太空裡變軌:只點外圈三具真空型引擎(見 ship.js)
+      gy: burn ? clamp(accS.dot(upF) * 0.16, -0.32, 0.32) : 0, gz: burn ? clamp(accS.dot(side) * 0.16, -0.32, 0.32) : 0 });
   }
 
   // ---- 每一格 ----
