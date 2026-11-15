@@ -68,7 +68,7 @@ export function mount(container, _arg, { go }) {
     grid.appendChild(p); holders.push([cat, p]);
   });
   const stage = document.createElement('div'); stage.className = 'ptp-stage'; stage.hidden = true;
-  stage.innerHTML = `<p class="ptp-tip">${T('pt.planet.tip')}</p>`;
+  stage.innerHTML = `<p class="ptp-tip">${T('pt.planet.tip')}</p><p class="ptp-egg" hidden></p>`;
   wrap.appendChild(stage);
   wrap.appendChild(grid);
   page.appendChild(wrap);
@@ -84,8 +84,35 @@ export function mount(container, _arg, { go }) {
     try {
       const { mountTablePlanet } = await import('./tablePlanet.js');
       if (my !== token || !planetOn || !page.isConnected) return;
-      planet = mountTablePlanet(stage, { lang: state.lang, level, filter, onPick: e => { setNextTab('info'); go('atom', e.z); } });
+      planet = mountTablePlanet(stage, { lang: state.lang, level, filter, onPick: e => { setNextTab('info'); go('atom', e.z); hatchDone(); },
+        onEgg: (ph, e, at) => {
+          if (ph === 'hatch') { hatchOut(e, at); return; }
+          const cap = stage.querySelector('.ptp-egg'); cap.innerHTML = T('pt.egg.' + ph); cap.hidden = false; stage.querySelector('.ptp-tip').hidden = true;       // 彩蛋的說明文字(開始、夾住)
+        } });
     } catch (err) { console.warn('週期表星球無法使用,改用表格', err); can3d && setView(false); }
+  }
+
+  // 彩蛋的最後一幕:飛船被夾住後,選的那個元素(分類顏色的圓牌:符號 + 名稱)從飛船裡跑出來、飄到畫面中央,然後放大蓋滿整個畫面;
+  // 換到原子頁之後再淡出,所以看起來是「元素從飛船出來,帶你進它的頁面」。圓牌掛在 <body> 上,換頁時不會被清掉。
+  let hatch = null;
+  function hatchOut(e, at) {
+    hatch?.remove();
+    const el = document.createElement('div'); el.className = 'ptp-hatch'; el.style.setProperty('--c', CATEGORIES[e.cat].color); el.style.left = at.x + 'px'; el.style.top = at.y + 'px';
+    el.innerHTML = `<span class="ph-in"><b>${e.sym}</b><span>${LH(e.name)}</span></span>`;
+    document.body.appendChild(el); hatch = el;
+    const dx = innerWidth / 2 - at.x, dy = innerHeight / 2 - at.y, cover = Math.hypot(innerWidth, innerHeight) / 130 * 2.2, base = 'translate(-50%,-50%)';
+    el.animate([
+      { transform: `${base} scale(.04)`, offset: 0 },
+      { transform: `${base} translate(${dx * 0.9}px,${dy * 0.9}px) scale(1.08)`, offset: 0.4, easing: 'ease-out' },
+      { transform: `${base} translate(${dx}px,${dy}px) scale(1)`, offset: 0.62 },
+      { transform: `${base} translate(${dx}px,${dy}px) scale(${cover})`, offset: 1, easing: 'ease-in' },
+    ], { duration: 1200, fill: 'forwards' });
+    el.firstChild.animate([{ opacity: 1, offset: 0 }, { opacity: 1, offset: 0.68 }, { opacity: 0, offset: 0.9 }, { opacity: 0, offset: 1 }], { duration: 1200, fill: 'forwards' });
+    setTimeout(() => { if (hatch === el) hatchDone(); }, 2600);          // 保險:萬一沒有換頁,也不要一直蓋著畫面
+  }
+  function hatchDone() {
+    const el = hatch; if (!el) return; hatch = null;
+    const a = el.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 480, fill: 'forwards', easing: 'ease-out' }); a.onfinish = () => el.remove(); setTimeout(() => el.remove(), 700);
   }
 
   let miniBuilt = false;

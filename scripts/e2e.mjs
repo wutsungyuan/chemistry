@@ -140,8 +140,23 @@ const picked = await page.eval(`(() => { const a = document.querySelector('.ptp-
 check('A3 星球中央對得到一個元素', typeof picked === 'string' && picked.length > 0, String(picked));
 await page.eval(`(document.querySelector('.pt-legend .chip:not(.view-toggle):not(.spec-toggle)').click(), 0)`); await page.sleep(300);
 check('A3 星球模式下篩選分類會顯示說明', await page.eval(`!document.querySelector('.cat-info').hidden`));
-await page.eval(`(() => { const cv = document.querySelector('.ptp-canvas'), a = cv.__api, c = a.center(), o = { clientX: c[0], clientY: c[1], pointerId: 1, bubbles: true }; cv.dispatchEvent(new PointerEvent('pointerdown', o)); cv.dispatchEvent(new PointerEvent('pointerup', o)); return 0; })()`); await page.sleep(1200);
-s = await snap(); check('A3 點星球上的一格 → 進入那個元素的原子頁', s.scene === 'atom' && s.hash.startsWith('#atom/'), s.scene + s.hash);
+await page.eval(`(() => { const cv = document.querySelector('.ptp-canvas'), a = cv.__api, c = a.center(), o = { clientX: c[0], clientY: c[1], pointerId: 1, bubbles: true }; cv.dispatchEvent(new PointerEvent('pointerdown', o)); cv.dispatchEvent(new PointerEvent('pointerup', o)); return 0; })()`); await page.sleep(500);
+// 小彩蛋(catchEgg.js):點了元素後先播「飛船被發射塔夾住」,播完才進原子頁;再點一下可以跳過
+const eggSt = () => page.eval(`(() => { const a = document.querySelector('.ptp-canvas')?.__api; if (!a) return null; const s = a.egg(); return JSON.stringify({ busy: a.eggBusy(), caught: s.caught, left: s.left, r: s.r, off: Math.abs(s.pos[0] * s.normal[0] + s.pos[1] * s.normal[1] + s.pos[2] * s.normal[2]), noseUp: s.nose[0] * s.up[0] + s.nose[1] * s.up[1] + s.nose[2] * s.up[2], d: Math.hypot(...s.pos.map((v, k) => v - s.catchAt[k])), cap: !document.querySelector('.ptp-egg').hidden && document.querySelector('.ptp-egg').textContent.length > 8 }); })()`).then(v => v && JSON.parse(v));
+let eg = await eggSt(); s = await snap();
+check('A3 點星球上的一格 → 先播彩蛋(還在週期表,有說明文字)', !!eg && eg.busy && eg.cap && s.scene === 'table', JSON.stringify(eg));
+let minR = 9, maxOff = 0, lastLeft = 99, back = 0; for (let k = 0; k < 500 && eg && !eg.caught; k++) { await page.sleep(60); eg = await eggSt(); if (eg) { minR = Math.min(minR, eg.r); maxOff = Math.max(maxOff, eg.off); if (eg.left > lastLeft + 1e-6) back++; lastLeft = eg.left; } }
+check('A3 彩蛋:飛船全程留在原本的軌道面上(不急轉彎)、一路往前、沒有穿過星球', !!eg && maxOff < 0.01 && back === 0 && minR > 1.05, 'maxOff=' + maxOff.toFixed(4) + ' back=' + back + ' minR=' + minR.toFixed(2));
+check('A3 彩蛋:最後機頭朝上停在機械臂的掛點', !!eg && eg.caught && eg.noseUp > 0.98 && eg.d < 0.01, JSON.stringify(eg));
+let hatched = false; for (let k = 0; k < 60 && !hatched; k++) { await page.sleep(50); hatched = await page.eval(`!!document.querySelector('.ptp-hatch b')?.textContent`); }
+check('A3 彩蛋:夾住後,選的元素從飛船裡出來(轉場的圓牌)', hatched);
+await page.sleep(2600);
+check('A3 彩蛋:轉場結束後圓牌會消失,不會蓋住原子頁', await page.eval(`!document.querySelector('.ptp-hatch')`));
+s = await snap(); check('A3 彩蛋播完 → 進入那個元素的原子頁', s.scene === 'atom' && s.hash.startsWith('#atom/'), s.scene + s.hash);
+await page.goto(url('index.html#table'), 2000);
+await page.eval(`(() => { const cv = document.querySelector('.ptp-canvas'); cv.__api.tapSym('O'); return 0; })()`); await page.sleep(600);
+await page.eval(`(() => { const cv = document.querySelector('.ptp-canvas'), c = cv.__api.center(); cv.dispatchEvent(new PointerEvent('pointerdown', { clientX: c[0], clientY: c[1], pointerId: 1, bubbles: true })); return 0; })()`); await page.sleep(500);
+s = await snap(); check('A3 彩蛋播放中再點一下 → 跳過,直接進氧的原子頁', s.scene === 'atom' && s.hash === '#atom/8', s.scene + s.hash);
 await page.goto(url('index.html#table'), 2000);
 await page.eval(`(document.querySelector('.view-toggle').click(), 0)`); await page.sleep(400);
 check('A3 切到表格:表格出現、3D 畫布釋放', await page.eval(`getComputedStyle(document.querySelector('.pt-grid')).display !== 'none' && !document.querySelector('.ptp-canvas') && document.querySelectorAll('.pt-grid .el').length >= 118`));

@@ -3,6 +3,7 @@
 // 表皮是用 canvas 畫的貼圖(分類顏色、原子序、符號、名稱);篩選分類時重畫。three.js 用動態載入(由 PeriodicTable.js 載入這個檔)。
 import * as THREE from 'three';
 import { ELEMENTS, CATEGORIES } from '../data/elements.js';
+import { mountCatch } from './catchEgg.js';
 
 const COLS = 18, ROW_DEG = 12.5, SLOTS = 9.4;                 // 每一列佔 12.5° 緯度;7 個週期 + 0.4 的空隙 + 鑭系、錒系 = 9.4 列
 const slotOf = row => (row <= 7 ? row - 1 : row - 1.6);       // 資料裡鑭系是第 9 列、錒系第 10 列 → 第 7.4、8.4 個位置
@@ -30,7 +31,7 @@ const SKINS = {
   } },
 };
 
-/** opts:{ lang, level, onPick(element), filter(分類 id 或 null) };回傳 { setFilter, dispose } */
+/** opts:{ lang, level, onPick(element), onEgg(階段, element, 飛船在網頁上的位置), filter(分類 id 或 null) };回傳 { setFilter, dispose } */
 export function mountTablePlanet(host, opts) {
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
@@ -103,7 +104,10 @@ export function mountTablePlanet(host, opts) {
     R = (H / 2) / (camera.position.z * Math.tan(camera.fov / 2 * Math.PI / 180));                                                           // 星球在螢幕上的半徑(px),拖曳多少就轉多少
   }
   const ro = new ResizeObserver(size); ro.observe(host); size();
-  canvas.addEventListener('pointerdown', e => { down = { x: e.clientX, y: e.clientY, id: e.pointerId }; goal = null; moved = 0; vy = 0; touched = true; canvas.setPointerCapture?.(e.pointerId); });
+  canvas.addEventListener('pointerdown', e => {
+    if (egg.busy) { egg.skip(); return; }                             // 彩蛋播放中:再點一下就跳過,直接進元素頁
+    down = { x: e.clientX, y: e.clientY, id: e.pointerId }; goal = null; moved = 0; vy = 0; touched = true; canvas.setPointerCapture?.(e.pointerId);
+  });
   canvas.addEventListener('pointermove', e => {
     if (!down || e.pointerId !== down.id) return; const dx = e.clientX - down.x, dy = e.clientY - down.y; down.x = e.clientX; down.y = e.clientY; moved += Math.abs(dx) + Math.abs(dy);
     yaw += dx / R; vy = dx / R * 60; pitch = Math.max(-0.95, Math.min(0.95, pitch + dy / R));
@@ -116,8 +120,18 @@ export function mountTablePlanet(host, opts) {
     for (const row of [1, 2, 3, 4, 5, 6, 7, 9, 10]) { const s = slotOf(row); if (slot >= s && slot < s + 1) return byCell.get(col + ':' + row) || null; }
     return null;
   }
-  const up = e => { if (!down || e.pointerId !== down.id) return; const tap = moved < 8; down = null; if (tap) { vy = 0; const el = pick(e.clientX, e.clientY); if (el) opts.onPick(el); } };
+  const up = e => { if (!down || e.pointerId !== down.id) return; const tap = moved < 8; down = null; if (tap) { vy = 0; const el = pick(e.clientX, e.clientY); if (el) catchThen(el); } };
   canvas.addEventListener('pointerup', up); canvas.addEventListener('pointercancel', () => { down = null; });
+
+  // 小彩蛋(catchEgg.js):飛船平常繞著星球飛;點了元素後,那一格長出發射塔,飛船降落被機械臂夾住,播完才進元素頁
+  const egg = mountCatch({ scene, camera, setPose: (y, p) => { yaw = y; pitch = p; }, onPhase: (ph, at) => { const b = canvas.getBoundingClientRect(); opts.onEgg?.(ph, eggEl, at && { x: b.left + (at.x + 1) / 2 * b.width, y: b.top + (1 - at.y) / 2 * b.height }); } });
+  let eggEl = null;
+  function catchThen(el) {
+    const u = (el.col - 0.5) / COLS, lat = (LAT_TOP - (slotOf(el.row) + 0.5) * ROW_DEG) * Math.PI / 180;
+    let ty = Math.PI / 2 - u * Math.PI * 2; ty += Math.round((yaw - ty) / (Math.PI * 2)) * Math.PI * 2;
+    goal = null; vy = 0; touched = true; down = null; eggEl = el;
+    egg.start({ yaw0: yaw, pitch0: pitch, yaw1: ty, lat }, () => opts.onPick(el));
+  }
 
   /** 把星球轉到某一類元素最密集的經度(和緯度):先找「連續 5 族(約 100°,一眼看得到的寬度)裡這一類元素最多」的那一段,再取這一段裡的平均位置 */
   let goal = null;
@@ -138,16 +152,17 @@ export function mountTablePlanet(host, opts) {
   (function frame(now) {
     if (!alive) return; raf = requestAnimationFrame(frame); const dt = Math.min(0.05, Math.max(0.001, (now - last) / 1000)); last = now;
     if (document.hidden) return;
-    if (!down && goal) {                                             // 篩選分類後:平順地轉到那一類元素最密集的地方(手一碰就停)
+    if (egg.busy) { /* 彩蛋播放中:星球的角度由彩蛋控制 */ } else if (!down && goal) {                                             // 篩選分類後:平順地轉到那一類元素最密集的地方(手一碰就停)
       const k = 1 - Math.exp(-4 * dt); yaw += (goal.yaw - yaw) * k; pitch += (goal.pitch - pitch) * k; vy = 0;
       if (Math.abs(goal.yaw - yaw) < 0.002 && Math.abs(goal.pitch - pitch) < 0.002) goal = null;
     } else if (!down) { if (!touched) yaw -= dt * 0.1; else if (Math.abs(vy) > 0.01) { yaw += vy * dt; vy *= Math.exp(-2.6 * dt); } }
+    egg.update(now / 1000, dt); if (!alive) return;                   // 彩蛋播完會換頁(這個星球已經被釋放),就不要再畫了
     planet.rotation.y = yaw; tilt.rotation.x = pitch; renderer.render(scene, camera);
   })(last);
 
-  canvas.__api = { pickAt: (x, y) => pick(x, y)?.sym || null, center: () => { const b = canvas.getBoundingClientRect(); return [b.left + b.width / 2, b.top + b.height / 2]; }, setYaw: v => { yaw = v; goal = null; touched = true; vy = 0; }, settled: () => !goal };   // 給 E2E 用
+  canvas.__api = { pickAt: (x, y) => pick(x, y)?.sym || null, center: () => { const b = canvas.getBoundingClientRect(); return [b.left + b.width / 2, b.top + b.height / 2]; }, setYaw: v => { yaw = v; goal = null; touched = true; vy = 0; }, settled: () => !goal, egg: () => egg.state(), eggBusy: () => egg.busy, tapSym: sym => { const el = ELEMENTS.find(e => e.sym === sym); if (el) catchThen(el); } };   // 給 E2E 用
   return {
     setFilter(f) { filter = f || null; draw(); if (filter) focus(filter); },
-    dispose() { alive = false; cancelAnimationFrame(raf); ro.disconnect(); tex.dispose(); mat.dispose(); planet.children[0].geometry.dispose(); glow.geometry.dispose(); glow.material.dispose(); if (ring) { ring.geometry.dispose(); ring.material.map.dispose(); ring.material.dispose(); } renderer.dispose(); canvas.remove(); },
+    dispose() { alive = false; cancelAnimationFrame(raf); ro.disconnect(); egg.dispose(); tex.dispose(); mat.dispose(); planet.children[0].geometry.dispose(); glow.geometry.dispose(); glow.material.dispose(); if (ring) { ring.geometry.dispose(); ring.material.map.dispose(); ring.material.dispose(); } renderer.dispose(); canvas.remove(); },
   };
 }
