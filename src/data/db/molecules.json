@@ -310,8 +310,8 @@
    "en": "A carbon surrounded by four hydrogens in a tetrahedron."
   },
   "use": {
-   "zh": "天然氣的主要成分,家裡煮飯的瓦斯就是它。",
-   "en": "The main part of natural gas, used for cooking."
+   "zh": "天然氣的主要成分,家裡煮飯的瓦斯就是它;新一代的火箭也用它當燃料。",
+   "en": "The main part of natural gas, used for cooking; new rockets burn it as fuel too."
   },
   "level": "kid",
   "factTeen": {
@@ -319,16 +319,16 @@
    "en": "One carbon atom bonded to four hydrogen atoms in a regular tetrahedron."
   },
   "useTeen": {
-   "zh": "天然氣的主要成分,家用瓦斯的燃料。",
-   "en": "The main component of natural gas, used as household fuel."
+   "zh": "天然氣的主要成分,家用瓦斯的燃料;冷卻成液體後也可以當火箭燃料。",
+   "en": "The main component of natural gas, used as household fuel; chilled to a liquid, it also serves as rocket fuel."
   },
   "factHigh": {
    "zh": "sp³ 混成的正四面體分子,鍵角約 109.5°,是最簡單的烷類(烴)。",
    "en": "A regular tetrahedral molecule with sp³ hybridization and bond angles of about 109.5°; the simplest alkane (hydrocarbon)."
   },
   "useHigh": {
-   "zh": "天然氣的主要成分,也是重要的溫室氣體。",
-   "en": "The main component of natural gas, and an important greenhouse gas."
+   "zh": "天然氣的主要成分,也是重要的溫室氣體;液態甲烷(沸點約 −162 °C)搭配液態氧可作為火箭推進劑。",
+   "en": "The main component of natural gas, and an important greenhouse gas; liquid methane (boiling point about −162 °C) with liquid oxygen serves as a rocket propellant."
   }
  },
  {

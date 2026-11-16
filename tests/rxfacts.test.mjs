@@ -18,9 +18,9 @@ test('原子守恆摘要:水的合成 4 H、2 O;每個反應左右相同,且與 
   for (const r of REACTIONS) { const c = conservation(r); assert.equal(c.ok, true, r.id); assert.equal(c.ok, checkBalance(r)); assert.equal(countText(c.left), countText(c.right), r.id); }
 });
 
-test('反應清單依階段:國小 6 個、國中 8 個、高中 9 個,國小 ⊂ 國中 ⊂ 高中', () => {
+test('反應清單依階段:國小 6 個、國中 9 個、高中 10 個,國小 ⊂ 國中 ⊂ 高中', () => {
   const kid = forLevel(REACTIONS, 'kid'), teen = forLevel(REACTIONS, 'teen'), high = forLevel(REACTIONS, 'high');
-  assert.deepEqual([kid.length, teen.length, high.length], [6, 8, 9]);
+  assert.deepEqual([kid.length, teen.length, high.length], [6, 9, 10]);
   for (const r of kid) assert.ok(teen.includes(r) && high.includes(r));
   assert.ok(!kid.some(r => r.id === 'ozone') && !teen.some(r => r.id === 'ozone') && high.some(r => r.id === 'ozone'));
 });
@@ -50,7 +50,7 @@ test('反應熱 dH:正負號與吸放熱一致,且和標準生成熱(教科書�
     assert.ok(Math.abs(calc - r.dH) < 10, `${r.id}:算出 ${calc.toFixed(1)} kJ,資料寫 ${r.dH}`);
     checked++;
   }
-  assert.equal(checked, 8);
+  assert.equal(checked, 9);
 });
 
 test('驗證腳本:缺國中版說明、dH 正負號與 heat 不一致、英文含中文字,都會被擋下', () => {
