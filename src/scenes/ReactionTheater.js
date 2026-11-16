@@ -260,11 +260,11 @@ export function mount(container, startId) {
       <div class="equation">${eqHTML(cur)}</div>
       <div style="margin:4px 0"><b>${LH(cur.name)}</b> — ${LH(storyFor(cur, level))}</div>
       ${infoHTML(cur)}
-      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-        <button class="btn" id="play"></button>
-        <button class="btn alt" id="replay">↺ ${T('rx.replay')}</button>
-        <input type="range" id="seek" min="0" max="${TEND * 100}" value="0" style="flex:1;min-width:120px">
-        ${canSpeak() ? '<button class="btn alt" id="say">🔊</button>' : ''}
+      <div class="playbar">
+        <button type="button" id="play"></button>
+        <button type="button" id="replay" aria-label="${Tp('rx.replay')}">↻</button>
+        <input type="range" id="seek" min="0" max="${TEND * 100}" value="0" aria-label="${Tp('rx.seek')}">
+        ${canSpeak() ? `<button type="button" id="say" aria-label="${Tp('rx.say')}">🔊</button>` : ''}
         <span id="note" style="display:none">⏩ ${T('rx.slow')}</span>
       </div>`;
     slider = bar.querySelector('#seek'); playBtn = bar.querySelector('#play'); noteEl = bar.querySelector('#note');
@@ -274,7 +274,7 @@ export function mount(container, startId) {
     bar.querySelector('#say')?.addEventListener('click', () => speak(`${L(cur.name)}。${L(storyFor(cur, level))}`));
     setPlayLabel();
   }
-  function setPlayLabel() { if (playBtn) playBtn.innerHTML = playing ? '⏸ ' + T('rx.pause') : '▶ ' + T('rx.play'); }
+  function setPlayLabel() { if (playBtn) { playBtn.textContent = playing ? '⏸' : '▶'; playBtn.setAttribute('aria-label', Tp(playing ? 'rx.pause' : 'rx.play')); } }   // 播放列和實驗動畫共用樣式(.playbar):只放圖示,文字給報讀軟體
 
   const desk = () => !isNarrow();
   // 桌面版:右側清單、下方控制列會遮住畫面,把畫面中心移到剩餘空間的中央

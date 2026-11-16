@@ -167,46 +167,7 @@ button:focus-visible,input:focus-visible{outline:3px solid #fff;outline-offset:2
 #toast{background:linear-gradient(180deg,#ffe066,#ffbf2e);box-shadow:0 8px 24px rgba(0,0,0,.4);border:2px solid #fff6;font-size:1.05rem}
 
 /* ---------- 窄版面(手機 + iPad 直式,≤900px):面板上下堆疊 ---------- */
-@media (max-width:900px){
-  #topbar{padding:6px 12px;gap:6px}
-  .brand{font-size:1.1rem}
-  .tools{margin-left:auto;display:flex;gap:8px}
-  #nav{order:3;flex:0 0 100%;flex-wrap:nowrap;overflow-x:auto;gap:8px;padding-bottom:2px}
-  #nav button{white-space:nowrap;flex:0 0 auto}
-  .side{top:8px;left:8px;width:calc(100% - 16px);max-height:42%;padding:12px 14px}
-  .list{top:auto;bottom:8px;left:8px;right:8px;width:auto;display:flex;gap:8px;overflow-x:auto;overflow-y:hidden;padding:8px}
-  .list button{width:auto;flex:0 0 auto;margin:0;white-space:nowrap;text-align:center}
-  .list.rx{top:8px;bottom:auto}
-  .stage-bar{left:8px;right:8px;bottom:8px;max-height:48%;overflow:auto}
-  .tray{left:8px;right:8px;bottom:8px;gap:8px}
-  .hint{display:none}
-  .zoombar{top:auto;bottom:16px;transform:none}
-  .side.mission{top:8px;bottom:auto;width:calc(100% - 16px);max-height:45%}
-  .quiz{margin:12px auto}
-  .pt-wrap{padding:10px 8px;min-width:0}
-  .el .nm{font-size:.62rem}
-  .el .sym{font-size:1.1rem}
-  .el .z{font-size:.5rem}
-  .pt-legend .chip{font-size:.85rem}
-}
 /* ---------- 手機(≤700px):字更小 ---------- */
-@media (max-width:700px){
-  html,body{font-size:16px}
-  .brand{font-size:1rem}
-  .tool,#nav button{padding:6px 12px;font-size:.9rem}
-  .side{font-size:.9rem}
-  .side h2{font-size:1.25rem}
-  .btn{padding:6px 10px;font-size:.9rem}
-  .stage-bar{font-size:.85rem;padding:8px 10px}
-  .equation{font-size:1.2rem}
-  .tray{padding:6px;gap:6px}
-  .tray .atom-btn{width:40px;height:40px;font-size:.9rem}
-  .quiz{margin:8px;padding:14px}
-  .quiz .q{font-size:1.25rem}
-  .pt-wrap{min-width:640px;padding:8px}
-  .el .nm{display:none}
-  .el .sym{font-size:1.05rem}
-}
 /* ---------- 觸控裝置(iPad):按鈕至少 44px ---------- */
 @media (pointer:coarse){
   button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
@@ -221,7 +182,6 @@ button:focus-visible,input:focus-visible{outline:3px solid #fff;outline-offset:2
 .cat-info{margin:12px 0 18px;padding:12px 18px;font-size:1.1rem;line-height:2.1;border-radius:14px}
 .cat-info > b{display:inline-block;margin-right:12px;line-height:1.7;font-size:1rem;vertical-align:middle}
 .pt-legend{margin-bottom:6px}
-@media (max-width:700px){.cat-info{font-size:1rem;padding:10px 14px;margin:10px 0 14px}}
 .tipbox{line-height:1.9}
 
 /* 週期表格子:玻璃質感(半透明漸層 + 模糊 + 高光邊) */
@@ -267,8 +227,6 @@ body{background:
 .bench .b{position:absolute;left:50%;top:2px;width:9px;height:9px;border-radius:50%;border:2px solid rgba(255,255,255,.8);background:rgba(255,255,255,.25);opacity:0;animation:bub 3s ease-in infinite}
 .bench .b2{animation-delay:1s;margin-left:-10px;width:7px;height:7px}.bench .b3{animation-delay:2s;margin-left:8px;width:6px;height:6px}
 @keyframes bub{0%{transform:translateY(0) scale(.6);opacity:0}15%{opacity:.9}100%{transform:translateY(-70px) scale(1.2);opacity:0}}
-@media (max-width:900px){.bench .eq{display:none}}
-@media (max-width:700px){.bench{height:60px}.bench .it{font-size:32px}.bench .it:nth-of-type(n+5){display:none}}
 /* 3D 場景改半透明,讓背景的彩色透出來 */
 .canvas-wrap{background:radial-gradient(ellipse at 50% 45%,rgba(255,255,255,.14) 0%,rgba(20,10,70,.18) 70%,rgba(10,5,50,.35) 100%)}
 /* 標題列:彩虹品牌字、各色導覽鈕 */
@@ -293,7 +251,6 @@ body{background:
 .bench .eq span{font-size:40px}
 .bench .at{width:40px;height:40px;font-size:18px}
 .bench .b{top:-4px}
-@media (max-width:700px){.bench{height:72px}.bench .it{font-size:38px;transform:translateY(-8px)}}
 
 /* ---------- 週期表格子:降低透明度,色塊更明確 ---------- */
 .pt-grid .el{
@@ -328,7 +285,6 @@ body{background:
 @keyframes m-twirl{0%{transform:translateY(0) rotate(0)}40%{transform:translateY(-14px) rotate(200deg)}100%{transform:translateY(0) rotate(360deg)}}
 /* 提示已整合進小博士,實驗室頂部的獨立提示條不再需要 */
 .hint{display:none!important}
-@media (max-width:900px){#tipbar{min-height:46px;padding:3px 10px 3px 8px}.m-body{width:40px;height:44px}.m-bubble{font-size:.85rem;line-height:1.7;padding:5px 12px}}
 
 /* ---------- 標題列 + 小博士提示列合為同一塊(少一層、不突兀);彩旗改成垂掛在下緣的裝飾 ---------- */
 #head{position:relative;z-index:0;flex:none;
@@ -339,20 +295,8 @@ body{background:
 #head #tipbar{min-height:46px;padding-top:0;padding-bottom:6px}
 #head #bunting{position:absolute;left:0;right:0;top:100%;height:24px;background-size:180px 24px;filter:none;z-index:0}
 .m-body{margin-top:0}
-@media (max-width:900px){#head #tipbar{min-height:40px;padding-bottom:4px}}
 
 /* 窄螢幕導覽列:iPad 直式(701~900)按鈕太多時直接換行,不用橫向捲動;手機維持橫向滑動但隱藏捲軸 */
-@media (min-width:701px) and (max-width:900px){#nav{flex-wrap:wrap;overflow:visible}}
-@media (max-width:900px){#nav{scrollbar-width:none}#nav::-webkit-scrollbar{display:none}}
-@media (min-width:701px) and (max-width:900px){#nav{gap:4px}#nav button{padding:6px 9px;font-size:.85rem}#nav .ico{margin-right:3px}}
-@media (max-width:700px){
-  .brand{font-size:1.05rem;letter-spacing:0}
-  #topbar{gap:4px 6px}
-  .tools{display:flex;gap:4px;margin-left:auto}
-  .tool{padding:4px 8px!important;font-size:.78rem!important;min-height:36px!important}
-  #head #tipbar{min-height:36px}
-  .m-body{width:34px;height:38px}
-}
 
 /* 元素頁:「它在生活中的樣子」 */
 .found-box{left:auto;right:12px;top:12px;width:min(300px,calc(100% - 24px))}
@@ -388,17 +332,15 @@ body{background:
 .spec-note a{color:var(--accent)}
 .side-tabs{display:none}
 /* 桌機:元素頁左側面板也用兩個分頁(原子資訊 | 光譜),比較寬;條件剛好是手機版區塊的補集 */
-@media (min-width:901px) and (not ((pointer:coarse) and (max-width:1400px))){
-  #app > .side[data-tab]{width:min(500px,calc(100% - 24px))}
-  #app > .side[data-tab] .side-tabs{display:flex;gap:8px;margin:6px 0 10px}
-  #app > .side[data-tab] .side-tabs .chip{flex:1;text-align:center;min-height:40px;margin:0;border:0;color:var(--text);cursor:pointer;font-size:.98rem}
-  #app > .side[data-tab] .side-tabs .chip.on{background:var(--accent);color:#222;font-weight:700}
-  #app > .side[data-tab=info] .spec{display:none}
-  #app > .side[data-tab=spec] > *:not(h2):not(.side-tabs):not(.spec):not(:last-child){display:none}
-  #app > .side[data-tab=spec] .spec{margin-top:0;padding-top:0;border-top:0}
-  #app > .side[data-tab=spec] .spec > .spec-h{display:none}
-  #app > .side[data-tab] > div:last-child{position:sticky;bottom:-14px;z-index:2;margin:8px -14px -14px;padding:8px 14px 12px;background:#1b2350;border-radius:0 0 20px 20px}
-}
+:where([data-device=desktop]) #app > .side[data-tab] {width:min(500px,calc(100% - 24px))}
+:where([data-device=desktop]) #app > .side[data-tab] .side-tabs {display:flex;gap:8px;margin:6px 0 10px}
+:where([data-device=desktop]) #app > .side[data-tab] .side-tabs .chip {flex:1;text-align:center;min-height:40px;margin:0;border:0;color:var(--text);cursor:pointer;font-size:.98rem}
+:where([data-device=desktop]) #app > .side[data-tab] .side-tabs .chip.on {background:var(--accent);color:#222;font-weight:700}
+:where([data-device=desktop]) #app > .side[data-tab=info] .spec {display:none}
+:where([data-device=desktop]) #app > .side[data-tab=spec] > *:not(h2):not(.side-tabs):not(.spec):not(:last-child) {display:none}
+:where([data-device=desktop]) #app > .side[data-tab=spec] .spec {margin-top:0;padding-top:0;border-top:0}
+:where([data-device=desktop]) #app > .side[data-tab=spec] .spec > .spec-h {display:none}
+:where([data-device=desktop]) #app > .side[data-tab] > div:last-child {position:sticky;bottom:-14px;z-index:2;margin:8px -14px -14px;padding:8px 14px 12px;background:#1b2350;border-radius:0 0 20px 20px}
 
 .spec-ladder-box{margin-top:10px;padding-top:8px;border-top:1px dashed var(--line)}
 .spec-h2{margin:0 0 4px;font-size:.98rem}
@@ -430,7 +372,7 @@ body{background:
 .spec-more{display:block}
 /* iPad 直式(寬 601–1100px):18 欄塞不下可讀的中文名稱+注音,所以格子放大到約 56px,整張表左右滑動(和手機一樣);橫式(更寬)放得下就不用滑 */
 @media (min-width:601px) and (max-width:1100px){
-  .pt-wrap{min-width:1060px}
+  .pt-wrap{min-width:1060px;padding:10px 8px}
   .pt-grid .el .nm{font-size:.74rem}
   .pt-grid .el .sym{font-size:1.2rem}
 }
@@ -634,9 +576,10 @@ html[lang="en"] .story h2{line-height:1.3;text-wrap:balance}
 .anim-leg{margin:6px 2px 0;font-size:.85rem;line-height:1.9;opacity:.9}
 .anim-cap{margin:8px 0 6px;padding:10px 12px;min-height:5.2em;border-radius:12px;background:var(--panel2);font-size:1.15rem;line-height:2.1}
 html[lang="en"] .anim-cap{font-size:1.08rem;line-height:1.6;min-height:3.6em}
-.anim-bar{display:flex;align-items:center;gap:8px}
-.anim-bar button{flex:none;min-width:44px;min-height:44px;border:0;border-radius:12px;background:var(--accent);color:#222;font-size:1.15rem;font-weight:800;cursor:pointer}
-.anim-bar .anim-seek{flex:1;min-width:0;height:32px}.anim-tm{flex:none;font-size:.82rem;opacity:.85;min-width:4.6em;text-align:right}
+/* 播放列(.playbar):實驗動畫與反應劇場共用——圖示按鈕(播放/暫停、重播…)+ 進度條 */
+.playbar{display:flex;align-items:center;gap:8px}
+.playbar button{flex:none;min-width:44px;min-height:44px;border:0;border-radius:12px;background:var(--accent);color:#222;font-size:1.15rem;font-weight:800;cursor:pointer}
+.playbar input[type=range]{flex:1;min-width:0;height:32px}.anim-tm{flex:none;font-size:.82rem;opacity:.85;min-width:4.6em;text-align:right}
 .anim-steps{display:flex;gap:3px;margin-top:6px}
 .anim-steps button{flex:1 1 0;min-width:0;min-height:34px;padding:2px 3px;border:0;border-radius:8px;background:var(--panel2);color:var(--text);font-size:.78rem;line-height:1.5;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;cursor:pointer}
 .anim-steps button.io{background:rgba(120,140,255,.22)}.anim-steps button.on{background:var(--accent);color:#222;font-weight:800}
@@ -644,13 +587,13 @@ html[lang="en"] .anim-cap{font-size:1.08rem;line-height:1.6;min-height:3.6em}
 /* 畫面大小與比例跟著裝置:手機 4:3、一般 16:10、桌機 16:9;動畫卡片在桌機也撐滿故事欄(不繞圖),要更大可以按「放大」(撐滿視窗,比例跟著視窗) */
 @media (max-width:520px){.anim-stage{aspect-ratio:4/3}}
 @media (min-width:900px){.anim-stage{aspect-ratio:16/9}}
-.anim-bar .anim-full{font-size:1.05rem}
+.playbar .anim-full{font-size:1.05rem}
 html.anim-lock,html.anim-lock body{overflow:hidden}
 .anim-card.full{position:fixed;inset:0;z-index:60;margin:0;box-sizing:border-box;display:flex;flex-direction:column;gap:6px;overflow:auto;background:#0b1030;padding:max(8px,env(safe-area-inset-top)) max(10px,env(safe-area-inset-right)) max(8px,env(safe-area-inset-bottom)) max(10px,env(safe-area-inset-left))}
 .anim-card.full .anim-stage{flex:1 1 0;aspect-ratio:auto;min-height:38vh;border-radius:10px}
 .anim-card.full .anim-cap{margin:0;min-height:0}
 .anim-card.full .anim-note{display:none}.anim-card.full .anim-leg{margin:0}.anim-card.full .anim-steps{margin-top:0}
-@media (max-height:520px){.anim-card.full .anim-cap{font-size:.95rem;line-height:1.7;padding:4px 10px}.anim-card.full .anim-steps,.anim-card.full .anim-note,.anim-card.full .anim-leg{display:none}.anim-card.full .anim-bar button{min-height:38px}}
+@media (max-height:520px){.anim-card.full .anim-cap{font-size:.95rem;line-height:1.7;padding:4px 10px}.anim-card.full .anim-steps,.anim-card.full .anim-note,.anim-card.full .anim-leg{display:none}.anim-card.full .playbar button{min-height:38px}}
 .brand{display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
 .brand-logo{display:inline-flex;flex:none;filter:none;-webkit-text-fill-color:initial}
 .brand-logo .logo{display:block;width:1.7em;height:1.7em;min-width:26px;min-height:26px}

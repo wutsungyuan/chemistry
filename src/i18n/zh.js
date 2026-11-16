@@ -154,6 +154,8 @@ export default {
   'rx.play': '播放',
   'rx.pause': '暫停',
   'rx.replay': '重播',
+  'rx.seek': '拖動進度',
+  'rx.say': '念給我聽',
   'rx.slow': '時間快轉中…真實世界要好幾天!',
 
   'quiz.streak': '連對',

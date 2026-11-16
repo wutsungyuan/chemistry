@@ -154,6 +154,8 @@ export default {
   'rx.play': 'Play',
   'rx.pause': 'Pause',
   'rx.replay': 'Replay',
+  'rx.seek': 'Seek',
+  'rx.say': 'Read to me',
   'rx.slow': 'Fast-forward: this takes days in real life!',
 
   'quiz.streak': 'Streak',

@@ -31,7 +31,7 @@ export async function startAnim(card, key, onClose) {
   card.innerHTML = `<div class="anim-stage" role="img"></div>
     <div class="anim-leg"></div>
     <div class="anim-cap" aria-live="polite"></div>
-    <div class="anim-bar"><button class="anim-play" type="button" aria-label="${plain('anim.playpause')}">⏸</button><button class="anim-re" type="button" aria-label="${plain('anim.replay')}">↻</button>${isSpeaking() ? `<button class="anim-say" type="button" aria-label="${plain('anim.stopsay')}">🔇</button>` : ''}<button class="anim-full" type="button" aria-label="${plain('anim.full')}">⛶</button><input class="anim-seek" type="range" min="0" max="1000" value="0" aria-label="${plain('anim.seek')}"><span class="anim-tm"></span></div>
+    <div class="playbar"><button class="anim-play" type="button" aria-label="${plain('anim.playpause')}">⏸</button><button class="anim-re" type="button" aria-label="${plain('anim.replay')}">↻</button>${isSpeaking() ? `<button class="anim-say" type="button" aria-label="${plain('anim.stopsay')}">🔇</button>` : ''}<button class="anim-full" type="button" aria-label="${plain('anim.full')}">⛶</button><input class="anim-seek" type="range" min="0" max="1000" value="0" aria-label="${plain('anim.seek')}"><span class="anim-tm"></span></div>
     <div class="anim-steps"></div><p class="anim-note">${T('anim.note')}</p>`;
   const q = s => card.querySelector(s), stage = q('.anim-stage'), cap = q('.anim-cap'), leg = q('.anim-leg'), play = q('.anim-play'), seek = q('.anim-seek'), tm = q('.anim-tm'), stepsEl = q('.anim-steps');
   let sig = '', dragging = false, lastTm = '';

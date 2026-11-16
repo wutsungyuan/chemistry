@@ -1,15 +1,19 @@
-// 版面斷點:
-//  - 手機與 iPad(觸控裝置,寬度 ≤ 1400px)共用「手機版面」:3D 在上、面板在下、底部導覽列(見 src/mobile.css,兩邊的條件要一致)
-//  - 滑鼠的視窗寬度 ≤ 900px 使用「面板上下堆疊」版面;更寬(桌面)使用左右面板版面
+// 版面的單一來源:<html data-device="mobile|desktop">,平板橫放時再加上 data-split。
+// 樣式(mobile.css、themes.css、space.css…)與各場景都只看這兩個屬性,不各自寫「手機版面」的 media query。
+//  - mobile:手機與 iPad(寬度 ≤ 900px,或觸控裝置且寬度 ≤ 1400px)——3D 在上、面板在下、底部導覽列
+//  - mobile + data-split:平板橫放(寬度 ≥ 1000px 且寬大於高)——3D 在左、面板在右
+//  - desktop:其餘(滑鼠的寬視窗)——面板浮在 3D 上
+// index.html 的 <head> 有一小段相同的判斷,在第一次畫出畫面之前先設好(否則會閃一下桌機版面);兩邊的條件要一致(tests/layout.test.mjs 會檢查)。
 export const NARROW_MAX = 900;
 export const PHONE_QUERY = '(max-width: 900px), (pointer: coarse) and (max-width: 1400px)';
+export const SPLIT_QUERY = '(min-width: 1000px) and (orientation: landscape)';
 export const isNarrow = () => window.innerWidth <= NARROW_MAX || matchMedia(PHONE_QUERY).matches;
+export const isSplit = () => isNarrow() && matchMedia(SPLIT_QUERY).matches;
 
-// 版面種類寫在 <html data-device="mobile|desktop">(手機與平板共用 mobile,桌機是 desktop),之後的樣式與外殼都用它判斷。
-// 判斷規則與上面的 PHONE_QUERY 相同(單一來源);視窗大小或轉向改變時自動更新。
 export const getDevice = () => (isNarrow() ? 'mobile' : 'desktop');
+/** 把版面種類寫到 <html>;視窗大小或轉向改變時自動更新 */
 export function initLayout() {
-  const apply = () => { document.documentElement.dataset.device = getDevice(); };
+  const apply = () => { const d = document.documentElement; d.dataset.device = getDevice(); d.toggleAttribute('data-split', isSplit()); };
   apply();
   addEventListener('resize', apply);
   addEventListener('orientationchange', apply);

@@ -1,136 +1,142 @@
 /* ============================================================
-   手機與 iPad(觸控裝置)共用的版面:寬度 ≤ 600px,或「主要輸入是手指(pointer: coarse)且寬度 ≤ 1400px」(含 iPad 直式/橫式)。
-   桌面(滑鼠)不受影響。JS 端的判斷在 src/ui/layout.js,兩邊要一致。
+   手機與 iPad(觸控裝置)共用的版面。
+   什麼時候套用只有一個來源:src/ui/layout.js 把版面種類寫在 <html data-device="mobile|desktop">(平板橫放再加 data-split),
+   這個檔的每條規則都以 :where([data-device=mobile]) 開頭——用 :where() 包起來不會增加權重,所以和沒有前綴時一樣容易被主題覆蓋。
+   以 html / :root 開頭的選擇器,把條件接在第一段後面(例如 html[data-level=kid]:where([data-device=mobile]) …)。
+   這裡只剩兩種 @media:「手機寬度」(≤ 600px,週期表的小格子與手機的字級)和「矮螢幕」(手機橫放)。桌面(滑鼠)不受影響。
    原則:
-   1. 3D 畫面有自己的區域,面板不再疊在 3D 上(上下分區)。
-   2. 導覽改成底部列(拇指好按,5 個都看得到)。
+   1. 3D 畫面有自己的區域,面板不再疊在 3D 上(上下分區;平板橫放是左右分區,見檔案最後)。
+   2. 導覽改成底部列(拇指好按)。
    3. 頂部只留一條薄薄的標題 + 原子博士提示。
    4. 觸控目標 ≥ 44px;用 dvh 與 safe-area,避開瀏覽器工具列。
    場景用 body[data-scene] 區分(由 main.js / mascot.js 設定)。
    ============================================================ */
-@media (max-width: 900px), (pointer: coarse) and (max-width: 1400px) {
-  :root { --nav-h: 60px; --stage-h: 42%; }
-  html, body { font-size: 15px; }
-  body { padding-bottom: calc(var(--nav-h) + env(safe-area-inset-bottom)); }
-  #deco { display: none; }                       /* 木頭實驗桌裝飾在手機上只會搶位置、蓋住內容 */
+:root:where([data-device=mobile]) { --nav-h: 60px; --stage-h: 42%; }
+html:where([data-device=mobile]), :where([data-device=mobile]) body { font-size: 15px; }
+:where([data-device=mobile]) body { padding-bottom: calc(var(--nav-h) + env(safe-area-inset-bottom)); }
+:where([data-device=mobile]) #deco { display: none; }                       /* 木頭實驗桌裝飾在手機上只會搶位置、蓋住內容 */
 
-  /* ---------- 頂部:標題 + 工具 + 原子博士提示 ---------- */
-  #head { padding-top: env(safe-area-inset-top); -webkit-backdrop-filter: none; backdrop-filter: none; border-bottom: 0; box-shadow: 0 2px 10px rgba(0,0,0,.3); }
-  #head #bunting { display: none; }
-  #head #topbar { flex-wrap: nowrap; gap: 6px; padding: 6px 10px 0; }
-  .brand { font-size: 1rem; white-space: nowrap; }
-  .tools { margin-left: auto; display: flex; gap: 6px; }
-  .tool { padding: 4px 11px !important; font-size: .78rem !important; min-height: 36px !important; }
-  #head #tipbar { min-height: 40px; padding: 2px 10px 8px 8px; gap: 8px; }
-  .m-body { width: 32px; height: 36px; }
-  .m-bubble { font-size: .82rem; line-height: 1.6; padding: 5px 11px; max-width: calc(100% - 44px); }
-  .m-bubble::before { left: -7px; border-width: 7px; margin-top: -7px; }
+/* ---------- 頂部:標題 + 工具 + 原子博士提示 ---------- */
+:where([data-device=mobile]) #head { padding-top: env(safe-area-inset-top); -webkit-backdrop-filter: none; backdrop-filter: none; border-bottom: 0; box-shadow: 0 2px 10px rgba(0,0,0,.3); }
+:where([data-device=mobile]) #head #bunting { display: none; }
+:where([data-device=mobile]) #head #topbar { flex-wrap: nowrap; gap: 6px; padding: 6px 10px 0; }
+:where([data-device=mobile]) .brand { font-size: 1rem; white-space: nowrap; }
+:where([data-device=mobile]) .tools { margin-left: auto; display: flex; gap: 6px; }
+:where([data-device=mobile]) .tool { padding: 4px 11px !important; font-size: .78rem !important; min-height: 36px !important; }
+:where([data-device=mobile]) #head #tipbar { min-height: 40px; padding: 2px 10px 8px 8px; gap: 8px; }
+:where([data-device=mobile]) .m-body { width: 32px; height: 36px; }
+:where([data-device=mobile]) .m-bubble { font-size: .82rem; line-height: 1.6; padding: 5px 11px; max-width: calc(100% - 44px); }
+:where([data-device=mobile]) .m-bubble::before { left: -7px; border-width: 7px; margin-top: -7px; }
 
-  /* ---------- 底部導覽列(像實驗桌的邊,5 個頁籤平均分配) ---------- */
-  #nav {
-    position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; order: 0; flex: none;
-    display: flex; flex-wrap: nowrap; gap: 2px; overflow: visible;
-    padding: 6px 6px calc(6px + env(safe-area-inset-bottom));
-    background: linear-gradient(180deg, #6b4526, #3f2713); border-top: 3px solid #d09a5c; box-shadow: 0 -4px 14px rgba(0,0,0,.4);
-  }
-  #nav button {
-    flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px;
-    padding: 3px 2px; min-height: 48px; border-radius: 12px; background: transparent; color: #f6dfc3;
-    font-size: .68rem; font-weight: 700; line-height: 1.15; white-space: nowrap;
-  }
-  #nav button .ico { font-size: 1.4rem; margin: 0; line-height: 1.1; }
-  #nav button.active { background: linear-gradient(180deg, #ffe066, #ffbf2e); color: #2a1a08; box-shadow: 0 2px 0 #b97a00; }
-  #nav .zp { display: none; }                    /* 底部導覽列太窄,不顯示注音 */
-
-  /* ---------- 有 3D 的場景:上下分區(3D 在上、面板在下),面板不再蓋住 3D ---------- */
-  #app { position: relative; }
-  #app:has(> .canvas-wrap) { display: flex; flex-direction: column; overflow: hidden; }
-  #app > .canvas-wrap { position: relative; inset: auto; flex: 0 0 var(--stage-h); min-height: 190px; order: 0; }
-  #app > .side:not(.mission) {
-    position: static; order: 2; width: auto; max-height: none; flex: 1 1 0; min-height: 0; margin: 0;
-    padding: 12px 14px; border-radius: 18px 18px 0 0; border-width: 1px 0 0; font-size: .92rem;
-  }
-  .side h2 { font-size: 1.3rem; }
-  /* 操作按鈕固定在面板底部,捲動時也一直按得到 */
-  #app > .side:not(.mission) > div:last-child {
-    position: sticky; bottom: -12px; z-index: 3; margin: 10px -14px -12px; padding: 8px 14px calc(8px + 2px);
-    background: linear-gradient(180deg, rgba(27,35,80,.9), rgba(27,35,80,.99) 30%); border-top: 1px solid var(--line);
-  }
-  .btn { padding: 9px 14px; min-height: 44px; }
-  /* 底部操作列:永遠單列(放不下就橫向滑動),不要換行蓋住說明文字 */
-  #app > .side:not(.mission) > div:last-child { display: flex; flex-wrap: nowrap; gap: 6px; overflow-x: auto; scrollbar-width: none; }
-  #app > .side:not(.mission) > div:last-child::-webkit-scrollbar { display: none; }
-  #app > .side:not(.mission) > div:last-child .btn { flex: none; margin: 0; padding: 6px 12px; min-height: 42px; font-size: .85rem; white-space: nowrap; }
-
-  /* 原子頁:3D 大一點;縮放改成 3D 底部的橫向滑桿;圖例兩欄;「生活中的樣子」兩欄 */
-  body[data-scene=atom] { --stage-h: 46%; }
-  body[data-scene=atom] .zoombar {
-    left: 12px; right: 12px; top: calc(var(--stage-h) - 54px); bottom: auto; transform: none;
-    flex-direction: row; align-items: center; gap: 8px; height: 46px; padding: 0 8px; border-radius: 999px;
-  }
-  body[data-scene=atom] .zoombar #zout { order: -1; }
-  body[data-scene=atom] .zoombar .zb { width: 38px; height: 38px; flex: none; }
-  body[data-scene=atom] .zr-wrap { position: relative; flex: 1; width: auto; height: 30px; }
-  body[data-scene=atom] .zr-wrap input { position: static; transform: none; width: 100%; height: 30px; }
-  #app > .side { overflow-x: hidden; }
-  .legend { grid-template-columns: 1fr 1fr; gap: 2px 8px; font-size: .8rem; }
-  .legend li { min-width: 0; align-items: flex-start; }
-  #nav .lbl { display: block; max-width: 100%; }
-  .found-list { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
-  .found-item { padding: 6px 8px; gap: 6px; flex-wrap: wrap; font-size: .82rem; }
-  .found-item > b { min-width: 0; font-size: .92rem; }
-  .found-item.link::after { display: none; }
-
-  /* 圖鑑:3D 在上 → 分子清單(橫向滑動)→ 說明 */
-  body[data-scene=gallery] { --stage-h: 40%; }
-  body[data-scene=gallery] #app > .list {
-    position: static; order: 1; flex: none; width: auto; margin: 0; border-radius: 0; border-width: 1px 0;
-    display: flex; gap: 8px; overflow-x: auto; overflow-y: hidden; padding: 8px 10px; -webkit-overflow-scrolling: touch; scrollbar-width: none;
-  }
-  body[data-scene=gallery] #app > .list::-webkit-scrollbar { display: none; }
-  body[data-scene=gallery] #app > .list button { flex: 0 0 auto; width: auto; min-width: 84px; margin: 0; padding: 6px 12px; text-align: center; white-space: nowrap; min-height: 50px; }
-
-  /* 實驗室:任務條在上(預設收合)→ 3D 滿版 → 原子托盤在下 */
-  body[data-scene=lab] #app > .side.mission {
-    position: static; order: 0; flex: none; width: auto; max-height: 52%; margin: 0; padding: 8px 12px 6px;
-    border-radius: 0 0 16px 16px; border-width: 0 0 1px; overflow: auto;
-  }
-  body[data-scene=lab] #app > .canvas-wrap { order: 1; flex: 1 1 0; min-height: 0; }
-  body[data-scene=lab] #app > .tray {
-    position: static; order: 2; flex: none; margin: 0; border-radius: 16px 16px 0 0; border-width: 1px 0 0;
-    flex-wrap: nowrap; overflow-x: auto; padding: 8px; gap: 6px; scrollbar-width: none;
-  }
-  body[data-scene=lab] #app > .tray::-webkit-scrollbar { display: none; }
-  body[data-scene=lab] .tray .atom-btn { flex: none; width: 40px; height: 40px; font-size: .9rem; }
-  /* 剪刀、清空在手機上只顯示圖示,才排得進同一列 */
-  body[data-scene=lab] .tray .btn { flex: none; margin: 0 0 0 auto; width: 44px; min-height: 44px; padding: 0; font-size: 1.2rem; display: inline-flex; align-items: center; justify-content: center; }
-  body[data-scene=lab] .tray .btn + .btn { margin-left: 0; }
-  body[data-scene=lab] .tray .btn .lbl { display: none; }
-  .m-grid { grid-template-columns: 1fr 1fr; }
-
-  /* 反應劇場:反應清單(橫向滑動)在上 → 3D → 控制列在下 */
-  body[data-scene=reaction] #app > .list.rx {
-    position: static; order: 0; flex: none; width: auto; margin: 0; border-radius: 0; border-width: 0 0 1px;
-    display: flex; gap: 8px; overflow-x: auto; overflow-y: hidden; padding: 8px 10px; scrollbar-width: none;
-  }
-  body[data-scene=reaction] #app > .list.rx::-webkit-scrollbar { display: none; }
-  body[data-scene=reaction] #app > .list.rx button { flex: 0 0 auto; width: auto; margin: 0; white-space: nowrap; min-height: 44px; padding: 6px 14px; }
-  body[data-scene=reaction] #app > .canvas-wrap { order: 1; flex: 1 1 0; min-height: 0; }
-  body[data-scene=reaction] #app > .stage-bar {
-    position: static; order: 2; flex: none; max-height: 44%; overflow: auto; margin: 0; border-radius: 16px 16px 0 0; border-width: 1px 0 0;
-    padding: 8px 12px; font-size: .85rem;
-  }
-  .equation { font-size: 1.15rem; }
-
-  /* 小測驗 */
-  .quiz { margin: 8px; padding: 14px; }
-  .quiz .opts button { min-height: 52px; }
-
+/* ---------- 底部導覽列(像實驗桌的邊,5 個頁籤平均分配) ---------- */
+:where([data-device=mobile]) #nav {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; order: 0; flex: none;
+  display: flex; flex-wrap: nowrap; gap: 2px; overflow: visible;
+  padding: 6px 6px calc(6px + env(safe-area-inset-bottom));
+  background: linear-gradient(180deg, #6b4526, #3f2713); border-top: 3px solid #d09a5c; box-shadow: 0 -4px 14px rgba(0,0,0,.4);
 }
+:where([data-device=mobile]) #nav button {
+  flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px;
+  padding: 3px 2px; min-height: 48px; border-radius: 12px; background: transparent; color: #f6dfc3;
+  font-size: .68rem; font-weight: 700; line-height: 1.15; white-space: nowrap;
+}
+:where([data-device=mobile]) #nav button .ico { font-size: 1.4rem; margin: 0; line-height: 1.1; }
+:where([data-device=mobile]) #nav button.active { background: linear-gradient(180deg, #ffe066, #ffbf2e); color: #2a1a08; box-shadow: 0 2px 0 #b97a00; }
+:where([data-device=mobile]) #nav .zp { display: none; }                    /* 底部導覽列太窄,不顯示注音 */
+
+/* ---------- 有 3D 的場景:上下分區(3D 在上、面板在下),面板不再蓋住 3D ---------- */
+:where([data-device=mobile]) #app { position: relative; }
+:where([data-device=mobile]) #app:has(> .canvas-wrap) { display: flex; flex-direction: column; overflow: hidden; }
+:where([data-device=mobile]) #app > .canvas-wrap { position: relative; inset: auto; flex: 0 0 var(--stage-h); min-height: 190px; order: 0; }
+:where([data-device=mobile]) #app > .side:not(.mission) {
+  position: static; order: 2; width: auto; max-height: none; flex: 1 1 0; min-height: 0; margin: 0;
+  padding: 12px 14px; border-radius: 18px 18px 0 0; border-width: 1px 0 0; font-size: .92rem;
+}
+:where([data-device=mobile]) .side h2 { font-size: 1.3rem; }
+/* 操作按鈕固定在面板底部,捲動時也一直按得到 */
+:where([data-device=mobile]) #app > .side:not(.mission) > div:last-child, :where([data-device=mobile]) #app > .stage-bar > .playbar {
+  position: sticky; bottom: -12px; z-index: 3; margin: 10px -14px -12px; padding: 8px 14px calc(8px + 2px);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--panel) 90%, transparent), var(--panel) 30%); border-top: 1px solid var(--line);   /* 底色跟著各版本的面板顏色 */
+}
+:where([data-device=mobile]) .btn { padding: 9px 14px; min-height: 44px; }
+/* 底部操作列:永遠單列(放不下就橫向滑動),不要換行蓋住說明文字 */
+:where([data-device=mobile]) #app > .side:not(.mission) > div:last-child { display: flex; flex-wrap: nowrap; gap: 6px; overflow-x: auto; scrollbar-width: none; }
+:where([data-device=mobile]) #app > .side:not(.mission) > div:last-child::-webkit-scrollbar { display: none; }
+:where([data-device=mobile]) #app > .side:not(.mission) > div:last-child .btn { flex: none; margin: 0; padding: 6px 12px; min-height: 42px; font-size: .85rem; white-space: nowrap; }
+
+/* 原子頁:3D 大一點;縮放改成 3D 底部的橫向滑桿;圖例兩欄;「生活中的樣子」兩欄 */
+:where([data-device=mobile]) body[data-scene=atom] { --stage-h: 46%; }
+:where([data-device=mobile]) body[data-scene=atom] .zoombar {
+  left: 12px; right: 12px; top: calc(var(--stage-h) - 54px); bottom: auto; transform: none;
+  flex-direction: row; align-items: center; gap: 8px; height: 46px; padding: 0 8px; border-radius: 999px;
+}
+:where([data-device=mobile]) body[data-scene=atom] .zoombar #zout { order: -1; }
+:where([data-device=mobile]) body[data-scene=atom] .zoombar .zb { width: 38px; height: 38px; flex: none; }
+:where([data-device=mobile]) body[data-scene=atom] .zr-wrap { position: relative; flex: 1; width: auto; height: 30px; }
+:where([data-device=mobile]) body[data-scene=atom] .zr-wrap input { position: static; transform: none; width: 100%; height: 30px; }
+:where([data-device=mobile]) #app > .side { overflow-x: hidden; }
+:where([data-device=mobile]) .legend { grid-template-columns: 1fr 1fr; gap: 2px 8px; font-size: .8rem; }
+:where([data-device=mobile]) .legend li { min-width: 0; align-items: flex-start; }
+:where([data-device=mobile]) #nav .lbl { display: block; max-width: 100%; }
+:where([data-device=mobile]) .found-list { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+:where([data-device=mobile]) .found-item { padding: 6px 8px; gap: 6px; flex-wrap: wrap; font-size: .82rem; }
+:where([data-device=mobile]) .found-item > b { min-width: 0; font-size: .92rem; }
+:where([data-device=mobile]) .found-item.link::after { display: none; }
+
+/* 圖鑑:3D 在上 → 分子清單(橫向滑動)→ 說明 */
+:where([data-device=mobile]) body[data-scene=gallery] { --stage-h: 40%; }
+:where([data-device=mobile]) body[data-scene=gallery] #app > .list {
+  position: static; order: 1; flex: none; width: auto; margin: 0; border-radius: 0; border-width: 1px 0;
+  display: flex; gap: 8px; overflow-x: auto; overflow-y: hidden; padding: 8px 10px; -webkit-overflow-scrolling: touch; scrollbar-width: none;
+}
+:where([data-device=mobile]) body[data-scene=gallery] #app > .list::-webkit-scrollbar { display: none; }
+:where([data-device=mobile]) body[data-scene=gallery] #app > .list button { flex: 0 0 auto; width: auto; min-width: 84px; margin: 0; padding: 6px 12px; text-align: center; white-space: nowrap; min-height: 50px; }
+
+/* 實驗室:任務條在上(預設收合)→ 3D 滿版 → 原子托盤在下 */
+:where([data-device=mobile]) body[data-scene=lab] #app > .side.mission {
+  position: static; order: 0; flex: none; width: auto; max-height: 52%; margin: 0; padding: 8px 12px 6px;
+  border-radius: 0 0 16px 16px; border-width: 0 0 1px; overflow: auto;
+}
+:where([data-device=mobile]) body[data-scene=lab] #app > .canvas-wrap { order: 1; flex: 1 1 0; min-height: 0; }
+:where([data-device=mobile]) body[data-scene=lab] #app > .tray {
+  position: static; order: 2; flex: none; margin: 0; border-radius: 16px 16px 0 0; border-width: 1px 0 0;
+  flex-wrap: nowrap; overflow-x: auto; padding: 8px; gap: 6px; scrollbar-width: none;
+}
+:where([data-device=mobile]) body[data-scene=lab] #app > .tray::-webkit-scrollbar { display: none; }
+:where([data-device=mobile]) body[data-scene=lab] .tray .atom-btn { flex: none; width: 40px; height: 40px; font-size: .9rem; }
+/* 剪刀、清空在手機上只顯示圖示,才排得進同一列 */
+:where([data-device=mobile]) body[data-scene=lab] .tray .btn { flex: none; margin: 0 0 0 auto; width: 44px; min-height: 44px; padding: 0; font-size: 1.2rem; display: inline-flex; align-items: center; justify-content: center; }
+:where([data-device=mobile]) body[data-scene=lab] .tray .btn + .btn { margin-left: 0; }
+:where([data-device=mobile]) body[data-scene=lab] .tray .btn .lbl { display: none; }
+:where([data-device=mobile]) .m-grid { grid-template-columns: 1fr 1fr; }
+
+/* 反應劇場:反應清單(橫向滑動)在上 → 3D → 控制列在下 */
+:where([data-device=mobile]) body[data-scene=reaction] #app > .list.rx {
+  position: static; order: 0; flex: none; width: auto; margin: 0; border-radius: 0; border-width: 0 0 1px;
+  display: flex; gap: 8px; overflow-x: auto; overflow-y: hidden; padding: 8px 10px; scrollbar-width: none;
+}
+:where([data-device=mobile]) body[data-scene=reaction] #app > .list.rx::-webkit-scrollbar { display: none; }
+:where([data-device=mobile]) body[data-scene=reaction] #app > .list.rx button { flex: 0 0 auto; width: auto; margin: 0; white-space: nowrap; text-align: center; min-height: 44px; padding: 6px 14px; }
+:where([data-device=mobile]) body[data-scene=reaction] #app > .canvas-wrap { order: 1; flex: 1 1 0; min-height: 0; }
+:where([data-device=mobile]) body[data-scene=reaction] #app > .stage-bar {
+  position: static; order: 2; flex: none; max-height: 44%; overflow: auto; margin: 0; border-radius: 16px 16px 0 0; border-width: 1px 0 0;
+  padding: 12px 14px; font-size: .85rem;      /* 內距和 .side 相同,底部黏住的播放列才能共用同一條規則 */
+}
+:where([data-device=mobile]) .equation { font-size: 1.15rem; }
+
+/* 小測驗 */
+:where([data-device=mobile]) .quiz { margin: 8px; padding: 14px; }
+:where([data-device=mobile]) .quiz .opts button { min-height: 52px; }
 
 /* 週期表(只有手機):格子縮到只剩符號,適合手指,左右滑動;說明與家族標籤固定在左邊,不會跟著捲走。
    iPad 與桌面的格子夠大,照常顯示中文名稱和注音,所以這一段不套用在 iPad。 */
 @media (max-width: 600px) {
+  /* 手機的字級比平板小一號:按鈕、實驗室任務卡、測驗題目 */
+  .btn { font-size: .9rem; }
+  .side.mission { font-size: .9rem; }
+  .quiz .q { font-size: 1.25rem; }
+  .brand { letter-spacing: 0; }
+  .el .nm { display: none; }
   .pt-wrap { min-width: 0; width: max-content; padding: 8px 10px 24px; }
   .pt-wrap > h2, .pt-wrap > p { display: none; }
   .pt-legend, .cat-info { position: sticky; left: 10px; width: calc(100vw - 20px); max-width: calc(100vw - 20px); }
@@ -162,106 +168,113 @@
 @keyframes swipe-hint { 0%, 70% { opacity: 1; } 100% { opacity: 0; visibility: hidden; } }
 
 /* 手機橫放:高度很矮,把提示列收起來,留空間給內容 */
-@media (max-height: 480px) and (max-width: 950px) {
-  #head #tipbar, #head #bunting { display: none; }
+@media (max-height: 480px) {
+  :where([data-device=mobile]) #head #tipbar, :where([data-device=mobile]) #head #bunting { display: none; }
 }
 
 /* 手機:光譜區塊的觸控目標要夠大 */
-@media (max-width: 900px), (pointer: coarse) and (max-width: 1400px) {
-  .spec-modes .chip, .spec-top .chip { min-height: 42px; padding: 6px 14px; }
-  .spec-strip { margin: 4px -2px; }
-}
+:where([data-device=mobile]) .spec-modes .chip, :where([data-device=mobile]) .spec-top .chip { min-height: 42px; padding: 6px 14px; }
+:where([data-device=mobile]) .spec-strip { margin: 4px -2px; }
 
 /* 手機:元素頁面板分頁(原子資訊 | 光譜) */
-@media (max-width: 900px), (pointer: coarse) and (max-width: 1400px) {
-  .side-tabs { display: flex; gap: 6px; margin: 4px 0 8px; }
-  .side-tabs .chip { flex: 1; text-align: center; min-height: 40px; margin: 0; border: 0; color: var(--text); cursor: pointer; font-size: .95rem; }
-  .side-tabs .chip.on { background: var(--accent); color: #222; font-weight: 700; }
-  #app > .side[data-tab=info] .spec { display: none; }
-  #app > .side[data-tab=spec] > *:not(h2):not(.side-tabs):not(.spec):not(:last-child) { display: none; }
-  #app > .side[data-tab=spec] .spec { margin-top: 0; padding-top: 0; border-top: 0; }
-}
+:where([data-device=mobile]) .side-tabs { display: flex; gap: 6px; margin: 4px 0 8px; }
+:where([data-device=mobile]) .side-tabs .chip { flex: 1; text-align: center; min-height: 40px; margin: 0; border: 0; color: var(--text); cursor: pointer; font-size: .95rem; }
+:where([data-device=mobile]) .side-tabs .chip.on { background: var(--accent); color: #222; font-weight: 700; }
+:where([data-device=mobile]) #app > .side[data-tab=info] .spec { display: none; }
+:where([data-device=mobile]) #app > .side[data-tab=spec] > *:not(h2):not(.side-tabs):not(.spec):not(:last-child) { display: none; }
+:where([data-device=mobile]) #app > .side[data-tab=spec] .spec { margin-top: 0; padding-top: 0; border-top: 0; }
 
 /* 手機:光譜分頁 = 一頁、不用捲動。3D 原子、光譜條、電子階梯圖三個圖同時看得到,點哪個顏色就立刻看到電子怎麼跳。
    空間怎麼分:3D(約 26% 高)→ 標題與分頁一列 → 「發光/吸收 + 最亮的幾條線 + ⓘ」一列 → 光譜條 → 讀數 → 階梯圖(吃掉剩下的高度)→ 精簡的操作列。
    長篇說明是一張蓋住下方面板的獨立面板(實心背景、有 ✕),不和圖疊在一起;原子博士提示列與縮放滑桿在這一頁隱藏
    (滑桿的位置用百分比算,畫布有最小高度時會對不上而蓋住原子)。3D 的取景由 AtomView 依畫布大小自動算(fitRing)。 */
-@media (max-width: 900px), (pointer: coarse) and (max-width: 1400px) {
-  body:has(#app > .side[data-tab=spec]) #head #tipbar { display: none; }
-  #app:has(> .side[data-tab=spec]) > .canvas-wrap { flex: 0 0 clamp(150px, 26%, 340px); min-height: 150px; }
-  #app:has(> .side[data-tab=spec]) > .zoombar { display: none; }
-  #app > .side[data-tab=spec] {
-    position: relative; top: 0; left: 0; display: grid; grid-template-columns: auto minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr) auto;   /* top/left 歸零:舊的窄版規則有 top/left: 8px,relative 時會真的位移 */
-    column-gap: 8px; padding: 8px 12px 0; overflow-x: hidden; overflow-y: auto;
-  }
-  #app > .side[data-tab=spec] > h2 { grid-area: 1 / 1; margin: 0; align-self: center; font-size: 1.15rem; }
-  #app > .side[data-tab=spec] > .side-tabs { grid-area: 1 / 2; margin: 0; }
-  #app > .side[data-tab=spec] > .spec {
-    grid-area: 2 / 1 / 3 / 3; min-height: 0; margin: 4px 0 0; padding: 0; border: 0; position: static;
-    display: grid; grid-template-columns: auto minmax(0, 1fr) auto; grid-template-rows: auto auto auto minmax(0, 1fr); gap: 6px 8px;
-  }
-  /* 操作列:◀ 回週期表 念給我聽 ▶(兩個分頁完全一致)。這一頁把它縮得比較扁,省下高度給圖 */
-  #app > .side[data-tab=spec] > div:last-child { grid-area: 3 / 1 / 4 / 3; margin: 4px -12px 0; padding: 4px 12px 6px; }
-  .spec > .spec-h { display: none; }
-  .spec-modes { grid-area: 1 / 1; margin: 0; }
-  .spec-modes .chip, .spec-top .chip { min-height: 38px; padding: 4px 12px; }
-  .spec-top { grid-area: 1 / 2; margin: 0; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
-  .spec-top::-webkit-scrollbar { display: none; }
-  .spec-top > span { display: none; }
-  .spec-top .chip { flex: none; }
-  .spec-info-btn { grid-area: 1 / 3; display: inline-flex; align-items: center; justify-content: center; min-width: 40px; min-height: 38px; border-radius: 50%; border: 0; background: var(--panel2); color: var(--accent); font-size: 1.15rem; cursor: pointer; padding: 0; }
-  .spec-strip { grid-area: 2 / 1 / 3 / 4; margin: 0; --fit: 1; }
-  .spec-read { grid-area: 3 / 1 / 4 / 4; min-height: 0; margin: 0; font-size: .88rem; line-height: 1.5; }
-  .spec-read .rd-sub { display: none; }
-  .spec-ladder-box { grid-area: 4 / 1 / 5 / 4; display: flex; flex-direction: column; min-height: 0; margin: 0; padding: 0; border: 0; }
-  .spec-ladder-box > .spec-h2 { display: none; }
-  .spec-ladder { --fit: 1; flex: 1 1 0; min-height: 100px; position: relative; }
-  .spec-ladder svg { position: absolute; inset: 0; width: 100%; height: 100%; }
-  .spec-ladder-box.tight .spec-ladder-read { display: none; }                  /* 放不下就整行收起來(見 AtomView 的 fitRead),不要被切掉一半 */
-  .spec-ladder-read { flex: none; margin: 2px 0 0; min-height: 0; font-size: .76rem; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-  /* 說明面板:蓋住整個下方面板,實心背景(不會和圖疊在一起),標題列固定在最上面,有 ✕ 可以關閉 */
-  .spec-more { display: none; }
-  .spec-more.open { display: block; position: absolute; inset: 0; z-index: 30; padding: 0 14px 16px; overflow-y: auto; background: #1b2350; border-radius: 18px 18px 0 0; box-shadow: 0 -8px 24px rgba(0,0,0,.45); }
-  .spec-more-head { position: sticky; top: 0; z-index: 1; display: flex; align-items: center; justify-content: space-between; padding: 10px 0 6px; background: #1b2350; font-size: 1rem; }
-  .spec-more-close { min-width: 44px; min-height: 44px; border-radius: 50%; border: 0; background: var(--panel2); color: var(--text); font-size: 1.1rem; cursor: pointer; }
-  .spec-sub, .spec-tip, .spec-tip2, .spec-3d, .spec-why { font-size: .85rem; }
+:where([data-device=mobile]) body:has(#app > .side[data-tab=spec]) #head #tipbar { display: none; }
+:where([data-device=mobile]) #app:has(> .side[data-tab=spec]) > .canvas-wrap { flex: 0 0 clamp(150px, 26%, 340px); min-height: 150px; }
+:where([data-device=mobile]) #app:has(> .side[data-tab=spec]) > .zoombar { display: none; }
+:where([data-device=mobile]) #app > .side[data-tab=spec] {
+  position: relative; top: 0; left: 0; display: grid; grid-template-columns: auto minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr) auto;   /* top/left 歸零:舊的窄版規則有 top/left: 8px,relative 時會真的位移 */
+  column-gap: 8px; padding: 8px 12px 0; overflow-x: hidden; overflow-y: auto;
 }
+:where([data-device=mobile]) #app > .side[data-tab=spec] > h2 { grid-area: 1 / 1; margin: 0; align-self: center; font-size: 1.15rem; }
+:where([data-device=mobile]) #app > .side[data-tab=spec] > .side-tabs { grid-area: 1 / 2; margin: 0; }
+:where([data-device=mobile]) #app > .side[data-tab=spec] > .spec {
+  grid-area: 2 / 1 / 3 / 3; min-height: 0; margin: 4px 0 0; padding: 0; border: 0; position: static;
+  display: grid; grid-template-columns: auto minmax(0, 1fr) auto; grid-template-rows: auto auto auto minmax(0, 1fr); gap: 6px 8px;
+}
+/* 操作列:◀ 回週期表 念給我聽 ▶(兩個分頁完全一致)。這一頁把它縮得比較扁,省下高度給圖 */
+:where([data-device=mobile]) #app > .side[data-tab=spec] > div:last-child { grid-area: 3 / 1 / 4 / 3; margin: 4px -12px 0; padding: 4px 12px 6px; }
+:where([data-device=mobile]) .spec > .spec-h { display: none; }
+:where([data-device=mobile]) .spec-modes { grid-area: 1 / 1; margin: 0; }
+:where([data-device=mobile]) .spec-modes .chip, :where([data-device=mobile]) .spec-top .chip { min-height: 38px; padding: 4px 12px; }
+:where([data-device=mobile]) .spec-top { grid-area: 1 / 2; margin: 0; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+:where([data-device=mobile]) .spec-top::-webkit-scrollbar { display: none; }
+:where([data-device=mobile]) .spec-top > span { display: none; }
+:where([data-device=mobile]) .spec-top .chip { flex: none; }
+:where([data-device=mobile]) .spec-info-btn { grid-area: 1 / 3; display: inline-flex; align-items: center; justify-content: center; min-width: 40px; min-height: 38px; border-radius: 50%; border: 0; background: var(--panel2); color: var(--accent); font-size: 1.15rem; cursor: pointer; padding: 0; }
+:where([data-device=mobile]) .spec-strip { grid-area: 2 / 1 / 3 / 4; margin: 0; --fit: 1; }
+:where([data-device=mobile]) .spec-read { grid-area: 3 / 1 / 4 / 4; min-height: 0; margin: 0; font-size: .88rem; line-height: 1.5; }
+:where([data-device=mobile]) .spec-read .rd-sub { display: none; }
+:where([data-device=mobile]) .spec-ladder-box { grid-area: 4 / 1 / 5 / 4; display: flex; flex-direction: column; min-height: 0; margin: 0; padding: 0; border: 0; }
+:where([data-device=mobile]) .spec-ladder-box > .spec-h2 { display: none; }
+:where([data-device=mobile]) .spec-ladder { --fit: 1; flex: 1 1 0; min-height: 100px; position: relative; }
+:where([data-device=mobile]) .spec-ladder svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+:where([data-device=mobile]) .spec-ladder-box.tight .spec-ladder-read { display: none; }                  /* 放不下就整行收起來(見 AtomView 的 fitRead),不要被切掉一半 */
+:where([data-device=mobile]) .spec-ladder-read { flex: none; margin: 2px 0 0; min-height: 0; font-size: .76rem; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+/* 說明面板:蓋住整個下方面板,實心背景(不會和圖疊在一起),標題列固定在最上面,有 ✕ 可以關閉 */
+:where([data-device=mobile]) .spec-more { display: none; }
+:where([data-device=mobile]) .spec-more.open { display: block; position: absolute; inset: 0; z-index: 30; padding: 0 14px 16px; overflow-y: auto; background: #1b2350; border-radius: 18px 18px 0 0; box-shadow: 0 -8px 24px rgba(0,0,0,.45); }
+:where([data-device=mobile]) .spec-more-head { position: sticky; top: 0; z-index: 1; display: flex; align-items: center; justify-content: space-between; padding: 10px 0 6px; background: #1b2350; font-size: 1rem; }
+:where([data-device=mobile]) .spec-more-close { min-width: 44px; min-height: 44px; border-radius: 50%; border: 0; background: var(--panel2); color: var(--text); font-size: 1.1rem; cursor: pointer; }
+:where([data-device=mobile]) .spec-sub, :where([data-device=mobile]) .spec-tip, :where([data-device=mobile]) .spec-tip2, :where([data-device=mobile]) .spec-3d, :where([data-device=mobile]) .spec-why { font-size: .85rem; }
 
 /* 手機很矮(例如 iPhone SE、或瀏覽器工具列佔很多):階梯圖下方的一行說明先收起來,空間留給三個圖(完整說明仍在「ⓘ 說明」) */
-@media (max-width: 900px) and (max-height: 640px), (pointer: coarse) and (max-width: 1400px) and (max-height: 640px) {
-  .spec-ladder-read { display: none; }
+@media (max-height: 640px) {
+  :where([data-device=mobile]) .spec-ladder-read { display: none; }
 }
 
 /* 手機:操作列的順序是 ◀ 回週期表 念給我聽 ▶ —— 左右箭頭固定在兩側,中間兩個按鈕平分剩下的空間 */
-@media (max-width: 900px), (pointer: coarse) and (max-width: 1400px) {
-  #app > .side:not(.mission) > div:last-child { justify-content: space-between; }
-  #app > .side:not(.mission) > div:last-child #prev, #app > .side:not(.mission) > div:last-child #next { flex: none; min-width: 48px; }
-  #app > .side:not(.mission) > div:last-child #back, #app > .side:not(.mission) > div:last-child #say { flex: 1 1 auto; }
-}
+:where([data-device=mobile]) #app > .side:not(.mission) > div:last-child { justify-content: space-between; }
+:where([data-device=mobile]) #app > .side:not(.mission) > div:last-child #prev, :where([data-device=mobile]) #app > .side:not(.mission) > div:last-child #next { flex: none; min-width: 48px; }
+:where([data-device=mobile]) #app > .side:not(.mission) > div:last-child #back, :where([data-device=mobile]) #app > .side:not(.mission) > div:last-child #say { flex: 1 1 auto; }
 
 /* 手機:原子核與同位素面板——標題一行、「回原子」只留箭頭,省出高度給內容 */
-@media (max-width: 900px), (pointer: coarse) and (max-width: 1400px) {
-  .nuc-side { gap: 6px; }
-  .nuc-side h2 small { display: inline; margin-left: 6px; }
-  .nuc-back .lbl { display: none; }
-  .nuc-back { min-width: 44px; }
-  .nuc-iso { max-height: 88px; }
-  .nuc-iso .chip { min-height: 34px; min-width: 36px; }
-  .cl-bar .chip { min-height: 36px; padding: 4px 10px; }
-}
+:where([data-device=mobile]) .nuc-side { gap: 6px; }
+:where([data-device=mobile]) .nuc-side h2 small { display: inline; margin-left: 6px; }
+:where([data-device=mobile]) .nuc-back .lbl { display: none; }
+:where([data-device=mobile]) .nuc-back { min-width: 44px; }
+:where([data-device=mobile]) .nuc-iso { max-height: 88px; }
+:where([data-device=mobile]) .nuc-iso .chip { min-height: 34px; min-width: 36px; }
+:where([data-device=mobile]) .cl-bar .chip { min-height: 36px; padding: 4px 10px; }
 
 /* 實驗室(手機):任務卡壓扁,留空間給 3D */
-@media (max-width: 900px), (pointer: coarse) and (max-width: 1400px) {
-  body[data-scene=lab] #app > .side.mission { max-height: 46%; padding: 6px 10px; }
-  body[data-scene=lab] .mi-card { padding: 6px 10px; margin-top: 2px; }
-  body[data-scene=lab] .mi-title { font-size: 1rem; }
-  body[data-scene=lab] .mi-toks { margin: 4px 0; gap: 6px; }
-  body[data-scene=lab] .mi-btns { margin-top: 4px; }
-  body[data-scene=lab] .tray .atom-btn .need { top: -5px; right: -5px; }
-}
+:where([data-device=mobile]) body[data-scene=lab] #app > .side.mission { max-height: 46%; padding: 6px 10px; }
+:where([data-device=mobile]) body[data-scene=lab] .mi-card { padding: 6px 10px; margin-top: 2px; }
+:where([data-device=mobile]) body[data-scene=lab] .mi-title { font-size: 1rem; }
+:where([data-device=mobile]) body[data-scene=lab] .mi-toks { margin: 4px 0; gap: 6px; }
+:where([data-device=mobile]) body[data-scene=lab] .mi-btns { margin-top: 4px; }
+:where([data-device=mobile]) body[data-scene=lab] .tray .atom-btn .need { top: -5px; right: -5px; }
 
 /* 物質的變化(手機):粒子圖在上、說明在下;小測驗時粒子圖縮小,把空間留給題目 */
-@media (max-width: 900px), (pointer: coarse) and (max-width: 1400px) {
-  #app:has(> .side[data-tab=quiz]) > .canvas-wrap { flex: 0 0 clamp(120px, 20%, 220px); min-height: 120px; }
-  #nav button { padding-left: 2px; padding-right: 2px; }
-}
+:where([data-device=mobile]) #app:has(> .side[data-tab=quiz]) > .canvas-wrap { flex: 0 0 clamp(120px, 20%, 220px); min-height: 120px; }
+:where([data-device=mobile]) #nav button { padding-left: 2px; padding-right: 2px; }
+
+/* ============================================================
+   平板橫放(<html data-device="mobile" data-split>,見 src/ui/layout.js):畫面夠寬,改成「3D 在左、面板在右」。
+   其他都沿用上面的手機版面(底部導覽列、觸控目標、面板底部黏住的操作列…),這裡只改 3D 場景的分區方式。
+   沒有 3D 的頁面(週期表、小測驗、化學故事)不受影響。
+   ============================================================ */
+:root:where([data-split]) { --side-w: clamp(340px, 38%, 460px); }
+:where([data-split]) #app:has(> .canvas-wrap) { display: grid; grid-template-columns: minmax(0, 1fr) var(--side-w); grid-template-rows: auto minmax(0, 1fr) auto; }
+:where([data-split]) #app > .canvas-wrap { grid-column: 1; grid-row: 1 / -1; min-height: 0; }
+:where([data-split]) #app > .side:not(.mission) { grid-column: 2; grid-row: 1 / -1; border-radius: 18px 0 0 0; border-width: 1px 0 0 1px; }
+/* 原子頁:縮放滑桿放在 3D 區的下緣 */
+:where([data-split]) body[data-scene=atom] .zoombar { top: auto; bottom: 12px; right: calc(var(--side-w) + 12px); }
+/* 圖鑑、反應劇場:清單是最上面一整列(橫向滑動),下面才分左右 */
+:where([data-split]) body[data-scene=gallery] #app > .list, :where([data-split]) body[data-scene=reaction] #app > .list.rx { grid-column: 1 / -1; grid-row: 1; }
+:where([data-split]) body[data-scene=gallery] #app > .canvas-wrap, :where([data-split]) body[data-scene=reaction] #app > .canvas-wrap { grid-row: 2 / -1; }
+:where([data-split]) body[data-scene=gallery] #app > .side { grid-row: 2 / -1; }
+:where([data-split]) body[data-scene=reaction] #app > .stage-bar { grid-column: 2; grid-row: 2 / -1; max-height: none; border-radius: 18px 0 0 0; border-width: 1px 0 0 1px; }
+/* 實驗室:任務卡在右邊(整欄),原子托盤在 3D 下面 */
+:where([data-split]) body[data-scene=lab] #app > .side.mission { grid-column: 2; grid-row: 1 / -1; max-height: none; border-radius: 18px 0 0 0; border-width: 1px 0 0 1px; }
+:where([data-split]) body[data-scene=lab] #app > .canvas-wrap { grid-row: 1 / 3; }
+:where([data-split]) body[data-scene=lab] #app > .tray { grid-column: 1; grid-row: 3; }

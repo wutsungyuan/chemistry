@@ -10,6 +10,8 @@
   <!-- 第一次來(還沒選過版本)先到入口頁選國小/國中/高中。
        同時先把版本寫到 <html data-level>:樣式(星球主題)靠它,要在第一次畫出畫面之前就有,不能等 main.js 載完才設(否則會閃一下舊的底色)。 -->
   <script>(function(){var l=null;try{l=localStorage.getItem('level');if(!l)location.replace('landing.html')}catch(e){}document.documentElement.dataset.level=/^(kid|teen|high)$/.test(l)?l:'kid'})()</script>
+  <!-- 版面種類(手機/平板 或 桌機;平板橫放再加 data-split)也要在第一次畫出畫面之前設好。條件和 src/ui/layout.js 相同,之後由它負責更新。 -->
+  <script>(function(){var d=document.documentElement,m=innerWidth<=900||matchMedia('(max-width: 900px), (pointer: coarse) and (max-width: 1400px)').matches;d.dataset.device=m?'mobile':'desktop';if(m&&matchMedia('(min-width: 1000px) and (orientation: landscape)').matches)d.setAttribute('data-split','')})()</script>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><g transform='rotate(-24 32 32)'><path d='M5 32 A27 9 0 0 1 59 32' fill='none' stroke='%23b9d9ff' stroke-width='3'/><circle cx='32' cy='32' r='17' fill='%233f8cff'/><circle cx='26' cy='25' r='5' fill='%23fff' opacity='.4'/><path d='M59 32 A27 9 0 0 1 5 32' fill='none' stroke='%23b9d9ff' stroke-width='3'/><circle cx='54' cy='37' r='6' fill='%23ff5d78'/></g></svg>" />
 </head>
 <body>

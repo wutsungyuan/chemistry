@@ -20,6 +20,7 @@ html[data-level=teen] #nav button.active, html[data-level=teen] .tool.on { backg
 html[data-level=teen] .btn { border-radius: 10px; }
 html[data-level=teen] .btn.alt { background: var(--panel2); color: var(--text); }
 html[data-level=teen] .chip { border-radius: 8px; }
+html[data-level=teen] .playbar button { border-radius: 10px; }
 html[data-level=teen] .m-bubble { border-radius: 10px; background: #f1f5fc; color: #1c2742; font-weight: 600; }
 html[data-level=teen] .m-bubble::before { border-right-color: #f1f5fc; }
 html[data-level=teen] .side { background: var(--glass); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: 0 6px 20px rgba(0,0,0,.3); }
@@ -51,6 +52,7 @@ html[data-level=high] #nav button.active, html[data-level=high] .tool.on { backg
 html[data-level=high] #nav .ico { display: none; }
 html[data-level=high] .btn { border-radius: 4px; background: var(--accent); color: #07101f; font-weight: 600; }
 html[data-level=high] .btn.alt { background: var(--panel2); color: var(--text); border: 1px solid var(--line); }
+html[data-level=high] .playbar button { border-radius: 4px; }
 html[data-level=high] .chip { border-radius: 3px; background: var(--panel2); border: 1px solid rgba(143,200,255,.18); }
 /* 光譜模式按鈕維持彩虹底色:上一行的深色底會蓋掉它,深色字就看不清楚了 */
 html[data-level=high] .pt-legend .spec-toggle { background: linear-gradient(90deg,#ff5c8a,#ffd23f,#4ade80,#4cc9ff,#a78bfa); border: 0; }
@@ -68,14 +70,12 @@ html[data-level=high] .pt-grid .el .nm, html[data-level=high] .pt-grid .el .z { 
 html[data-level=high] .pt-grid .el:hover { background: #1b2745; box-shadow: 0 0 14px color-mix(in srgb, var(--c) 40%, transparent); }
 
 /* ================= 手機/平板的底部導覽列(條件與 mobile.css 相同):不再是木頭實驗桌 ================= */
-@media (max-width: 900px), (pointer: coarse) and (max-width: 1400px) {
-  html[data-level=teen] #nav { background: #1b2744; border-top: 1px solid var(--line); box-shadow: 0 -2px 10px rgba(0,0,0,.35); }
-  html[data-level=high] #nav { background: #0d1426; border-top: 1px solid var(--line); box-shadow: none; }
-  html[data-level=teen] #nav button, html[data-level=high] #nav button { background: transparent; border-color: transparent; color: var(--muted); }
-  html[data-level=teen] #nav button.active { background: rgba(109,179,242,.2); border-color: var(--accent); color: #dcecff; }
-  html[data-level=high] #nav button.active { background: rgba(143,200,255,.14); border-color: var(--accent); color: #bfe3ff; }
-  html[data-level=high] #nav button { border-radius: 4px; }
-}
+html[data-level=teen]:where([data-device=mobile]) #nav { background: #1b2744; border-top: 1px solid var(--line); box-shadow: 0 -2px 10px rgba(0,0,0,.35); }
+html[data-level=high]:where([data-device=mobile]) #nav { background: #0d1426; border-top: 1px solid var(--line); box-shadow: none; }
+html[data-level=teen]:where([data-device=mobile]) #nav button, html[data-level=high]:where([data-device=mobile]) #nav button { background: transparent; border-color: transparent; color: var(--muted); }
+html[data-level=teen]:where([data-device=mobile]) #nav button.active { background: rgba(109,179,242,.2); border-color: var(--accent); color: #dcecff; }
+html[data-level=high]:where([data-device=mobile]) #nav button.active { background: rgba(143,200,255,.14); border-color: var(--accent); color: #bfe3ff; }
+html[data-level=high]:where([data-device=mobile]) #nav button { border-radius: 4px; }
 
 /* 週期表「左右滑動」提示標籤(手機):配合各版本的色調 */
 html[data-level=teen] body[data-scene=table] #app::before { background: rgba(109,179,242,.95); color: #0b1730; font-weight: 700; border-radius: 8px; }

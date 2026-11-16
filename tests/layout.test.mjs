@@ -1,4 +1,4 @@
-// 手機版版面(src/mobile.css)的靜態檢查:確保手機樣式不會外漏到 iPad / 桌面。
+// 版面(src/ui/layout.js、src/mobile.css)的靜態檢查:版面種類只有一個來源(<html data-device>、data-split),手機樣式不會外漏到桌面。
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -18,11 +18,45 @@ function topLevelBlocks(src) {
   return out;
 }
 
-test('mobile.css:最上層只有 @media(手機寬度/橫放矮螢幕)與 @keyframes,沒有會影響桌面的裸規則', () => {
+const MOBILE = ':where([data-device=mobile])', SPLIT = ':where([data-split])';
+/** 選擇器清單(以最外層逗號分開)是否每一個都限定在某個版面 */
+const scoped = head => head.split(/,(?![^(]*\))/).every(x => x.includes(MOBILE) || x.includes(SPLIT));
+
+test('mobile.css:每條規則都限定在手機版面(data-device=mobile)或平板橫放(data-split);只有「手機寬度」與「矮螢幕」兩種 @media', () => {
   for (const b of topLevelBlocks(css)) {
     const head = b.slice(0, b.indexOf('{')).trim();
-    assert.match(head, /^@(media\s*\((max-width:\s*(?:600|900)px\)(\s*and\s*\(max-height:\s*640px\))?, \(pointer:\s*coarse\)\s*and\s*\(max-width:\s*1400px\)|max-width:\s*600px\)$|max-height:\s*480px\)\s*and\s*\(max-width:\s*950px)|keyframes\s)/, `會影響所有裝置的規則:${head.slice(0, 60)}`);
+    if (/^@keyframes\s/.test(head)) continue;
+    if (head === '@media (max-width: 600px)') continue;                                     // 手機寬度:≤ 600px 一定是手機版面
+    if (/^@media \(max-height: (480|640)px\)$/.test(head)) {                                // 矮螢幕:裡面的規則仍要限定在手機版面
+      for (const m of b.slice(b.indexOf('{') + 1, -1).matchAll(/([^{}]+)\{[^}]*\}/g)) assert.ok(scoped(m[1].trim()), `矮螢幕區塊裡有沒限定版面的規則:${m[1].trim()}`);
+      continue;
+    }
+    assert.ok(!head.startsWith('@'), `不該有其他 @ 規則:${head}`);
+    assert.ok(scoped(head), `會影響所有裝置的規則:${head.slice(0, 70)}`);
   }
+});
+
+test('版面種類只有一個來源:樣式檔裡不再有「手機版面」的 media query;index.html 在第一次繪製前用和 layout.js 相同的條件設好', () => {
+  const lay = fs.readFileSync(path.join(root, 'src/ui/layout.js'), 'utf8'), html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+  const q = lay.match(/PHONE_QUERY = '([^']+)'/)[1], sq = lay.match(/SPLIT_QUERY = '([^']+)'/)[1];
+  assert.equal(q, '(max-width: 900px), (pointer: coarse) and (max-width: 1400px)'); assert.equal(sq, '(min-width: 1000px) and (orientation: landscape)');
+  assert.match(lay, /isNarrow = \(\) => window\.innerWidth <= NARROW_MAX \|\| matchMedia\(PHONE_QUERY\)\.matches/);
+  assert.match(lay, /d\.dataset\.device = getDevice\(\); d\.toggleAttribute\('data-split', isSplit\(\)\)/);
+  assert.ok(html.includes(`matchMedia('${q}')`) && html.includes(`matchMedia('${sq}')`), 'index.html 的判斷條件要和 layout.js 一樣');
+  assert.ok(html.indexOf('data-split') < html.indexOf('<link rel="icon"'), '要寫在 <head> 裡、樣式載入之前');
+  for (const file of ['style.css', 'mobile.css', 'themes.css', 'space.css']) {
+    const src = fs.readFileSync(path.join(root, 'src', file), 'utf8');
+    assert.ok(!/@media[^{]*max-width:\s*(900|1400)px/.test(src), `${file} 還有手機版面的 media query,請改用 [data-device=mobile]`);
+    assert.ok(!/@media[^{]*max-width:\s*700px/.test(src), `${file} 還有舊的 700px 斷點`);
+  }
+});
+
+test('平板橫放(data-split):3D 在左、面板在右;清單橫跨最上面一列;實驗室的托盤在 3D 下面', () => {
+  assert.match(css, /:where\(\[data-split\]\) #app:has\(> \.canvas-wrap\) \{ display: grid; grid-template-columns: minmax\(0, 1fr\) var\(--side-w\);/);
+  assert.match(css, /:where\(\[data-split\]\) #app > \.side:not\(\.mission\) \{ grid-column: 2;/);
+  assert.match(css, /body\[data-scene=reaction\] #app > \.list\.rx \{ grid-column: 1 \/ -1; grid-row: 1; \}/);
+  assert.match(css, /:where\(\[data-split\]\) body\[data-scene=lab\] #app > \.tray \{ grid-column: 1; grid-row: 3; \}/);
+  assert.ok(css.indexOf(SPLIT) > css.lastIndexOf('@media'), '分欄規則要寫在手機版面的規則之後(才能覆蓋)');
 });
 
 test('mobile.css 在 style.css 之後載入(才能覆蓋)', () => {
@@ -78,30 +112,22 @@ test('操作列:順序是 ◀ 回週期表 念給我聽 ▶;按 ◀ ▶ 換元�
   assert.match(av, /#prev'\)\.onclick = \(\) => \{ pendingTab = side\.dataset\.tab; go\(/);
   assert.match(av, /#next'\)\.onclick = \(\) => \{ pendingTab = side\.dataset\.tab; go\(/);
   assert.match(av, /side\.dataset\.tab = specOn && pendingTab === 'spec' \? 'spec' : 'info'; pendingTab = null;/);   // 用過就清掉:從週期表進來仍從原子資訊開始
-  assert.match(css, /#prev, #app > \.side:not\(\.mission\) > div:last-child #next \{ flex: none;/);   // 箭頭固定在兩側
+  assert.match(css, /#app > \.side:not\(\.mission\) > div:last-child #next \{ flex: none;/);   // 箭頭固定在兩側
 });
 
-test('iPad(觸控、寬度 ≤ 1400px)與手機共用同一套版面;JS 判斷(layout.js)和 CSS 條件要一致', () => {
-  const lay = fs.readFileSync(path.join(root, 'src/ui/layout.js'), 'utf8');
-  assert.match(lay, /PHONE_QUERY = '\(max-width: 900px\), \(pointer: coarse\) and \(max-width: 1400px\)'/);
-  assert.match(lay, /isNarrow = \(\) => window\.innerWidth <= NARROW_MAX \|\| matchMedia\(PHONE_QUERY\)\.matches/);
+test('iPad 與手機共用同一套版面;週期表的小格子只在「手機寬度」的區塊', () => {
   const raw = fs.readFileSync(path.join(root, 'src/mobile.css'), 'utf8');
-  const heads = [...raw.matchAll(/^@media ([^{]+)\{/gm)].map(m => m[1].trim()).filter(h => !/max-height:\s*480px/.test(h));
-  assert.ok(heads.length >= 5);
-  const phoneOnly = heads.filter(h => h === '(max-width: 600px)');
-  assert.equal(phoneOnly.length, 1, '只有週期表那一段是「只有手機」');
-  for (const h of heads.filter(h => h !== '(max-width: 600px)')) assert.match(h, /\(pointer: coarse\) and \(max-width: 1400px\)/, `這個區塊沒有涵蓋 iPad:${h}`);
-  // 週期表的小格子只能出現在「只有手機」的區塊;iPad 與桌面要顯示中文名稱與注音
-  const tableBlock = raw.slice(raw.indexOf('@media (max-width: 600px) {\n  .pt-wrap'));
+  const at = raw.indexOf('@media (max-width: 600px) {'), end = raw.indexOf('\n}\n', at);
+  const tableBlock = raw.slice(at, end);
   assert.match(tableBlock, /\.pt-grid \{ grid-template-columns: repeat\(18, 40px\)/);
-  assert.ok(!raw.slice(0, raw.indexOf('@media (max-width: 600px) {\n  .pt-wrap')).includes('.pt-grid'), '.pt-grid 的小格子規則不能在涵蓋 iPad 的區塊裡');
+  assert.ok(!(raw.slice(0, at) + raw.slice(end)).includes('.pt-grid'), '.pt-grid 的小格子規則不能在涵蓋 iPad 的規則裡');
   const pt = fs.readFileSync(path.join(root, 'src/scenes/PeriodicTable.js'), 'utf8');
   assert.match(pt, /phoneOnly = matchMedia\('\(max-width: 600px\)'\)\.matches/); assert.match(pt, /phoneOnly && level !== 'kid' \? L\(e\.name\) : LH\(e\.name\)/);   // 少一個就會造成 iPad 版面一半是手機、一半是桌面
 });
 
 test('週期表:手機只顯示符號;iPad 直式放大格子(可左右滑)顯示中文名稱與注音;桌面不變', () => {
   const st = fs.readFileSync(path.join(root, 'src/style.css'), 'utf8');
-  assert.match(st, /@media \(min-width:601px\) and \(max-width:1100px\)\{\s*\.pt-wrap\{min-width:1060px\}\s*\.pt-grid \.el \.nm\{font-size:\.74rem\}/);
+  assert.match(st, /@media \(min-width:601px\) and \(max-width:1100px\)\{\s*\.pt-wrap\{min-width:1060px;padding:10px 8px\}\s*\.pt-grid \.el \.nm\{font-size:\.74rem\}/);
   const pt = fs.readFileSync(path.join(root, 'src/scenes/PeriodicTable.js'), 'utf8');
   assert.ok(!/isNarrow/.test(pt), '週期表顯示中文名稱不能再看 isNarrow(iPad 也是 isNarrow)');
 });
